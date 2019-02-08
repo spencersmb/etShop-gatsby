@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "every-tuesday-shop",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "The Every-Tuesday shop built with Gatsby",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Spencer Bigum <spencer.bigum@gmail.com>",
   "dependencies": {
     "gatsby": "^2.0.117",
     "gatsby-image": "^2.0.29",
@@ -19,7 +19,12 @@
     "react-helmet": "^5.2.0"
   },
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "e-commerce",
+    "react",
+    "wordpress",
+    "headless",
+    "woocommerce"
   ],
   "license": "MIT",
   "scripts": {
@@ -31,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/spencersmb/etShop-gatsby.git"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
