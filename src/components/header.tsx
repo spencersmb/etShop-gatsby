@@ -1,8 +1,9 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
-
-const Header = ({ siteTitle }) => (
+import { Link } from 'gatsby'
+import React from 'react'
+interface Iheader {
+  siteTitle?: string
+}
+const Header = ({ siteTitle=`` }:Iheader) => (
   <header
     style={{
       background: `rebeccapurple`,
@@ -18,7 +19,7 @@ const Header = ({ siteTitle }) => (
     >
       <h1 style={{ margin: 0 }}>
         <Link
-          to="/"
+          to='/'
           style={{
             color: `white`,
             textDecoration: `none`,
@@ -31,12 +32,5 @@ const Header = ({ siteTitle }) => (
   </header>
 )
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Header.defaultProps = {
-  siteTitle: ``,
-}
 
 export default Header
