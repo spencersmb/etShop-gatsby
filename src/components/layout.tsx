@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { StaticQuery, graphql } from 'gatsby'
+import { StaticQuery, graphql, Link } from 'gatsby'
 import Header from './header'
 import './layout.css'
 import { connect } from 'react-redux'
@@ -37,6 +37,15 @@ const Layout = ({ children }:Ilayout) => (
             title
           }
         }
+        allEtShopProduct{
+          edges{
+            node{
+              id
+              name
+              slug
+            }
+          }
+        }
       }
     `}
     render={data => (
@@ -51,6 +60,17 @@ const Layout = ({ children }:Ilayout) => (
           }}
         >
           <ConnectedCounter/>
+          <ul>
+            {data.allEtShopProduct.edges.map(({node}: any)=>{
+              return(
+                <li key={node.id}>
+                  <Link to={`/products/${node.slug}`}>
+                    {node.name}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
           <main>{children}</main>
           <footer>
             © {new Date().getFullYear()}, Built with
