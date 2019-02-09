@@ -13,9 +13,7 @@
       "./node_modules/@types"
     ],
     "baseUrl": "src",
-    "rootDirs": [
-      "src"
-    ],
+    "rootDirs": ["src"],
     "resolveJsonModule": true,
     "allowJs": true,
     // "checkJs": true,
