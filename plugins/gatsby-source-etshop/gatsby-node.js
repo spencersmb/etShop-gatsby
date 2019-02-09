@@ -11,6 +11,8 @@ exports.sourceNodes = async (
 ) => {
   const { createNode } = actions
 
+  await fs.removeSync('/.cache');
+
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 

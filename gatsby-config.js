@@ -3,6 +3,7 @@ module.exports = {
     title: `Gatsby Default Starter`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
+    siteUrl: `https://www.example.com`,
   },
   plugins: [
     `gatsby-plugin-typescript`,
@@ -31,9 +32,68 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-playground`,
     `gatsby-plugin-netlify`,
-    `gatsby-plugin-sitemap`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        serialize: ({ site, allSitePage }) => {
+          return allSitePage.edges
+            .sort((a, b)=>{
+              // Default to 0, which indicates
+              // no sorting is necessary
+              let returnVal = 0;
+
+              // If `a` is a Chevy, subtract 1
+              // to move `a` "up" in the sort order
+              // because Chevys are awesome.
+              if (a.node.path === '/' ) {
+                returnVal = returnVal - 1;
+              }
+
+              if (b.node.path === '/' ) {
+                returnVal = returnVal + 1;
+              }
+
+              // If `b` is a Chevy, add 1
+              // to move `b` "up" in the sort order
+              // if (b.match(/Chevy/)) {
+              //   returnVal = returnVal + 1;
+              // }
+
+              return returnVal;
+            })
+            .map(edge => {
+
+              const urlPath = edge.node.path
+              // console.log('urlPath', urlPath)
+              const productsRegex = /(\/products\/)/
+
+              if(urlPath === '/'){
+                return{
+                  url: site.siteMetadata.siteUrl + edge.node.path,
+                  changefreq: `daily`,
+                  priority: 1,
+                }
+              }else if(urlPath.match(productsRegex)){
+                return {
+                  url: site.siteMetadata.siteUrl + edge.node.path,
+                  changefreq: `weekly`,
+                  priority: 0.7,
+                }
+              }else{
+                return {
+                  url: site.siteMetadata.siteUrl + edge.node.path,
+                  changefreq: `monthly`,
+                  priority: 0.5,
+                }
+              }
+            })
+
+        }
+      }
+    },
+
   ],
 }

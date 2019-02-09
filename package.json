@@ -41,12 +41,13 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "start": "npm run develop",
+    "start": "npm run clean && npm run develop",
     "serve": "gatsby serve",
     "test": "jest --watch",
     "storybook": "start-storybook -p 6006 -c .storybook",
     "build:storybook": "build-storybook",
-    "dev": "run-p storybook nextDev"
+    "dev": "run-p storybook nextDev",
+    "clean": "node cleanDir"
   },
   "repository": {
     "type": "git",
