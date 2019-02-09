@@ -1,3 +1,4 @@
+import { count as CountUp } from '@redux/actions/productActions'
 import React, { ReactNode } from 'react'
 import { StaticQuery, graphql, Link } from 'gatsby'
 import Header from './header'
@@ -16,7 +17,7 @@ const mapStateToProps = ({ count }:{count: number}) => {
 }
 
 const mapDispatchToProps = (dispatch: any) => {
-  return { increment: () => dispatch({ type: `INCREMENT` }) }
+  return { increment: () => dispatch(CountUp()) }
 }
 
 const ConnectedCounter = connect(

@@ -8,6 +8,22 @@ module.exports = {
   plugins: [
     `gatsby-plugin-typescript`,
     {
+      resolve: 'gatsby-plugin-module-resolver',
+      options: {
+        root: './src', // <- will be used as a root dir
+        aliases: {
+          // '@components': './components', // <- will become ./src/components
+          '@redux': './state', // <- will become ./src/components
+          '@et/types': './types', // <- will become ./src/components
+          // helpers: './helpers', // <- will become ./src/helpers
+          static: {
+            root: './public', // <- will used as this alias' root dir
+            alias: './static' // <- will become ./public/static
+          }
+        }
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
@@ -35,6 +51,14 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     'gatsby-plugin-offline',
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.example.com',
+        sitemap: 'https://www.example.com/sitemap.xml',
+        // policy: [{ userAgent: '*', allow: '/' }]
+      }
+    },
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {

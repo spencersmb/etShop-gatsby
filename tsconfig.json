@@ -12,8 +12,7 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
-    "baseUrl": "src",
-    "rootDirs": ["src"],
+
     "resolveJsonModule": true,
     "allowJs": true,
     // "checkJs": true,
@@ -23,7 +22,20 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "rootDirs": ["src"],
+    "paths": {
+      "@redux/*": [
+        "state/*"
+      ],
+      "@et/types/*": [
+        "types/*"
+      ]
+    }
   },
   "exclude": [
     "build",

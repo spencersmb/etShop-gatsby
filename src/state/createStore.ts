@@ -1,36 +1,27 @@
-import { createStore as reduxCreateStore, applyMiddleware } from 'redux'
+import { IState } from '@et/types/State'
+import { countReducer } from '@redux/reducers/countReducer'
+import { productReducer } from '@redux/reducers/productReducer'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
-import data from './products.json'
-
-const reducers = (state: any, action: any) => {
-	if (action.type === `INCREMENT`) {
-		return {...state, 
-			count: state.count + 1}
-	}
-	if (action.type === `PRODUCTS`) {
-		console.log('action', action)
-		return {
-			...state,
-		}
-	}
-	return state
-}
-
-const initialState:any = { count: 0, products: data || [] }
-
+import initState from '@redux/reducers/initialState'
 
 const env = process.env.NODE_ENV || 'development'
-// const createStore = () => reduxCreateStore(reducer, initialState, devtools)
-const createStore = () => {
+const initStore = (initialState: IState = initState) => {
+
+	const reducers = combineReducers<IState>({
+		count: countReducer,
+		products: productReducer
+	})
+
 	if (typeof window !== 'undefined' && env === 'development') {
-		return reduxCreateStore(
+		return createStore(
 			reducers,
 			initialState,
 			composeWithDevTools(applyMiddleware(thunkMiddleware)),
 		)
 	} else {
-		return reduxCreateStore(
+		return createStore(
 			reducers,
 			initialState,
 			composeWithDevTools(applyMiddleware(thunkMiddleware)),
@@ -39,4 +30,4 @@ const createStore = () => {
 		)
 	}
 }
-export default createStore
+export default initStore
