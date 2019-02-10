@@ -1,3 +1,5 @@
+const utils = require('./utils')
+
 const fetch = require('node-fetch')
 const queryString = require('query-string')
 const fs = require('fs-extra')
@@ -54,7 +56,7 @@ exports.sourceNodes = async (
   const apiResponse = await fetch(apiUrl)
   const results = await apiResponse.json()
 
-  const jsonResults = JSON.stringify(results.data)
+  const jsonResults = JSON.stringify(utils.transformNormalizedData(results.data))
   fs.writeFileSync('src/state/products.json', jsonResults)
 
   results.data.forEach(async (product) => {

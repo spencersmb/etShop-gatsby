@@ -2,6 +2,6 @@ import {IState} from '@et/types/State'
 
 const initialState: IState = {
   count: 0,
-  products: []
+  products: {}
 }
 export default initialState

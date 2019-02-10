@@ -1,6 +1,8 @@
+import { IProducts } from '@et/types/Products'
+
 export interface IState {
   count: number,
-  products: []
+  products: IProducts
   // breakPoint: number,
   // cart: ICartState,
   // modal: IModalState,

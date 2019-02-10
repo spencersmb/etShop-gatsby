@@ -6,3 +6,7 @@
 
 // And to shim assets, use (one file extension per `declare`):
 // declare module "*.png"
+
+export interface CustomWindow extends Window {
+  __REDUX_DEVTOOLS_EXTENSION__: any;
+}
