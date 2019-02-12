@@ -8,7 +8,9 @@ exports[`Navbar Layout renders correctly 1`] = `
     <li>
       Home
     </li>
-    <li>
+    <li
+      onClick={[Function]}
+    >
       Login
     </li>
   </ul>

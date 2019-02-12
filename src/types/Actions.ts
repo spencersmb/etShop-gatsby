@@ -1,4 +1,4 @@
-import {AuthActionTypes, ProductsActionTypes} from './Enums'
+import { AuthActionTypes, ModalActionTypes, ProductsActionTypes } from './Enums'
 import {IAuthResponse} from '@et/types/User'
 
 export interface ILoadProductsSuccess {
@@ -12,6 +12,15 @@ export interface ICount {
   type: ProductsActionTypes.COUNT
 }
 
+export interface IShowModal {
+  type: ModalActionTypes.SHOW_MODAL
+  payload: any
+}
+
+export interface IHideModal {
+  type: ModalActionTypes.HIDE_MODAL
+}
+
 export interface IAuthLogin {
   type: AuthActionTypes.LOGIN_USER
   payload: IAuthResponse
@@ -20,6 +29,10 @@ export interface IAuthLogin {
 export interface IAuthLogOut {
   type: AuthActionTypes.LOGOUT
 }
+
+export type ModalActions =
+  | IShowModal
+  | IHideModal
 
 type ProductActions =
   | ILoadProductsSuccess
@@ -33,3 +46,4 @@ export type AuthActions =
 export type Actions =
   | AuthActions
   | ProductActions
+  | ModalActions
