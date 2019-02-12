@@ -1,10 +1,11 @@
 import React, {
-  Component,
   ComponentType,
-  RefObject
+  RefObject,
+  useState,
+  useRef,
+  useEffect
 } from 'react'
 import { Action, bindActionCreators, Dispatch } from 'redux'
-// import {hideModal} from '@et/actions/modalActions'
 import { hideModal } from '@redux/actions/modalActions'
 import { connect } from 'react-redux'
 import posed from 'react-pose'
@@ -26,8 +27,10 @@ interface IPropsActions {
   hideModalAction: () => void,
 }
 
-interface ILocalState {
-  visible: boolean
+function isChildOf (child: any, parent: any): any {
+  if (child.parentNode === parent) {
+    return true
+  } else { return child.parentNode !== null; }
 }
 
 /**
@@ -39,148 +42,81 @@ interface ILocalState {
  *
  * On Resize we close the modal.
  */
-export const Modal = class extends Component<IPropsPublic & IPropsActions & IPropsRedux, ILocalState> {
-  static isChildOf (child: any, parent: any): any {
-    if (child.parentNode === parent) {
-      return true
-    } else if (child.parentNode === null) {
-      return false
-    } else {
-      return this.isChildOf(child.parentNode, parent)
+export const Modal = (props: IPropsActions & IPropsRedux) => {
+  const {show, component} = props
+  const [isVisible, setIsVisible] = useState(false)
+  const modalContentRef: RefObject<any> = useRef(null)
+
+  function forceClose () {
+    setIsVisible(false)
+    props.hideModalAction()
+  }
+
+  function animateClose () {
+    // on animate complete fires on both open and close,
+    // so we check to make sure to only hide modal when isVisible is set to false
+    if (!isVisible) {
+      props.hideModalAction()
     }
   }
 
-  wrapperRef: RefObject<any>
-  modalContentRef: RefObject<any>
-  state = {
-    visible: false
-  }
-
-  constructor (props: IPropsPublic & IPropsActions & IPropsRedux) {
-    super(props)
-
-    this.handleOnCloseClick = this.handleOnCloseClick.bind(this)
-    this.animateClose = this.animateClose.bind(this)
-    // this.handleOnOutsideClick = this.handleOnOutsideClick.bind(this)
-    this.wrapperRef = React.createRef()
-    this.modalContentRef = React.createRef()
-    this.state = {
-      visible: false
+  function handleOnOutsideClick (e: any)  {
+    if (isChildOf(e.target, modalContentRef.current)) {
+      setIsVisible(false)
     }
   }
 
-  async componentDidMount () {
-    // reset if null
-    if (this.modalContentRef.current === null) {
-      this.forceClose()
-    }
-
-    // re-render if not null
-    if (this.modalContentRef.current !== null && this.props.show) {
-
-      this.setState(() => {
-        return {
-          visible: true
-        }
-      })
-
-    }
-
+  function handleOnCloseClick () {
+    setIsVisible(false)
   }
 
-  async componentDidUpdate (prevProps: IPropsPublic & IPropsActions & IPropsRedux, prevState: ILocalState) {
-    if (!prevProps.show && this.modalContentRef.current !== null && this.props.show) {
-      this.setState(() => {
-        return {
-          visible: true
-        }
-      })
+  function renderModal (ModalComponent: ComponentType<any>) {
+    if (!ModalComponent) {
+      return (<div>No Modal Found</div>)
+    }
+    return <ModalComponent
+      showModal={props.show}
+      // showLoadingBar={props.showLoadingBarAction}
+      // hideLoadingBar={props.hideLoadingBarAction}
+      closeModal={handleOnCloseClick}
+      // isLoading={props.isLoading}
+      confirm={props.options.confirm}
+      content={props.options.content}/>
+  }
 
-      return
+  useEffect(()=>{
+    console.log('render')
+    // first pass modal is null so no render
+    // but when props change - it will render
+
+    // render if not null
+    if (modalContentRef.current && props.show) {
+      setIsVisible(true)
     }
 
     // if (prevProps.breakpoint !== this.props.breakpoint && this.modalContentRef.current !== null && this.props.show) {
     // 	// resized
     // 	this.forceClose()
     // }
-  }
 
-  handleOnOutsideClick = (e: any) => {
-    if (!Modal.isChildOf(e.target, this.modalContentRef.current)) {
-      this.setState(() => {
-        return {
-          visible: false
-        }
-      })
-    }
-  }
+  }, [show])
 
-  handleOnCloseClick (cb: any = null, url: any = null) {
-    // Callback must be the ROUTER object from NEXT
-    // animations.fadeOut(this.wrapper)
-    // animations.hide(this.container, () => {
-    // 	this.props.hideModalAction()
-    // 	if (cb && url && (typeof url === 'string')) {
-    // 		cb.push(url)
-    // 	}
-    // })
-    this.setState(() => {
-      return {
-        visible: false
-      }
-    })
-  }
-
-  animateClose () {
-    if (!this.state.visible) {
-      this.props.hideModalAction()
-    }
-  }
-
-  forceClose () {
-    this.setState(() => {
-      return {
-        visible: false
-      }
-    })
-    this.props.hideModalAction()
-  }
-
-  renderModal (ModalComponent: ComponentType<any>) {
-    if (!ModalComponent) {
-      return (<div>No Modal Found</div>)
-    }
-    return <ModalComponent
-      showModal={this.props.show}
-      // showLoadingBar={this.props.showLoadingBarAction}
-      // hideLoadingBar={this.props.hideLoadingBarAction}
-      closeModal={this.handleOnCloseClick}
-      // isLoading={this.props.isLoading}
-      confirm={this.props.options.confirm}
-      content={this.props.options.content}/>
-  }
-
-  render () {
-    // Don't Forget the OPTIONS on PROPS
-    const { show, component } = this.props
-
-    // will return empty if nothing is true
-    return (
-      show && component &&
-      <>
-        <ModalPose
-          ref={this.modalContentRef}
-          pose={this.state.visible ? 'visible' : 'hidden'}
-        >
-          {this.renderModal(component)}
-        </ModalPose>
-        <Overlay
-          onClick={this.handleOnOutsideClick}
-          onPoseComplete={this.animateClose}
-          pose={this.state.visible ? 'visible' : 'hidden'}/>
-      </>
-    )
-  }
+  return (
+    show && component &&
+    <>
+      <ModalPose
+        ref={modalContentRef}
+        pose={isVisible ? 'visible' : 'hidden'}
+      >
+        {renderModal(component)}
+      </ModalPose>
+      <Overlay
+        data-testid='overlay'
+        onClick={handleOnOutsideClick}
+        onPoseComplete={animateClose}
+        pose={isVisible ? 'visible' : 'hidden'}/>
+    </>
+  )
 }
 
 const mapStateToProps = (state: IState): IPropsRedux => {
