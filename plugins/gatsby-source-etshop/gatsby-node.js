@@ -31,7 +31,7 @@ exports.sourceNodes = async (
       image.localFile___NODE = fileNode.id
     })
 
-    const nodeId = createNodeId(`etshop-product-${product.id}`)
+    const nodeId = createNodeId(`wc-product-${product.id}`)
     const nodeContent = JSON.stringify(product)
 
     // Node info
@@ -40,7 +40,7 @@ exports.sourceNodes = async (
       parent: null,
       children: [],
       internal: {
-        type: `EtShopProduct`,
+        type: `wcProduct`,
         content: nodeContent,
         contentDigest: createContentDigest(product),
       },

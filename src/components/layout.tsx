@@ -38,7 +38,7 @@ const Layout = ({ children }:Ilayout) => (
             title
           }
         }
-        allEtShopProduct{
+        allWcProduct{
           edges{
             node{
               id
@@ -62,7 +62,7 @@ const Layout = ({ children }:Ilayout) => (
         >
           <ConnectedCounter/>
           <ul>
-            {data.allEtShopProduct.edges.map(({node}: any)=>{
+            {data.allWcProduct.edges.map(({node}: any)=>{
               return(
                 <li key={node.id}>
                   <Link to={`/products/${node.slug}`}>

@@ -6,7 +6,7 @@
 const path = require('path')
 const pageQuery = `
     {
-      allEtShopProduct{
+      allWcProduct{
         edges{
           node{
             slug
@@ -27,7 +27,7 @@ exports.createPages = ({ graphql, actions }) => {
         console.log(results.errors)
         reject(results.errors)
       }
-      results.data.allEtShopProduct.edges.forEach(({ node }) => {
+      results.data.allWcProduct.edges.forEach(({ node }) => {
         createPage({
           path: `/products/${node.slug}`,
           component: path.resolve(`./src/components/products/productLayout.tsx`),

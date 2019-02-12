@@ -1,5 +1,6 @@
 import { Link } from 'gatsby'
 import React from 'react'
+import Navbar from './nav/navbar'
 interface Iheader {
   siteTitle?: string
 }
@@ -28,6 +29,17 @@ const Header = ({ siteTitle=`` }:Iheader) => (
           {siteTitle}
         </Link>
       </h1>
+    </div>
+    <div
+      style={{
+        margin: `0 auto`,
+        maxWidth: 960,
+        padding: `1.45rem 1.0875rem`,
+        color: `#fff`,
+        listStyle: `none`
+      }}
+    >
+      <Navbar/>
     </div>
   </header>
 )
