@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import Navbar from '../navbar'
+import {Navbar} from '../navbar'
 import {
   render,
 } from 'react-testing-library'

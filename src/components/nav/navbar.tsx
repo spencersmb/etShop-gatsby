@@ -1,9 +1,21 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {showModal} from '@redux/actions/modalActions'
+import Login from '../modals/login'
 
 function Navbar (props: any) {
 
   function openSignInModal() {
-    console.log('modal')
+    props.showModal({
+      // modal: LoginModal(name),
+      modal: Login,
+      options: {
+        closeOutsideModal: true,
+        content: 'my Content',
+        hasBackground: true,
+      }
+    })
   }
 
   return (
@@ -16,4 +28,9 @@ function Navbar (props: any) {
   )
 }
 
-export default Navbar
+// export default Navbar
+export default connect(
+  null,
+  dispatch => bindActionCreators({showModal}, dispatch)
+)(Navbar)
+export {Navbar}

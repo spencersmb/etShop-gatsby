@@ -1,30 +1,8 @@
-import { count as CountUp } from '@redux/actions/productActions'
 import React, { ReactNode } from 'react'
 import { StaticQuery, graphql, Link } from 'gatsby'
 import Header from './header'
 import './layout.css'
-import { connect } from 'react-redux'
-
-const Counter = ({ count, increment }: {count: number, increment: any}) => (
-  <div>
-    <p>Count: {count}</p>
-    <button onClick={increment}>Increment</button>
-  </div>
-)
-
-const mapStateToProps = ({ count }:{count: number}) => {
-  return { count }
-}
-
-const mapDispatchToProps = (dispatch: any) => {
-  return { increment: () => dispatch(CountUp()) }
-}
-
-const ConnectedCounter = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Counter)
-
+import Modal from './modals/wrapper'
 
 interface Ilayout {
   children: ReactNode
@@ -60,7 +38,6 @@ const Layout = ({ children }:Ilayout) => (
             paddingTop: 0,
           }}
         >
-          <ConnectedCounter/>
           <ul>
             {data.allWcProduct.edges.map(({node}: any)=>{
               return(
@@ -78,6 +55,7 @@ const Layout = ({ children }:Ilayout) => (
             {` `}
             <a href='https://www.gatsbyjs.org'>Gatsby</a>
           </footer>
+          <Modal key='modal'/>
         </div>
       </>
     )}

@@ -1,5 +1,6 @@
 import { IState } from '@et/types/State'
 import { countReducer } from '@redux/reducers/countReducer'
+import { modalReducer } from '@redux/reducers/modalReducer'
 import { productReducer } from '@redux/reducers/productReducer'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -11,7 +12,8 @@ const initStore = (initialState: IState = initState) => {
 
 	const reducers = combineReducers<IState>({
 		count: countReducer,
-		products: productReducer
+		modal: modalReducer,
+		products: productReducer,
 	})
 
 	if (typeof window !== 'undefined' && env === 'development') {

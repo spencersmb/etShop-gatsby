@@ -2,6 +2,7 @@
 import { ModalActionTypes } from '@et/types/Enums'
 import { showModal } from '@redux/actions/modalActions'
 import initialState from '@redux/reducers/initialState'
+import * as React from 'react'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -12,10 +13,15 @@ describe('Modal Actions', () => {
 
   it('Should have type ShowModal', async () => {
 
+    const modalComponent = () => (<div>Test Modal</div>)
     const store = mockStore(initialState)
     const modal = {
-      modal: 'hi',
-      options: 'options'
+      modal: modalComponent,
+      options: {
+        closeOutsideModal: true,
+        content: 'string',
+        hasBackground: true,
+      }
     }
     store.dispatch(showModal(modal))
     const getActions = store.getActions()

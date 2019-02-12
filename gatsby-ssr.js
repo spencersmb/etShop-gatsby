@@ -6,5 +6,9 @@
 
 // You can delete this file if you're not using it
 import wrapWithProvider from './wrap-with-provider'
-
 export const wrapRootElement = wrapWithProvider
+
+// thrd party script ex
+// exports.onRenderBody = ({ setHeadComponents }) => {
+//   setHeadComponents([<script {put_attributes_here} />])
+// }
