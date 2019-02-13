@@ -1,6 +1,6 @@
 import posed, { PoseGroup } from 'react-pose';
 import styled from 'styled-components'
-// import SignInForm from '@et/forms/login'
+import SignInForm from '@components/forms/signin'
 // import SignUpForm from '@et/forms/signUp'
 import React, { useState, useEffect, useRef, RefObject } from 'react'
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
@@ -37,7 +37,7 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
     }
   }, [])
 
-  function changeName(newName: string){
+  function changeForm(newName: string){
     return ()=>{
       setName(newName)
       firstRender.current = false
@@ -58,10 +58,12 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
             {name === 'signin' &&
             <SignInPose key='signIn' firstRender={firstRender.current}>
               {({ref}: IPoseHoc) => (
-                <div ref={ref} key='signIn'>
-                  SignIn
-                  <button onClick={changeName('signup')}>Sign Up</button>
-                </div>
+                <SignInForm
+                  changeForm={changeForm}
+                  closeModal={closeModal}
+                  firstRender={firstRender.current}
+                  poseRef={ref}
+                />
               )}
             </SignInPose>}
 
@@ -72,7 +74,7 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
               {({ref}: IPoseHoc) => (
                 <div ref={ref} key='signUp'>
                   Signup
-                  <button onClick={changeName('signin')}>Sign In</button>
+                  <button onClick={changeForm('signin')}>Sign In</button>
                 </div>
               )}
             </SignInPose>
@@ -122,8 +124,8 @@ const ContentContainer = styled.div<any>`
 // The size of the box animation is controlled by ContentContainer and we delay it to look like the animation is staggered
 const SignInPose = posed(PoseHoc)({
   enter: {
-    delay: ((props: any) => props.firstRender ? 0 : 150),
-    duration: ((props: any) => props.firstRender ? 0 : 300),
+    // delay: ((props: any) => props.firstRender ? 0 : 150),
+    duration: ((props: any) => props.firstRender ? 0 : 50),
     opacity: 1,
     y: `0px`
   },
@@ -132,19 +134,5 @@ const SignInPose = posed(PoseHoc)({
     y: `-25px`
   }
 })
-const sign = styled.div`
-  position: relative;
-`
-const SignInNoHOC = posed(sign)({
-  enter: {
-    delay: ((props: any) => props.firstRender ? 0 : 150),
-    duration: ((props: any) => props.firstRender ? 0 : 300),
-    opacity: 1,
-    y: `0px`
-  },
-  exit: {
-    opacity: 0,
-    y: `-25px`
-  }
-})
+
 
