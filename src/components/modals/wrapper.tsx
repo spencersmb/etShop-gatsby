@@ -1,14 +1,13 @@
 import React, {
   ComponentType,
   RefObject,
-  useState,
   useRef,
   useEffect
 } from 'react'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { hideModal } from '@redux/actions/modalActions'
 import { connect } from 'react-redux'
-import posed from 'react-pose'
+import posed, { PoseGroup } from 'react-pose';
 import styled from 'styled-components'
 import { IState } from '@et/types/State'
 
@@ -44,30 +43,21 @@ function isChildOf (child: any, parent: any): any {
  */
 export const Modal = (props: IPropsActions & IPropsRedux) => {
   const {show, component} = props
-  const [isVisible, setIsVisible] = useState(false)
   const modalContentRef: RefObject<any> = useRef(null)
+  const bodyRef: any = useRef(null)
 
   function forceClose () {
-    setIsVisible(false)
     props.hideModalAction()
-  }
-
-  function animateClose () {
-    // on animate complete fires on both open and close,
-    // so we check to make sure to only hide modal when isVisible is set to false
-    if (!isVisible) {
-      props.hideModalAction()
-    }
   }
 
   function handleOnOutsideClick (e: any)  {
     if (isChildOf(e.target, modalContentRef.current)) {
-      setIsVisible(false)
+      props.hideModalAction()
     }
   }
 
   function handleOnCloseClick () {
-    setIsVisible(false)
+    props.hideModalAction()
   }
 
   function renderModal (ModalComponent: ComponentType<any>) {
@@ -75,25 +65,33 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
       return (<div>No Modal Found</div>)
     }
     return <ModalComponent
-      showModal={props.show}
+      options={props.options}
+      closeModal={handleOnCloseClick}
       // showLoadingBar={props.showLoadingBarAction}
       // hideLoadingBar={props.hideLoadingBarAction}
-      closeModal={handleOnCloseClick}
       // isLoading={props.isLoading}
-      confirm={props.options.confirm}
-      content={props.options.content}/>
+      />
   }
 
+  // on mount get body
   useEffect(()=>{
-    console.log('render')
-    // first pass modal is null so no render
-    // but when props change - it will render
+    bodyRef.current = document.getElementsByTagName('body')
+  },[])
 
-    // render if not null
-    if (modalContentRef.current && props.show) {
-      setIsVisible(true)
+
+  useEffect(()=>{
+    // if props.show means the modal should be open
+    if(show){
+      if(bodyRef.current.length > 0){
+        bodyRef.current[0].setAttribute('style', 'overflow: hidden; height: 100vh;')
+      }
     }
 
+    return () => {
+      if(!show && bodyRef.current && bodyRef.current.length > 0){
+        bodyRef.current[0].setAttribute('style', 'overflow: visible; height: auto;')
+      }
+    }
     // if (prevProps.breakpoint !== this.props.breakpoint && this.modalContentRef.current !== null && this.props.show) {
     // 	// resized
     // 	this.forceClose()
@@ -102,20 +100,21 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
   }, [show])
 
   return (
-    show && component &&
-    <>
-      <ModalPose
-        ref={modalContentRef}
-        pose={isVisible ? 'visible' : 'hidden'}
-      >
-        {renderModal(component)}
-      </ModalPose>
-      <Overlay
+    <PoseGroup>
+      {show && [
+        <ModalPose
+          key='modal'
+          ref={modalContentRef}
+        >
+          {renderModal(component)}
+        </ModalPose>,
+        <Overlay
         data-testid='overlay'
+        key='overlay'
         onClick={handleOnOutsideClick}
-        onPoseComplete={animateClose}
-        pose={isVisible ? 'visible' : 'hidden'}/>
-    </>
+        />
+      ]}
+    </PoseGroup>
   )
 }
 
@@ -155,24 +154,24 @@ const ModalStyled = styled.div`
 		overflow: hidden;
 `
 const ModalPose = posed(ModalStyled)({
-  hidden: {
+  exit: {
     opacity: 0,
     transition: {
-      default: { duration: 300 },
+      default: { duration: 150 },
       y: { ease: 'easeOut' }
     },
     x: `-50%`,
-    // y: (props: any) => -props.top + 24,
     y: `-60%`
   },
-  visible: {
+  enter: {
     opacity: 1,
+    delay: 300,
     transition: {
-      default: { duration: 100 },
+      default: { duration: 300 },
+      // y: { type: 'spring', stiffness: 1500, damping: 15 },
       y: { type: 'spring', stiffness: 1500, damping: 35 }
     },
     x: `-50%`,
-    // y: (props: any) => -props.top,
     y: `-50%`
   }
 })
@@ -180,18 +179,18 @@ const Shade = styled.div`
 		background: red;
 		height: 100vh;
 		left: 0;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		width: 100%;
 		z-index: ${depth};
 `
 const Overlay = posed(Shade)({
-  hidden: {
+  exit: {
     opacity: 0,
-    transition: {
-      default: { delay: 100 }
-    }
+    // transition: {
+    //   default: { delay: 100 }
+    // }
   },
-  visible: { opacity: 1 }
+  enter: { opacity: 1 }
 })
 

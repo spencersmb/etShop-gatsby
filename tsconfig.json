@@ -29,6 +29,9 @@
     "baseUrl": "src",
     "rootDirs": ["src"],
     "paths": {
+      "@components/*": [
+        "components/*"
+      ],
       "@redux/*": [
         "state/*"
       ],

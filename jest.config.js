@@ -10,6 +10,7 @@ module.exports = {
     "node_modules"
   ],
   moduleNameMapper: {
+    "^@components(.*)$": "<rootDir>/src/components$1",
     "^@et/types(.*)$": "<rootDir>/src/types$1",
     "^@redux(.*)$": "<rootDir>/src/state$1",
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",

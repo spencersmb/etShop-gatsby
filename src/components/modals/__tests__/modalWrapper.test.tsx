@@ -3,8 +3,11 @@ import renderer from 'react-test-renderer'
 import {Modal} from '../wrapper'
 import {
   render,
+  cleanup
 } from 'react-testing-library'
+import 'jest-dom/extend-expect'
 
+afterEach(cleanup)
 
 const initialProps = {
   hideModalAction: () => null,
@@ -12,15 +15,15 @@ const initialProps = {
   show: false,
   options: {}
 }
-const ModalComponent = () => (<div data-testid='modal'>Test Modal</div>)
+const ModalComponent = (props: any) => (<div data-testid='modal'><div>Test Modal</div><button onClick={props.closeModal} data-testid='closeBtn' >Close</button></div>)
 const showModalProps = {
-  hideModalAction: () => null,
+  hideModalAction: jest.fn(),
   component: ModalComponent,
   show: true,
   options:{
     closeOutsideModal: true,
     content: 'content',
-    hasBackground: true,
+    hasBackground: true
   }
 }
 describe('Modal Wrapper Layout', () => {
@@ -35,7 +38,7 @@ describe('Modal Wrapper Layout', () => {
   it('Should be an empty component', ( ) => {
     const modalRender = render(<Modal {...initialProps}/>)
 
-    const html = `<div></div>`;
+    const html = `<div></div>`
     expect(modalRender.baseElement.innerHTML).toEqual(html)
   })
 
@@ -44,5 +47,11 @@ describe('Modal Wrapper Layout', () => {
     const overLay = getByTestId('overlay')
     expect(getByText('Test Modal').innerHTML).toEqual('Test Modal')
     expect(overLay).toBeTruthy()
+  })
+
+  it('Should call hideModalAction on click', async () => {
+    const {getByTestId} = render(<Modal {...showModalProps}/>)
+    getByTestId('closeBtn').click()
+    expect(showModalProps.hideModalAction).toHaveBeenCalledTimes(1)
   })
 })

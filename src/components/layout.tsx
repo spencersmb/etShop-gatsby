@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 import { StaticQuery, graphql, Link } from 'gatsby'
 import Header from './header'
 import './layout.css'
-import Modal from './modals/wrapper'
+import Modal from '@components/modals/wrapper'
 
 interface Ilayout {
   children: ReactNode

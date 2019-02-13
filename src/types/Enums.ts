@@ -9,6 +9,10 @@ export enum ModalActionTypes {
   HIDE_MODAL = '@@modal/hide',
 }
 
+export enum WindowActionTypes {
+  CHANGE_BREAKPOINT = '@@window/CHANGE_BREAKPOINT'
+}
+
 export enum AuthActionTypes {
   LOGIN_USER = '@@auth/login',
   LOGOUT = '@@auth/logout'

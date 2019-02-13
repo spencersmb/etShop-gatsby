@@ -1,7 +1,7 @@
 import {IState} from '@et/types/State'
 
 const initialState: IState = {
-  count: 0,
+  breakpoint: 0,
   modal: {
     component: null,
     options: {

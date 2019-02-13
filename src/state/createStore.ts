@@ -1,5 +1,5 @@
 import { IState } from '@et/types/State'
-import { countReducer } from '@redux/reducers/countReducer'
+import { breakPointReducer } from '@redux/reducers/breakpointReducer'
 import { modalReducer } from '@redux/reducers/modalReducer'
 import { productReducer } from '@redux/reducers/productReducer'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
@@ -11,7 +11,7 @@ const env = process.env.NODE_ENV || 'development'
 const initStore = (initialState: IState = initState) => {
 
 	const reducers = combineReducers<IState>({
-		count: countReducer,
+		breakpoint: breakPointReducer,
 		modal: modalReducer,
 		products: productReducer,
 	})

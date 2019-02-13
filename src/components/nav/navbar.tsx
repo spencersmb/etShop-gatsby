@@ -6,23 +6,26 @@ import Login from '../modals/login'
 
 function Navbar (props: any) {
 
-  function openSignInModal() {
-    props.showModal({
-      // modal: LoginModal(name),
-      modal: Login,
-      options: {
-        closeOutsideModal: true,
-        content: 'my Content',
-        hasBackground: true,
-      }
-    })
+  function openSignInModal (name: string) {
+    return () => [
+      props.showModal({
+        modal: Login,
+        options: {
+          closeOutsideModal: true,
+          content: 'my Content',
+          hasBackground: true,
+          name
+        }
+      })
+    ]
   }
 
   return (
     <div data-testid='navbar'>
       <ul>
         <li>Home</li>
-        <li onClick={openSignInModal}>Login</li>
+        <li onClick={openSignInModal('signin')}>Sign In</li>
+        <li onClick={openSignInModal('signup')}>Sign Up</li>
       </ul>
     </div>
   )
