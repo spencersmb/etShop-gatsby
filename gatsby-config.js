@@ -13,8 +13,10 @@ module.exports = {
         root: './src', // <- will be used as a root dir
         aliases: {
           '@components': './components', // <- will become ./src/components
-          '@redux': './state',
           '@et/types': './types',
+          '@redux': './state',
+          '@svg': './assets/svg',
+          '@utils': './utils',
           // helpers: './helpers', // <- will become ./src/helpers
           static: {
             root: './public', // <- will used as this alias' root dir
@@ -27,7 +29,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
+        path: `${__dirname}/src/assets/images`,
       },
     },
     {
@@ -39,8 +41,16 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/assets/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
+    },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /svg-icons/
+        }
+      }
     },
     `gatsby-source-etshop`,
     `gatsby-plugin-react-helmet`,

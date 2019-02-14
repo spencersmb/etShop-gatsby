@@ -1,0 +1,11 @@
+<svg viewBox="0 0 360 247" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <desc>Generic Credit Card Icon</desc>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Generic-Credit-Card">
+            <rect id="Background" fill="#48A1DD" x="0" y="0" width="360" height="247" rx="15"></rect>
+            <rect id="Rectangle-19" fill="#465186" x="0" y="55" width="360" height="45"></rect>
+            <rect id="Rectangle-19-Copy" fill="#FFFFFF" x="43" y="188" width="129" height="21" rx="10.5"></rect>
+            <rect id="Rectangle-20" fill="#465186" x="253" y="144" width="63" height="65" rx="15"></rect>
+        </g>
+    </g>
+</svg>

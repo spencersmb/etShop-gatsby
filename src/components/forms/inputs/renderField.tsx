@@ -1,7 +1,7 @@
 import React from 'react'
 // import {colors} from '@et/styles/base/colors'
 import styled from 'styled-components'
-// import {renderSvg} from '@et/utils/styleUtils'
+import { renderSvg } from '@utils/styleUtils'
 
 interface InputField {
 	name: string,
@@ -92,17 +92,15 @@ export const RenderField = (props: IProps) => {
 		<div key={key} style={{position: 'relative'}}>
 			<input
 				{...input}
+				aria-label={label}
 				placeholder={placeholder}
 				type={type}
 				disabled={disabled}
 				readOnly={disabled}
 			/>
 			<Label className={'renderLabel'} active={showLabel()}>{label}</Label>
-			{svg && <Svg className={'renderInputSvg'} color={renderSvgColor}>
-				{/*{React.createElement(svg)}*/}
-				{/*{React.createElement(removeDotFromName(upperCaseFirstLetter(svg)))}*/}
-				{/*{renderSvg(svgs[svg])}*/}
-				{/*{renderSvg(svg)}*/}
+			{svg && <Svg className={'renderInputSvg'} >
+				{renderSvg(svg)}
       </Svg>}
 
 		</div>

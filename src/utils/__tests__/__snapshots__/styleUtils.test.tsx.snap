@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Modal renders SVG correctly 1`] = `
+<div
+  data-testid="svg-test"
+>
+  <test-file-stub />
+</div>
+`;

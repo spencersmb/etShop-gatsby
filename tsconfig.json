@@ -10,9 +10,9 @@
       "es2017"
     ],
     "typeRoots": [
-      "./node_modules/@types"
+      "./node_modules/@types",
+      "./src/global.d.ts"
     ],
-
     "resolveJsonModule": true,
     "allowJs": true,
     // "checkJs": true,
@@ -28,15 +28,22 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
     "rootDirs": ["src"],
+
     "paths": {
       "@components/*": [
         "components/*"
       ],
+      "@et/types/*": [
+        "types/*"
+      ],
       "@redux/*": [
         "state/*"
       ],
-      "@et/types/*": [
-        "types/*"
+      "@svg": [
+        "assets/svg"
+      ],
+      "@utils/*": [
+        "utils/*"
       ]
     }
   },
@@ -50,6 +57,6 @@
     "next-seo.config.js",
     "**/*.spec.ts",
     "**/*.spec.tsx",
-    "**/*.test.tsx"
+    "**/*.test.tsx",
   ]
 }

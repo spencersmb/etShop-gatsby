@@ -37,11 +37,10 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
     }
   }, [])
 
-  function changeForm(newName: string){
-    return ()=>{
-      setName(newName)
-      firstRender.current = false
-    }
+  function changeForm(event: any){
+    const formName = event.target.getAttribute('data-form')
+    setName(formName)
+    firstRender.current = false
   }
 
   return (
@@ -72,9 +71,9 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
             {name === 'signup' &&
             <SignInPose key='signUp' firstRender={firstRender.current}>
               {({ref}: IPoseHoc) => (
-                <div ref={ref} key='signUp'>
+                <div data-testid='signUp-form' ref={ref} key='signUp'>
                   Signup
-                  <button onClick={changeForm('signin')}>Sign In</button>
+                  {/*<button onClick={changeForm('signin')}>Sign In</button>*/}
                 </div>
               )}
             </SignInPose>

@@ -1,21 +1,22 @@
 import { IState } from '@et/types/State'
 import { login } from '@redux/actions/authActions'
+import { svgs } from '@svg'
 import styled from 'styled-components'
-import React, {RefObject} from 'react'
+import React, { RefObject, useState } from 'react'
 import {reduxForm, InjectedFormProps} from 'redux-form'
 import validate from '@components/forms/validations'
 import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
 import RenderField from '@components/forms/inputs/renderField'
-// import CreditCardsvg from '@et/svgs/icons/GenericCreditCard.svg'
 import {connect} from 'react-redux'
 import {Action, bindActionCreators, Dispatch} from 'redux'
-// import {login} from '@et/actions/authActions'
+
+// import CreditCardsvg from '@et/svgs/icons/GenericCreditCard.svg'
 // import {toastr} from 'react-redux-toastr'
 // import {IUser} from '@et/types/User'
-// import {FormWrapper} from '@et/styles/partials/forms'
 
 interface IPropsPublic {
-	changeForm: (formName: string)=>(e: any) => void;
+	// changeForm: (formName: string)=>(e: any) => void;
+	changeForm: (event: any) => void;
 	closeModal: () => void;
 	firstRender: boolean;
 	poseRef: RefObject<any>;
@@ -32,9 +33,11 @@ interface IFormProps {
 
 type MixedFormProps = InjectedFormProps<{}, IPropsPublic & IpropsReduxActions>
 
-const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPublic) => {
+export const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPublic) => {
 
 	const userSubmit = async (formProps: any) => {
+		console.log('formProps', formProps)
+
 		// try {
 		// 	const user: IUser = await props.login(formProps)
 		// 	toastr.removeByType('error')
@@ -44,13 +47,12 @@ const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPublic) =
 		// 	console.log('user login fail:', e)
 		// }
 	}
-	const handleChangeForm = (name: string) => () => {
-		props.changeForm(name)
-	}
-	const {handleSubmit, poseRef, firstRender} = props
+
+	const {handleSubmit, poseRef, firstRender, submitting} = props
+
 
 	return (
-		<FormWrapper ref={poseRef} firstRender={firstRender}>
+		<FormWrapper data-testid='signIn-form' ref={poseRef} firstRender={firstRender}>
 			<form onSubmit={handleSubmit(userSubmit)}>
 				<h3>Sign In</h3>
 				<div>
@@ -60,7 +62,7 @@ const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPublic) =
 						component={RenderField}
 						placeholder=''
 						label='Email:'
-						// svg={CreditCardsvg}
+						svg={svgs.CreditCard}
 					/>
 				</div>
 				<div>
@@ -73,9 +75,10 @@ const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPublic) =
 						// svg={CreditCardsvg}
 					/>
 				</div>
-				<button>Submit</button>
+				<button type='button' disabled={submitting}>Submit</button>
 			</form>
-			<button onClick={props.changeForm('signup')}>Sign Up</button>
+
+			<button onClick={props.changeForm} data-form='signup'>Sign Up</button>
 		</FormWrapper>
 	)
 }
@@ -93,7 +96,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 	}
 }
 
-export default connect<null, IpropsReduxActions, IPropsPublic, IState>(null, mapDispatchToProps)(RegisterLoginForm)
+export default connect<null, IpropsReduxActions, IPropsPublic, MixedFormProps>(null, mapDispatchToProps)(RegisterLoginForm)
 
 export const FormWrapper = styled.div`
 	position: absolute;

@@ -35,6 +35,20 @@ const Connected = connect((state: IModalState) =>{
 	}
 )(LoginModal)
 
+const ConnectedSignUp = connect((state: IModalState) =>{
+
+		return {
+			...state,
+				component: Login,
+				show: true,
+				options: {
+					content: '',
+					name: 'signup'
+				}
+			}
+	}
+)(LoginModal)
+
 describe('Login Modal', () => {
 
 	// React pose wont render snapshots by default
@@ -52,9 +66,12 @@ describe('Login Modal', () => {
 	 * ?
 	 */
 
-	it('Should render signin button', ( ) => {
+	it('Should render signin form and have signup button', ( ) => {
 		const modalRender = renderWithRedux(<Connected {...initialProps}/>, modalReducer)
+		const signUp = modalRender.queryByTestId('signUp-form')
 		expect(modalRender.getByText('Sign Up')).toBeTruthy()
+		expect(modalRender.getByTestId('signIn-form')).toBeTruthy()
+		expect(signUp).toBeNull()
 	})
 
 	it('Should render close button and call close when clicked', ( ) => {
@@ -65,16 +82,20 @@ describe('Login Modal', () => {
 		expect(close).toHaveBeenCalledTimes(1)
 	})
 
-	it('Should render signup button', ( ) => {
-		const modalRender = renderWithRedux(<Connected {...signUpProps}/>, modalReducer)
+	it('Should render signup form and have sign button', ( ) => {
+		const modalRender = renderWithRedux(<ConnectedSignUp {...signUpProps}/>, modalReducer)
+		const signUp = modalRender.getByTestId('signUp-form')
+		const signIn = modalRender.queryByTestId('signIn-form')
 		expect(modalRender.getByText('Sign In')).toBeTruthy()
+		expect(signUp).toBeTruthy()
+		expect(signIn).toBeNull()
 	})
 
 	// Sing Up button is only present after button click
 	it('Should switch states on click', ( ) => {
-		const modalRender = renderWithRedux(<Connected {...signUpProps}/>, modalReducer)
+		const modalRender = renderWithRedux(<ConnectedSignUp {...signUpProps}/>, modalReducer)
 		const button = modalRender.getByText('Sign In')
 		button.click()
-		expect(modalRender.getByText('Sign Up')).toBeTruthy()
+		expect(modalRender.getByTestId('signIn-form')).toBeTruthy()
 	})
 })
