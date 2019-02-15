@@ -88,7 +88,7 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
     }
 
     return () => {
-      if(!show && bodyRef.current && bodyRef.current.length > 0){
+      if(show && bodyRef.current && bodyRef.current.length > 0){
         bodyRef.current[0].setAttribute('style', 'overflow: visible; height: auto;')
       }
     }

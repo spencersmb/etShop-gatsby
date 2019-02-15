@@ -2,7 +2,7 @@ import posed, { PoseGroup } from 'react-pose';
 import styled from 'styled-components'
 import SignInForm from '@components/forms/signin'
 // import SignUpForm from '@et/forms/signUp'
-import React, { useState, useEffect, useRef, RefObject } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 
 interface IModalOptions {
@@ -43,6 +43,19 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
     firstRender.current = false
   }
 
+  async function userSubmit(formProps: any) {
+    console.log('formProps', formProps)
+
+    // try {
+    // 	const user: IUser = await props.login(formProps)
+    // 	toastr.removeByType('error')
+    // 	toastr.success(`Welcome ${user.firstName}`, 'you\'ve successfully logged in.')
+    // 	props.closeModal()
+    // } catch (e) {
+    // 	console.log('user login fail:', e)
+    // }
+  }
+
   return (
     <LoginModalWrapper>
       <LoginModalContent>
@@ -58,6 +71,7 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
             <SignInPose key='signIn' firstRender={firstRender.current}>
               {({ref}: IPoseHoc) => (
                 <SignInForm
+                  handleUserSubmit={userSubmit}
                   changeForm={changeForm}
                   closeModal={closeModal}
                   firstRender={firstRender.current}
@@ -73,7 +87,7 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
               {({ref}: IPoseHoc) => (
                 <div data-testid='signUp-form' ref={ref} key='signUp'>
                   Signup
-                  {/*<button onClick={changeForm('signin')}>Sign In</button>*/}
+                  <button onClick={changeForm} data-form='signin'>Sign In</button>
                 </div>
               )}
             </SignInPose>

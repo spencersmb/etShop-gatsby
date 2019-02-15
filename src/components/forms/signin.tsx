@@ -1,10 +1,9 @@
-import { IState } from '@et/types/State'
+import ReduxValidation from '@components/forms/validations'
 import { login } from '@redux/actions/authActions'
 import { svgs } from '@svg'
 import styled from 'styled-components'
-import React, { RefObject, useState } from 'react'
-import {reduxForm, InjectedFormProps} from 'redux-form'
-import validate from '@components/forms/validations'
+import React, { RefObject } from 'react'
+import { reduxForm, InjectedFormProps } from 'redux-form'
 import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
 import RenderField from '@components/forms/inputs/renderField'
 import {connect} from 'react-redux'
@@ -15,7 +14,7 @@ import {Action, bindActionCreators, Dispatch} from 'redux'
 // import {IUser} from '@et/types/User'
 
 interface IPropsPublic {
-	// changeForm: (formName: string)=>(e: any) => void;
+	handleUserSubmit: (props: any) => void
 	changeForm: (event: any) => void;
 	closeModal: () => void;
 	firstRender: boolean;
@@ -33,27 +32,17 @@ interface IFormProps {
 
 type MixedFormProps = InjectedFormProps<{}, IPropsPublic & IpropsReduxActions>
 
+const minLength5 = ReduxValidation.minLength(5)
+const tooOld = (value: any) =>
+	value && value > 65 ? 'You might be too old for this' : undefined
+
 export const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPublic) => {
 
-	const userSubmit = async (formProps: any) => {
-		console.log('formProps', formProps)
-
-		// try {
-		// 	const user: IUser = await props.login(formProps)
-		// 	toastr.removeByType('error')
-		// 	toastr.success(`Welcome ${user.firstName}`, 'you\'ve successfully logged in.')
-		// 	props.closeModal()
-		// } catch (e) {
-		// 	console.log('user login fail:', e)
-		// }
-	}
-
-	const {handleSubmit, poseRef, firstRender, submitting} = props
-
-
+	const {handleSubmit, poseRef, firstRender, submitting, invalid, handleUserSubmit} = props
+	const {required, numberCheck, email} = ReduxValidation
 	return (
 		<FormWrapper data-testid='signIn-form' ref={poseRef} firstRender={firstRender}>
-			<form onSubmit={handleSubmit(userSubmit)}>
+			<form onSubmit={handleSubmit(handleUserSubmit)}>
 				<h3>Sign In</h3>
 				<div>
 					<ReduxFieldExt
@@ -61,6 +50,7 @@ export const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPu
 						type='email'
 						component={RenderField}
 						placeholder=''
+						validate={[ required, email ]}
 						label='Email:'
 						svg={svgs.CreditCard}
 					/>
@@ -72,13 +62,14 @@ export const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPu
 						component={RenderField}
 						placeholder=''
 						label='Password:'
-						// svg={CreditCardsvg}
+						withRef={true}
+						svg={svgs.CreditCard}
 					/>
 				</div>
-				<button type='button' disabled={submitting}>Submit</button>
+				<button type='submit' disabled={invalid || submitting}>Submit</button>
 			</form>
 
-			<button onClick={props.changeForm} data-form='signup'>Sign Up</button>
+			<button type='button' onClick={props.changeForm} data-form='signup'>Sign Up</button>
 		</FormWrapper>
 	)
 }
@@ -87,7 +78,6 @@ export const RegisterLoginForm = reduxForm<{}, IPropsPublic & IpropsReduxActions
 	destroyOnUnmount: true, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
 	form: 'LoginForm',
-	validate
 })(SignInForm)
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => {

@@ -63,9 +63,10 @@ export const RenderField = (props: IProps) => {
 		type,
 		disabled,
 		placeholder,
+
 		// autoComplete,
 		svg,
-		meta: {pristine, touched, invalid, active, dirty}
+		meta: {pristine, touched, invalid, active, dirty, error, warning}
 	} = props
 
 	const renderSvgColor: string = !pristine || touched
@@ -88,6 +89,14 @@ export const RenderField = (props: IProps) => {
 		return false
 	}
 
+	const messageTest = (errorObj: {} | string) => {
+		if(typeof errorObj === 'string'){
+			return(
+				<span>{error}</span>
+			)
+		}
+	}
+
 	return (
 		<div key={key} style={{position: 'relative'}}>
 			<input
@@ -102,6 +111,9 @@ export const RenderField = (props: IProps) => {
 			{svg && <Svg className={'renderInputSvg'} >
 				{renderSvg(svg)}
       </Svg>}
+
+			{messageTest(error)}
+			{messageTest(warning)}
 
 		</div>
 	)

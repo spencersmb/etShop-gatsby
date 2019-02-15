@@ -1,5 +1,5 @@
-import React from 'react'
-import { Field } from 'redux-form'
+import React, { Component } from 'react'
+import { Field, Validator } from 'redux-form'
 
 interface IReduxField {
 	name: string;
@@ -9,6 +9,9 @@ interface IReduxField {
 	label: string;
 	disabled?: boolean;
 	svg?: any;
+	validate?: Validator | Validator[];
+	warn?: Validator | Validator[];
+	withRef?: boolean;
 	// dirty: boolean;
 	// pristine: boolean;
 	// value: any;
@@ -20,9 +23,9 @@ export class ReduxFieldExt extends React.Component<IReduxField>{
 	}
 	render(){
 		return(
-			<div>
+			<>
 				<Field {...this.props}/>
-			</div>
+			</>
 		)
 	}
 }

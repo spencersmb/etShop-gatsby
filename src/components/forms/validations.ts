@@ -1,40 +1,17 @@
-interface IReduxValues {
-	firstName?: string;
-	lastName?: string;
-	email?: string;
-	password?: string;
+
+class ReduxValidation {
+
+	static required = (value: any | undefined) => value ? undefined : 'Required'
+	static maxLength = (max: number) => (value: any) =>
+		value && value.length > max ? `Must be ${max} characters or less` : undefined
+	static minLength = (min: number) => (value: any) =>
+		value && value.length < min ? `Must at least be ${min} characters long` : undefined
+	static email =( value: any) =>
+		value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
+			'Invalid email address' : undefined
+	static numberCheck = (value: number) => value && isNaN(Number(value)) ? 'Must be a number' : undefined
+
 
 }
 
-interface IReduxErrors {
-	firstName?: string;
-	lastName?: string;
-	email?: string;
-	password?: string;
-}
-
-const validate = (values: IReduxValues) => {
-	const errors: IReduxErrors = {}
-
-	if (!values.firstName) {
-		errors.firstName = 'Required'
-	}
-	if (!values.lastName) {
-		errors.lastName = 'Required'
-	}
-	if (!values.email) {
-		errors.email = 'Required'
-	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-		errors.email = 'Invalid email address'
-	}
-
-	if (!values.password) {
-		errors.password = 'Required'
-	} else if (values.password.length < 4) {
-		errors.password = 'password must be longer than 4'
-	}
-
-	return errors
-}
-
-export default validate
+export default ReduxValidation
