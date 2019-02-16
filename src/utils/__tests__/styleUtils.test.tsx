@@ -13,7 +13,7 @@ const Parent = () => {
 	)
 }
 
-describe('Login Modal', () => {
+describe('Style Utils', () => {
 	it('Should render an SVG component', () => {
 		const rendered = render(<Parent/>)
 		const wrapper = rendered.getByTestId('svg-test')

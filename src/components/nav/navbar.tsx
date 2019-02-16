@@ -1,6 +1,6 @@
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
-import { ILogoutAction, logout } from '@redux/actions/authActions'
+import { ILogoutAction, logout as logoutAction } from '@redux/actions/authActions'
 import React from 'react'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
@@ -15,8 +15,7 @@ interface IProps {
 }
 function Navbar (props: IProps) {
   const {user, logout} = props
-  console.log('user', user)
-  
+
   function openModal () {
     toastr.success(`Welcome `, 'you\'ve successfully logged');
   }
@@ -63,6 +62,6 @@ const mapStateToProps = (state: IState) => {
 // export default Navbar
 export default connect(
   mapStateToProps,
-  dispatch => bindActionCreators({showModal, logout}, dispatch)
+  dispatch => bindActionCreators({showModal, logoutAction}, dispatch)
 )(Navbar)
 export {Navbar}
