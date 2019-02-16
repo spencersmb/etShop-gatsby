@@ -3,7 +3,7 @@ import {
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import initStore from '../createStore'
-import initialState from '../reducers/initialState'
+import initialState from '../../reducers/initialState'
 
 afterEach(cleanup)
 

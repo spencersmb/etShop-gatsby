@@ -10,9 +10,11 @@ module.exports = {
     "node_modules"
   ],
   moduleNameMapper: {
+    "^@api(.*)$": "<rootDir>/src/api$1",
     "^@components(.*)$": "<rootDir>/src/components$1",
     "^@et/types(.*)$": "<rootDir>/src/types$1",
     "^@redux(.*)$": "<rootDir>/src/state$1",
+    "^@styles(.*)$": "<rootDir>/src/styles$1",
     "^@svg(.*)$": "<rootDir>/src/assets/svg.ts",
     "^@utils(.*)$": "<rootDir>/src/utils$1",
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
@@ -33,7 +35,9 @@ module.exports = {
   collectCoverageFrom: [
     "src/**/**/*.{ts,tsx}",
     "!src/pages/**/*.{ts,tsx}",
+    "!src/api/**/*.{ts,tsx}",
     "!src/state/reduxTestUtils.tsx",
+    "!src/styles/**/*.{ts,tsx}",
     "!src/Button/**/*.{ts,tsx}",
     "!/node_modules/",
     "!/docs/",

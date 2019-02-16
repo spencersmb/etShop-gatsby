@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 
-import createStore from './src/state/createStore'
+import createStore from './src/state/store/createStore'
 import { loadProducts } from "./src/state/actions/productActions"
 
 // eslint-disable-next-line react/display-name,react/prop-types

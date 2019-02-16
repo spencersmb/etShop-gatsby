@@ -4,6 +4,8 @@ module.exports = {
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
     siteUrl: `https://www.example.com`,
+    db: 'http://shopeverytuesday.local',
+    route: 'et-shop'
   },
   plugins: [
     `gatsby-plugin-typescript`,
@@ -12,10 +14,12 @@ module.exports = {
       options: {
         root: './src', // <- will be used as a root dir
         aliases: {
+          '@api': './api',
           '@components': './components', // <- will become ./src/components
           '@et/types': './types',
           '@redux': './state',
           '@svg': './assets/svg',
+          '@styles': './styles',
           '@utils': './utils',
           // helpers: './helpers', // <- will become ./src/helpers
           static: {

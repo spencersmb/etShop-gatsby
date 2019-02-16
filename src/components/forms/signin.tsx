@@ -1,17 +1,15 @@
 import ReduxValidation from '@components/forms/validations'
-import { login } from '@redux/actions/authActions'
 import { svgs } from '@svg'
 import styled from 'styled-components'
 import React, { RefObject } from 'react'
-import { reduxForm, InjectedFormProps } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
 import RenderField from '@components/forms/inputs/renderField'
-import {connect} from 'react-redux'
-import {Action, bindActionCreators, Dispatch} from 'redux'
 
 // import CreditCardsvg from '@et/svgs/icons/GenericCreditCard.svg'
 // import {toastr} from 'react-redux-toastr'
 // import {IUser} from '@et/types/User'
+
 
 interface IPropsPublic {
 	handleUserSubmit: (props: any) => void
@@ -20,26 +18,15 @@ interface IPropsPublic {
 	firstRender: boolean;
 	poseRef: RefObject<any>;
 }
-
-interface IpropsReduxActions {
-	login: (formData: IFormProps) => any
-}
-
-interface IFormProps {
-	email: string,
-	password: string
-}
-
-type MixedFormProps = InjectedFormProps<{}, IPropsPublic & IpropsReduxActions>
-
 const minLength5 = ReduxValidation.minLength(5)
 const tooOld = (value: any) =>
 	value && value > 65 ? 'You might be too old for this' : undefined
 
-export const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPublic) => {
+export const SignInForm = (props: any) => {
 
 	const {handleSubmit, poseRef, firstRender, submitting, invalid, handleUserSubmit} = props
-	const {required, numberCheck, email} = ReduxValidation
+	const {required, email} = ReduxValidation
+
 	return (
 		<FormWrapper data-testid='signIn-form' ref={poseRef} firstRender={firstRender}>
 			<form onSubmit={handleSubmit(handleUserSubmit)}>
@@ -62,7 +49,9 @@ export const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPu
 						component={RenderField}
 						placeholder=''
 						label='Password:'
+						validate={[ required, minLength5 ]}
 						withRef={true}
+						warn={tooOld}
 						svg={svgs.CreditCard}
 					/>
 				</div>
@@ -74,19 +63,13 @@ export const SignInForm = (props: MixedFormProps & IpropsReduxActions & IPropsPu
 	)
 }
 
-export const RegisterLoginForm = reduxForm<{}, IPropsPublic & IpropsReduxActions>({
+export const RegisterLoginForm = reduxForm<{}, IPropsPublic>({
 	destroyOnUnmount: true, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
 	form: 'LoginForm',
 })(SignInForm)
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
-	return {
-		login: bindActionCreators(login, dispatch)
-	}
-}
-
-export default connect<null, IpropsReduxActions, IPropsPublic, MixedFormProps>(null, mapDispatchToProps)(RegisterLoginForm)
+export default RegisterLoginForm
 
 export const FormWrapper = styled.div`
 	position: absolute;

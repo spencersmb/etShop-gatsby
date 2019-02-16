@@ -10,5 +10,5 @@ export const wrapRootElement = wrapWithProvider
 
 // thrd party script ex
 // exports.onRenderBody = ({ setHeadComponents }) => {
-//   setHeadComponents([<script {put_attributes_here} />])
-// }
+// //   setHeadComponents([<script {put_attributes_here} />])
+// // }

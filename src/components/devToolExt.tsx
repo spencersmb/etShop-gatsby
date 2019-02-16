@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {CustomWindow} from '../global';
+import {CustomWindow} from '@et/types/Winodw';
 
 declare let window: CustomWindow;
 

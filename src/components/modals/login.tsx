@@ -1,4 +1,9 @@
+import { login as loginAction } from '@redux/actions/authActions'
+import { toastrOptions } from '@utils/apiUtils'
 import posed, { PoseGroup } from 'react-pose';
+import { connect } from 'react-redux'
+import { toastr } from 'react-redux-toastr'
+import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
 import SignInForm from '@components/forms/signin'
 // import SignUpForm from '@et/forms/signUp'
@@ -26,8 +31,20 @@ interface IModalOptions {
  *
  */
 
-export const LoginModal = ({options, closeModal}: IModalOptions) =>{
-  
+
+interface IpropsReduxActions {
+  loginAction: (formData: IFormProps) => any
+}
+interface IFormProps {
+  email: string,
+  password: string
+}
+type MixedFormProps = IModalOptions & IpropsReduxActions
+
+
+export const LoginModal = (props: MixedFormProps) =>{
+const {options, closeModal} = props
+
   const [name, setName] = useState(options.name)
   const firstRender = useRef(true)
 
@@ -43,17 +60,16 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
     firstRender.current = false
   }
 
-  async function userSubmit(formProps: any) {
-    console.log('formProps', formProps)
+  const userSubmit = async (formProps: any) =>{
 
-    // try {
-    // 	const user: IUser = await props.login(formProps)
-    // 	toastr.removeByType('error')
-    // 	toastr.success(`Welcome ${user.firstName}`, 'you\'ve successfully logged in.')
-    // 	props.closeModal()
-    // } catch (e) {
-    // 	console.log('user login fail:', e)
-    // }
+    try {
+    	const loginResponse: {firstName: string} = await props.loginAction(formProps)
+    	toastr.removeByType('error')
+    	toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.noHover)
+    	closeModal()
+    } catch (e) {
+    	console.log('user login fail:', e)
+    }
   }
 
   return (
@@ -80,7 +96,6 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
               )}
             </SignInPose>}
 
-
             {/*SignUp Form*/}
             {name === 'signup' &&
             <SignInPose key='signUp' firstRender={firstRender.current}>
@@ -102,7 +117,19 @@ export const LoginModal = ({options, closeModal}: IModalOptions) =>{
   )
 }
 
-export default LoginModal
+// export default LoginModal
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+  return {
+    login: bindActionCreators(loginAction, dispatch)
+  }
+}
+
+const actions:any = {
+  loginAction
+};
+
+export default connect<null, IpropsReduxActions, IModalOptions, MixedFormProps>(null, actions)(LoginModal)
 
 const LoginModalWrapper = styled.div`
 	position: relative;
@@ -127,7 +154,6 @@ const ContentContainer = styled.div<any>`
 	align-items: center;
 	justify-content: center;
 `
-
 
 
 // animations

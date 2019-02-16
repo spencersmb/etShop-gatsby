@@ -18,6 +18,11 @@ exports[`Navbar Layout renders correctly 1`] = `
     >
       Sign Up
     </li>
+    <li
+      onClick={[Function]}
+    >
+      Toaster
+    </li>
   </ul>
 </div>
 `;

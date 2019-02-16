@@ -11,7 +11,7 @@
     ],
     "typeRoots": [
       "./node_modules/@types",
-      "./src/global.d.ts"
+      "./src/types/*.d.ts"
     ],
     "resolveJsonModule": true,
     "allowJs": true,
@@ -30,6 +30,9 @@
     "rootDirs": ["src"],
 
     "paths": {
+      "@api/*": [
+        "api/*"
+      ],
       "@components/*": [
         "components/*"
       ],
@@ -38,6 +41,9 @@
       ],
       "@redux/*": [
         "state/*"
+      ],
+      "@styles/*": [
+        "styles/*"
       ],
       "@svg": [
         "assets/svg"

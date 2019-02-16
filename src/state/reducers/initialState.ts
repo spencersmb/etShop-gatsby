@@ -5,14 +5,18 @@ const initialState: IState = {
   form: {},
   modal: {
     component: null,
+    show: false,
     options: {
       closeOutsideModal: false,
       content:'',
       hasBackground: false
     },
-    show: false,
   },
   products: {},
-
+  toastr: {
+   confirm: null,
+    toastrs: [],
+  },
+  user: null
 }
 export default initialState

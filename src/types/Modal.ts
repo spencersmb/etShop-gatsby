@@ -4,6 +4,7 @@ interface IModalOptions {
   closeOutsideModal: boolean,
   content: string,
   hasBackground: boolean,
+  name: string
 }
 export interface IModalState {
   component: ComponentType<any> | null,

@@ -2,7 +2,9 @@ import { Actions } from '@et/types/Actions'
 import { ModalActionTypes } from '@et/types/Enums'
 import { IShowModalProps } from '@et/types/Modal'
 
-export const showModal = ({modal, options}: IShowModalProps): Actions => {
+export type IShowModalAction = ({modal, options}: IShowModalProps) => Actions
+
+export const showModal: IShowModalAction = ({modal, options}: IShowModalProps): Actions => {
   return {
     payload: {
       modal,
