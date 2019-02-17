@@ -39,7 +39,7 @@ const Header = ({ siteTitle=`` }:Iheader) => (
         listStyle: `none`
       }}
     >
-      <Navbar/>
+      <Navbar />
     </div>
   </header>
 )

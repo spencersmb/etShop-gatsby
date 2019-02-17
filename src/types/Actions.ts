@@ -1,5 +1,5 @@
 import { AuthActionTypes, ModalActionTypes, ProductsActionTypes, WindowActionTypes } from './Enums'
-import {IAuthResponse} from '@et/types/User'
+import { IAuthResponse, IUser } from '@et/types/User'
 
 export interface ILoadProductsSuccess {
   type: ProductsActionTypes.LOAD_PRODUCTS_SUCCESS,
@@ -29,6 +29,11 @@ export interface IChangeBreakPoint {
 export interface IAuthLogin {
   type: AuthActionTypes.LOGIN_USER
   payload: IAuthResponse
+}
+
+export interface IAuthLoadUser {
+  type: AuthActionTypes.LOAD_USER
+  payload: IUser
 }
 
 export interface IAuthLogOut {

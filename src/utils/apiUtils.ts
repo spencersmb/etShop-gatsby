@@ -1,5 +1,5 @@
 import { matchString } from '@utils/genUtils'
-import {toastr} from 'react-redux-toastr'
+import { toastr } from 'react-redux-toastr'
 
 /**
  * statusCheck(res, dispatch)
@@ -79,10 +79,17 @@ export const toastrOptions = {
 		preventDuplicates: true,
 		removeOnHover: false,
 		showCloseButton: true, // true by default
-		timeOut: 0, // by setting to 0 it will prevent the auto close
+		timeOut: 0 // by setting to 0 it will prevent the auto close
 		// onShowComplete: () => console.log('SHOW: animation is done'),
 		// onHideComplete: () => console.log('HIDE: animation is done'),
 		// onCloseButtonClick: () => console.log('Close button was clicked'),
 		// onToastrClick: () => console.log('Toastr was clicked'),
+	},
+	standard: {
+		closeOnToastrClick: true, // false by default, this will close the toastr when user clicks on it
+		preventDuplicates: true,
+		removeOnHover: false,
+		showCloseButton: true, // true by default
+		timeOut: 3000 // by setting to 0 it will prevent the auto close
 	}
 }

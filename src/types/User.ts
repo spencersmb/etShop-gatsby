@@ -27,3 +27,15 @@ export interface IUser {
   lastName: string,
   token: string,
 }
+
+export interface IJWTDecoded {
+  iss: string, // server
+  iat: 1550335086, // issued at
+  nbf: 1550335086, // not valid before
+  exp: 1550939886, // Expires
+  data: {
+    user: {
+      id: string
+    }
+  }
+}

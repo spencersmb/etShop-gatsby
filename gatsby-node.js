@@ -3,7 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
-const path = require('path')
+const path = require("path")
 const pageQuery = `
     {
       allWcProduct{
@@ -32,12 +32,25 @@ exports.createPages = ({ graphql, actions }) => {
           path: `/products/${node.slug}`,
           component: path.resolve(`./src/components/products/productLayout.tsx`),
           context: {
-            slug: node.slug,
-          },
+            slug: node.slug
+          }
         })
       })
     })
     resolve()
   })
 
+}
+
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/account/)) {
+    page.matchPath = `/account/*`
+
+    // Update the page.
+    createPage(page)
+  }
 }

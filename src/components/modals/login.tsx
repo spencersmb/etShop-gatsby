@@ -1,6 +1,6 @@
 import { login as loginAction } from '@redux/actions/authActions'
 import { toastrOptions } from '@utils/apiUtils'
-import posed, { PoseGroup } from 'react-pose';
+import posed, { PoseGroup } from 'react-pose'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -11,11 +11,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 
 interface IModalOptions {
-  closeModal: () => void,
-  options: {
-    name: string,
-    content: string
-  }
+	closeModal: () => void,
+	options: {
+		name: string,
+		content: string
+	}
 }
 
 /*
@@ -31,103 +31,103 @@ interface IModalOptions {
  *
  */
 
-
 interface IpropsReduxActions {
-  loginAction: (formData: IFormProps) => any
+	loginAction: (formData: IFormProps) => any
 }
+
 interface IFormProps {
-  email: string,
-  password: string
+	email: string,
+	password: string
 }
+
 type MixedFormProps = IModalOptions & IpropsReduxActions
 
+export const LoginModal = (props: MixedFormProps) => {
+	const { options, closeModal } = props
 
-export const LoginModal = (props: MixedFormProps) =>{
-const {options, closeModal} = props
+	const [name, setName] = useState(options.name)
+	const firstRender = useRef(true)
 
-  const [name, setName] = useState(options.name)
-  const firstRender = useRef(true)
+	useEffect(() => {
+		return () => {
+			firstRender.current = true
+		}
+	}, [])
 
-  useEffect(()=>{
-    return()=>{
-      firstRender.current = true
-    }
-  }, [])
+	function changeForm (event: any) {
+		const formName = event.target.getAttribute('data-form')
+		setName(formName)
+		firstRender.current = false
+	}
 
-  function changeForm(event: any){
-    const formName = event.target.getAttribute('data-form')
-    setName(formName)
-    firstRender.current = false
-  }
+	const userSubmit = async (formProps: any) => {
 
-  const userSubmit = async (formProps: any) =>{
+		try {
+			const loginResponse: { firstName: string } = await props.loginAction(formProps)
+			toastr.removeByType('error')
+			toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+			closeModal()
+		} catch (e) {
+			console.log('user login fail:', e)
+		}
+	}
 
-    try {
-    	const loginResponse: {firstName: string} = await props.loginAction(formProps)
-    	toastr.removeByType('error')
-    	toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.noHover)
-    	closeModal()
-    } catch (e) {
-    	console.log('user login fail:', e)
-    }
-  }
+	return (
+		<LoginModalWrapper>
+			<LoginModalContent>
+				<div style={{ background: '#7ACC28' }} className='content'>
+					TEst left content
+				</div>
+				<ContentContainer modalHeight={name}>
 
-  return (
-    <LoginModalWrapper>
-      <LoginModalContent>
-        <div style={{background: '#7ACC28'}} className='content'>
-          TEst left content
-        </div>
-        <ContentContainer modalHeight={name}>
+					<PoseGroup>
 
-          <PoseGroup>
-
-            {/*SignIn Form*/}
-            {name === 'signin' &&
+						{/*SignIn Form*/}
+						{name === 'signin' &&
             <SignInPose key='signIn' firstRender={firstRender.current}>
-              {({ref}: IPoseHoc) => (
-                <SignInForm
-                  handleUserSubmit={userSubmit}
-                  changeForm={changeForm}
-                  closeModal={closeModal}
-                  firstRender={firstRender.current}
-                  poseRef={ref}
-                />
-              )}
+							{({ ref }: IPoseHoc) => (
+								<SignInForm
+									handleUserSubmit={userSubmit}
+									changeForm={changeForm}
+									closeModal={closeModal}
+									firstRender={firstRender.current}
+									poseRef={ref}
+								/>
+							)}
             </SignInPose>}
 
-            {/*SignUp Form*/}
-            {name === 'signup' &&
+						{/*SignUp Form*/}
+						{name === 'signup' &&
             <SignInPose key='signUp' firstRender={firstRender.current}>
-              {({ref}: IPoseHoc) => (
-                <div data-testid='signUp-form' ref={ref} key='signUp'>
-                  Signup
-                  <button onClick={changeForm} data-form='signin'>Sign In</button>
-                </div>
-              )}
+							{({ ref }: IPoseHoc) => (
+								<div data-testid='signUp-form' ref={ref} key='signUp'>
+									Signup
+									<button onClick={changeForm} data-form='signin'>Sign In</button>
+								</div>
+							)}
             </SignInPose>
-            }
+						}
 
-          </PoseGroup>
-        </ContentContainer>
-      </LoginModalContent>
+					</PoseGroup>
+				</ContentContainer>
+			</LoginModalContent>
 
-      <button className='jestCartToggle' onClick={closeModal}>Close</button>
-    </LoginModalWrapper>
-  )
+			<button className='jestCartToggle' onClick={closeModal}>Close</button>
+		</LoginModalWrapper>
+	)
 }
 
 // export default LoginModal
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
-  return {
-    login: bindActionCreators(loginAction, dispatch)
-  }
+	return {
+		login: bindActionCreators(loginAction, dispatch)
+	}
 }
 
-const actions:any = {
-  loginAction
-};
+const actions: any = {
+	loginAction
+}
 
 export default connect<null, IpropsReduxActions, IModalOptions, MixedFormProps>(null, actions)(LoginModal)
 
@@ -155,23 +155,22 @@ const ContentContainer = styled.div<any>`
 	justify-content: center;
 `
 
-
 // animations
 //   ...(flag1 && { optionalKey1: 5 }),
 // How it works
 // We pass in our HOC component to pass down the ref to the inner component that needs to animate in/out
 // The size of the box animation is controlled by ContentContainer and we delay it to look like the animation is staggered
 const SignInPose = posed(PoseHoc)({
-  enter: {
-    // delay: ((props: any) => props.firstRender ? 0 : 150),
-    duration: ((props: any) => props.firstRender ? 0 : 50),
-    opacity: 1,
-    y: `0px`
-  },
-  exit: {
-    opacity: 0,
-    y: `-25px`
-  }
+	enter: {
+		// delay: ((props: any) => props.firstRender ? 0 : 150),
+		duration: ((props: any) => props.firstRender ? 0 : 50),
+		opacity: 1,
+		y: `0px`
+	},
+	exit: {
+		opacity: 0,
+		y: `-25px`
+	}
 })
 
 
