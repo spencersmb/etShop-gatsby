@@ -66,7 +66,7 @@ export const RenderField = (props: IProps) => {
 
 		// autoComplete,
 		svg,
-		meta: {pristine, touched, invalid, active, dirty, error, warning}
+		meta: { pristine, touched, invalid, active, dirty, error, warning }
 	} = props
 
 	const renderSvgColor: string = !pristine || touched
@@ -90,15 +90,15 @@ export const RenderField = (props: IProps) => {
 	}
 
 	const messageTest = (errorObj: {} | string) => {
-		if(typeof errorObj === 'string'){
-			return(
+		if (typeof errorObj === 'string') {
+			return (
 				<span>{error}</span>
 			)
 		}
 	}
 
 	return (
-		<div key={key} style={{position: 'relative'}}>
+		<div key={key} style={{ position: 'relative' }}>
 			<input
 				{...input}
 				aria-label={label}
@@ -108,7 +108,7 @@ export const RenderField = (props: IProps) => {
 				readOnly={disabled}
 			/>
 			<Label className={'renderLabel'} active={showLabel()}>{label}</Label>
-			{svg && <Svg className={'renderInputSvg'} >
+			{svg && <Svg className={'renderInputSvg'} color={renderSvgColor}>
 				{renderSvg(svg)}
       </Svg>}
 

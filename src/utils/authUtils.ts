@@ -2,7 +2,7 @@ import { IAuthResponse, IJWTDecoded, IUser } from '@et/types/User'
 import jwtDecode from 'jwt-decode'
 
 /**
- * saveUserLocalStorage()
+ * * saveUserLocalStorage()
  * - Adds User to localstorage
  *
  */
@@ -14,7 +14,7 @@ export const saveUserLocalStorage = (user: IAuthResponse) => {
 }
 
 /**
- * removeUserLocalStorage()
+ * * removeUserLocalStorage()
  * - Remove user from localstorage
  *
  */
@@ -26,7 +26,7 @@ export const removeUserLocalStorage = () => {
 }
 
 /**
- * getUserLocalStorage()
+ * * getUserLocalStorage()
  * - Get user from localstorage
  * * @returns IUser | false
  */
@@ -43,6 +43,12 @@ export const getUserLocalStorage = (): IAuthResponse | false => {
 	return JSON.parse(userString)
 }
 
+/**
+ * * isUserValid()
+ * - Get user from JWT and compare dates
+ * @param {String} token
+ * @returns boolean
+ */
 export function isUserValid (token: string) {
 	const decodedUser: IJWTDecoded = jwtDecode(token)
 	const today: Date = new Date()
@@ -53,11 +59,11 @@ export function isUserValid (token: string) {
 }
 
 /**
- * loadUser()
+ * * loadUser()
  * - Get user from localstorage
  * - Check if the JWT date is valid
  * - If JWT is invalid throw error
- * * @returns string | false
+ * @returns Promise
  */
 export const loadUser = async (): Promise<IAuthResponse | null> => {
 	return new Promise((resolve, reject) => {

@@ -1,11 +1,7 @@
-import { IAuthResponse } from '@et/types/User'
-import { ILoginAction, loginUserSuccess } from '@redux/actions/authActions'
-import { loadUser } from '@utils/authUtils'
-import React, { ReactNode, useEffect, useRef } from 'react'
-import { StaticQuery, graphql, Link } from 'gatsby'
-import { connect } from 'react-redux'
+import { ILoginAction } from '@redux/actions/authActions'
+import React, { ReactNode } from 'react'
+import { StaticQuery, graphql } from 'gatsby'
 import ReduxToastr from 'react-redux-toastr'
-import { Dispatch, Action } from 'redux'
 import Header from './header'
 import './layout.css'
 import Modal from '@components/modals/wrapper'
@@ -13,10 +9,9 @@ import GlobalStyle from '@styles/global/globalStyles'
 
 interface IlayoutProps {
 	children: ReactNode,
-	loginUserAction: ILoginAction
 }
 
-const Layout = ({ children, loginUserAction }: IlayoutProps) => {
+const Layout = ({ children }: IlayoutProps) => {
 
   return (
 		<StaticQuery
@@ -25,15 +20,6 @@ const Layout = ({ children, loginUserAction }: IlayoutProps) => {
         site {
           siteMetadata {
             title
-          }
-        }
-        allWcProduct{
-          edges{
-            node{
-              id
-              name
-              slug
-            }
           }
         }
       }
@@ -50,17 +36,6 @@ const Layout = ({ children, loginUserAction }: IlayoutProps) => {
 							paddingTop: 0
 						}}
 					>
-						<ul>
-							{data.allWcProduct.edges.map(({ node }: any) => {
-								return (
-									<li key={node.id}>
-										<Link to={`/products/${node.slug}`}>
-											{node.name}
-										</Link>
-									</li>
-								)
-							})}
-						</ul>
 						<main>{children}</main>
 						<footer>
 							© {new Date().getFullYear()}, Built with
@@ -85,10 +60,5 @@ const Layout = ({ children, loginUserAction }: IlayoutProps) => {
   )
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
-	return {
-		loginUserAction: (user: IAuthResponse) => dispatch(loginUserSuccess(user))
-	}
-}
-export default connect(null, mapDispatchToProps)(Layout)
+export default Layout
 

@@ -16,16 +16,20 @@ interface RouterProps {
 
 const PrivateRoute = (props: IPropsPublic & RouterProps) => {
 	const { Component, location, user, ...rest } = props
+
 	if (!location) {
 		navigate(`/`)
 		return null
-	} else if (!user && location.pathname !== `/app/login`) {
+	} else if (!user && location.pathname !== `/`) {
 		// If the user is not logged in, redirect to the login page.
 		navigate(`/`)
 		return null
 	}
-
-	return <Component {...rest} />
+	const innerProps = {
+		...rest,
+		user
+	}
+	return <Component {...innerProps} />
 }
 
 export default PrivateRoute

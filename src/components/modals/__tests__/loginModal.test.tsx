@@ -4,18 +4,20 @@ import { cleanup } from 'react-testing-library'
 import { modalReducer } from '@redux/reducers/modalReducer'
 import { renderWithRedux } from '@redux/reduxTestUtils'
 import { IModalState } from '@et/types/Modal'
-import Login,{LoginModal} from '../login'
+import Login, { LoginModal } from '../login'
 
 afterEach(cleanup)
 
 const close = jest.fn()
 const initialProps = {
-		closeModal: close,
-	}
+	loginAction: jest.fn(),
+	closeModal: close
+}
 const signUpProps = {
+	loginAction: jest.fn(),
 	closeModal: close,
-	options:{
-		name: 'signup',
+	options: {
+		name: 'signup'
 	}
 }
 const modal = {
@@ -26,26 +28,26 @@ const modal = {
 		name: 'signin'
 	}
 }
-const Connected = connect((state: IModalState) =>{
+const Connected = connect((state: IModalState) => {
 
-	return {
-		...state,
-		...modal
+		return {
+			...state,
+			...modal
 		}
 	}
 )(LoginModal)
 
-const ConnectedSignUp = connect((state: IModalState) =>{
+const ConnectedSignUp = connect((state: IModalState) => {
 
 		return {
 			...state,
-				component: Login,
-				show: true,
-				options: {
-					content: '',
-					name: 'signup'
-				}
+			component: Login,
+			show: true,
+			options: {
+				content: '',
+				name: 'signup'
 			}
+		}
 	}
 )(LoginModal)
 
@@ -66,7 +68,7 @@ describe('Login Modal', () => {
 	 * ?
 	 */
 
-	it('Should render signin form and have signup button', ( ) => {
+	it('Should render signin form and have signup button', () => {
 		const modalRender = renderWithRedux(<Connected {...initialProps}/>, modalReducer)
 		const signUp = modalRender.queryByTestId('signUp-form')
 		expect(modalRender.getByText('Sign Up')).toBeTruthy()
@@ -74,7 +76,7 @@ describe('Login Modal', () => {
 		expect(signUp).toBeNull()
 	})
 
-	it('Should render close button and call close when clicked', ( ) => {
+	it('Should render close button and call close when clicked', () => {
 		const modalRender = renderWithRedux(<Connected {...initialProps}/>, modalReducer)
 		const closeBtn = modalRender.getByText('Close')
 		closeBtn.click()
@@ -82,7 +84,7 @@ describe('Login Modal', () => {
 		expect(close).toHaveBeenCalledTimes(1)
 	})
 
-	it('Should render signup form and have sign button', ( ) => {
+	it('Should render signup form and have sign button', () => {
 		const modalRender = renderWithRedux(<ConnectedSignUp {...signUpProps}/>, modalReducer)
 		const signUp = modalRender.getByTestId('signUp-form')
 		const signIn = modalRender.queryByTestId('signIn-form')
@@ -92,7 +94,7 @@ describe('Login Modal', () => {
 	})
 
 	// Sing Up button is only present after button click
-	it('Should switch states on click', ( ) => {
+	it('Should switch states on click', () => {
 		const modalRender = renderWithRedux(<ConnectedSignUp {...signUpProps}/>, modalReducer)
 		const button = modalRender.getByText('Sign In')
 		button.click()

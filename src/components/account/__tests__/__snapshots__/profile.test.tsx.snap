@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile Layout renders correctly 1`] = `
+Array [
+  <h1>
+    Your profile
+  </h1>,
+  <ul>
+    <li>
+      Name: 
+      Spencer
+    </li>
+    <li>
+      E-mail: 
+      <span>
+        spencer.bigum@gmail.com
+      </span>
+    </li>
+  </ul>,
+]
+`;

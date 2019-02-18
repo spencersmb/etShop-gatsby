@@ -1,7 +1,7 @@
 /* tslint:disable: no-empty */
-import {shallow} from 'enzyme'
+import { shallow } from 'enzyme'
 import React from 'react'
-import sinon, {SinonStub} from 'sinon'
+import sinon, { SinonStub } from 'sinon'
 import RenderField from '@components/forms/inputs/renderField'
 import renderer from 'react-test-renderer'
 import { svgs } from '@svg'
@@ -45,13 +45,13 @@ const setup = () => {
 	return shallow(
 		<RenderField
 			input={input}
-	label='Coupon Code:'
-	meta={meta}
-	disabled={false}
-	placeholder='Enter your coupon code'
-	svg={svgs.CreditCard}
-	type='text'/>
-)
+			label='Coupon Code:'
+			meta={meta}
+			disabled={false}
+			placeholder='Enter your coupon code'
+			svg={svgs.CreditCard}
+			type='text'/>
+	)
 }
 const setupValid = () => {
 	const input = {
@@ -89,13 +89,13 @@ const setupValid = () => {
 	return shallow(
 		<RenderField
 			input={input}
-	label='Coupon Code:'
-	meta={meta}
-	disabled={false}
-	placeholder='Enter your coupon code'
-	svg={svgs.CreditCard}
-	type='text'/>
-)
+			label='Coupon Code:'
+			meta={meta}
+			disabled={false}
+			placeholder='Enter your coupon code'
+			svg={svgs.CreditCard}
+			type='text'/>
+	)
 }
 const setupInvalid = () => {
 	const input = {
@@ -133,13 +133,13 @@ const setupInvalid = () => {
 	return shallow(
 		<RenderField
 			input={input}
-	label='Coupon Code:'
-	meta={meta}
-	disabled={false}
-	placeholder='Enter your coupon code'
-	svg={svgs.CreditCard}
-	type='text'/>
-)
+			label='Coupon Code:'
+			meta={meta}
+			disabled={false}
+			placeholder='Enter your coupon code'
+			svg={svgs.CreditCard}
+			type='text'/>
+	)
 }
 
 describe('RenderField Component', () => {
@@ -187,14 +187,14 @@ describe('RenderField Component', () => {
 				warning: {}
 			}
 			const component = renderer.create(<RenderField
-					input={input}
-			label='Coupon Code:'
-			meta={meta}
-			disabled={false}
-			placeholder='Enter your coupon code'
-			svg={svgs.CreditCard}
-			type='text'/>
-		)
+				input={input}
+				label='Coupon Code:'
+				meta={meta}
+				disabled={false}
+				placeholder='Enter your coupon code'
+				svg={svgs.CreditCard}
+				type='text'/>
+			)
 			const tree = component.toJSON()
 			expect(tree).toMatchSnapshot()
 		})
@@ -235,23 +235,23 @@ describe('RenderField Component', () => {
 			expect(wrapperShallow.find('.renderInputSvg').length).toBe(1)
 		})
 
-		xit('should have default SVG color of silver', () => {
+		it('should have default SVG color of silver', () => {
 
 			const svg = wrapperShallow.find('.renderInputSvg')
-			// expect(svg.props().color).toBe(colors.silver)
+			expect(svg.props().color).toBe('grey')
 			expect(svg.props().children.type).toBe(svgs.CreditCard)
 		})
 
-		xit('should have SVG color of red for invalid', () => {
+		it('should have SVG color of red for invalid', () => {
 			const wrapperInvalid = setupInvalid()
 			const svg = wrapperInvalid.find('.renderInputSvg')
-			// expect(svg.props().color).toBe(colors.red)
+			expect(svg.props().color).toBe('red')
 		})
 
-		xit('should have SVG color of green for valid', () => {
+		it('should have SVG color of green for valid', () => {
 			const wrapperInvalid = setupValid()
 			const svg = wrapperInvalid.find('.renderInputSvg')
-			// expect(svg.props().color).toBe(colors.green)
+			expect(svg.props().color).toBe('green')
 		})
 
 	}

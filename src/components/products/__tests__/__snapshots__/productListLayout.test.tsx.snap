@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product List Layout renders correctly 1`] = `
+<div>
+  <ul
+    data-testid="productList"
+  >
+    <li>
+      <a
+        href="/products/honeymoon"
+      >
+        Honeymoon
+      </a>
+    </li>
+    <li>
+      <a
+        href="/products/watercolor-texture-kit-vol-1"
+      >
+        Watercolor texture kit Vol. 1
+      </a>
+    </li>
+  </ul>
+</div>
+`;

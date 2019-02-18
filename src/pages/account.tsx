@@ -1,10 +1,10 @@
-import PrivateRoute from '@components/privateRoutes'
+import PrivateRoute from '@components/account/privateRoutes'
 import { IUserState } from '@et/types/User'
 import React from 'react'
 import { Router } from '@reach/router'
 import Layout from '@components/layout'
-import Profile from '@components/profile'
-import UserHoc from '@components/user/userHoc'
+import Profile from '@components/account/profile'
+import UserHoc from '@components/account/userHoc'
 
 const Account = () => (
 	<Layout>

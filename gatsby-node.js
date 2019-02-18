@@ -30,7 +30,7 @@ exports.createPages = ({ graphql, actions }) => {
       results.data.allWcProduct.edges.forEach(({ node }) => {
         createPage({
           path: `/products/${node.slug}`,
-          component: path.resolve(`./src/components/products/productLayout.tsx`),
+          component: path.resolve(`./src/components/products/productDetailPage.tsx`),
           context: {
             slug: node.slug
           }

@@ -28,7 +28,8 @@ exports[`RenderField Component should correct snapshot 1`] = `
     Coupon Code:
   </label>
   <div
-    className="renderInputSvg sc-bdVaJa etplbY"
+    className="renderInputSvg sc-bdVaJa fjHlRI"
+    color="red"
   >
     <test-file-stub />
   </div>
