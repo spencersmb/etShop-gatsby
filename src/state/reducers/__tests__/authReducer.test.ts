@@ -1,4 +1,4 @@
-import { AuthActionTypes, ModalActionTypes } from '@et/types/Enums'
+import { AuthActionTypes } from '@et/types/Enums'
 import { IAuthResponse, IUser } from '@et/types/User'
 import { userReducer } from '@redux/reducers/authReducer'
 import initialState from '@redux/reducers/initialState'

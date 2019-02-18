@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { AuthActionTypes, ProductsActionTypes } from '@et/types/Enums'
-import { login, logout } from '@redux/actions/authActions'
+import { ProductsActionTypes } from '@et/types/Enums'
 import { loadProducts } from '@redux/actions/productActions'
 import data from '@redux/products.json'
 import { cleanup } from 'react-testing-library'
