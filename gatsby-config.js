@@ -1,30 +1,33 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `Every-Tuesday Digital Products Shop`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    siteUrl: `https://www.example.com`,
-    db: 'http://shopeverytuesday.local',
-    route: 'et-shop'
+    author: `@Teelac`,
+    authorUrl: 'https://every-tuesday.com/about/#teela',
+    siteUrl: `https://shop.every-tuesday.com`,
+    siteName: `Every-Tuesday Shop`,
+    db: "http://shopeverytuesday.local",
+    route: "et-shop",
+    twitterUrl: "https://twitter.com/teelacunningham",
   },
   plugins: [
     `gatsby-plugin-typescript`,
     {
-      resolve: 'gatsby-plugin-module-resolver',
+      resolve: "gatsby-plugin-module-resolver",
       options: {
-        root: './src', // <- will be used as a root dir
+        root: "./src", // <- will be used as a root dir
         aliases: {
-          '@api': './api',
-          '@components': './components', // <- will become ./src/components
-          '@et/types': './types',
-          '@redux': './state',
-          '@svg': './assets/svg',
-          '@styles': './styles',
-          '@utils': './utils',
+          "@api": "./api",
+          "@components": "./components", // <- will become ./src/components
+          "@et/types": "./types",
+          "@redux": "./state",
+          "@svg": "./assets/svg",
+          "@styles": "./styles",
+          "@utils": "./utils",
           // helpers: './helpers', // <- will become ./src/helpers
           static: {
-            root: './public', // <- will used as this alias' root dir
-            alias: './static' // <- will become ./public/static
+            root: "./public", // <- will used as this alias' root dir
+            alias: "./static" // <- will become ./public/static
           }
         }
       }
@@ -33,8 +36,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/assets/images`,
-      },
+        path: `${__dirname}/src/assets/images`
+      }
     },
     {
       resolve: `gatsby-plugin-manifest`,
@@ -45,11 +48,11 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
+        icon: `src/assets/images/gatsby-icon.png` // This path is relative to the root of the site.
+      }
     },
     {
-      resolve: 'gatsby-plugin-react-svg',
+      resolve: "gatsby-plugin-react-svg",
       options: {
         rule: {
           include: /svg-icons/
@@ -64,12 +67,12 @@ module.exports = {
     `gatsby-plugin-netlify`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
-    'gatsby-plugin-offline',
+    "gatsby-plugin-offline",
     {
-      resolve: 'gatsby-plugin-robots-txt',
+      resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: 'https://www.example.com',
-        sitemap: 'https://www.example.com/sitemap.xml',
+        host: "https://www.example.com",
+        sitemap: "https://www.example.com/sitemap.xml"
         // policy: [{ userAgent: '*', allow: '/' }]
       }
     },
@@ -78,20 +81,20 @@ module.exports = {
       options: {
         serialize: ({ site, allSitePage }) => {
           return allSitePage.edges
-            .sort((a, b)=>{
+            .sort((a, b) => {
               // Default to 0, which indicates
               // no sorting is necessary
-              let returnVal = 0;
+              let returnVal = 0
 
               // If `a` is a Chevy, subtract 1
               // to move `a` "up" in the sort order
               // because Chevys are awesome.
-              if (a.node.path === '/' ) {
-                returnVal = returnVal - 1;
+              if (a.node.path === "/") {
+                returnVal = returnVal - 1
               }
 
-              if (b.node.path === '/' ) {
-                returnVal = returnVal + 1;
+              if (b.node.path === "/") {
+                returnVal = returnVal + 1
               }
 
               // If `b` is a Chevy, add 1
@@ -100,7 +103,7 @@ module.exports = {
               //   returnVal = returnVal + 1;
               // }
 
-              return returnVal;
+              return returnVal
             })
             .map(edge => {
 
@@ -108,30 +111,30 @@ module.exports = {
               // console.log('urlPath', urlPath)
               const productsRegex = /(\/products\/)/
 
-              if(urlPath === '/'){
-                return{
+              if (urlPath === "/") {
+                return {
                   url: site.siteMetadata.siteUrl + edge.node.path,
                   changefreq: `daily`,
-                  priority: 1,
+                  priority: 1
                 }
-              }else if(urlPath.match(productsRegex)){
+              } else if (urlPath.match(productsRegex)) {
                 return {
                   url: site.siteMetadata.siteUrl + edge.node.path,
                   changefreq: `weekly`,
-                  priority: 0.7,
+                  priority: 0.7
                 }
-              }else{
+              } else {
                 return {
                   url: site.siteMetadata.siteUrl + edge.node.path,
                   changefreq: `monthly`,
-                  priority: 0.5,
+                  priority: 0.5
                 }
               }
             })
 
         }
       }
-    },
+    }
 
-  ],
+  ]
 }

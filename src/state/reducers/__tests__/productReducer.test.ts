@@ -1,6 +1,4 @@
-import { AuthActionTypes, ProductsActionTypes } from '@et/types/Enums'
-import { IAuthResponse, IUser } from '@et/types/User'
-import { userReducer } from '@redux/reducers/authReducer'
+import { ProductsActionTypes } from '@et/types/Enums'
 import initialState from '@redux/reducers/initialState'
 import data from '@redux/products.json'
 import { productReducer } from '@redux/reducers/productReducer'

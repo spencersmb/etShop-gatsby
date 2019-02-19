@@ -4,7 +4,7 @@ interface ICat {
   slug: string
 }
 
-interface Image {
+export interface Image {
   id: number,
   alt: string,
   fullSize:{
@@ -42,9 +42,10 @@ export interface IProduct {
     type: string,
     // may not need this if we are testing the extendedItem itself
     hasExtendedLicense: boolean,
-    standardItem?: { id: string },
+    standardItem?: {
+      slug: string
+    },
     extendedItem?: {
-      id: number,
       slug: string
     }
   },

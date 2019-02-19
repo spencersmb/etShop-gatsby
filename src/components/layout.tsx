@@ -1,4 +1,3 @@
-import { ILoginAction } from '@redux/actions/authActions'
 import React, { ReactNode } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import ReduxToastr from 'react-redux-toastr'
