@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Number Dial Test renders correctly 1`] = `
+<div
+  className="testClass"
+>
+  <label
+    htmlFor="numberDial"
+  >
+    Select number of license
+  </label>
+  <input
+    className="numberInput"
+    data-testid="numberDial"
+    id="numberDial"
+    onBlur={[Function]}
+    onChange={[Function]}
+    readOnly={false}
+    type="number"
+    value={2}
+  />
+</div>
+`;

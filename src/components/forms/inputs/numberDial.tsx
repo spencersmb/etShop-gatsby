@@ -13,7 +13,7 @@ export interface IProps {
 }
 
 function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
-	const [value, setValue] = useState<string | number>(1)
+	const [value, setValue] = useState<string | number>(qty)
 	const handleInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
 		// Match OBJECT for unit testing purposes
 		if (e.target instanceof HTMLInputElement || typeof e.target === 'object'
@@ -34,9 +34,12 @@ function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
 			}
 
 			// this.setState({currentSize: currentNumber}) // Change state and value on user screen
-			if (inputOnChange) {
-				setValue(currentNumber) // change value in redux
-			}
+			// if (inputOnChange) {
+			// 	setValue(currentNumber) // change value in redux
+			// }
+			console.log('currentNumber', typeof inputValue)
+
+			setValue(currentNumber)
 		}
 	}
 	const onBlurChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +58,7 @@ function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
 		<div className={className}>
 			<label htmlFor='numberDial'>Select number of license</label>
 			<input
+				data-testid='numberDial'
 				id='numberDial'
 				type='number'
 				className='numberInput'
