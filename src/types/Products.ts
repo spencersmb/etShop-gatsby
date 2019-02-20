@@ -32,6 +32,7 @@ export interface IProduct {
 	price: string,
 	regular_price: string;
 	sale_price: string,
+	licenseDiscountPrice?: string, // bulk options
 	date_modified_gmt: string,
 	date_created_gmt: string,
 	on_sale: boolean;

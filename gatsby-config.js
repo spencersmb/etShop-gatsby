@@ -10,7 +10,11 @@ module.exports = {
     route: "et-shop",
     twitterUrl: "https://twitter.com/teelacunningham",
     // TODO find default image url
-    twitterDefaultImage: "https://twitter.com/teelacunningham"
+    twitterDefaultImage: "https://twitter.com/teelacunningham",
+    pricing:{
+      minQuantity: 10,
+      discount: .10
+    }
   },
   plugins: [
     `gatsby-plugin-typescript`,

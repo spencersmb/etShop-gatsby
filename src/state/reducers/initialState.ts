@@ -17,6 +17,23 @@ const initialState: IState = {
    confirm: null,
     toastrs: [],
   },
-  user: null
+  user: null,
+  cart: {
+    couponCode: {
+      code: '',
+      discount: '',
+      loading: false,
+      product_ids: [],
+      submitted: false,
+      type: '',
+      valid: false,
+    },
+    isOpen: false,
+    items: {},
+    loaded: false,
+    paymentType: '',
+    totalItems: 0,
+    totalPrice: 0
+  },
 }
 export default initialState

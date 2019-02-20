@@ -1,4 +1,5 @@
-import { AuthActionTypes, ModalActionTypes, ProductsActionTypes, WindowActionTypes } from './Enums'
+import { ICartItem } from '@et/types/Cart'
+import { AuthActionTypes, CartActionTypes, ModalActionTypes, ProductsActionTypes, WindowActionTypes } from './Enums'
 import { IAuthResponse, IUser } from '@et/types/User'
 
 export interface ILoadProductsSuccess {
@@ -31,13 +32,21 @@ export interface IAuthLogin {
   payload: IAuthResponse
 }
 
-export interface IAuthLoadUser {
-  type: AuthActionTypes.LOAD_USER
-  payload: IUser
-}
-
 export interface IAuthLogOut {
   type: AuthActionTypes.LOGOUT
+}
+
+export interface IAddItemToCart {
+  type: CartActionTypes.ADD_TO_CART,
+  payload: {
+    item: {
+      [id: string]: ICartItem
+    }
+  }
+}
+
+export interface ICartToggle {
+  type: CartActionTypes.CART_TOGGLE
 }
 
 export type WindowActions =
@@ -56,8 +65,13 @@ export type AuthActions =
   | IAuthLogin
   | IAuthLogOut
 
+type CartActions =
+  | IAddItemToCart
+  | ICartToggle
+
 export type Actions =
   | AuthActions
   | ProductActions
   | ModalActions
   | WindowActions
+  | CartActions

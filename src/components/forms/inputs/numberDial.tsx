@@ -13,7 +13,6 @@ export interface IProps {
 }
 
 function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
-	const [value, setValue] = useState<string | number>(qty)
 	const handleInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
 		// Match OBJECT for unit testing purposes
 		if (e.target instanceof HTMLInputElement || typeof e.target === 'object'
@@ -22,7 +21,7 @@ function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
 
 			let currentNumber: number | string = 0
 			if (inputValue) {
-				currentNumber = parseInt(e.target.value, 10)
+				currentNumber = parseInt(inputValue, 10)
 			}
 
 			if (inputValue.length > 3) {
@@ -33,26 +32,9 @@ function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
 				currentNumber = ''
 			}
 
-			// this.setState({currentSize: currentNumber}) // Change state and value on user screen
-			// if (inputOnChange) {
-			// 	setValue(currentNumber) // change value in redux
-			// }
-			console.log('currentNumber', typeof inputValue)
-
-			setValue(currentNumber)
+			inputOnChange(currentNumber)
 		}
 	}
-	const onBlurChange = (e: ChangeEvent<HTMLInputElement>) => {
-		if (e.target.value === '') {
-			inputOnChange(1)
-			setValue(1)
-		} else {
-			inputOnChange(e.target.value)
-		}
-	}
-	useEffect(() => {
-
-	}, [value])
 
 	return (
 		<div className={className}>
@@ -63,8 +45,7 @@ function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
 				type='number'
 				className='numberInput'
 				onChange={handleInputOnChange}
-				onBlur={onBlurChange}
-				value={value}
+				value={qty}
 				readOnly={inCart}
 			/>
 		</div>

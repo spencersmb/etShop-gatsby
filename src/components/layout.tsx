@@ -1,3 +1,4 @@
+import MyShoppingCart from '@components/cart/cartStore'
 import React, { ReactNode } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import ReduxToastr from 'react-redux-toastr'
@@ -27,6 +28,7 @@ const Layout = ({ children }: IlayoutProps) => {
 				<>
 					<GlobalStyle key='globalStyles'/>
 					<Header siteTitle={data.site.siteMetadata.title}/>
+					<MyShoppingCart key='myCart' defaultOpenState={false}/>,
 					<div
 						style={{
 							margin: `0 auto`,

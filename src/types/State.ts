@@ -1,3 +1,4 @@
+import { ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import {IModalState} from '@et/types/Modal'
 import {IReduxForm} from '@et/types/ReduxForms'
@@ -9,8 +10,6 @@ export interface IState {
   products: IProducts
   form: IReduxForm,
   toastr: any
-  // cart: ICartState,
-  // modal: IModalState,
-  // products: IProductState,
+  cart: ICartState,
   user: IUserState
 }
