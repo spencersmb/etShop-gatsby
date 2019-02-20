@@ -22,6 +22,7 @@ const IndexPage = () => (
 	<Layout>
 		<SEO
 			title='home'
+			description={`description for home`}
 			keywords={[`gatsby`, `application`, `react`]}
 			meta={[
 				{

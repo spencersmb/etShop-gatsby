@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product Select renders correctly 1`] = `
+<select
+  data-testid="selectID"
+  onChange={[MockFunction]}
+  value="standard"
+>
+  <option
+    value="standard"
+  >
+    Standard
+  </option>
+  <option
+    value="extended"
+  >
+    Extended
+  </option>
+</select>
+`;

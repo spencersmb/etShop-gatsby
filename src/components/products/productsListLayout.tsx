@@ -1,3 +1,4 @@
+import { IProduct } from '@et/types/Products'
 import { graphql, Link, StaticQuery } from 'gatsby'
 import React, { Component } from 'react'
 
@@ -13,28 +14,33 @@ class ProductsListLayout extends Component {
               id
               name
               slug
+              license{
+              	type
+              }
             }
           }
         }
       }
     `}
-			render={data => (
-				<>
-					<div>
-						<ul data-testid='productList'>
-							{data.allWcProduct.edges.map(({ node }: any) => {
-								return (
-									<li key={node.id}>
-										<Link to={`/products/${node.slug}`}>
-											{node.name}
-										</Link>
-									</li>
-								)
-							})}
-						</ul>
-					</div>
-				</>
-			)}
+				render={data => (
+					<>
+						<div>
+							<ul data-testid='productList'>
+								{data.allWcProduct.edges
+									.filter(({ node }: { node: IProduct }) => node.license.type === 'standard')
+									.map(({ node }: { node: IProduct }) => {
+										return (
+											<li key={node.id}>
+												<Link to={`/products/${node.slug}`}>
+													{node.name}
+												</Link>
+											</li>
+										)
+									})}
+							</ul>
+						</div>
+					</>
+				)}
 			/>
     )
   }

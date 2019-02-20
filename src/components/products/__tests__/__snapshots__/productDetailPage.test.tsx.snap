@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Product Layout renders correctly 1`] = `
-<h1>
-  Item
-</h1>
-`;

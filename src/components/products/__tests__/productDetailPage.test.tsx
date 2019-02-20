@@ -1,8 +1,17 @@
+import { shallow } from 'enzyme'
 import React from 'react'
 import renderer from 'react-test-renderer'
-import ProductPage from '../productDetailPage'
+import SEO from '../../seo'
+import { ProductDetailPage } from '../productDetailPage'
 import { StaticQuery } from 'gatsby'
 import { singleItemQuery } from '@redux/reduxTestUtils'
+import ProductLayout from '../productLayout'
+
+const setup = () => {
+	return shallow(<ProductDetailPage
+		data={singleItemQuery}
+	/>)
+}
 
 beforeEach(() => {
 	// @ts-ignore
@@ -11,12 +20,15 @@ beforeEach(() => {
 	)
 })
 
-describe('Product Layout', () => {
-	it('renders correctly', () => {
-
-		const tree = renderer
-			.create(<ProductPage data={singleItemQuery}/>)
-			.toJSON()
-		expect(tree).toMatchSnapshot()
+describe('Product Detail Page', () => {
+	it('Should render SEO component', () => {
+		const shallowRender = setup()
+		const component = shallowRender.find(SEO)
+		expect(component.length).toEqual(1)
+	})
+	it('Should render Product Layout Component', () => {
+		const shallowRender = setup()
+		const component = shallowRender.find(ProductLayout)
+		expect(component.length).toEqual(1)
 	})
 })

@@ -32,7 +32,8 @@ const testSiteMetaDataQuery = {
 	siteName: `Every-Tuesday Shop`,
 	db: 'http://shopeverytuesday.local',
 	route: 'et-shop',
-	twitterUrl: 'https://twitter.com/teelacunningham'
+	twitterUrl: 'https://twitter.com/teelacunningham',
+	twitterDefaultImage: 'url'
 }
 
 export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
@@ -42,6 +43,7 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 		}
 	},
 	wcProduct: {
+		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
 		id: '202eca74-fc90-56e7-8269-b59f18a19194',
@@ -52,6 +54,17 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 		regular_price: '16',
 		sale_price: '',
 		slug: 'watercolor-texture-kit-vol-1',
+		description: 'description',
+		short_description: 'short desc',
+		on_sale: false,
+		features: {
+			description: 'feature desc',
+			items: {
+				description: 'item desc',
+				icon: 'icon',
+				title: 'singleItemQuery title'
+			}
+		},
 		categories: [
 			{ id: 1, slug: 'fonts', name: 'Fonts' },
 			{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
@@ -82,6 +95,20 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 		tags: [
 			{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 			{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
-		]
+		],
+		localFile: {
+			name: 'file name',
+			id: '1234',
+			childImageSharp: {
+				fluid: {
+					src: 'src'
+				},
+				fixed: {
+					width: '400',
+					height: '400',
+					src: 'src'
+				}
+			}
+		}
 	}
 }

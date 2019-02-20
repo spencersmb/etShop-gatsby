@@ -16,15 +16,24 @@ beforeEach(() => {
 				edges: [
 					{
 						node: {
+
 							id: '367dd45d-e237-591c-9da7-c29d657da816',
 							name: 'Honeymoon',
 							slug: 'honeymoon',
 							date_created_gmt: '2018-10-10T14:47:44',
-							images: []
+							images: [],
+							license: {
+								hasExtendedLicense: true,
+								type: 'extended',
+								extendedItem: {
+									slug: 'watercolor-texture-kit-vol'
+								}
+							}
 						}
 					},
 					{
 						node: {
+
 							id: '202eca74-fc90-56e7-8269-b59f18a19194',
 							name: 'Watercolor texture kit Vol. 1',
 							slug: 'watercolor-texture-kit-vol-1',
@@ -54,7 +63,14 @@ beforeEach(() => {
 										}
 									}
 								}
-							]
+							],
+							license: {
+								hasExtendedLicense: true,
+								type: 'standard',
+								extendedItem: {
+									slug: 'watercolor-texture-kit-vol-1-ext'
+								}
+							}
 						}
 					}
 				]
@@ -78,7 +94,7 @@ describe('Product List Layout', () => {
 	it('Should render correct items', () => {
 		const modalRender = render(<ProductsListLayout/>)
 		const list = modalRender.getByTestId('productList')
-		expect(list.children.length).toEqual(2)
+		expect(list.children.length).toEqual(1)
 	})
 
 })

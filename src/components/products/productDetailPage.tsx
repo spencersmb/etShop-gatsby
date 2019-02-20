@@ -1,3 +1,4 @@
+import ProductLayout from '@components/products/productLayout'
 import SEO from '@components/seo'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IProduct } from '@et/types/Products'
@@ -12,7 +13,7 @@ interface IProductQuery {
 	data: Response
 }
 
-class ProductDetailPage extends Component<IProductQuery> {
+export class ProductDetailPage extends Component<IProductQuery> {
 	ogArticles: IOGType[] = []
 	twitterAddons: IMeta[] = []
 	jsonld: any
@@ -20,7 +21,7 @@ class ProductDetailPage extends Component<IProductQuery> {
 
 	constructor (props: IProductQuery) {
 		super(props)
-		const { data: { wcProduct } } = this.props
+		const { data: { wcProduct, site: { siteMetadata } } } = this.props
 		this.ogArticles = wcProduct.tags.map(tag => tag.name).map(article => ({
 			property: 'article:tag',
 			content: `${article}`
@@ -43,7 +44,7 @@ class ProductDetailPage extends Component<IProductQuery> {
 			},
 			{
 				name: `twitter:image`,
-				content: `${wcProduct.images[0].thumbnail.url}`
+				content: `${wcProduct.images.length > 0 ? wcProduct.images[0].thumbnail.url : siteMetadata.twitterDefaultImage}`
 			}
 		]
 
@@ -78,7 +79,6 @@ class ProductDetailPage extends Component<IProductQuery> {
 	render () {
 		// TODO: add featured image to meta - currently the thumbnail
 		// TODO: get google verification token
-		// console.log('props', this.props.data)
 
 		const { data: { wcProduct, site: { siteMetadata } } } = this.props
 
@@ -132,7 +132,7 @@ class ProductDetailPage extends Component<IProductQuery> {
 					<link rel='canonical' href='http://mysite.com/product1'/>
 					<script type='application/ld+json'>{JSON.stringify(this.jsonld)}</script>
 				</SEO>
-				<h1>Item</h1>
+				<ProductLayout product={wcProduct}/>
 			</>
 		)
 	}

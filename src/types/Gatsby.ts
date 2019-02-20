@@ -10,6 +10,7 @@ export interface IGatsbyConfig {
 			db: string,
 			route: string,
 			twitterUrl: string
+			twitterDefaultImage: string
 		},
 	}
 }

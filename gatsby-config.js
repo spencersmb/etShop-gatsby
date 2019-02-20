@@ -3,12 +3,14 @@ module.exports = {
     title: `Every-Tuesday Digital Products Shop`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@Teelac`,
-    authorUrl: 'https://every-tuesday.com/about/#teela',
+    authorUrl: "https://every-tuesday.com/about/#teela",
     siteUrl: `https://shop.every-tuesday.com`,
     siteName: `Every-Tuesday Shop`,
     db: "http://shopeverytuesday.local",
     route: "et-shop",
     twitterUrl: "https://twitter.com/teelacunningham",
+    // TODO find default image url
+    twitterDefaultImage: "https://twitter.com/teelacunningham"
   },
   plugins: [
     `gatsby-plugin-typescript`,
