@@ -69,7 +69,7 @@ export class CartLayout extends React.Component<IPropsPublic & IReduxState & IRe
 				<button data-testid='close-btn' className='jestCloseCart' onClick={this.props.cartToggle}>Close</button>
 
 				<div>
-					<button data-testid='empty-cart-btn' className='jestEmptyCart' onClick={this.props.emptyCart}>Empty Cart
+					<button data-testid='empty-cart-btn' className='jestEmptyCart' onClick={this.props.emptyCart	}>Empty Cart
 					</button>
 				</div>
 

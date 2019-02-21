@@ -6,13 +6,8 @@ import { IState } from '@et/types/State'
 import { emptyLocalStorageCart, updateLocalStorageCart } from '@utils/cartUtils'
 import { Action, Dispatch } from 'redux'
 
-export const cartToggle = (): Actions => {
-	return {
-		type: CartActionTypes.CART_TOGGLE
-	}
-}
-
 /*
+* * Tested!
  Create cart item to be added to cart
  - Check for extended boolean (used when viewing the cart for dropdown select)
  - Check bulk pricing
@@ -64,8 +59,11 @@ export const addProductToCart: IAddProductAction =
 
 			const newState: IState = getState()
 			updateLocalStorageCart(newState.cart)
-}
+		}
 
+/*
+* * Tested!
+*/
 export const emptyCart = (): Actions => {
 	emptyLocalStorageCart()
 	return {
@@ -74,23 +72,35 @@ export const emptyCart = (): Actions => {
 }
 
 /*
- Calc total items in cart using QTY after ADD_TO_CART Action completes
- */
+* * Tested!
+*/
+export const cartToggle = (): Actions => {
+	return {
+		type: CartActionTypes.CART_TOGGLE
+	}
+}
+
+/*
+* * Tested!
+Calc total items in cart using QTY after ADD_TO_CART Action completes
+*/
 export const updateCartTotal = (): Actions => {
 	return {
 		type: CartActionTypes.UPDATE_CART_TOTAL
 	}
 }
 
+/*
+* * Tested!
+*/
 export const updateCartPrice = (): Actions => {
 	return {
 		type: CartActionTypes.UPDATE_CART_PRICE
 	}
 }
 
-
-
 /*
+* * Tested!
  Used to Initialize the cart from localStorage on Page Refresh
  */
 export const updateCartState = (cartData: ILocalStorageCart): Actions => {
@@ -98,7 +108,7 @@ export const updateCartState = (cartData: ILocalStorageCart): Actions => {
 		type: CartActionTypes.UPDATE_CART_STATE,
 		payload: {
 			cart: cartData
-		},
+		}
 	}
 }
 
