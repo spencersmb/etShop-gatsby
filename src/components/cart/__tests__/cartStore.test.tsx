@@ -17,12 +17,12 @@ afterEach(cleanup)
 const props = {
 	cart: testCartEmpty,
 	updateCartState: jest.fn(),
-	cartLoaded: jest.fn()
+	cartLoadedComplete: jest.fn()
 }
 
 const propsShowCart = {
 	updateCartState: jest.fn(),
-	cartLoaded: jest.fn()
+	cartLoadedComplete: jest.fn()
 }
 
 const Connected = connect((state: IState) => {
@@ -45,7 +45,7 @@ describe('Cart Store Wrapper', () => {
 
 	it('Should call load cart complete', () => {
 		// calls one time based on the first test above
-		expect(props.cartLoaded).toHaveBeenCalledTimes(1)
+		expect(props.cartLoadedComplete).toHaveBeenCalledTimes(1)
 	})
 
 	it('Should render cart', () => {
