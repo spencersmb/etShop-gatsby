@@ -1,23 +1,35 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import {Navbar} from '../navbar'
+import { ILogoutAction } from '../../../state/actions/authActions'
+import { IShowModalAction } from '../../../state/actions/modalActions'
+import { testCartEmpty } from '../../../state/reduxTestUtils'
+import { Navbar } from '../navbar'
 import {
-  render,
+	render
 } from 'react-testing-library'
 
+const props = {
+	showModal: jest.fn(),
+	logout: jest.fn(),
+	cartToggle: jest.fn(),
+	cart: {
+		...testCartEmpty
+	},
+	user: null
+}
 describe('Navbar Layout', () => {
-  it('renders correctly', () => {
-    const tree = renderer
-      .create(<Navbar />)
-      .toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-  it('Should have Login and Home buttons', ( ) => {
-    const { getByText, getByTestId } = render(<Navbar />)
-    const element = getByTestId('navbar')
-    // console.log('element', element.children[0].children.length)
+	it('renders correctly', () => {
+		const tree = renderer
+			.create(<Navbar {...props} />)
+			.toJSON()
+		expect(tree).toMatchSnapshot()
+	})
+	it('Should have Login and Home buttons', () => {
+		const { getByText, getByTestId } = render(<Navbar {...props} />)
+		const element = getByTestId('navbar')
+		// console.log('element', element.children[0].children.length)
 
-    expect(getByText('Home')).toBeDefined()
-    
-  })
+		expect(getByText('Home')).toBeDefined()
+
+	})
 })

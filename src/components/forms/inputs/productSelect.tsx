@@ -4,13 +4,18 @@ interface IProps {
 	showDropdown: boolean
 	onChange: any,
 	selectedLicense: string,
+	inCart: boolean
 }
 
-const ProductSelect = ({ onChange, selectedLicense, showDropdown }: IProps) => {
+const ProductSelect = ({ onChange, selectedLicense, showDropdown, inCart }: IProps) => {
 
 	if (showDropdown) {
 		return (
-			<select data-testid='selectID' onChange={onChange} value={selectedLicense}>
+			<select
+				disabled={inCart}
+				data-testid='selectID'
+				onChange={onChange}
+				value={selectedLicense}>
 				<option value='standard'>Standard</option>
 				<option value='extended'>Extended</option>
 			</select>

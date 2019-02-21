@@ -9,10 +9,11 @@ export interface IProps {
 	qty: number | string;
 	inCart: boolean;
 	inputOnChange: (total: number | string) => void
+	label?: string
 	className?: string
 }
 
-function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
+function NumberDial ({ qty = 0, inputOnChange, inCart, className, label = '' }: IProps) {
 	const handleInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
 		// Match OBJECT for unit testing purposes
 		if (e.target instanceof HTMLInputElement || typeof e.target === 'object'
@@ -38,7 +39,7 @@ function NumberDial ({ qty = 0, inputOnChange, inCart, className }: IProps) {
 
 	return (
 		<div className={className}>
-			<label htmlFor='numberDial'>Select number of license</label>
+			<label htmlFor='numberDial'>{label}</label>
 			<input
 				data-testid='numberDial'
 				id='numberDial'

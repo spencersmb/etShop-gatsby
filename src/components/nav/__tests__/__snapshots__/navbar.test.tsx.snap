@@ -4,7 +4,9 @@ exports[`Navbar Layout renders correctly 1`] = `
 <div
   data-testid="navbar"
 >
-  <ul>
+  <ul
+    className="sc-bZQynM ffHDVB"
+  >
     <li>
       Home
     </li>
@@ -26,9 +28,11 @@ exports[`Navbar Layout renders correctly 1`] = `
       Sign Up
     </li>
     <li
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
-      Toaster
+      Cart (
+      0
+      )
     </li>
   </ul>
 </div>

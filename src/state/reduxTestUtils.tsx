@@ -1,4 +1,5 @@
 // this is a handy function that I normally make available for all my tests
+import { ICartState } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IProduct } from '@et/types/Products'
 import React from 'react'
@@ -111,4 +112,23 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 			}
 		}
 	}
+}
+
+export const testCartEmpty: ICartState = {
+	couponCode: {
+		code: 'string',
+		discount: 'string',
+		loading: false,
+		product_ids: [],
+		submitted: false,
+		type: 'string',
+		valid: false,
+	},
+	isOpen: false,
+	items: {
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 0,
+	totalPrice: 0
 }

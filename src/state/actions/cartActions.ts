@@ -38,16 +38,12 @@ export const addProductToCart: IAddProductAction =
 	) =>
 		(dispatch: Dispatch<Action>, getState: () => IState) => {
 
-			// Extended
-			// if true = standard item
-			// if false = extended item
-
 			dispatch(
 				{
 					payload: {
 						item: {
 							[slug]: {
-								extended: !product.license.hasExtendedLicense,
+								extended: product.license.type !== 'standard',
 								id: product.product_id,
 								name: product.name,
 								price,

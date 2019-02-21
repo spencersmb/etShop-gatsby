@@ -9,9 +9,10 @@ import { loadUser, removeUserLocalStorage } from './src/utils/authUtils'
 // Instantiating store in `wrapRootElement` handler ensures:
 //  - there is fresh store for each SSR page
 //  - it will be called only once in browser, when React mounts
-export default ({ element }: {element: ReactNode}) => {
+export default ({ element }: { element: ReactNode }) => {
 	const store = createStore()
 	store.dispatch(loadProducts())
+	console.log('new store')
 
 	// check localstorage for user
 	// decode jwt and check if expired - if expired throw error and logout

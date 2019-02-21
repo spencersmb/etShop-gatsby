@@ -39,26 +39,10 @@ export class AddToCartBtn extends React.Component<IPropsPublic & IPropsPrivate &
 	handleAddToCart = async () => {
 
 		const { addToCart, cart, selectedProduct, handleAddToCartState, licenseQty, price } = this.props
-		const product: IProduct = selectedProduct
-
-		// check to see if we need to reset licenseQty Discount
-		// if (product.licenseDiscountPrice && licenseQty <= 10) {
-		// 	delete product.licenseDiscountPrice
-		// }
-
-		// change price based on selected Licenses
-		// if (typeof licenseQty !== 'string' && licenseQty > 10) {
-		// 	product.licenseDiscountPrice = AddToCartBtn.calcPriceBasedOnQty(licenseQty, selectedProduct.price)
-		// }
-
-		// check for pwyw item
-		if (this.props.pwyw) {
-			// product.price = calcPwywPrice(selectedProduct, this.props.pwyw)
-		}
 
 		// add item, the current items in cart, the standard license slug, and qty
 		if (typeof licenseQty !== 'string') {
-			addToCart(product, cart.items, this.props.slug, licenseQty, price)
+			addToCart(selectedProduct, cart.items, this.props.slug, licenseQty, price)
 			handleAddToCartState()
 		}
 	}
