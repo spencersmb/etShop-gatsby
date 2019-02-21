@@ -1,96 +1,68 @@
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
-import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
+import { cartLoadedComplete as cartLoaded, updateCartState } from '@redux/actions/cartActions'
 import { media } from '@styles/global/breakpoints'
-import * as React from 'react'
+import { getLocalStorageCart } from '@utils/cartUtils'
+import React, { useLayoutEffect } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
-// import CartCheckout from '@et/cart/checkout'
-// import {getLocalStorageCart} from '@et/utils/cartUtils'
-// import {cartLoadedComplete, cartToggle, updateCartState} from '@et/actions/cartActions'
 import posed, { PoseGroup } from 'react-pose'
-import { ICartState } from '@et/types/Cart'
+import { ICartState, ILocalStorageCart } from '@et/types/Cart'
 import Cart from '@components/cart/cartLayout'
 
-interface IPropsReduxState {
+interface IPropsPrivate {
 	cart: ICartState;
-	products: IProducts;
 }
 
-interface IPropsReduxActions {
-	// cartLoadedComplete: () => void;
-	cartToggle: () => void;
-	// updateCartState(cart: ILocalStorageCart): void;
+interface IPrivateActions {
+	cartLoadedComplete: () => any;
+	updateCartState: (cart: ILocalStorageCart) => any
 }
 
-interface IProps {
+interface IPropsPublic {
 	defaultOpenState?: boolean
 }
 
-interface IComponentState {
-	isOpen: boolean
-}
+export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPublic) => {
+	useLayoutEffect(() => {
+		const localStateCart: ILocalStorageCart = getLocalStorageCart()
 
-export class MyShoppingCart extends React.Component<IProps & IPropsReduxState & IPropsReduxActions, IComponentState> {
-
-	constructor (props: IProps & IPropsReduxState & IPropsReduxActions) {
-		super(props)
-		this.getState = this.getState.bind(this)
-	}
-
-	getState (): void {
-		if (this.props.defaultOpenState) {
-			// open by defautl
-			this.props.cartToggle()
+		if (Object.keys(localStateCart).length > 0) {
+			// update Cart with data from local storage
+			props.updateCartState(localStateCart)
 		}
-	}
+		props.cartLoadedComplete()
 
-	componentDidMount () {
-		// check for items in cart on page refresh
-		// const localStateCart: ILocalStorageCart = getLocalStorageCart()
-		//
-		// if (Object.keys(localStateCart).length > 0) {
-		// 	// init redux
-		// 	this.props.updateCartState(localStateCart)
-		// }
-		//
-		// this.props.cartLoadedComplete()
-		// this.getState()
-	}
-
-	render () {
-		return (
-			<CartStyled style={{ position: 'relative', zIndex: 3 }}>
-				<PoseGroup>
-					{this.props.cart.isOpen &&
-          <CartPose key='cart'>
-						{({ ref }: IPoseHoc) => (
-							<Cart poseRef={ref}/>
-						)}
-          </CartPose>
-					}
-				</PoseGroup>
-			</CartStyled>
-		)
-	}
+	}, [])
+	return (
+		<CartStyled style={{ position: 'relative', zIndex: 3 }}>
+			<PoseGroup>
+				{props.cart.isOpen &&
+        <CartPose key='cart'>
+					{({ ref }: IPoseHoc) => (
+						<Cart poseRef={ref}/>
+					)}
+        </CartPose>
+				}
+			</PoseGroup>
+		</CartStyled>
+	)
 }
 
-const mapStateToProps = (state: IState): any => {
+const mapStateToProps = (state: IState): { cart: ICartState } => {
 	return {
-		cart: state.cart,
-		products: state.products
+		cart: state.cart
 	}
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+const mapDispatchToProps = (dispatch: Dispatch<Action>): IPrivateActions => {
 	return {
-		// cartLoadedComplete: bindActionCreators(cartLoadedComplete, dispatch),
-		// cartToggle: bindActionCreators(cartToggle, dispatch)
-		// updateCartState: bindActionCreators(updateCartState, dispatch)
+		cartLoadedComplete: bindActionCreators(cartLoaded, dispatch),
+		updateCartState: bindActionCreators(updateCartState, dispatch)
 	}
 }
 
-export default connect<IPropsReduxState, IPropsReduxActions, IProps, IState>(mapStateToProps, mapDispatchToProps)(MyShoppingCart)
+export default connect<IPropsPrivate, IPrivateActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(MyShoppingCart)
 
 // Styles
 const CartStyled = styled.div`

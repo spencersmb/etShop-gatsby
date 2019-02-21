@@ -1,6 +1,7 @@
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
-import { cartToggle } from '@redux/actions/cartActions'
+import { cartToggle, emptyCart } from '@redux/actions/cartActions'
+import { displayCurrency } from '@utils/priceUtils'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { ICartState } from '@et/types/Cart'
@@ -12,19 +13,22 @@ interface IPropsPublic {
 	poseRef: RefObject<any>;
 }
 
-interface IPropsRedux {
+interface IReduxState {
 	cart: ICartState,
-	changeCheckoutType: (type: string) => Actions,
 	products: IProducts,
+}
+
+interface IReduxActions {
+	// changeCheckoutType: (type: string) => Actions,
 	emptyCart: () => Actions,
 	cartToggle: () => void
 }
 
-export class CartLayout extends React.Component<IPropsPublic & IPropsRedux> {
+export class CartLayout extends React.Component<IPropsPublic & IReduxState & IReduxActions> {
 
-	// emptyCart = () => {
-	// 	this.props.emptyCart()
-	// }
+	emptyCart = () => {
+		this.props.emptyCart()
+	}
 	// changePaymentType = (type: string) => {
 	// 	this.props.changeCheckoutType(type)
 	// }
@@ -61,11 +65,11 @@ export class CartLayout extends React.Component<IPropsPublic & IPropsRedux> {
 
 	render () {
 		return (
-			<CartWrapper ref={this.props.poseRef}>
-				<button className='jestCloseCart' onClick={this.props.cartToggle}> Close</button>
+			<CartWrapper data-testid='cart-wrapper' ref={this.props.poseRef}>
+				<button data-testid='close-btn' className='jestCloseCart' onClick={this.props.cartToggle}>Close</button>
 
 				<div>
-					<button className='jestEmptyCart'>Empty Cart</button>
+					<button data-testid='empty-cart-btn' className='jestEmptyCart' onClick={this.emptyCart}>Empty Cart</button>
 				</div>
 
 				<div>
@@ -78,6 +82,9 @@ export class CartLayout extends React.Component<IPropsPublic & IPropsRedux> {
 				<div>
 					{/*{this.getCheckOutForm()}*/}
 					checkout forms
+					<p>
+						{displayCurrency(this.props.cart.totalPrice)}
+					</p>
 				</div>
 			</CartWrapper>
 		)
@@ -105,10 +112,10 @@ const mapStateToProps = (state: IState): any => {
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 	return {
-		cartToggle: bindActionCreators(cartToggle, dispatch)
+		cartToggle: bindActionCreators(cartToggle, dispatch),
 		// changeCheckoutType: bindActionCreators(changeCheckoutType, dispatch),
-		// emptyCart: bindActionCreators(emptyCart, dispatch)
+		emptyCart: bindActionCreators(emptyCart, dispatch)
 	}
 }
 
-export default connect<IPropsRedux>(mapStateToProps, mapDispatchToProps)(CartLayout)
+export default connect<IReduxState, IReduxActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(CartLayout)

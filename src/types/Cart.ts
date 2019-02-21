@@ -32,3 +32,9 @@ export interface ICartItem {
 export interface ICartItemWithKey {
 	[id: string]: ICartItem
 }
+
+export interface ILocalStorageCart {
+	items: {
+		[id: string]: ICartItem
+	}
+}

@@ -1,4 +1,5 @@
-import { ICartItem } from '@et/types/Cart'
+import { ICartItem, ILocalStorageCart } from '@et/types/Cart'
+import { IProducts } from '@et/types/Products'
 import { AuthActionTypes, CartActionTypes, ModalActionTypes, ProductsActionTypes, WindowActionTypes } from './Enums'
 import { IAuthResponse, IUser } from '@et/types/User'
 
@@ -49,6 +50,28 @@ export interface ICartToggle {
   type: CartActionTypes.CART_TOGGLE
 }
 
+export interface IUpdateCartTotal {
+  type: CartActionTypes.UPDATE_CART_TOTAL
+}
+
+export interface IupdateCartPrice {
+  type: CartActionTypes.UPDATE_CART_PRICE
+}
+export interface IUpdateCartState {
+  type: CartActionTypes.UPDATE_CART_STATE,
+  payload: {
+    cart: ILocalStorageCart
+  }
+}
+
+export interface IEmptyCart {
+  type: CartActionTypes.EMPTY_CART
+}
+
+export interface ILoadCartComplete {
+  type: CartActionTypes.LOAD_CART_COMPLETE
+}
+
 export type WindowActions =
   | IChangeBreakPoint
 
@@ -68,6 +91,11 @@ export type AuthActions =
 type CartActions =
   | IAddItemToCart
   | ICartToggle
+  | IUpdateCartTotal
+  | IupdateCartPrice
+  | IUpdateCartState
+  | ILoadCartComplete
+  | IEmptyCart
 
 export type Actions =
   | AuthActions

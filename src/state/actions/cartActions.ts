@@ -1,8 +1,9 @@
 import { Actions } from '@et/types/Actions'
-import { ICartItem, ICartItemWithKey } from '@et/types/Cart'
+import { ICartItem, ICartItemWithKey, ILocalStorageCart } from '@et/types/Cart'
 import { CartActionTypes } from '@et/types/Enums'
-import { IProduct } from '@et/types/Products'
+import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
+import { emptyLocalStorageCart, updateLocalStorageCart } from '@utils/cartUtils'
 import { Action, Dispatch } from 'redux'
 
 export const cartToggle = (): Actions => {
@@ -40,6 +41,7 @@ export const addProductToCart: IAddProductAction =
 
 			dispatch(
 				{
+					type: CartActionTypes.ADD_TO_CART,
 					payload: {
 						item: {
 							[slug]: {
@@ -51,16 +53,57 @@ export const addProductToCart: IAddProductAction =
 								slug: product.slug
 							}
 						}
-					},
-					type: CartActionTypes.ADD_TO_CART
+					}
 				}
 			)
 
 			// After item added - re-calc totalItems
-			// dispatch(updateCartTotal())
+			dispatch(updateCartTotal())
 
-			// dispatch(updateCartPrice())
+			dispatch(updateCartPrice())
 
-			// const newState: IState = getState()
-			// updateLocalStorageCart(newState.cart)
-		}
+			const newState: IState = getState()
+			updateLocalStorageCart(newState.cart)
+}
+
+export const emptyCart = (): Actions => {
+	emptyLocalStorageCart()
+	return {
+		type: CartActionTypes.EMPTY_CART
+	}
+}
+
+/*
+ Calc total items in cart using QTY after ADD_TO_CART Action completes
+ */
+export const updateCartTotal = (): Actions => {
+	return {
+		type: CartActionTypes.UPDATE_CART_TOTAL
+	}
+}
+
+export const updateCartPrice = (): Actions => {
+	return {
+		type: CartActionTypes.UPDATE_CART_PRICE
+	}
+}
+
+
+
+/*
+ Used to Initialize the cart from localStorage on Page Refresh
+ */
+export const updateCartState = (cartData: ILocalStorageCart): Actions => {
+	return {
+		type: CartActionTypes.UPDATE_CART_STATE,
+		payload: {
+			cart: cartData
+		},
+	}
+}
+
+export const cartLoadedComplete = (): Actions => {
+	return {
+		type: CartActionTypes.LOAD_CART_COMPLETE
+	}
+}

@@ -6,9 +6,9 @@ import { ICartItem, ICartState } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { checkCartForProduct } from '@utils/cartUtils'
-import { calcPriceBasedOnQty, displayCurrency } from '@utils/priceUtils'
+import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
 import { Link } from 'gatsby'
-import React, { useEffect, useReducer, useRef } from 'react'
+import React, { Dispatch, useLayoutEffect, useReducer, useRef } from 'react'
 import config from '../../../gatsby-config'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -49,23 +49,36 @@ interface INewState {
 
 // Price gets set when licenses change or extended Item?
 // fix license qty so that it is a number to help calc price better
+type useSetStateType = [IPublicState, Dispatch<INewState>]
+
+function useSetState (initialState: any): useSetStateType {
+	const [state, setState] = useReducer((originalState: IPublicState, newState: INewState) => ({ ...originalState, ...newState }),
+		initialState)
+
+	return [
+		state,
+		setState
+	]
+}
 
 export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 	const { product, products, cart } = props
-	const [state, setState] = useReducer((originalState: IPublicState, newState: INewState) => ({ ...originalState, ...newState }),
-		{
-			selectedProduct: product,
-			selectedLicense: 'standard',
-			numberOfLicenses: 1,
-			inCart: false,
-			bulkDiscount: false,
-			payWhatYouWant: product.pwyw,
-			price: product.price
-		})
+	const [state, setState] = useSetState({
+		selectedProduct: product,
+		selectedLicense: 'standard',
+		numberOfLicenses: 1,
+		inCart: false,
+		bulkDiscount: false,
+		payWhatYouWant: product.pwyw,
+		price: product.price
+	})
+
 	const standardItem = useRef(props.product)
 	const extendedItem = useRef(product.license.extendedItem ? products[product.license.extendedItem.slug] : null)
 
-	useEffect(() => {
+	// check for product in cart on load
+	// then dispatch to state the item found
+	useLayoutEffect(() => {
 
 		// Check if item is in cart on load
 		const productFound: boolean = checkCartForProduct(cart, product.slug).length > 0
@@ -103,14 +116,14 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 				selectedProduct: standardItem.current,
 				price: standardItem.current.on_sale
 					? standardItem.current.sale_price
-					: calcPriceDiscount(state.bulkDiscount, state.numberOfLicenses, standardItem.current.price)
+					: calcBulkPriceDiscount(state.bulkDiscount, state.numberOfLicenses, standardItem.current.price)
 			})
 		} else if (e.target.value === 'extended' && extendedItem.current) {
 			setState({
 				selectedProduct: extendedItem.current,
 				price: extendedItem.current.on_sale
 					? extendedItem.current.sale_price
-					: calcPriceDiscount(state.bulkDiscount, state.numberOfLicenses, extendedItem.current.price)
+					: calcBulkPriceDiscount(state.bulkDiscount, state.numberOfLicenses, extendedItem.current.price)
 			})
 		}
 	}
@@ -121,7 +134,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 			setState({
 				numberOfLicenses: total,
 				bulkDiscount: true,
-				price: calcPriceDiscount(true, total, state.price)
+				price: calcBulkPriceDiscount(true, total, state.price)
 			})
 		} else {
 			setState({
@@ -138,12 +151,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 			price: total.toString()
 		})
 
-	}
-
-	function calcPriceDiscount (bulkDiscount: boolean, licenseQty: string | number, price: string) {
-		return bulkDiscount
-			? calcPriceBasedOnQty(licenseQty, price)
-			: price
 	}
 
 	const { name, license: { hasExtendedLicense } } = props.product
@@ -193,15 +200,15 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 			</div>
 			<hr/>
 			<div>
-				<AddToCartBtn
-					handleAddToCartState={() => (setState({ inCart: true }))}
-					isInCart={state.inCart}
-					pwyw={null}
-					slug={product.slug}
-					selectedProduct={state.selectedProduct}
-					licenseQty={state.numberOfLicenses}
-					price={state.price}
-				/>
+				{React.useMemo(() => (
+					<AddToCartBtn
+						handleAddToCartState={() => (setState({ inCart: true }))}
+						isInCart={state.inCart}
+						slug={product.slug}
+						selectedProduct={state.selectedProduct}
+						licenseQty={state.numberOfLicenses}
+						price={state.price}
+					/>), [state.inCart, state.price])}
 			</div>
 			<Link to='/page-2/'>Go to page 2</Link>
 		</Layout>
@@ -222,7 +229,5 @@ const NumberDialStyled = styled(NumberDial)`
 const mapStateToProps = (state: IState) => ({
 	cart: state.cart,
 	products: state.products
-	// pwyw: pwywForm(state, 'pwyw'),
-	// initialValues: {pwyw: 0} // pull initial values from account reducer
 })
 export default connect<IPropsPrivate, {}, IPropsPublic, IState>(mapStateToProps)(ProductLayout)
