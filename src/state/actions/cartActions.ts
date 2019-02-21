@@ -112,6 +112,9 @@ export const updateCartState = (cartData: ILocalStorageCart): Actions => {
 	}
 }
 
+/*
+* * Tested!
+*/
 export const cartLoadedComplete = (): Actions => {
 	return {
 		type: CartActionTypes.LOAD_CART_COMPLETE
