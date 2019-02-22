@@ -80,6 +80,9 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				totalPrice
 			}
 
+		/*
+		* * Tested!
+		*/
 		case CartActionTypes.LOAD_CART_COMPLETE:
 			return {
 				...state,

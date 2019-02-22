@@ -1,7 +1,8 @@
 import { ICartItem, ICartItemWithKey, ICartState, ICouponCode, ILocalStorageCart } from '@et/types/Cart'
-import { calcDiscount } from '@utils/priceUtils'
+import { calcCouponDiscount } from '@utils/priceUtils'
 
 /**
+ * * Tested!
  * Check Redux cart for a particular item we pass in
  *
  * How it works;
@@ -11,11 +12,11 @@ import { calcDiscount } from '@utils/priceUtils'
  * @param {string} slug - Item-key we ware looking for
  */
 export const checkCartForProduct = (cart: ICartState, slug: string): string[] => {
-	const cartKeys = Object.keys(cart.items)
-	return cartKeys.filter(key => key === slug)
+	return Object.keys(cart.items).filter(key => key === slug)
 }
 
 /**
+ * * Tested!
  * Calculates the Total number of items added to the cart.
  *
  * How it works:
@@ -26,9 +27,7 @@ export const checkCartForProduct = (cart: ICartState, slug: string): string[] =>
  * @return {number} The result of adding all the items and their Qty in the cart together
  */
 export const totalItemsInCart = (items: { [id: string]: ICartItem }): number => {
-	const itemKeysArray = Object.keys(items)
-
-	return itemKeysArray.length
+	return Object.keys(items).length
 }
 
 /**
@@ -85,7 +84,7 @@ export const getCartTotal = (items: ICartItemWithKey, couponCode: ICouponCode): 
 
 	const couponIsForCart = couponCode.valid && couponCode.product_ids.length === 0
 	const totalWithDiscount = couponIsForCart && totalPriceItems > 0
-		? totalPriceItems - calcDiscount(couponCode, totalPriceItems)
+		? totalPriceItems - calcCouponDiscount(couponCode, totalPriceItems)
 		: totalPriceItems
 
 	// check for negative number

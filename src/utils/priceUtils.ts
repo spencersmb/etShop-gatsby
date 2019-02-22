@@ -1,11 +1,12 @@
 import { ICouponCode } from '@et/types/Cart'
 import config from '../../gatsby-config'
+import _ = require('lodash')
 
 /*
+* * Tested!
 Check and return a discounted price based on qty set in config
 */
-export const calcPriceBasedOnQty = (qty: number | string, price: string): string => {
-	if (typeof qty === 'number' && qty > config.siteMetadata.pricing.minQuantity) {
+export const calcBulkDiscount = (price: string): string => {
 		// convert to Number
 		const strToNum = parseInt(price, 10)
 
@@ -14,12 +15,10 @@ export const calcPriceBasedOnQty = (qty: number | string, price: string): string
 
 		// price * percentage subtracted from total price
 		return (strToNum - (percent * strToNum)).toString()
-	} else {
-		return price
-	}
 }
 
 /**
+ * * Tested!
  * Check for bulk pricing and return the new price if true.
  *
  *
@@ -28,13 +27,14 @@ export const calcPriceBasedOnQty = (qty: number | string, price: string): string
  * @param {string} price
  * @return {string} Convert the result to readable USD string with dollar sign
  */
-export function calcBulkPriceDiscount (bulkDiscount: boolean, licenseQty: string | number, price: string): string {
+export function calcBulkPriceDiscount (bulkDiscount: boolean,  price: string): string {
 	return bulkDiscount
-		? calcPriceBasedOnQty(licenseQty, price)
+		? calcBulkDiscount(price)
 		: price
 }
 
 /**
+ * * Tested!
  * Calculates the Dollar Total of price passed in.
  *
  *
@@ -60,7 +60,8 @@ export const displayCurrency = (price: string | number): string => {
 }
 
 /**
- * Return the discount off we should expect per total passed in.
+ * Return the discount off we should expect per total passed in. Convert the string to number or
+ * convert the percentage to a readable number
  *
  * How it works:
  * For percentage we return the amount off the number passed in, otherwise
@@ -70,13 +71,13 @@ export const displayCurrency = (price: string | number): string => {
  * @param {number} total
  * @return number
  */
-export const calcDiscount = (couponData: ICouponCode, total: number): number => {
+export const calcCouponDiscount = (couponData: ICouponCode, total: number): number => {
 	switch (couponData.type) {
 
 		case 'percent':
 			const percentage = (parseInt(couponData.discount, 10) / 100)
 			// console.log('discount percentage off', total * percentage)
-			return total * percentage
+			return _.round((total * percentage), 2)
 		case 'fixed_product':
 		case 'fixed_cart':
 			// console.log('discount fixed cart', parseFloat(couponData.discount))
@@ -87,20 +88,5 @@ export const calcDiscount = (couponData: ICouponCode, total: number): number => 
 	}
 }
 
-/**
- * Calculates the Dollar Total of price passed in.
- *
- *
- * @param {object} total - Cart Final number total
- * @return {string} Convert the result to readable USD string
- */
-export const convertTotalUSD = (total: number): string => {
-	return total.toLocaleString('en-US', {
-		currency: 'USD',
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 2,
-		style: 'currency'
-	})
-}
 
 

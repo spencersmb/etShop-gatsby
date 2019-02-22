@@ -116,14 +116,14 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 				selectedProduct: standardItem.current,
 				price: standardItem.current.on_sale
 					? standardItem.current.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, state.numberOfLicenses, standardItem.current.price)
+					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price)
 			})
 		} else if (e.target.value === 'extended' && extendedItem.current) {
 			setState({
 				selectedProduct: extendedItem.current,
 				price: extendedItem.current.on_sale
 					? extendedItem.current.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, state.numberOfLicenses, extendedItem.current.price)
+					: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price)
 			})
 		}
 	}
@@ -134,7 +134,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 			setState({
 				numberOfLicenses: total,
 				bulkDiscount: true,
-				price: calcBulkPriceDiscount(true, total, state.price)
+				price: calcBulkPriceDiscount(true, state.price)
 			})
 		} else {
 			setState({
