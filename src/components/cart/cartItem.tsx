@@ -94,12 +94,12 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	}
 
 	function hasCoupon (): boolean {
-		return checkForCoupon(cart.couponCode.product_ids, cart.items[cartIndex].id)
+		return checkForCoupon(cart.coupon.product_ids, cart.items[cartIndex].id)
 	}
 
 	function calcDiscount (): string {
 		const price = parseInt(cart.items[cartIndex].price, 10)
-		return displayCurrency(calcCouponDiscount(cart.couponCode, price))
+		return displayCurrency(calcCouponDiscount(cart.coupon, price))
 	}
 
 	function handleRemoveItem () {
@@ -117,7 +117,8 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 					showDropdown={selectedProduct.current.license.hasExtendedLicense}
 				/>
 			</div>
-			{bulkDiscount && <span data-testid="bulkDiscount">Bulk discount of {config.siteMetadata.pricing.discount} applied</span>}
+			{bulkDiscount &&
+      <span data-testid='bulkDiscount'>Bulk discount of {config.siteMetadata.pricing.discount} applied</span>}
 			<NumberDial
 				label='Quantity'
 				qty={cart.items[cartIndex].qty}
@@ -134,7 +135,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
         <div className='jestDiscount'>-{calcDiscount()}</div>
       </div>}
 
-			<button onClick={handleRemoveItem} data-testid="removeItemBtn">Remove Item</button>
+			<button onClick={handleRemoveItem} data-testid='removeItemBtn'>Remove Item</button>
 			<hr/>
 		</div>
 	)

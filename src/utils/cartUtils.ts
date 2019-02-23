@@ -186,6 +186,7 @@ export const emptyLocalStorageCart = (): void => {
 }
 
 /**
+ * * Tested!
  * Check if any of the product ids match any ids in the coupon array
  *
  * How it works:
@@ -199,10 +200,25 @@ export const checkForCoupon = (couponIds: number[], needleId: number): boolean =
 	return !!couponIds.filter(id => (id === needleId)).length
 }
 
+/**
+ * * Tested!
+ * Check if any of the product in the cart are PWYW enabled
+ *
+ * How it works:
+ * Filter over the array and return the key of the item that's enabled
+ * Return a boolean checking if the array has a length or not
+ *
+ * @param {ICartItemWithKey} cartItems
+ * @param {IProducts} products
+ * @return boolean
+ */
 export function checkForPWYWItemInCart (cartItems: ICartItemWithKey, products: IProducts) {
 
 	const productsKeys = Object.keys(products)
 	const itemFound = productsKeys.filter(key => {
+
+		// if the cart has an item & that item has pwyw enabled
+		// return the key
 		if (cartItems[key] && products[key].pwyw) {
 			return key
 		}

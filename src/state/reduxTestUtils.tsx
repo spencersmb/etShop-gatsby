@@ -39,7 +39,7 @@ const testSiteMetaDataQuery = {
 
 
 export const testCartEmpty: ICartState = {
-	couponCode: {
+	coupon: {
 		code: 'string',
 		discount: 'string',
 		loading: false,
@@ -411,7 +411,7 @@ export const testProducts: IProducts = {
 }
 
 export const testCartWithItem: ICartState = {
-	couponCode: {
+	coupon: {
 		code: '',
 		discount: '',
 		loading: false,
@@ -436,8 +436,36 @@ export const testCartWithItem: ICartState = {
 	totalItems: 1,
 	totalPrice: 12
 }
+export const testCartWithItemAndCoupon: ICartState = {
+	coupon: {
+		code: '',
+		discount: '',
+		loading: false,
+		product_ids: [
+			222
+		],
+		submitted: true,
+		type: '',
+		valid: true,
+	},
+	isOpen: false,
+	items: {
+		[ProductKey.WatercolorStd]: {
+			extended: false,
+			id: testProducts[ProductKey.WatercolorStd].product_id,
+			name: testProducts[ProductKey.WatercolorStd].name,
+			price: testProducts[ProductKey.WatercolorStd].price,
+			qty: 1,
+			slug: testProducts[ProductKey.WatercolorStd].slug,
+		}
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 1,
+	totalPrice: 12
+}
 export const testCartWithMultiples: ICartState = {
-	couponCode: {
+	coupon: {
 		code: '',
 		discount: '',
 		loading: false,

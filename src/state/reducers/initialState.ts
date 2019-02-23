@@ -19,7 +19,7 @@ const initialState: IState = {
   },
   user: null,
   cart: {
-    couponCode: {
+    coupon: {
       code: '',
       discount: '',
       loading: false,

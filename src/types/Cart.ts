@@ -11,7 +11,7 @@ export interface ICouponCode {
 }
 
 export interface ICartState {
-	couponCode: ICouponCode,
+	coupon: ICouponCode,
 	paymentType: string,
 	totalItems: number,
 	totalPrice: number,

@@ -1,5 +1,12 @@
 import { ICouponCode } from '@et/types/Cart'
-import { calcBulkDiscount, calcBulkPriceDiscount, calcCouponDiscount, displayCurrency } from '@utils/priceUtils'
+import { ProductKey, testProducts } from '@redux/reduxTestUtils'
+import {
+	calcBulkDiscount,
+	calcBulkPriceDiscount,
+	calcCouponDiscount,
+	displayCurrency,
+	getPrice
+} from '@utils/priceUtils'
 import {
 	cleanup
 } from 'react-testing-library'
@@ -58,6 +65,15 @@ describe('Price Utility helpers', () => {
 		const discount = calcCouponDiscount(fixed, 20)
 
 		expect(discount).toEqual(6.6)
+	})
+
+	it('Should return Sale Price if on sale, or regular price if not', () => {
+		const onSale = getPrice(testProducts[ProductKey.Skinnyjeans])
+		const noSale = getPrice(testProducts[ProductKey.WatercolorStd])
+
+		expect(onSale).toEqual(testProducts[ProductKey.Skinnyjeans].sale_price)
+		expect(noSale).toEqual(testProducts[ProductKey.WatercolorStd].price)
+
 	})
 
 })

@@ -59,7 +59,7 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 		case CartActionTypes.UPDATE_CART_PRICE:
 
 			// calc total items here so we dont use getState in Action creater
-			const updateTotalPrice = getCartTotal(state.items, state.couponCode)
+			const updateTotalPrice = getCartTotal(state.items, state.coupon)
 
 			return {
 				...state,
@@ -70,7 +70,7 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 		* * Tested!
 		*/
 		case CartActionTypes.UPDATE_CART_STATE:
-			const totalPrice = getCartTotal({ ...action.payload.cart.items }, state.couponCode)
+			const totalPrice = getCartTotal({ ...action.payload.cart.items }, state.coupon)
 			return {
 				...state,
 				items: {

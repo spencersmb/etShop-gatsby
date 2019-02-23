@@ -90,6 +90,14 @@ export const calcCouponDiscount = (coupon: ICouponCode, total: number): number =
 	}
 }
 
+/**
+ * * Tested!
+ * Returns the sale price if onSale or regular price if not.
+ *
+ *
+ * @param {IProduct} product
+ * @return {string} Price
+ */
 // incorporate bulk?
 export function getPrice (product: IProduct) {
 	return product.on_sale ? product.sale_price : product.price
