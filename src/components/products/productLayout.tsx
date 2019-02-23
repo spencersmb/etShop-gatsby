@@ -218,7 +218,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
           <NumberDialStyled
             label='Pay what you want'
             qty={state.price}
-            disabled={state.inCart}
+            disableInput={state.inCart}
             inputOnChange={onPwywChange}/>
         </div>}
 			</div>
@@ -237,7 +237,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 				{!state.payWhatYouWant && <NumberDialStyled
           label='Select number of license'
           qty={state.numberOfLicenses}
-          disabled={state.inCart}
+          disableInput={state.inCart}
           inputOnChange={onDialChange}/>}
 			</div>
 			<hr/>

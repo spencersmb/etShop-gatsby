@@ -1,4 +1,5 @@
 import { ICouponCode } from '@et/types/Cart'
+import { IProduct } from '@et/types/Products'
 import config from '../../gatsby-config'
 import _ from 'lodash'
 
@@ -8,7 +9,7 @@ Check and return a discounted price based on qty set in config
 */
 export const calcBulkDiscount = (price: string): string => {
 	// convert to Number
-	const strToNum = parseInt(price, 10)
+	const strToNum = parseFloat(price)
 
 	// percent in config
 	const percent = config.siteMetadata.pricing.discount
@@ -89,5 +90,8 @@ export const calcCouponDiscount = (coupon: ICouponCode, total: number): number =
 	}
 }
 
-
+// incorporate bulk?
+export function getPrice (product: IProduct) {
+	return product.on_sale ? product.sale_price : product.price
+}
 

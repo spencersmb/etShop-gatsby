@@ -139,7 +139,9 @@ export const singleProduct: IProduct = {
 }
 export enum ProductKey {
 	WatercolorStd = 'watercolor-texture-kit-vol-1',
-	WatercolorExt = 'watercolor-texture-kit-vol-1-ext'
+	WatercolorExt = 'watercolor-texture-kit-vol-1-ext',
+	Honeymoon = 'honeymoon',
+	Skinnyjeans = 'skinny-jeans'
 }
 export const testProducts: IProducts = {
 	[ProductKey.WatercolorStd] : {
@@ -279,7 +281,133 @@ export const testProducts: IProducts = {
 				}
 			}
 		}
-	}
+	},
+	[ProductKey.Honeymoon] : {
+		type: 'simple',
+		date_created_gmt: '2018-09-25T20:35:51',
+		date_modified_gmt: '2019-02-18T21:44:25',
+		id: '202eca74-fc90-56e7-8269-b59f18a19194',
+		name: 'Honeymoon',
+		price: '0',
+		product_id: 352,
+		pwyw: true,
+		regular_price: '0',
+		sale_price: '',
+		slug: 'honeymoon',
+		description: 'description',
+		short_description: 'short desc',
+		on_sale: false,
+		features: {
+			description: 'feature desc',
+			items: {
+				description: 'item desc',
+				icon: 'icon',
+				title: 'singleItemQuery title'
+			}
+		},
+		categories: [
+			{ id: 1, slug: 'fonts', name: 'Fonts' }
+		],
+		images: [
+			{
+				id: 123414,
+				alt: 'alt',
+				fullSize: {
+					url: 'fullsize-url'
+				},
+				thumbnail: {
+					url: 'image-url'
+				}
+			}
+		],
+		license: {
+			hasExtendedLicense: false,
+			type: 'standard'
+		},
+		seo: {
+			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
+			title: 'Honeymoon seo title'
+		},
+		tags: [
+		],
+		localFile: {
+			name: 'file name',
+			id: '1234',
+			childImageSharp: {
+				fluid: {
+					src: 'src'
+				},
+				fixed: {
+					width: '400',
+					height: '400',
+					src: 'src'
+				}
+			}
+		}
+	},
+	[ProductKey.Skinnyjeans] : {
+		type: 'simple',
+		date_created_gmt: '2018-09-25T20:35:51',
+		date_modified_gmt: '2019-02-18T21:44:25',
+		id: '202eca74-fc90-56e7-8269-b59f18a19194',
+		name: 'Skinny Jeans',
+		price: '9.99',
+		product_id: 30,
+		pwyw: false,
+		regular_price: '13',
+		sale_price: '9.99',
+		slug: 'honeymoon',
+		description: 'description',
+		short_description: 'short desc',
+		on_sale: true,
+		features: {
+			description: 'feature desc',
+			items: {
+				description: 'item desc',
+				icon: 'icon',
+				title: 'singleItemQuery title'
+			}
+		},
+		categories: [
+			{ id: 1, slug: 'fonts', name: 'Fonts' }
+		],
+		images: [
+			{
+				id: 123414,
+				alt: 'alt',
+				fullSize: {
+					url: 'fullsize-url'
+				},
+				thumbnail: {
+					url: 'image-url'
+				}
+			}
+		],
+		license: {
+			hasExtendedLicense: false,
+			type: 'standard'
+		},
+		seo: {
+			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
+			title: 'Skinny Jeans seo title'
+		},
+		tags: [
+		],
+		localFile: {
+			name: 'file name',
+			id: '1234',
+			childImageSharp: {
+				fluid: {
+					src: 'src'
+				},
+				fixed: {
+					width: '400',
+					height: '400',
+					src: 'src'
+				}
+			}
+		}
+	},
 }
 
 export const testCartWithItem: ICartState = {
@@ -307,6 +435,40 @@ export const testCartWithItem: ICartState = {
 	paymentType: 'Stripe',
 	totalItems: 1,
 	totalPrice: 12
+}
+export const testCartWithMultiples: ICartState = {
+	couponCode: {
+		code: '',
+		discount: '',
+		loading: false,
+		product_ids: [],
+		submitted: false,
+		type: '',
+		valid: false,
+	},
+	isOpen: false,
+	items: {
+		[ProductKey.WatercolorStd]: {
+			extended: false,
+			id: testProducts[ProductKey.WatercolorStd].product_id,
+			name: testProducts[ProductKey.WatercolorStd].name,
+			price: testProducts[ProductKey.WatercolorStd].price,
+			qty: 1,
+			slug: testProducts[ProductKey.WatercolorStd].slug,
+		},
+		[ProductKey.Skinnyjeans]:{
+			extended: false,
+			id: testProducts[ProductKey.Skinnyjeans].product_id,
+			name: testProducts[ProductKey.Skinnyjeans].name,
+			price: testProducts[ProductKey.Skinnyjeans].price,
+			qty: 1,
+			slug: testProducts[ProductKey.Skinnyjeans].slug,
+		}
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 2,
+	totalPrice: 25.99
 }
 
 export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {

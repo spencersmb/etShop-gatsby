@@ -49,7 +49,7 @@ export interface IChangeQty {
 }
 
 export interface IChangeLicenseData {
-	itemSlug: string,
+	cartItemIndex: string,
 	extended: boolean,
 	products: IProducts,
 	currentCartItem: ICartItem,

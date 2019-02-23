@@ -66,10 +66,11 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponCode): numb
 		// 2.a
 		// convert String product price to a number to do calculations on it
 		const product: ICartItem = items[slug]
+
 		let productPrice: number = parseFloat(product.price)
 		// Ts check because we told interfaces it could be string or number,
 		// but coded it so that qty should never get to this point as a string
-		const qty = typeof product.qty === 'string' ? parseFloat(product.qty) : product.qty
+		const qty: number = typeof product.qty === 'string' ? 0 : product.qty
 
 		// 2.b
 		// check if coupon applies to a product
@@ -132,6 +133,7 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponCode): numb
 	//
 	// check for negative number and return 0 if that's the case
 	// else round the total to string of 2 decimal places return that number
+
 	return totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
 	// return totalWithDiscount < 0 ? 0 : parseFloat(totalWithDiscount.toFixed(2))
 

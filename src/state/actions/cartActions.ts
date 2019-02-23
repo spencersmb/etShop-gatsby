@@ -172,7 +172,7 @@ export const updateCartItemQty = ({ key, cartItem, bulkDiscount, regularPrice }:
 
 	}
 
-export const changeLicenseType = ({ itemSlug, extended, products, currentCartItem, bulkDiscount }: IChangeLicenseData) =>
+export const changeLicenseType = ({ cartItemIndex, extended, products, currentCartItem, bulkDiscount }: IChangeLicenseData) =>
 	(dispatch: Dispatch<Action>, getState: () => IState) => {
 
 		// take item slug
@@ -182,8 +182,8 @@ export const changeLicenseType = ({ itemSlug, extended, products, currentCartIte
 		// update cart with new object (price slug, id, qty)
 		// then update cart price
 
-		const product = products[itemSlug]
-		const standardItem: IProduct = products[itemSlug]
+		const product = products[cartItemIndex]
+		const standardItem: IProduct = products[cartItemIndex]
 		const extendedItem: boolean | IProduct = product.license.extendedItem ? products[product.license.extendedItem.slug] : false
 		// look up price of extended item based off its slug
 
@@ -192,21 +192,21 @@ export const changeLicenseType = ({ itemSlug, extended, products, currentCartIte
 		}
 
 		const standardPriceLookup = bulkDiscount
-			? calcBulkPriceDiscount(bulkDiscount, products[itemSlug].price)
-			: products[itemSlug].price
+			? calcBulkPriceDiscount(bulkDiscount, products[cartItemIndex].price)
+			: products[cartItemIndex].price
 
 		const extendedItemPriceLookup = (bulkDiscount && extendedItem)
 			? calcBulkPriceDiscount(bulkDiscount, products[extendedItem.slug].price)
 			: (extendedItem ? products[extendedItem.slug].price : standardItem.price)
 
 		cartItem = {
-			[itemSlug]: {
+			[cartItemIndex]: {
 				extended,
 				id: (extended && extendedItem) ? extendedItem.product_id : standardItem.product_id,
 				name: (extended && extendedItem) ? extendedItem.name : standardItem.name,
 				price: (extended && extendedItem) ? extendedItemPriceLookup : standardPriceLookup,
 				qty: currentCartItem.qty,
-				slug: (extended && extendedItem) ? extendedItem.slug : itemSlug
+				slug: (extended && extendedItem) ? extendedItem.slug : cartItemIndex
 			}
 		}
 
@@ -214,7 +214,7 @@ export const changeLicenseType = ({ itemSlug, extended, products, currentCartIte
 			{
 				payload: {
 					item: cartItem,
-					slug: itemSlug
+					slug: cartItemIndex
 				},
 				type: CartActionTypes.UPDATE_CART_LICENSE
 			}

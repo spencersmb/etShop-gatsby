@@ -14,6 +14,7 @@ exports[`Number Dial Test renders correctly 1`] = `
     data-testid="numberDial"
     id="numberDial"
     onChange={[Function]}
+    onKeyPress={[Function]}
     type="number"
     value={2}
   />

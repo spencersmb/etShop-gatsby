@@ -1,31 +1,28 @@
 import CartItem from '@components/cart/cartItem'
 import { ICartState } from '@et/types/Cart'
-import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import React from 'react'
 import { connect } from 'react-redux'
 
 interface IProps {
 	cart: ICartState,
-	products: IProducts
 }
 
-export function CartList (props: any) {
+export function CartList (props: IProps) {
 	const { cart } = props
 	const itemsKeyArray: string[] = Object.keys(cart.items)
 
 	if (itemsKeyArray.length < 1) {
 		return (
-			<div/>
+			<div>Your cart is empty</div>
 		)
 	}
 	return (
-		<div>
-			<p>Itemized List of items in cart</p>
+		<div data-testid='cartList'>
 			{itemsKeyArray
 				.map((slug, index) =>
 					<CartItem
-						cartSlug={slug}
+						cartIndex={slug}
 						key={index}
 					/>
 				)}

@@ -21,12 +21,13 @@ function NumberDial ({ qty = 0, inputOnChange, disableInput, className, label = 
 			const inputValue: string = e.target.value
 
 			let currentNumber: number | string = 0
-			if (inputValue) {
-				currentNumber = parseInt(inputValue, 10)
-			}
 
 			if (inputValue.length > 3) {
 				return
+			}
+
+			if (inputValue) {
+				currentNumber = parseInt(inputValue, 10)
 			}
 
 			if (inputValue === '') {
@@ -47,6 +48,12 @@ function NumberDial ({ qty = 0, inputOnChange, disableInput, className, label = 
 				className='numberInput'
 				onChange={handleInputOnChange}
 				value={qty}
+				onKeyPress={(e) => {
+					if (e.key === '.' || e.key === '-') {
+						e.preventDefault()
+						return
+					}
+				}}
 				readOnly={disableInput}
 			/>
 		</div>
