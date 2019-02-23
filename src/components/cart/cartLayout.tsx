@@ -1,6 +1,8 @@
+import CartList from '@components/cart/cartList'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { cartToggle, emptyCart } from '@redux/actions/cartActions'
+import { checkForPWYWItemInCart } from '@utils/cartUtils'
 import { displayCurrency } from '@utils/priceUtils'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -69,23 +71,39 @@ export class CartLayout extends React.Component<IPropsPublic & IReduxState & IRe
 				<button data-testid='close-btn' className='jestCloseCart' onClick={this.props.cartToggle}>Close</button>
 
 				<div>
-					<button data-testid='empty-cart-btn' className='jestEmptyCart' onClick={this.props.emptyCart	}>Empty Cart
+					<button data-testid='empty-cart-btn' className='jestEmptyCart' onClick={this.props.emptyCart}>Empty Cart
 					</button>
 				</div>
 
 				<div>
 					Items list
 					{/*<ErrorBoundary>*/}
-					{/*<CartItemsList/>*/}
+					<CartList/>
 					{/*</ErrorBoundary>*/}
 				</div>
 
 				<div>
 					{/*{this.getCheckOutForm()}*/}
 					checkout forms
-					<p>
-						{displayCurrency(this.props.cart.totalPrice)}
-					</p>
+					<hr/>
+					<div>
+						<div>pay what you want found?</div>
+						<div>
+							{JSON.stringify(checkForPWYWItemInCart(this.props.cart.items, this.props.products))}
+						</div>
+					</div>
+					<hr/>
+					<div>
+						<p>
+							{displayCurrency(this.props.cart.totalPrice)}
+						</p>
+						<button
+							type='button'
+							disabled={this.props.cart.totalPrice === 0
+								? !checkForPWYWItemInCart(this.props.cart.items, this.props.products)
+								: false}>Checkout temp btn
+						</button>
+					</div>
 				</div>
 			</CartWrapper>
 		)

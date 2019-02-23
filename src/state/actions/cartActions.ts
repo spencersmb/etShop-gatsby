@@ -1,9 +1,10 @@
 import { Actions } from '@et/types/Actions'
-import { ICartItem, ICartItemWithKey, ILocalStorageCart } from '@et/types/Cart'
+import { ICartItem, ICartItemWithKey, IChangeLicenseData, IChangeQty, ILocalStorageCart } from '@et/types/Cart'
 import { CartActionTypes } from '@et/types/Enums'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { emptyLocalStorageCart, updateLocalStorageCart } from '@utils/cartUtils'
+import { calcBulkPriceDiscount } from '@utils/priceUtils'
 import { Action, Dispatch } from 'redux'
 
 /*
@@ -120,3 +121,109 @@ export const cartLoadedComplete = (): Actions => {
 		type: CartActionTypes.LOAD_CART_COMPLETE
 	}
 }
+
+// CART ITEM SPECIFIC
+/*
+ Dispatch event to remove the item clicked by user
+ After - dispatch updateCartTotal and Price
+ */
+export const removeProductFromCart = (slug: string) => (dispatch: Dispatch<Action>, getState: () => IState) => {
+
+	dispatch({
+		payload: {
+			id: slug
+		},
+		type: CartActionTypes.REMOVE_ITEM
+	})
+
+	// After item added - re-calc totalItems
+	dispatch(updateCartTotal())
+
+	dispatch(updateCartPrice())
+
+	const newState: IState = getState()
+	updateLocalStorageCart(newState.cart)
+}
+
+export const updateCartItemQty = ({ key, cartItem, bulkDiscount, regularPrice }: IChangeQty) =>
+	(dispatch: Dispatch<Action>, getState: () => IState) => {
+
+		dispatch(
+			{
+				payload: {
+					price: bulkDiscount
+						? calcBulkPriceDiscount(true, regularPrice)
+						: regularPrice,
+					qty: cartItem.qty,
+					slug: key
+				},
+				type: CartActionTypes.UPDATE_CART_QTY
+			}
+		)
+
+		// then update total
+		dispatch(updateCartTotal())
+
+		// then update price
+		dispatch(updateCartPrice())
+
+		const newState: IState = getState()
+		updateLocalStorageCart(newState.cart)
+
+	}
+
+export const changeLicenseType = ({ itemSlug, extended, products, currentCartItem, bulkDiscount }: IChangeLicenseData) =>
+	(dispatch: Dispatch<Action>, getState: () => IState) => {
+
+		// take item slug
+		// find the item in our products list
+		// if extended get the extended Item details
+		// if standard get the standard Item details
+		// update cart with new object (price slug, id, qty)
+		// then update cart price
+
+		const product = products[itemSlug]
+		const standardItem: IProduct = products[itemSlug]
+		const extendedItem: boolean | IProduct = product.license.extendedItem ? products[product.license.extendedItem.slug] : false
+		// look up price of extended item based off its slug
+
+		let cartItem: {
+			[id: string]: ICartItem
+		}
+
+		const standardPriceLookup = bulkDiscount
+			? calcBulkPriceDiscount(bulkDiscount, products[itemSlug].price)
+			: products[itemSlug].price
+
+		const extendedItemPriceLookup = (bulkDiscount && extendedItem)
+			? calcBulkPriceDiscount(bulkDiscount, products[extendedItem.slug].price)
+			: (extendedItem ? products[extendedItem.slug].price : standardItem.price)
+
+		cartItem = {
+			[itemSlug]: {
+				extended,
+				id: (extended && extendedItem) ? extendedItem.product_id : standardItem.product_id,
+				name: (extended && extendedItem) ? extendedItem.name : standardItem.name,
+				price: (extended && extendedItem) ? extendedItemPriceLookup : standardPriceLookup,
+				qty: currentCartItem.qty,
+				slug: (extended && extendedItem) ? extendedItem.slug : itemSlug
+			}
+		}
+
+		dispatch(
+			{
+				payload: {
+					item: cartItem,
+					slug: itemSlug
+				},
+				type: CartActionTypes.UPDATE_CART_LICENSE
+			}
+		)
+
+		// then update price
+		dispatch(updateCartPrice())
+
+		const newState: IState = getState()
+		updateLocalStorageCart(newState.cart)
+
+	}

@@ -27,8 +27,9 @@
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
-    "rootDirs": ["src"],
-
+    "rootDirs": [
+      "src"
+    ],
     "paths": {
       "@api/*": [
         "api/*"
@@ -62,7 +63,6 @@
     "next.config.js",
     "next-seo.config.js",
     "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/*.test.tsx",
+    "**/*.spec.tsx"
   ]
 }

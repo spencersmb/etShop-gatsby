@@ -1,3 +1,5 @@
+import { IProduct, IProducts } from '@et/types/Products'
+
 export interface ICouponCode {
 	valid: boolean;
 	loading: boolean;
@@ -25,7 +27,7 @@ export interface ICartItem {
 	id: number,
 	name: string,
 	price: string,
-	qty: number,
+	qty: number | string,
 	slug: string
 }
 
@@ -37,4 +39,19 @@ export interface ILocalStorageCart {
 	items: {
 		[id: string]: ICartItem
 	}
+}
+
+export interface IChangeQty {
+	cartItem: ICartItem,
+	regularPrice: string,
+	bulkDiscount: boolean,
+	key: string
+}
+
+export interface IChangeLicenseData {
+	itemSlug: string,
+	extended: boolean,
+	products: IProducts,
+	currentCartItem: ICartItem,
+	bulkDiscount: boolean
 }

@@ -1,7 +1,6 @@
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 import { IState } from '@et/types/State'
 import { cartLoadedComplete as cartLoaded, updateCartState } from '@redux/actions/cartActions'
-import { media } from '@styles/global/breakpoints'
 import { getLocalStorageCart } from '@utils/cartUtils'
 import React, { useLayoutEffect } from 'react'
 import { connect } from 'react-redux'
@@ -66,12 +65,7 @@ export default connect<IPropsPrivate, IPrivateActions, IPropsPublic, IState>(map
 
 // Styles
 const CartStyled = styled.div`
-	p{
-		color: red;
-		${media.tablet`
-			color: green;
-		`}
-	}
+	
 `
 
 // animations

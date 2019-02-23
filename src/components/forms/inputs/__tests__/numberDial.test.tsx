@@ -15,9 +15,9 @@ const props = {
 	className: 'testClass'
 }
 
-const props3Char = {
+const disabled = {
 	qty: 233,
-	inCart: false,
+	disableInput: true,
 	inputOnChange: jest.fn(),
 	className: 'testClass'
 }
@@ -68,6 +68,13 @@ describe('Number Dial Test', () => {
 		fireEvent.input(input, { target: { value: 'abc' } })
 		// called 32 from previous test, so no change
 		expect(props.inputOnChange).toBeCalledWith(32)
+	})
+
+	it('Should render disabled', () => {
+		const modalRender = render(<NumberDial {...disabled}/>)
+		const input = modalRender.getByTestId('numberDial')
+
+		expect(input.getAttribute('readonly')).toEqual('')
 	})
 
 })

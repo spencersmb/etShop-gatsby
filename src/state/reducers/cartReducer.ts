@@ -89,6 +89,49 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				loaded: true
 			}
 
+		// CART ITEM SPECIFIC
+
+		case CartActionTypes.REMOVE_ITEM:
+
+			// Loop over all items in cart
+			const newItems = Object.keys(state.items).reduce((obj, key) => {
+
+				// if the id's don't match
+				// add it back into the obj
+				if (key !== action.payload.id) {
+					obj[key] = state.items[key]
+					return obj
+				}
+				return obj
+
+			}, {})
+
+			// Return all items but the one that
+			// was to be removed
+			return {
+				...state,
+				items: newItems
+			}
+
+		case CartActionTypes.UPDATE_CART_QTY:
+			const updateItem = {
+				[action.payload.slug]: {
+					...state.items[action.payload.slug],
+					price: action.payload.price,
+					qty: action.payload.qty
+				}
+			}
+			return {
+				...state,
+				items: { ...state.items, ...updateItem }
+			}
+
+		case CartActionTypes.UPDATE_CART_LICENSE:
+			return {
+				...state,
+				items: { ...state.items, ...action.payload.item }
+			}
+
 		default:
 			return state
 	}

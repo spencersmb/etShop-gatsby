@@ -8,10 +8,11 @@ import { IState } from '@et/types/State'
 import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
 import { Link } from 'gatsby'
-import React, { Dispatch, useLayoutEffect, useReducer, useRef } from 'react'
+import React, { Dispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import config from '../../../gatsby-config'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import _ from 'lodash'
 
 interface IPropsPrivate {
 	products: IProducts,
@@ -42,13 +43,6 @@ interface INewState {
 	payWhatYouWant?: boolean
 }
 
-// Create State for bulk
-// if license qty is larger than X - set state to true
-// pass that in as a prop to add to cart btn
-// create Price utils file with calc discount function
-
-// Price gets set when licenses change or extended Item?
-// fix license qty so that it is a number to help calc price better
 type useSetStateType = [IPublicState, Dispatch<INewState>]
 
 function useSetState (initialState: any): useSetStateType {
@@ -72,16 +66,16 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 		payWhatYouWant: product.pwyw,
 		price: product.price
 	})
-
 	const standardItem = useRef(props.product)
 	const extendedItem = useRef(product.license.extendedItem ? products[product.license.extendedItem.slug] : null)
 
+	// dispatch effect after cart is loaded
 	// check for product in cart on load
 	// then dispatch to state the item found
 	useLayoutEffect(() => {
-
 		// Check if item is in cart on load
 		const productFound: boolean = checkCartForProduct(cart, product.slug).length > 0
+
 		if (productFound && !state.inCart) {
 
 			// 1. Get the item in the cart
@@ -101,10 +95,58 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 				payWhatYouWant: selectedProduct.pwyw,
 				price: cartItem.price
 			})
-
 		}
 
-	}, [])
+	}, [cart.loaded])
+
+	// on Cart price change
+	// if the item gets removed,
+	// reset the pageLayout instance
+	useEffect(() => {
+		if (previousCart.current.loaded) {
+			const productFound: boolean = checkCartForProduct(cart, product.slug).length > 0
+
+			if (!productFound) {
+				setState({
+					inCart: false,
+					numberOfLicenses: 1,
+					selectedLicense: 'standard',
+					bulkDiscount: false,
+					selectedProduct: props.product,
+					price: props.product.price
+				})
+			} else {
+
+				// check if the items are equal
+				if (!_.isEqual(previousCart.current.items[product.slug], cart.items[product.slug])) {
+					// product is in cart and may have changed
+					// 1. Get the item in the cart
+					const cartItem: ICartItem = cart.items[product.slug]
+
+					// 2. Set the correct item
+					const selectedProduct = cartItem.extended && extendedItem.current ? extendedItem.current : standardItem.current
+					const bulkDiscount: boolean = cartItem.qty >= config.siteMetadata.pricing.minQuantity
+
+					// 3. Set state
+					setState({
+						selectedProduct,
+						selectedLicense: cartItem.extended ? 'extended' : 'standard',
+						numberOfLicenses: cartItem.qty,
+						inCart: true,
+						bulkDiscount,
+						payWhatYouWant: selectedProduct.pwyw,
+						price: cartItem.price
+					})
+				}
+
+			}
+		}
+	}, [cart.totalPrice, cart.totalItems])
+
+	const previousCart = useRef(cart)
+	useEffect(() => {
+		previousCart.current = cart
+	})
 
 	function selectChange (e: any) {
 		setState({
@@ -176,7 +218,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
           <NumberDialStyled
             label='Pay what you want'
             qty={state.price}
-            inCart={state.inCart}
+            disabled={state.inCart}
             inputOnChange={onPwywChange}/>
         </div>}
 			</div>
@@ -195,7 +237,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 				{!state.payWhatYouWant && <NumberDialStyled
           label='Select number of license'
           qty={state.numberOfLicenses}
-          inCart={state.inCart}
+          disabled={state.inCart}
           inputOnChange={onDialChange}/>}
 			</div>
 			<hr/>

@@ -72,6 +72,31 @@ export interface ILoadCartComplete {
   type: CartActionTypes.LOAD_CART_COMPLETE
 }
 
+export interface ICartRemoveProduct {
+  payload: {
+    id: string
+  },
+  type: CartActionTypes.REMOVE_ITEM
+}
+
+export interface IUpdateCartQty {
+  type: CartActionTypes.UPDATE_CART_QTY,
+  payload: {
+    price: string,
+    qty: number,
+    slug: string,
+  }
+}
+
+export interface IUpdateCartLicense {
+  type: CartActionTypes.UPDATE_CART_LICENSE,
+  payload: {
+    item: {
+      [id: string]: ICartItem
+    },
+  }
+}
+
 export type WindowActions =
   | IChangeBreakPoint
 
@@ -96,6 +121,9 @@ type CartActions =
   | IUpdateCartState
   | ILoadCartComplete
   | IEmptyCart
+  | ICartRemoveProduct
+  | IUpdateCartQty
+  | IUpdateCartLicense
 
 export type Actions =
   | AuthActions

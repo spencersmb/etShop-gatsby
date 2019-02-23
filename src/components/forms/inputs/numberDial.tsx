@@ -7,13 +7,13 @@ export interface IProps {
 
 	/** prop1 description */
 	qty: number | string;
-	inCart: boolean;
+	disableInput?: boolean;
 	inputOnChange: (total: number | string) => void
 	label?: string
 	className?: string
 }
 
-function NumberDial ({ qty = 0, inputOnChange, inCart, className, label = '' }: IProps) {
+function NumberDial ({ qty = 0, inputOnChange, disableInput, className, label = '' }: IProps) {
 	const handleInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
 		// Match OBJECT for unit testing purposes
 		if (e.target instanceof HTMLInputElement || typeof e.target === 'object'
@@ -47,7 +47,7 @@ function NumberDial ({ qty = 0, inputOnChange, inCart, className, label = '' }: 
 				className='numberInput'
 				onChange={handleInputOnChange}
 				value={qty}
-				readOnly={inCart}
+				readOnly={disableInput}
 			/>
 		</div>
 	)

@@ -11,13 +11,20 @@ module.exports = {
     twitterUrl: "https://twitter.com/teelacunningham",
     // TODO find default image url
     twitterDefaultImage: "https://twitter.com/teelacunningham",
-    pricing:{
+    pricing: {
       minQuantity: 10,
       discount: .10
     }
   },
   plugins: [
     `gatsby-plugin-typescript`,
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Add any options here
+        displayName: true
+      }
+    },
     {
       resolve: "gatsby-plugin-module-resolver",
       options: {

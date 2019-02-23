@@ -4,7 +4,7 @@ interface IProps {
 	showDropdown: boolean
 	onChange: any,
 	selectedLicense: string,
-	inCart: boolean
+	inCart?: boolean
 }
 
 const ProductSelect = ({ onChange, selectedLicense, showDropdown, inCart }: IProps) => {
