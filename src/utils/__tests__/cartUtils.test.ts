@@ -1,6 +1,6 @@
 import initialState from '@redux/reducers/initialState'
 import { ProductKey, testCartWithItem, testCartWithItemAndCoupon, testProducts } from '@redux/reduxTestUtils'
-import { checkCartForProduct, checkForCoupon, checkForPWYWItemInCart, totalItemsInCart } from '@utils/cartUtils'
+import { checkCartForProduct, checkForCoupon, isPWYWItemInCart, totalItemsInCart } from '@utils/cartUtils'
 import {
 	cleanup
 } from 'react-testing-library'
@@ -35,7 +35,7 @@ describe('Cart Helper Utils', () => {
 	})
 
 	it('Should return false if a PWYW item is in the cart', () => {
-		expect(checkForPWYWItemInCart(testCartWithItem.items, testProducts)).toEqual(false)
+		expect(isPWYWItemInCart(testCartWithItem.items, testProducts)).toEqual(false)
 	})
 
 	it('Should return true if a PWYW item is in the cart', () => {
@@ -49,7 +49,7 @@ describe('Cart Helper Utils', () => {
 			slug: testProducts[ProductKey.Honeymoon].slug
 		}
 
-		expect(checkForPWYWItemInCart(hasPwyw.items, testProducts)).toEqual(true)
+		expect(isPWYWItemInCart(hasPwyw.items, testProducts)).toEqual(true)
 	})
 
 })

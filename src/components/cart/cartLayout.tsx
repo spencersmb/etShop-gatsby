@@ -1,9 +1,9 @@
 import CartList from '@components/cart/cartList'
+import CheckoutTabs from '@components/tabs/checkoutTabs'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
-import { cartToggle, emptyCart } from '@redux/actions/cartActions'
-import { checkForPWYWItemInCart } from '@utils/cartUtils'
-import { displayCurrency } from '@utils/priceUtils'
+import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
+import { isPWYWItemInCart } from '@utils/cartUtils'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { ICartState } from '@et/types/Cart'
@@ -21,49 +21,66 @@ interface IReduxState {
 }
 
 interface IReduxActions {
-	// changeCheckoutType: (type: string) => Actions,
+	changeCheckout: (type: string) => Actions,
 	emptyCart: () => Actions,
 	cartToggle: () => void
 }
 
+function preventDefault (e) {
+	e = e || window.event
+	if (e.preventDefault) {
+		e.preventDefault()
+	}
+	e.returnValue = false
+}
+
 export class CartLayout extends React.Component<IPropsPublic & IReduxState & IReduxActions> {
 
-	emptyCart = () => {
-		this.props.emptyCart()
+	getCheckOutForm = () => {
+		const { cart } = this.props
+		// TODO: Redo how we check for free checkout
+		// Possibly add a free checkout toggle into redux so if the cart is empty and we
+		// add a free item - the cart is toggled to free checkout
+		// if cart has an item in it already and is not set to free, then the checkout is
+		// not changed to free
+		if (this.props.cart.totalPrice === 0 && isPWYWItemInCart(this.props.cart.items, this.props.products)) {
+			return (<div className='freeCheckout'>Free item checkout</div>)
+		} else {
+			return (
+				<CheckoutTabs
+					cartTotal={this.props.cart.totalPrice}
+					initialLoad='stripe'
+					handleChangeType={this.props.changeCheckout}
+				>
+					<div data-payment='stripe'>Tab 1</div>
+					<div data-payment='paypal'>Tab 2</div>
+				</CheckoutTabs>
+			)
+		}
+
 	}
-	// changePaymentType = (type: string) => {
-	// 	this.props.changeCheckoutType(type)
-	// }
-	//
-	// getCheckOutForm = () => {
-	// 	const {cart} = this.props
-	// 	// TODO: Redo how we check for free checkout
-	// 	// Possibly add a free checkout toggle into redux so if the cart is empty and we
-	// 	// add a free item - the cart is toggled to free checkout
-	// 	// if cart has an item in it already and is not set to free, then the checkout is
-	// 	// not changed to free
-	// 	if (cart.totalPrice === 0 && cart.totalItems > 0) {
-	// 		return (<div className='freeCheckout'>Free item checkout</div>)
-	// 	} else {
-	// 		return (
-	// 			<TabsList
-	// 				initialLoad={2}
-	// 				onLoad={this.changePaymentType}
-	// 			>
-	// 				{/*Fade in out each item if key is active*/}
-	// 				<div data-item={1} data-payment="stripe" data-click={this.changePaymentType}>
-	// 					<StripeProviderWrapper>
-	// 						<StripeCheckOutForm/>
-	// 					</StripeProviderWrapper>
-	// 				</div>
-	// 				<div data-item={2} data-payment="paypal" data-click={this.changePaymentType}>
-	// 					<PaypalCheckOutForm/>
-	// 				</div>
-	// 			</TabsList>
-	// 		)
-	// 	}
-	//
-	// }
+
+	componentDidMount (): void {
+		const body: HTMLElement | null = document.getElementById('app')
+		if (body) {
+			body.style.top = '-' + window.pageYOffset.toString(10) + 'px'
+			body.style.position = 'fixed'
+		}
+
+	}
+
+	componentWillUnmount (): void {
+		const body = document.getElementById('app')
+		if (body) {
+			const styles = window.getComputedStyle(body, 'top')
+			console.log('parseInt(styles.top.substring(1), 10)', parseInt(styles.top.substr(1), 10))
+
+			body.style.position = 'relative'
+			window.scrollTo(0, (styles.top ? parseInt(styles.top.substr(1), 10) : 0))
+			body.style.top = 'auto'
+		}
+
+	}
 
 	render () {
 		return (
@@ -71,36 +88,41 @@ export class CartLayout extends React.Component<IPropsPublic & IReduxState & IRe
 				<button data-testid='close-btn' className='jestCloseCart' onClick={this.props.cartToggle}>Close</button>
 
 				<div>
-					<button data-testid='empty-cart-btn' className='jestEmptyCart' onClick={this.props.emptyCart}>Empty Cart
+					<button
+						data-testid='empty-cart-btn'
+						className='jestEmptyCart'
+						onClick={this.props.emptyCart}>
+						Empty Cart
 					</button>
 				</div>
 
 				<div>
-					Items list
-					{/*<ErrorBoundary>*/}
 					<CartList/>
-					{/*</ErrorBoundary>*/}
 				</div>
 
 				<div>
-					{/*{this.getCheckOutForm()}*/}
-					checkout forms
+					<CheckoutTabs
+						cartTotal={this.props.cart.totalPrice}
+						initialLoad='stripe'
+						handleChangeType={this.props.changeCheckout}
+						freeCheckout={this.props.cart.totalPrice === 0 && isPWYWItemInCart(this.props.cart.items, this.props.products)}
+					>
+						<div data-payment='stripe'>Tab 1</div>
+						<div data-payment='paypal'>Tab 2</div>
+					</CheckoutTabs>
 					<hr/>
 					<div>
 						<div>pay what you want found?</div>
 						<div>
-							{JSON.stringify(checkForPWYWItemInCart(this.props.cart.items, this.props.products))}
+							{JSON.stringify(isPWYWItemInCart(this.props.cart.items, this.props.products))}
 						</div>
 					</div>
 					<hr/>
 					<div>
-						<p>
-							{displayCurrency(this.props.cart.totalPrice)}
-						</p>
 						<button
 							type='button'
 							disabled={this.props.cart.totalPrice === 0
-								? !checkForPWYWItemInCart(this.props.cart.items, this.props.products)
+								? !isPWYWItemInCart(this.props.cart.items, this.props.products)
 								: false}>Checkout temp btn
 						</button>
 					</div>
@@ -116,6 +138,7 @@ const CartWrapper = styled.div`
 	left: 0;
 	height: 100vh;
 	width: 100%;
+	overflow-y: scroll;
 	background: #8ac3c0;
 	transform:translateY(0) translateX(0);
 	z-index: 4;
@@ -132,7 +155,7 @@ const mapStateToProps = (state: IState): any => {
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 	return {
 		cartToggle: bindActionCreators(cartToggle, dispatch),
-		// changeCheckoutType: bindActionCreators(changeCheckoutType, dispatch),
+		changeCheckout: bindActionCreators(changeCheckoutType, dispatch),
 		emptyCart: bindActionCreators(emptyCart, dispatch)
 	}
 }

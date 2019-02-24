@@ -24,6 +24,7 @@ interface IPropsPublic {
 }
 
 export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPublic) => {
+	// onComponent mount
 	useLayoutEffect(() => {
 		const localStateCart: ILocalStorageCart = getLocalStorageCart()
 

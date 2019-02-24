@@ -97,6 +97,11 @@ export interface IUpdateCartLicense {
   }
 }
 
+export interface ICartChangeCheckoutType {
+  payload: string,
+  type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+}
+
 export type WindowActions =
   | IChangeBreakPoint
 
@@ -124,6 +129,7 @@ type CartActions =
   | ICartRemoveProduct
   | IUpdateCartQty
   | IUpdateCartLicense
+  | ICartChangeCheckoutType
 
 export type Actions =
   | AuthActions

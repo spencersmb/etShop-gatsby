@@ -54,8 +54,6 @@ interface IReduxPropActions {
  * Item total calculates the coupon discount on the fly so when a user saves the cart we dont save the discount
  * Same thing is done for the total cart, we check for the coupon on the fly when creating the total
  */
-
-
 export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	const { cart, cartIndex, products, changeLicense, removeItem, updateCartItemQty } = props
 	const [bulkDiscount, setBulkDiscount] = useState(false)
@@ -106,7 +104,6 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 		removeItem(cartIndex)
 	}
 
-	// place item error here
 	return (
 		<div>
 			<div data-testid='productName'>{selectedProduct.current.name}</div>
@@ -126,7 +123,6 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 				disableInput={selectedProduct.current.pwyw}
 			/>
 
-			{/*Do we want to show the final price after discount???*/}
 			<div>Item:</div>
 			<div data-testid='productPrice'>{displayCurrency(cart.items[cartIndex].price)}</div>
 			{hasCoupon() &&

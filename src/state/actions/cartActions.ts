@@ -232,3 +232,11 @@ export const changeLicenseType = ({ cartItemIndex, extended, products, currentCa
 		updateLocalStorageCart(newState.cart)
 
 	}
+
+
+export const changeCheckoutType = (type: string): Actions => {
+	return {
+		payload: type,
+		type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+	}
+}

@@ -212,7 +212,7 @@ export const checkForCoupon = (couponIds: number[], needleId: number): boolean =
  * @param {IProducts} products
  * @return boolean
  */
-export function checkForPWYWItemInCart (cartItems: ICartItemWithKey, products: IProducts) {
+export function isPWYWItemInCart (cartItems: ICartItemWithKey, products: IProducts) {
 
 	const productsKeys = Object.keys(products)
 	const itemFound = productsKeys.filter(key => {

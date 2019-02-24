@@ -141,6 +141,12 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				items: { ...state.items, ...action.payload.item }
 			}
 
+		case CartActionTypes.CHANGE_CHECKOUT_TYPE:
+			return {
+				...state,
+				paymentType: action.payload
+			}
+
 		default:
 			return state
 	}
