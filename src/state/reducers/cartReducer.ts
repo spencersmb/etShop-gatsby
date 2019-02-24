@@ -91,6 +91,9 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 
 		// CART ITEM SPECIFIC
 
+		/*
+		* * Tested!
+		*/
 		case CartActionTypes.REMOVE_ITEM:
 
 			// Loop over all items in cart
@@ -113,6 +116,9 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				items: newItems
 			}
 
+		/*
+		* * Tested!
+		*/
 		case CartActionTypes.UPDATE_CART_QTY:
 			const updateItem = {
 				[action.payload.slug]: {
@@ -126,6 +132,9 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				items: { ...state.items, ...updateItem }
 			}
 
+		/*
+		* * Tested!
+		*/
 		case CartActionTypes.UPDATE_CART_LICENSE:
 			return {
 				...state,

@@ -123,7 +123,9 @@ export const cartLoadedComplete = (): Actions => {
 }
 
 // CART ITEM SPECIFIC
+
 /*
+* * Tested!
  Dispatch event to remove the item clicked by user
  After - dispatch updateCartTotal and Price
  */
@@ -145,6 +147,11 @@ export const removeProductFromCart = (slug: string) => (dispatch: Dispatch<Actio
 	updateLocalStorageCart(newState.cart)
 }
 
+/*
+* * Tested!
+ Dispatch event to update the item qty and possibly price
+ After - dispatch updateCartTotal and Price
+ */
 export const updateCartItemQty = ({ key, cartItem, bulkDiscount, regularPrice }: IChangeQty) =>
 	(dispatch: Dispatch<Action>, getState: () => IState) => {
 
@@ -172,6 +179,11 @@ export const updateCartItemQty = ({ key, cartItem, bulkDiscount, regularPrice }:
 
 	}
 
+/*
+* * Tested!
+Dispatch event to changeLicenseType
+After - dispatch Price
+*/
 export const changeLicenseType = ({ cartItemIndex, extended, products, currentCartItem, bulkDiscount }: IChangeLicenseData) =>
 	(dispatch: Dispatch<Action>, getState: () => IState) => {
 
@@ -187,10 +199,6 @@ export const changeLicenseType = ({ cartItemIndex, extended, products, currentCa
 		const extendedItem: boolean | IProduct = product.license.extendedItem ? products[product.license.extendedItem.slug] : false
 		// look up price of extended item based off its slug
 
-		let cartItem: {
-			[id: string]: ICartItem
-		}
-
 		const standardPriceLookup = bulkDiscount
 			? calcBulkPriceDiscount(bulkDiscount, products[cartItemIndex].price)
 			: products[cartItemIndex].price
@@ -199,22 +207,19 @@ export const changeLicenseType = ({ cartItemIndex, extended, products, currentCa
 			? calcBulkPriceDiscount(bulkDiscount, products[extendedItem.slug].price)
 			: (extendedItem ? products[extendedItem.slug].price : standardItem.price)
 
-		cartItem = {
-			[cartItemIndex]: {
-				extended,
-				id: (extended && extendedItem) ? extendedItem.product_id : standardItem.product_id,
-				name: (extended && extendedItem) ? extendedItem.name : standardItem.name,
-				price: (extended && extendedItem) ? extendedItemPriceLookup : standardPriceLookup,
-				qty: currentCartItem.qty,
-				slug: (extended && extendedItem) ? extendedItem.slug : cartItemIndex
-			}
-		}
-
 		dispatch(
 			{
 				payload: {
-					item: cartItem,
-					slug: cartItemIndex
+					item: {
+						[cartItemIndex]: {
+							extended,
+							id: (extended && extendedItem) ? extendedItem.product_id : standardItem.product_id,
+							name: (extended && extendedItem) ? extendedItem.name : standardItem.name,
+							price: (extended && extendedItem) ? extendedItemPriceLookup : standardPriceLookup,
+							qty: currentCartItem.qty,
+							slug: (extended && extendedItem) ? extendedItem.slug : cartItemIndex
+						}
+					}
 				},
 				type: CartActionTypes.UPDATE_CART_LICENSE
 			}

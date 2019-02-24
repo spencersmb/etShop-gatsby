@@ -1,6 +1,6 @@
 import { IState } from '@et/types/State'
-import { addProductToCart, cartToggle as cartToggleAction, IAddProductAction } from '@redux/actions/cartActions'
-import React, { useEffect } from 'react'
+import { addProductToCart, cartToggle as cartToggleAction, IAddProductAction } from '../../state/actions/cartActions'
+import React from 'react'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { ICartState } from '@et/types/Cart'
@@ -38,7 +38,7 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 
 	if (isInCart) {
 		return (
-			<button onClick={cartToggle}>
+			<button data-testid='checkout' onClick={cartToggle}>
 				Checkout
 			</button>
 		)
@@ -46,10 +46,10 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 
 	return (
 		<>
-			<button onClick={handleAddToCart} disabled={disabled}>
+			<button data-testid='addToCart' onClick={handleAddToCart} disabled={disabled}>
 				Add To Cart
 			</button>
-			{disabled && <div className='jestWarning'>Must have at least one computer license selected</div>}
+			{disabled && <div data-testid='warning'>Must have at least one computer license selected</div>}
 		</>
 	)
 }

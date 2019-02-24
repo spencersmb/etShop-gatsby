@@ -1,4 +1,4 @@
-import AddToCartBtn from '@components/cart/addToCartBtn'
+import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
 import LicenseSelect from '@components/forms/inputs/productSelect'
 import Layout from '@components/layout'

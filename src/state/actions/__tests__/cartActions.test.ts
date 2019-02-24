@@ -4,8 +4,8 @@ import { CartActionTypes } from '@et/types/Enums'
 import { IProduct } from '@et/types/Products'
 import {
 	addProductToCart, cartLoadedComplete,
-	cartToggle,
-	emptyCart,
+	cartToggle, changeLicenseType,
+	emptyCart, removeProductFromCart, updateCartItemQty,
 	updateCartPrice,
 	updateCartState,
 	updateCartTotal
@@ -18,6 +18,7 @@ import {
 	testProducts,
 	testCartWithItem
 } from '@redux/reduxTestUtils'
+import { calcBulkPriceDiscount } from '@utils/priceUtils'
 import { cleanup } from 'react-testing-library'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -197,6 +198,111 @@ describe('Cart Action tests', () => {
 
 		expect(getActions.length).toBe(1)
 		expect(getActions).toEqual([expectedActions])
+
+	})
+
+	it('Should have type REMOVE_ITEM + correct payload', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithItem
+		const store = mockStore(stateWithCartItem)
+
+		// @ts-ignore
+		store.dispatch(removeProductFromCart(ProductKey.WatercolorStd))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: {
+					id: ProductKey.WatercolorStd
+				},
+				type: CartActionTypes.REMOVE_ITEM
+			},
+			{
+				type: CartActionTypes.UPDATE_CART_TOTAL
+			},
+			{
+				type: CartActionTypes.UPDATE_CART_PRICE
+			}
+		]
+
+		expect(getActions.length).toBe(3)
+		expect(getActions).toEqual(expectedActions)
+
+	})
+
+	it('Should have type updateCartItemQty + correct payload', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithItem
+		const store = mockStore(stateWithCartItem)
+		const item = testProducts[ProductKey.WatercolorStd]
+
+		// @ts-ignore
+		store.dispatch(updateCartItemQty({
+			key: ProductKey.WatercolorStd,
+			cartItem: testCartWithItem.items[ProductKey.WatercolorStd],
+			bulkDiscount: false,
+			regularPrice: testCartWithItem.items[ProductKey.WatercolorStd].price
+		}))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: {
+					price: item.price,
+					qty: 1,
+					slug: ProductKey.WatercolorStd
+				},
+				type: CartActionTypes.UPDATE_CART_QTY
+			},
+			{
+				type: CartActionTypes.UPDATE_CART_TOTAL
+			},
+			{
+				type: CartActionTypes.UPDATE_CART_PRICE
+			}
+		]
+
+		expect(getActions.length).toBe(3)
+		expect(getActions).toEqual(expectedActions)
+
+	})
+
+	it('Should have type changeLicenseType + correct payload', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithItem
+		const store = mockStore(stateWithCartItem)
+		const extendedItem = testProducts[ProductKey.WatercolorExt]
+
+		// @ts-ignore
+		store.dispatch(changeLicenseType({
+			currentCartItem: stateWithCartItem.cart.items[ProductKey.WatercolorStd], // item in cart
+			extended: true, // value from dropdown
+			cartItemIndex: ProductKey.WatercolorStd, // redundent?
+			products: testProducts, // all our products
+			bulkDiscount: false // is bulkdiscount enabled
+		}))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: {
+					item: {
+						[ProductKey.WatercolorStd]: {
+							extended: true,
+							id: extendedItem.product_id,
+							name: extendedItem.name,
+							price: extendedItem.price,
+							qty: 1,
+							slug: extendedItem.slug
+						}
+					}
+				},
+				type: CartActionTypes.UPDATE_CART_LICENSE
+			},
+			{
+				type: CartActionTypes.UPDATE_CART_PRICE
+			}
+		]
+
+		expect(getActions.length).toBe(2)
+		expect(getActions).toEqual(expectedActions)
 
 	})
 })

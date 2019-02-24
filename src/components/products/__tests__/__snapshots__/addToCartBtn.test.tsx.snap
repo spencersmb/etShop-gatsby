@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddToCart Button renders correctly 1`] = `
+Array [
+  <button
+    data-testid="addToCart"
+    disabled={true}
+    onClick={[Function]}
+  >
+    Add To Cart
+  </button>,
+  <div
+    data-testid="warning"
+  >
+    Must have at least one computer license selected
+  </div>,
+]
+`;
