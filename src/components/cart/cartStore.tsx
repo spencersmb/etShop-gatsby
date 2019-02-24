@@ -36,17 +36,17 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 
 	}, [])
 	return (
-		<CartStyled style={{ position: 'relative', zIndex: 3 }}>
-			<PoseGroup>
-				{props.cart.isOpen &&
-        <CartPose key='cart'>
-					{({ ref }: IPoseHoc) => (
-						<Cart poseRef={ref}/>
-					)}
-        </CartPose>
-				}
-			</PoseGroup>
-		</CartStyled>
+			<CartStyled style={{ position: 'relative', zIndex: 3 }}>
+				<PoseGroup>
+					{props.cart.isOpen &&
+          <CartPose key='cart'>
+						{({ ref }: IPoseHoc) => (
+							<Cart poseRef={ref}/>
+						)}
+          </CartPose>
+					}
+				</PoseGroup>
+			</CartStyled>
 	)
 }
 

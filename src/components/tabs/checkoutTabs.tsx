@@ -1,7 +1,7 @@
 import CheckoutTab from '@components/tabs/checkoutTab'
 import { IState } from '@et/types/State'
 import { displayCurrency } from '@utils/priceUtils'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ICartState } from '@et/types/Cart'
 // import {convertTotalUSD} from '@et/utils/cartUtils'
 // import CouponCodeInput from '@et/forms/inputs/couponCode'
@@ -36,34 +36,47 @@ export interface IProps {
  * pass it to the Tab component. When the tab component gets clicked, we fire clickHandler2 that then
  * calls clickHandler1 with a value.
  */
-export class CheckoutTabs extends React.Component<IProps, {}> {
-	initialState = { key: this.props.initialLoad || 'stripe' }
-	state = this.initialState
+export const CheckoutTabs = (props: IProps) => {
+	const [key, setKey] = useState('stripe')
+	const prevState = useRef(key)
+	// onMount
+	useEffect(() => {
+		if (props.initialLoad && props.initialLoad !== 'stripe') {
+			setKey(props.initialLoad)
+		}
 
-	onTabClick = (itemKey: string) => {
+		if (props.freeCheckout) {
+			props.handleChangeType('pwyw')
+		}
+
+		return () => {
+		}
+
+	}, [])
+
+	// onState change
+	// useEffect(() => {
+		// console.log('total change')
+		// props.handleChangeType(getItemType(key))
+	// }, [props.cartTotal])
+
+	useEffect(() => {
+		prevState.current = key
+	})
+
+	function onTabClick (itemKey: string) {
 
 		// setState callback done with useEffects hooks in new version
-		this.setState(
-			() => ({ key: itemKey }), (() => {
-				this.props.handleChangeType(this.getItemType(itemKey))
-			})
-		)
-	}
-
-	shouldComponentUpdate (nextProps: IProps, nextState: { key: string }) {
-		return !(this.state.key === nextState.key && this.props.cartTotal === nextProps.cartTotal && nextProps.freeCheckout === this.props.freeCheckout)
-	}
-
-	componentDidMount (): void {
-		if (this.props.freeCheckout) {
-			this.props.handleChangeType('pwyw')
+		if (prevState.current !== itemKey) {
+			setKey(itemKey)
+			props.handleChangeType(getItemType(itemKey))
 		}
 	}
 
-	getItemType = (type: string): string => {
+	function getItemType (type: string): string {
 
 		// convert children to an array
-		const items = React.Children.toArray(this.props.children)
+		const items = React.Children.toArray(props.children)
 
 		return items.reduce((prev: any, curr: any) => {
 			switch (type) {
@@ -75,47 +88,43 @@ export class CheckoutTabs extends React.Component<IProps, {}> {
 		})
 	}
 
-	render () {
-		console.log('render test')
+	console.log('render test', key)
+	return (
+		<>
+			<ul className='tabs__Nav'>
+				{React.Children.toArray(props.children)
+					.map((child: any, index: number) =>
+						<CheckoutTab
+							key={index}
+							selectedTab={key}
+							paymentType={child.props['data-payment']}
+							handleClick={onTabClick}
+						/>
+					)}
+			</ul>
 
-		return (
-			<>
-				<ul className='tabs__Nav'>
-					{React.Children.toArray(this.props.children)
-						.map((child: any, index: number) =>
-							<CheckoutTab
-								key={index}
-								selectedTab={this.state.key}
-								paymentType={child.props['data-payment']}
-								handleClick={this.onTabClick}
-							/>
-						)}
-				</ul>
+			<div>
+				<h3>Order Summery Title</h3>
+				<div className='jestTotal'>Order Total: {displayCurrency(props.cartTotal)}</div>
+			</div>
+			{/*Possible dropdown for country code selecttion goes here*/}
+			{/*<div>*/}
+			{/*<CouponCodeInput/>*/}
+			{/*</div>*/}
 
-				<div>
-					<h3>Order Summery Title</h3>
-					<div className='jestTotal'>Order Total: {displayCurrency(this.props.cartTotal)}</div>
-				</div>
-				{/*Possible dropdown for country code selecttion goes here*/}
-				{/*<div>*/}
-				{/*<CouponCodeInput/>*/}
-				{/*</div>*/}
-
-				{/*Render Matching Content*/}
-				{!this.props.freeCheckout &&
-        <div className='tabs__Content'>
-					{React.Children.toArray(this.props.children)
-						.map((child: any) => {
-								return child.props['data-payment'] === this.state.key ? child.props.children : null
-							}
-						)}
-        </div>
-				}
-				{this.props.freeCheckout && <div className='freeCheckout'>Free item checkout</div>}
-			</>
-		)
-	}
-
+			{/*Render Matching Content*/}
+			{!props.freeCheckout &&
+      <div className='tabs__Content'>
+				{React.Children.toArray(props.children)
+					.map((child: any) => {
+							return child.props['data-payment'] === key ? child.props.children : null
+						}
+					)}
+      </div>
+			}
+			{props.freeCheckout && <div className='freeCheckout'>Free item checkout</div>}
+		</>
+	)
 }
 
 export default CheckoutTabs
