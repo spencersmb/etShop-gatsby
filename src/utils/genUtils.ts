@@ -1,5 +1,7 @@
 import { Image } from '@et/types/Products'
 import { IMeta } from '@et/types/SEO'
+import React from 'react'
+import { ReactChild } from 'react'
 import config from '../../gatsby-config'
 import _ from 'lodash'
 
@@ -65,4 +67,16 @@ export const twitterDefaultMeta = (additionalProps: IMeta[] = []): IMeta[] => {
  */
 export const jsonldImages = (imageArray: Image[]): string[] => {
 	return imageArray.map(item => item.thumbnail.url)
+}
+
+export function reduceChildrenByDataType (type: string, children: ReactChild, dataType: string): string {
+	const items: any[] = React.Children.toArray(children)
+	return items.reduce((prev: any, curr: any) => {
+		switch (type) {
+			case curr.props[dataType]:
+				return curr.props[dataType]
+			default:
+				return prev.props[dataType]
+		}
+	})
 }

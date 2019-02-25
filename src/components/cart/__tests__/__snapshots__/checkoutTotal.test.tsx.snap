@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkout Total renders correctly 1`] = `
+<div>
+  <h3>
+    Order Summery Title
+  </h3>
+  <div
+    data-testid="orderTotal"
+  >
+    Order Total: 
+    $12.00
+  </div>
+</div>
+`;

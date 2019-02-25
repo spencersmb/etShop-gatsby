@@ -27,62 +27,39 @@ interface IReduxActions {
 }
 
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
-	const [pwywCheckout, setPwywCheckout] = useState(false)
 	const bodyScrollPos = useRef(0)
+	const target = useRef<HTMLElement | null>(null)
 	const checkout = useMemo(() => <CheckoutTabs
-		cartTotal={props.cart.totalPrice}
 		initialLoad='stripe'
 		handleChangeType={props.changeCheckout}
-		freeCheckout={pwywCheckout}
+		freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
 	>
 		<div data-payment='stripe'>Tab 1</div>
 		<div data-payment='paypal'>Tab 2</div>
 	</CheckoutTabs>, [
-		pwywCheckout
+		props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)
 	])
 
 	useEffect(() => {
-
-		setPwywCheckout(props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products))
-		const body: HTMLElement | null = document.querySelector('#___gatsby')
-		if (body) {
-
+		target.current = document.querySelector('#___gatsby')
+		if (target.current) {
 			bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-			// // body.style.top = '-' + window.pageYOffset.toString(10) + 'px'
-			body.style.width = `100%`
-			body.style.top = `-${bodyScrollPos.current}px`
-			body.style.position = 'fixed'
+			target.current.style.width = `100%`
+			target.current.style.top = `-${bodyScrollPos.current}px`
+			target.current.style.position = 'fixed'
 		}
 
 		return () => {
 
-			if (body) {
-
-				// way 2
-				body.style.removeProperty('position')
-				body.style.removeProperty('top')
+			if (target.current) {
+				target.current.style.removeProperty('position')
+				target.current.style.removeProperty('top')
 
 				document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
-
-				// way 1
-				// const styles = window.getComputedStyle(body, 'top')
-				//
-				// body.style.position = 'relative'
-				// window.scrollTo(0, (styles.top ? parseInt(styles.top.substr(1), 10) : 0))
-				// body.style.top = 'auto'
 			}
 
 		}
-	})
-
-	useEffect(() => {
-		console.log('pwywCheckout', pwywCheckout)
-
-		if (props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products) && !pwywCheckout) {
-			console.log('enable')
-			setPwywCheckout(true)
-		}
-	})
+	}, [])
 
 	return (
 		<CartWrapper data-testid='cart-wrapper' ref={props.poseRef} id='cartWrapper'>
@@ -104,13 +81,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			<div>
 				{checkout}
 				<hr/>
-				<div>
-					<div>pay what you want found?</div>
-					<div>
-						{JSON.stringify(isPWYWItemInCart(props.cart.items, props.products))}
-					</div>
-				</div>
-				<hr/>
+
 				<div>
 					<button
 						type='button'
@@ -122,92 +93,6 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			</div>
 		</CartWrapper>
 	)
-}
-
-export class CartLayoutold extends React.Component<IPropsPublic & IReduxState & IReduxActions> {
-	bodyScrollPos = 0
-
-	componentDidMount (): void {
-		const body: HTMLElement | null = document.querySelector('#___gatsby')
-		if (body) {
-
-			this.bodyScrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0
-			// // body.style.top = '-' + window.pageYOffset.toString(10) + 'px'
-			body.style.width = `100%`
-			body.style.top = `-${this.bodyScrollPos}px`
-			body.style.position = 'fixed'
-		}
-
-	}
-
-	componentWillUnmount (): void {
-		const body = document.getElementById('___gatsby')
-		if (body) {
-
-			// way 2
-			body.style.removeProperty('position')
-			body.style.removeProperty('top')
-
-			document.documentElement.scrollTop = document.body.scrollTop = this.bodyScrollPos
-
-			// way 1
-			// const styles = window.getComputedStyle(body, 'top')
-			//
-			// body.style.position = 'relative'
-			// window.scrollTo(0, (styles.top ? parseInt(styles.top.substr(1), 10) : 0))
-			// body.style.top = 'auto'
-		}
-
-	}
-
-	render () {
-		return (
-			<CartWrapper data-testid='cart-wrapper' ref={this.props.poseRef} id='cartWrapper'>
-				<button data-testid='close-btn' className='jestCloseCart' onClick={this.props.cartToggle}>Close</button>
-
-				<div>
-					<button
-						data-testid='empty-cart-btn'
-						className='jestEmptyCart'
-						onClick={this.props.emptyCart}>
-						Empty Cart
-					</button>
-				</div>
-
-				<div>
-					<CartList/>
-				</div>
-
-				<div>
-					<CheckoutTabs
-						cartTotal={this.props.cart.totalPrice}
-						initialLoad='stripe'
-						handleChangeType={this.props.changeCheckout}
-						freeCheckout={this.props.cart.totalPrice === 0 && isPWYWItemInCart(this.props.cart.items, this.props.products)}
-					>
-						<div data-payment='stripe'>Tab 1</div>
-						<div data-payment='paypal'>Tab 2</div>
-					</CheckoutTabs>
-					<hr/>
-					<div>
-						<div>pay what you want found?</div>
-						<div>
-							{JSON.stringify(isPWYWItemInCart(this.props.cart.items, this.props.products))}
-						</div>
-					</div>
-					<hr/>
-					<div>
-						<button
-							type='button'
-							disabled={this.props.cart.totalPrice === 0
-								? !isPWYWItemInCart(this.props.cart.items, this.props.products)
-								: false}>Checkout temp btn
-						</button>
-					</div>
-				</div>
-			</CartWrapper>
-		)
-	}
 }
 
 const CartWrapper = styled.div`

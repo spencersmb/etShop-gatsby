@@ -7,11 +7,8 @@ import React, { Component } from 'react'
  */
 export interface IProps {
 	/** itemIndex description */
-	selectedTab: string;
 	paymentType: string;
-	// handleClick: (itemKey: number, cb?: null | myCallbackType) => void;
 	handleClick: any;
-	customAction?: (type: string) => void;
 }
 
 /**
@@ -30,7 +27,7 @@ export class CheckoutTab extends Component<IProps, {}> {
 
 	render () {
 		return (
-			<li onClick={this.tabClick}>
+			<li data-testid={`tab-${this.props.paymentType}`} onClick={this.tabClick}>
 				<span>{this.props.paymentType.toUpperCase()}</span>
 			</li>
 		)

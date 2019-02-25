@@ -1,7 +1,5 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { ILogoutAction } from '../../../state/actions/authActions'
-import { IShowModalAction } from '../../../state/actions/modalActions'
 import { testCartEmpty } from '../../../state/reduxTestUtils'
 import { Navbar } from '../navbar'
 import {
