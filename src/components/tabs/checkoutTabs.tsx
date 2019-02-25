@@ -1,4 +1,5 @@
 import CheckoutTotal from '@components/cart/checkout/checkoutTotal'
+import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import React, { useEffect, useState } from 'react'
@@ -76,6 +77,9 @@ export const CheckoutTabs = (props: IProps) => {
 			{/*Possible dropdown for country code selecttion goes here*/}
 			{/*<div>*/}
 			{/*<CouponCodeInput/>*/}
+			<div>
+				<CouponInput/>
+			</div>
 			{/*</div>*/}
 
 			{/*Render Matching Content*/}

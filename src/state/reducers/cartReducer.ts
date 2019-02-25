@@ -1,6 +1,6 @@
 import { Actions } from '@et/types/Actions'
-import { ICartState } from '@et/types/Cart'
-import { CartActionTypes } from '@et/types/Enums'
+import { ICartState, ICouponRaw } from '@et/types/Cart'
+import { CartActionTypes, CouponActionTypes } from '@et/types/Enums'
 import initialState from '@redux/reducers/initialState'
 import { getCartTotal, totalItemsInCart } from '@utils/cartUtils'
 import { Reducer } from 'redux'
@@ -141,10 +141,60 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				items: { ...state.items, ...action.payload.item }
 			}
 
+		/*
+		* * Tested!
+		*/
 		case CartActionTypes.CHANGE_CHECKOUT_TYPE:
 			return {
 				...state,
 				paymentType: action.payload
+			}
+
+		/*
+		* * Tested!
+		*/
+		case CouponActionTypes.SUBMIT_COUPON:
+			return {
+				...state,
+				coupon: {
+					...state.coupon,
+					loading: true
+				}
+			}
+
+		/*
+		* * Tested!
+		*/
+		case CouponActionTypes.SUBMIT_COUPON_SUCCESS:
+			const coupon: ICouponRaw = action.payload.coupon
+			return {
+				...state,
+				coupon: {
+					code: coupon.code,
+					discount: coupon.amount,
+					loading: false,
+					product_ids: coupon.product_ids,
+					submitted: true,
+					type: coupon.discount_type,
+					valid: true
+				}
+			}
+
+		/*
+		* * Tested!
+		*/
+		case CouponActionTypes.SUBMIT_COUPON_INVALID:
+			return {
+				...state,
+				coupon: {
+					code: '',
+					discount: '',
+					loading: false,
+					product_ids: [],
+					submitted: true,
+					type: '',
+					valid: false
+				}
 			}
 
 		default:

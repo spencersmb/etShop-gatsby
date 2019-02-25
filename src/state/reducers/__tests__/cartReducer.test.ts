@@ -1,17 +1,21 @@
 import { Actions } from '@et/types/Actions'
 import { ICartState } from '@et/types/Cart'
-import { CartActionTypes } from '@et/types/Enums'
+import { CartActionTypes, CouponActionTypes } from '@et/types/Enums'
 import { IProduct } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { cartReducer } from '@redux/reducers/cartReducer'
 import initialState from '@redux/reducers/initialState'
-import { ProductKey, testCartWithItem, testCartWithMultiples, testProducts } from '@redux/reduxTestUtils'
+import { coupons, ProductKey, testCartWithItem, testCartWithMultiples, testProducts } from '@redux/reduxTestUtils'
 import {
 	cleanup
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
 
 afterEach(cleanup)
+
+afterEach(() => {
+
+})
 
 describe('Cart Reducer', () => {
 
@@ -150,7 +154,7 @@ describe('Cart Reducer', () => {
 		expect(reducer).toEqual(result)
 	})
 
-	it('should react to an action with the type UPDATE_CART_QTY', () => {
+	it('should react to an action with the type UPDATE_CART_LICENSE', () => {
 
 		const extendedItem: IProduct = testProducts[ProductKey.WatercolorExt]
 		const action: Actions = {
@@ -182,6 +186,19 @@ describe('Cart Reducer', () => {
 		expect(reducer).toEqual(result)
 	})
 
+	it('should react to an action with the type CHANGE_CHECKOUT_TYPE', () => {
+
+		const action: Actions = {
+			payload: 'paypal',
+			type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+		}
+		const reducer = cartReducer(testCartWithMultiples, action)
+		const result: ICartState = testCartWithMultiples
+		result.paymentType = 'paypal'
+
+		expect(reducer).toEqual(result)
+	})
+
 	it('should react to an action with the type REMOVE_ITEM', () => {
 		const state: IState = initialState
 		state.cart = testCartWithMultiples
@@ -194,6 +211,73 @@ describe('Cart Reducer', () => {
 		const reducer = cartReducer(state.cart, action)
 		const result: ICartState = state.cart
 		delete result.items[ProductKey.WatercolorStd]
+
+		expect(reducer).toEqual(result)
+	})
+
+	it('Should react to an action with SUBMIT_COUPON', () => {
+		const state: IState = initialState
+		const action: Actions = {
+			type: CouponActionTypes.SUBMIT_COUPON
+		}
+		const reducer = cartReducer(state.cart, action)
+		const result: ICartState = state.cart
+		result.coupon = {
+			...state.cart.coupon,
+			loading: true
+		}
+
+		expect(reducer).toEqual(result)
+	})
+
+	it('Should react to an action with SUBMIT_COUPON_INVALID', () => {
+		const state = {
+			cart: {
+				coupon: {
+					code: '',
+					discount: '',
+					loading: false,
+					product_ids: [],
+					submitted: false,
+					type: '',
+					valid: false
+				},
+				isOpen: false,
+				items: {},
+				loaded: false,
+				paymentType: 'stripe',
+				totalItems: 0,
+				totalPrice: 0
+			}
+		}
+		const action: Actions = {
+			type: CouponActionTypes.SUBMIT_COUPON_INVALID
+		}
+		const reducerInvalid = cartReducer(state.cart, action)
+		const resultInvalid: ICartState = state.cart
+		resultInvalid.coupon = {
+			...initialState.cart.coupon,
+			loading: false,
+			submitted: true,
+			valid: false
+		}
+
+		expect(reducerInvalid).toEqual(resultInvalid)
+	})
+
+	it('Should react to an action with SUBMIT_COUPON_SUCCESS', () => {
+		const state: IState = initialState
+		const action: Actions = {
+			payload: {
+				coupon: coupons.rawValidFixedCart.data.coupon
+			},
+			type: CouponActionTypes.SUBMIT_COUPON_SUCCESS
+		}
+		const reducer = cartReducer(state.cart, action)
+		const result: ICartState = state.cart
+		result.coupon = {
+			...coupons.fixedCart
+		}
 
 		expect(reducer).toEqual(result)
 	})

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Coupon Input renders correctly 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    data-testid="couponInput"
+    onChange={[Function]}
+    readOnly={false}
+    type="text"
+    value=""
+  />
+  <button
+    data-testid="couponSubmitBtn"
+    disabled={true}
+    type="submit"
+  >
+    Submit
+  </button>
+</form>
+`;

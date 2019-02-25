@@ -1,6 +1,13 @@
-import { ICartItem, ILocalStorageCart } from '@et/types/Cart'
+import { ICartItem, ICouponRaw, ILocalStorageCart } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
-import { AuthActionTypes, CartActionTypes, ModalActionTypes, ProductsActionTypes, WindowActionTypes } from './Enums'
+import {
+  AuthActionTypes,
+  CartActionTypes,
+  CouponActionTypes,
+  ModalActionTypes,
+  ProductsActionTypes,
+  WindowActionTypes
+} from './Enums'
 import { IAuthResponse, IUser } from '@et/types/User'
 
 export interface ILoadProductsSuccess {
@@ -101,6 +108,19 @@ export interface ICartChangeCheckoutType {
   payload: string,
   type: CartActionTypes.CHANGE_CHECKOUT_TYPE
 }
+export interface ICouponSubmitAction {
+  type: CouponActionTypes.SUBMIT_COUPON,
+}
+export interface ICouponSubmitSuccess {
+  payload: {
+    coupon: ICouponRaw
+  }
+  type: CouponActionTypes.SUBMIT_COUPON_SUCCESS,
+}
+
+export interface ICouponSubmitInvalid {
+  type: CouponActionTypes.SUBMIT_COUPON_INVALID,
+}
 
 export type WindowActions =
   | IChangeBreakPoint
@@ -131,9 +151,15 @@ type CartActions =
   | IUpdateCartLicense
   | ICartChangeCheckoutType
 
+type CouponActions =
+  | ICouponSubmitAction
+  | ICouponSubmitSuccess
+  | ICouponSubmitInvalid
+
 export type Actions =
   | AuthActions
   | ProductActions
   | ModalActions
   | WindowActions
   | CartActions
+  | CouponActions

@@ -9,7 +9,10 @@ import styled from 'styled-components'
 import { ICartState } from '@et/types/Cart'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { Actions } from '@et/types/Actions'
-import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react'
+import React, { RefObject, useEffect, useMemo, useRef, Suspense } from 'react'
+
+const StripeProvider = React.lazy(() => import('@components/stripe/stripeProvider'))
+const PaypalProvider = React.lazy(() => import('@components/paypal/paypalProvider'))
 
 interface IPropsPublic {
 	poseRef: RefObject<any>;
@@ -34,8 +37,16 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		handleChangeType={props.changeCheckout}
 		freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
 	>
-		<div data-payment='stripe'>Tab 1</div>
-		<div data-payment='paypal'>Tab 2</div>
+		<div data-payment='stripe'>
+			<Suspense fallback={<div>Loading...</div>}>
+				<StripeProvider/>
+			</Suspense>
+		</div>
+		<div data-payment='paypal'>
+			<Suspense fallback={<div>Loading...</div>}>
+				<PaypalProvider/>
+			</Suspense>
+		</div>
 	</CheckoutTabs>, [
 		props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)
 	])

@@ -4,7 +4,7 @@ import { CartActionTypes } from '@et/types/Enums'
 import { IProduct } from '@et/types/Products'
 import {
 	addProductToCart, cartLoadedComplete,
-	cartToggle, changeLicenseType,
+	cartToggle, changeCheckoutType, changeLicenseType,
 	emptyCart, removeProductFromCart, updateCartItemQty,
 	updateCartPrice,
 	updateCartState,
@@ -18,7 +18,6 @@ import {
 	testProducts,
 	testCartWithItem
 } from '@redux/reduxTestUtils'
-import { calcBulkPriceDiscount } from '@utils/priceUtils'
 import { cleanup } from 'react-testing-library'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -302,6 +301,26 @@ describe('Cart Action tests', () => {
 		]
 
 		expect(getActions.length).toBe(2)
+		expect(getActions).toEqual(expectedActions)
+
+	})
+
+	it('Should have type changeCheckoutType + correct payload', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithItem
+		const store = mockStore(stateWithCartItem)
+
+		// @ts-ignore
+		store.dispatch(changeCheckoutType('paypal'))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: 'paypal',
+				type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+			}
+		]
+
+		expect(getActions.length).toBe(1)
 		expect(getActions).toEqual(expectedActions)
 
 	})

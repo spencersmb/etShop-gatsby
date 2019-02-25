@@ -37,7 +37,6 @@ const testSiteMetaDataQuery = {
 	twitterDefaultImage: 'url'
 }
 
-
 export const testCartEmpty: ICartState = {
 	coupon: {
 		code: 'string',
@@ -46,11 +45,10 @@ export const testCartEmpty: ICartState = {
 		product_ids: [],
 		submitted: false,
 		type: 'string',
-		valid: false,
+		valid: false
 	},
 	isOpen: false,
-	items: {
-	},
+	items: {},
 	loaded: true,
 	paymentType: 'Stripe',
 	totalItems: 0,
@@ -59,7 +57,7 @@ export const testCartEmpty: ICartState = {
 
 export const standardItemAddToCart = {
 	['watercolor-texture-kit-vol-1']: {
-		extended:false,
+		extended: false,
 		id: 222,
 		name: 'Watercolor texture kit Vol. 1',
 		price: '16',
@@ -137,14 +135,16 @@ export const singleProduct: IProduct = {
 		}
 	}
 }
+
 export enum ProductKey {
 	WatercolorStd = 'watercolor-texture-kit-vol-1',
 	WatercolorExt = 'watercolor-texture-kit-vol-1-ext',
 	Honeymoon = 'honeymoon',
 	Skinnyjeans = 'skinny-jeans'
 }
+
 export const testProducts: IProducts = {
-	[ProductKey.WatercolorStd] : {
+	[ProductKey.WatercolorStd]: {
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
@@ -213,7 +213,7 @@ export const testProducts: IProducts = {
 			}
 		}
 	},
-	[ProductKey.WatercolorExt] : {
+	[ProductKey.WatercolorExt]: {
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
@@ -282,7 +282,7 @@ export const testProducts: IProducts = {
 			}
 		}
 	},
-	[ProductKey.Honeymoon] : {
+	[ProductKey.Honeymoon]: {
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
@@ -328,8 +328,7 @@ export const testProducts: IProducts = {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Honeymoon seo title'
 		},
-		tags: [
-		],
+		tags: [],
 		localFile: {
 			name: 'file name',
 			id: '1234',
@@ -345,7 +344,7 @@ export const testProducts: IProducts = {
 			}
 		}
 	},
-	[ProductKey.Skinnyjeans] : {
+	[ProductKey.Skinnyjeans]: {
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
@@ -391,8 +390,7 @@ export const testProducts: IProducts = {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Skinny Jeans seo title'
 		},
-		tags: [
-		],
+		tags: [],
 		localFile: {
 			name: 'file name',
 			id: '1234',
@@ -407,7 +405,7 @@ export const testProducts: IProducts = {
 				}
 			}
 		}
-	},
+	}
 }
 
 export const testCartWithItem: ICartState = {
@@ -418,7 +416,7 @@ export const testCartWithItem: ICartState = {
 		product_ids: [],
 		submitted: false,
 		type: '',
-		valid: false,
+		valid: false
 	},
 	isOpen: false,
 	items: {
@@ -428,7 +426,7 @@ export const testCartWithItem: ICartState = {
 			name: testProducts[ProductKey.WatercolorStd].name,
 			price: testProducts[ProductKey.WatercolorStd].price,
 			qty: 1,
-			slug: testProducts[ProductKey.WatercolorStd].slug,
+			slug: testProducts[ProductKey.WatercolorStd].slug
 		}
 	},
 	loaded: true,
@@ -446,7 +444,7 @@ export const testCartWithItemAndCoupon: ICartState = {
 		],
 		submitted: true,
 		type: '',
-		valid: true,
+		valid: true
 	},
 	isOpen: false,
 	items: {
@@ -456,7 +454,7 @@ export const testCartWithItemAndCoupon: ICartState = {
 			name: testProducts[ProductKey.WatercolorStd].name,
 			price: testProducts[ProductKey.WatercolorStd].price,
 			qty: 1,
-			slug: testProducts[ProductKey.WatercolorStd].slug,
+			slug: testProducts[ProductKey.WatercolorStd].slug
 		}
 	},
 	loaded: true,
@@ -472,7 +470,7 @@ export const testCartWithMultiples: ICartState = {
 		product_ids: [],
 		submitted: false,
 		type: '',
-		valid: false,
+		valid: false
 	},
 	isOpen: false,
 	items: {
@@ -482,15 +480,15 @@ export const testCartWithMultiples: ICartState = {
 			name: testProducts[ProductKey.WatercolorStd].name,
 			price: testProducts[ProductKey.WatercolorStd].price,
 			qty: 1,
-			slug: testProducts[ProductKey.WatercolorStd].slug,
+			slug: testProducts[ProductKey.WatercolorStd].slug
 		},
-		[ProductKey.Skinnyjeans]:{
+		[ProductKey.Skinnyjeans]: {
 			extended: false,
 			id: testProducts[ProductKey.Skinnyjeans].product_id,
 			name: testProducts[ProductKey.Skinnyjeans].name,
 			price: testProducts[ProductKey.Skinnyjeans].price,
 			qty: 1,
-			slug: testProducts[ProductKey.Skinnyjeans].slug,
+			slug: testProducts[ProductKey.Skinnyjeans].slug
 		}
 	},
 	loaded: true,
@@ -507,5 +505,32 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 	},
 	wcProduct: {
 		...singleProduct
+	}
+}
+
+export const coupons = {
+	rawValidFixedCart: {
+		code: 200,
+		data: {
+			coupon: {
+				id: 24,
+				code: 'free-test',
+				amount: '12.54',
+				discount_type: 'fixed_cart',
+				product_ids: [],
+				excluded_product_ids: [],
+				product_id: 24,
+				isExpired: false
+			}
+		}
+	},
+	fixedCart: {
+		code: 'free-test',
+		discount: '12.54',
+		loading: false,
+		product_ids: [],
+		submitted: true,
+		type: 'fixed_cart',
+		valid: true
 	}
 }

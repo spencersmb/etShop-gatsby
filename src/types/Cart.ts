@@ -1,6 +1,23 @@
 import { IProduct, IProducts } from '@et/types/Products'
 
-export interface ICouponCode {
+
+export interface ICouponApiResponse {
+	code: number,
+	data: {
+		coupon: ICouponRaw
+	}
+}
+
+export interface ICouponRaw {
+	id: number,
+	code: string,
+	amount: string,
+	discount_type: string,
+	product_ids: number[],
+	excluded_product_ids: number [],
+}
+
+export interface ICouponState {
 	valid: boolean;
 	loading: boolean;
 	code: string;
@@ -11,7 +28,7 @@ export interface ICouponCode {
 }
 
 export interface ICartState {
-	coupon: ICouponCode,
+	coupon: ICouponState,
 	paymentType: string,
 	totalItems: number,
 	totalPrice: number,

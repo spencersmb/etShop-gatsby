@@ -31,3 +31,9 @@ export enum CartActionTypes {
   CART_TOGGLE = '@@cart/CART_TOGGLE',
   CHANGE_CHECKOUT_TYPE = '@@cart/CHANGE_CHECKOUT_TYPE',
 }
+
+export enum CouponActionTypes {
+  SUBMIT_COUPON = '@@coupon/SUBMIT',
+  SUBMIT_COUPON_SUCCESS = '@@coupon/SUBMIT_SUCCESS',
+  SUBMIT_COUPON_INVALID = '@@coupon/SUBMIT_INVALID',
+}
