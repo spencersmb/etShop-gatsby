@@ -5,10 +5,12 @@
  */
 
 // You can delete this file if you're not using it
-import wrapWithProvider from './wrap-with-provider'
+import wrapWithProvider from "./wrap-with-provider"
+import React from "react"
+
 export const wrapRootElement = wrapWithProvider
 
 // thrd party script ex
 // exports.onRenderBody = ({ setHeadComponents }) => {
-// //   setHeadComponents([<script {put_attributes_here} />])
-// // }
+//   setHeadComponents([<script id="stripe-js" src="https://js.stripe.com/v3/"/>])
+// }

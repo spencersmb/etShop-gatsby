@@ -1,23 +1,24 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`
+})
+
 module.exports = {
   siteMetadata: {
-    title: `Every-Tuesday Digital Products Shop`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    title: `${process.env.TITLE}`,
+    description: `${process.env.DESCRIPTION}`,
     author: `@Teelac`,
     authorUrl: "https://every-tuesday.com/about/#teela",
     siteUrl: `https://shop.every-tuesday.com`,
-    siteName: `Every-Tuesday Shop`,
-    db: "http://shopeverytuesday.local",
-    route: "et-shop",
-    twitterUrl: "https://twitter.com/teelacunningham",
-    // TODO find default image url
-    twitterDefaultImage: "https://twitter.com/teelacunningham",
-    pricing: {
-      minQuantity: 10,
-      discount: .10
-    }
+    siteName: `Every-Tuesday Shop`
   },
   plugins: [
     `gatsby-plugin-typescript`,
+    {
+      resolve: `gatsby-plugin-stripe`,
+      options: {
+        async: true
+      }
+    },
     {
       resolve: `gatsby-plugin-styled-components`,
       options: {

@@ -1,12 +1,11 @@
 import { IUserCreate, IUserSubmit } from '@et/types/User'
-import config from '../../gatsby-config'
 import fetched from 'isomorphic-unfetch'
 
 // import {logFormData} from '@et/utils/errorHandling'
 
 class AuthApi {
-	static login(user: IUserSubmit): Promise<Response> {
-		const url: string = `${config.siteMetadata.db}/wp-json/jwt-auth/v1/token`
+	static login (user: IUserSubmit): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/jwt-auth/v1/token`
 
 		const formData = new FormData()
 		formData.append('username', user.email)
@@ -25,8 +24,8 @@ class AuthApi {
 		)
 	}
 
-	static resetPassword(reduxFormData: { email: string, password: string, key: string }): Promise<Response> {
-		const url: string = `${config.siteMetadata.db}/wp-json/et-shop/reset`
+	static resetPassword (reduxFormData: { email: string, password: string, key: string }): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/et-shop/reset`
 		const formData = new FormData()
 		formData.append('email', reduxFormData.email)
 		formData.append('password', reduxFormData.password)
@@ -45,8 +44,8 @@ class AuthApi {
 		)
 	}
 
-	static createUser(user: IUserCreate): Promise<Response> {
-		const url: string = `${config.siteMetadata.db}/wp-json/et-shop/createUser`
+	static createUser (user: IUserCreate): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/et-shop/createUser`
 
 		const formData = new FormData()
 		formData.append('email', user.email)
@@ -68,9 +67,9 @@ class AuthApi {
 		)
 	}
 
-	static forgotPasswordRequest({email}: { email: string }): Promise<Response> {
+	static forgotPasswordRequest ({ email }: { email: string }): Promise<Response> {
 
-		const url: string = `${config.siteMetadata.db}/wp-json/et-shop/forgotPassword`
+		const url: string = `${process.env.DB}/wp-json/et-shop/forgotPassword`
 		const formData = new FormData()
 		formData.append('email', email)
 

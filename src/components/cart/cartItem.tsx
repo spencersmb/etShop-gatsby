@@ -1,3 +1,4 @@
+import { CartPricingConfig } from '@components/cart/cartStatics'
 import NumberDial from '@components/forms/inputs/numberDial'
 import LicenseSelect from '@components/forms/inputs/productSelect'
 import { IState } from '@et/types/State'
@@ -13,7 +14,6 @@ import { IProduct, IProducts } from '@et/types/Products'
 import { ICartState, IChangeLicenseData, IChangeQty } from '@et/types/Cart'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import config from '../../../gatsby-config'
 
 // import styled from 'styled-components'
 
@@ -60,7 +60,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	const selectedProduct = useRef<IProduct>(products[cartIndex])
 
 	useEffect(() => {
-		if (cart.items[cartIndex].qty > config.siteMetadata.pricing.minQuantity) {
+		if (cart.items[cartIndex].qty > CartPricingConfig.minQuantity) {
 			setBulkDiscount(true)
 		}
 	}, [])
@@ -77,7 +77,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 
 	function handleNumberDialInputChange (total: number | string) {
 		const cartItemRef = cart.items[cartIndex]
-		const isBulkPricing = total >= config.siteMetadata.pricing.minQuantity
+		const isBulkPricing = total >= CartPricingConfig.minQuantity
 		setBulkDiscount(isBulkPricing)
 		updateCartItemQty({
 			key: cartIndex,
@@ -115,7 +115,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 				/>
 			</div>
 			{bulkDiscount &&
-      <span data-testid='bulkDiscount'>Bulk discount of {config.siteMetadata.pricing.discount} applied</span>}
+      <span data-testid='bulkDiscount'>Bulk discount of {CartPricingConfig.bulkDiscount} applied</span>}
 			<NumberDial
 				label='Quantity'
 				qty={cart.items[cartIndex].qty}

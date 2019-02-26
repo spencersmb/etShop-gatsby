@@ -9,10 +9,10 @@ import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
 import { Link } from 'gatsby'
 import React, { Dispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
-import config from '../../../gatsby-config'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import _ from 'lodash'
+import { CartPricingConfig } from '@components/cart/cartStatics'
 
 interface IPropsPrivate {
 	products: IProducts,
@@ -83,7 +83,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 
 			// 2. Set the correct item
 			const selectedProduct = cartItem.extended && extendedItem.current ? extendedItem.current : standardItem.current
-			const bulkDiscount: boolean = cartItem.qty >= config.siteMetadata.pricing.minQuantity
+			const bulkDiscount: boolean = cartItem.qty >= CartPricingConfig.minQuantity
 
 			// 3. Set state
 			setState({
@@ -125,7 +125,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 
 					// 2. Set the correct item
 					const selectedProduct = cartItem.extended && extendedItem.current ? extendedItem.current : standardItem.current
-					const bulkDiscount: boolean = cartItem.qty >= config.siteMetadata.pricing.minQuantity
+					const bulkDiscount: boolean = cartItem.qty >= CartPricingConfig.minQuantity
 
 					// 3. Set state
 					setState({
@@ -172,7 +172,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 
 	function onDialChange (total: number | string) {
 
-		if (total >= config.siteMetadata.pricing.minQuantity) {
+		if (total >= CartPricingConfig.minQuantity) {
 			setState({
 				numberOfLicenses: total,
 				bulkDiscount: true,
@@ -233,7 +233,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 			</p>
 			<hr/>
 			<div style={{ paddingBottom: 20 }}>
-				{state.bulkDiscount && <span>Bulk discount of {config.siteMetadata.pricing.discount} applied</span>}
+				{state.bulkDiscount && <span>Bulk discount of {CartPricingConfig.bulkDiscount} applied</span>}
 				{!state.payWhatYouWant && <NumberDialStyled
           label='Select number of license'
           qty={state.numberOfLicenses}

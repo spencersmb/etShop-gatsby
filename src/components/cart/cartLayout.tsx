@@ -1,4 +1,6 @@
 import CartList from '@components/cart/cartList'
+import StripeCheckout from '@components/stripe/stripeCheckout'
+import StripeProviderWrapper from '@components/stripe/stripeProvider'
 import CheckoutTabs from '@components/tabs/checkoutTabs'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
@@ -11,7 +13,6 @@ import { Action, bindActionCreators, Dispatch } from 'redux'
 import { Actions } from '@et/types/Actions'
 import React, { RefObject, useEffect, useMemo, useRef, Suspense } from 'react'
 
-const StripeProvider = React.lazy(() => import('@components/stripe/stripeProvider'))
 const PaypalProvider = React.lazy(() => import('@components/paypal/paypalProvider'))
 
 interface IPropsPublic {
@@ -38,9 +39,9 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
 	>
 		<div data-payment='stripe'>
-			<Suspense fallback={<div>Loading...</div>}>
-				<StripeProvider/>
-			</Suspense>
+			<StripeProviderWrapper>
+				<StripeCheckout/>
+			</StripeProviderWrapper>
 		</div>
 		<div data-payment='paypal'>
 			<Suspense fallback={<div>Loading...</div>}>

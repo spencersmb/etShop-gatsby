@@ -1,7 +1,7 @@
-import { ICouponCode } from '@et/types/Cart'
+import { ICouponState } from '@et/types/Cart'
 import { IProduct } from '@et/types/Products'
-import config from '../../gatsby-config'
 import _ from 'lodash'
+import { CartPricingConfig } from '@components/cart/cartStatics'
 
 /*
 * * Tested!
@@ -12,7 +12,7 @@ export const calcBulkDiscount = (price: string): string => {
 	const strToNum = parseFloat(price)
 
 	// percent in config
-	const percent = config.siteMetadata.pricing.discount
+	const percent = CartPricingConfig.bulkDiscount
 
 	// price * percentage subtracted from total price
 	return (strToNum - (percent * strToNum)).toString()
@@ -73,7 +73,7 @@ export const displayCurrency = (price: string | number): string => {
  * @param {number} total
  * @return number
  */
-export const calcCouponDiscount = (coupon: ICouponCode, total: number): number => {
+export const calcCouponDiscount = (coupon: ICouponState, total: number): number => {
 	switch (coupon.type) {
 
 		case 'percent':

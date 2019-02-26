@@ -3,7 +3,7 @@ import SEO from '@components/seo'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IProduct } from '@et/types/Products'
 import { IMeta, IOGType } from '@et/types/SEO'
-import { jsonldImages, twitterDefaultMeta } from '@utils/genUtils'
+import { jsonldImages, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
 import { graphql } from 'gatsby'
 import React, { Component } from 'react'
 
@@ -13,6 +13,7 @@ interface IProductQuery {
 	data: Response
 }
 
+// WRAP IN GRAPHQL to pass data to twitter from sitemetadata
 export class ProductDetailPage extends Component<IProductQuery> {
 	ogArticles: IOGType[] = []
 	twitterAddons: IMeta[] = []
@@ -44,7 +45,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			},
 			{
 				name: `twitter:image`,
-				content: `${wcProduct.images.length > 0 ? wcProduct.images[0].thumbnail.url : siteMetadata.twitterDefaultImage}`
+				content: `${wcProduct.images.length > 0 ? wcProduct.images[0].thumbnail.url : socialUtils.twitter.defaultImage}`
 			}
 		]
 

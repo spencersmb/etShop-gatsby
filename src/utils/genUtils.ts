@@ -1,10 +1,15 @@
 import { Image } from '@et/types/Products'
 import { IMeta } from '@et/types/SEO'
-import React from 'react'
-import { ReactChild } from 'react'
-import config from '../../gatsby-config'
+import React, { ReactChild } from 'react'
 import _ from 'lodash'
 
+export const socialUtils = {
+	twitter: {
+		author: '@Teelac',
+		url: 'https://twitter.com/teelacunningham',
+		defaultImage: 'https://twitter.com/teelacunningham'
+	}
+}
 /**
  * matchString(str, regexPattern)
  * - matchRegex and return true or false
@@ -32,27 +37,27 @@ export const twitterDefaultMeta = (additionalProps: IMeta[] = []): IMeta[] => {
 		},
 		{
 			name: `twitter:title`,
-			content: `${config.siteMetadata.title}`
+			content: `${process.env.TITLE}`
 		},
 		{
 			name: `twitter:description`,
-			content: `${config.siteMetadata.description}`
+			content: `${process.env.DESCRIPTION}`
 		},
 		{
 			name: `twitter:creator`,
-			content: `${config.siteMetadata.author}`
+			content: `${socialUtils.twitter.author}`
 		},
 		{
 			name: `twitter:site	`,
-			content: `${config.siteMetadata.author}`
+			content: `${socialUtils.twitter.url}`
 		},
 		{
 			name: `twitter:url`,
-			content: `${config.siteMetadata.twitterUrl}`
+			content: `${socialUtils.twitter.url}`
 		},
 		{
 			name: `twitter:image`,
-			content: `${config.siteMetadata.siteUrl}`
+			content: `${socialUtils.twitter.defaultImage}`
 		}
 	]
 	return _.unionBy(additionalProps, og, 'name')
