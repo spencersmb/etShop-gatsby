@@ -6,7 +6,8 @@ import { cleanup } from 'react-testing-library'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import initialState from '@redux/reducers/initialState'
-import config from '../../../../gatsby-config'
+
+const dataBase: string = process.env.DB || 'http://shopeverytuesday.local'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
@@ -32,7 +33,7 @@ describe('Cart Action tests', () => {
 				type: CartActionTypes.UPDATE_CART_PRICE
 			}
 		]
-		nock(config.siteMetadata.db)
+		nock(dataBase)
 			.defaultReplyHeaders({
 				'Content-Type': 'application/json'
 			})

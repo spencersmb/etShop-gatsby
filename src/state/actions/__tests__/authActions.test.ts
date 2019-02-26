@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { AuthActionTypes } from '@et/types/Enums'
 import { login, logout } from '@redux/actions/authActions'
-import config from '../../../../gatsby-config'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
 import initialState from '@redux/reducers/initialState'
-
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
+const dataBase: string = process.env.DB || 'http://shopeverytuesday.local'
 
 describe('Auth Action tests', () => {
 
@@ -38,10 +37,10 @@ describe('Auth Action tests', () => {
 		]
 
 		const bodyData = {
-				...apiResponse
+			...apiResponse
 		}
 
-		nock(config.siteMetadata.db)
+		nock(dataBase)
 			.defaultReplyHeaders({
 				'Content-Type': 'application/json'
 			})
@@ -62,7 +61,7 @@ describe('Auth Action tests', () => {
 
 	})
 
-	it('Should have type LOGOUT',() => {
+	it('Should have type LOGOUT', () => {
 
 		const store = mockStore(initialState)
 		store.dispatch(logout())

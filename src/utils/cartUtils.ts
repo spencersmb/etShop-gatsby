@@ -1,6 +1,5 @@
 import { ICartItem, ICartItemWithKey, ICartState, ICouponState, ILocalStorageCart } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
-import { IWcOrderItem } from '@et/types/WC_Order'
 import { calcCouponDiscount } from '@utils/priceUtils'
 import _ from 'lodash'
 
@@ -226,25 +225,4 @@ export function isPWYWItemInCart (cartItems: ICartItemWithKey, products: IProduc
 	})
 
 	return itemFound.length > 0
-}
-
-/**
- * Create line item specifically for Stripe + WC backend
- *
- * @param {ICartState} cartItems - Cart Object from Redux Store
- * @param {IProducts} products - Products from Redux Store
- * @return {IWcOrderItem[]} array - Item-key we ware looking for
- */
-export const wcCreateOrderLineItems = (cartItems: ICartItemWithKey, products: IProducts): IWcOrderItem[] => {
-	const keys = Object.keys(cartItems)
-	return keys.map((key: string) => ({
-		name: cartItems[key].name,
-		price: cartItems[key].price,
-		product_id: cartItems[key].id,
-		pwyw: {
-			enabled: products[cartItems[key].slug].pwyw ? cartItems[key].price !== '0.00' : false,
-			price: cartItems[key].price
-		},
-		quantity: typeof cartItems[key].qty === 'number' ? cartItems[key].qty : 0
-	}))
 }

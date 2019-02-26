@@ -1,6 +1,5 @@
-import { jsonldImages, matchString, twitterDefaultMeta } from '@utils/genUtils'
+import { jsonldImages, matchString, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
 import { cleanup } from 'react-testing-library'
-import config from '../../../gatsby-config'
 
 afterEach(cleanup)
 
@@ -20,27 +19,27 @@ describe('General Utils', () => {
 			},
 			{
 				name: `twitter:title`,
-				content: `${config.siteMetadata.title}`
+				content: `${process.env.TITLE}`
 			},
 			{
 				name: `twitter:description`,
-				content: `${config.siteMetadata.description}`
+				content: `${process.env.DESCRIPTION}`
 			},
 			{
 				name: `twitter:creator`,
-				content: `${config.siteMetadata.author}`
+				content: `${socialUtils.twitter.author}`
 			},
 			{
 				name: `twitter:site	`,
-				content: `${config.siteMetadata.author}`
+				content: `${socialUtils.twitter.url}`
 			},
 			{
 				name: `twitter:url`,
-				content: `${config.siteMetadata.twitterUrl}`
+				content: `${socialUtils.twitter.url}`
 			},
 			{
 				name: `twitter:image`,
-				content: `${config.siteMetadata.siteUrl}`
+				content: `${socialUtils.twitter.defaultImage}`
 			}
 		]
 		expect(card).toEqual(result)
@@ -83,15 +82,15 @@ describe('General Utils', () => {
 			},
 			{
 				name: `twitter:creator`,
-				content: `${config.siteMetadata.author}`
+				content: `${socialUtils.twitter.author}`
 			},
 			{
 				name: `twitter:site	`,
-				content: `${config.siteMetadata.author}`
+				content: `${socialUtils.twitter.url}`
 			},
 			{
 				name: `twitter:url`,
-				content: `${config.siteMetadata.twitterUrl}`
+				content: `${socialUtils.twitter.url}`
 			}
 		]
 		expect(card).toEqual(result)

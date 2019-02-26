@@ -17,6 +17,7 @@ export function StripeProviderWrapper (props: any) {
 	const stripeSecretKey: string = process.env.STRIPE_SECRET_KEY || ''
 	const [stripe, setStripe] = useState(null)
 	const stripeScriptTag = useRef<Element | null>(null)
+
 	useEffect(() => {
 		if (window.Stripe) {
 			// console.log('has Stripe already')
@@ -41,6 +42,7 @@ export function StripeProviderWrapper (props: any) {
 			<Elements>
 				<>
 					{props.children}
+					{!stripe && <div>Unable to load stripe checkout</div>}
 				</>
 			</Elements>
 		</StripeProvider>

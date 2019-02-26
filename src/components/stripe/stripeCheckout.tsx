@@ -5,15 +5,8 @@ import { IUserState } from '@et/types/User'
 import { IOrderDetails } from '@et/types/WC_Order'
 
 import React from 'react'
-import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
 import { injectStripe, ReactStripeElements } from 'react-stripe-elements'
-
-interface IProps extends ReactStripeElements.InjectedStripeProps {
-	cart: ICartState
-	product: IProducts
-	user: IUserState
-}
 
 export function StripeCheckout (props: ReactStripeElements.InjectedStripeProps) {
 

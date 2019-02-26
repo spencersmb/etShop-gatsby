@@ -4,9 +4,8 @@ import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
 import { IBillingWc } from '@et/types/WC_Order'
-import { isPWYWItemInCart } from '@utils/cartUtils'
 import { wc_createBilling, wc_createOrder } from '@utils/orderUtils'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { reduxForm, InjectedFormProps, reset } from 'redux-form'
@@ -85,7 +84,6 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllP
 	)
 }
 
-// reduxForm<IFormData, IOwnProps>({})(SampleForm);
 export const RegisterStripeForm = reduxForm<{}, AllProps>({
 	destroyOnUnmount: false, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
@@ -105,5 +103,5 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 		resetReduxForms: bindActionCreators(reset, dispatch)
 	}
 }
+
 export default connect<IProps, IReduxActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(RegisterStripeForm)
-// export default RegisterStripeForm

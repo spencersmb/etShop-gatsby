@@ -53,6 +53,7 @@ typings/
 
 # dotenv environment variables files
 .env
+.env.test
 .env.development
 .env.production
 
