@@ -37,6 +37,7 @@ module.exports = {
     "!src/pages/**/*.{ts,tsx}",
     "!src/api/**/*.{ts,tsx}",
     "!src/state/reduxTestUtils.tsx",
+    "!src/components/stripe/**/*.{ts,tsx}",
     "!src/utils/apiUtils.ts",
     "!src/styles/**/*.{ts,tsx}",
     "!src/Button/**/*.{ts,tsx}",

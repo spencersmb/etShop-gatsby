@@ -1,3 +1,4 @@
+import { IModal } from '@et/types/Modal'
 import { login as loginAction } from '@redux/actions/authActions'
 import { toastrOptions } from '@utils/apiUtils'
 import posed, { PoseGroup } from 'react-pose'
@@ -9,14 +10,6 @@ import SignInForm from '@components/forms/signin'
 // import SignUpForm from '@et/forms/signUp'
 import React, { useState, useEffect, useRef } from 'react'
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
-
-interface IModalOptions {
-	closeModal: () => void,
-	options: {
-		name: string,
-		content: string
-	}
-}
 
 /*
  * LoginModal
@@ -40,7 +33,7 @@ interface IFormProps {
 	password: string
 }
 
-type MixedFormProps = IModalOptions & IpropsReduxActions
+type MixedFormProps = IModal & IpropsReduxActions
 
 export const LoginModal = (props: MixedFormProps) => {
 	const { options, closeModal } = props
@@ -73,47 +66,52 @@ export const LoginModal = (props: MixedFormProps) => {
 	}
 
 	return (
-		<LoginModalWrapper>
-			<LoginModalContent>
-				<div style={{ background: '#7ACC28' }} className='content'>
-					TEst left content
-				</div>
-				<ContentContainer modalHeight={name}>
+		<ModalPose
+			animateOnMount={true}
+			key='loginmodal'
+		>
+			<LoginModalWrapper>
+				<LoginModalContent>
+					<div style={{ background: '#7ACC28' }} className='content'>
+						TEst left content
+					</div>
+					<ContentContainer modalHeight={name}>
 
-					<PoseGroup>
+						<PoseGroup>
 
-						{/*SignIn Form*/}
-						{name === 'signin' &&
-            <SignInPose key='signIn' firstRender={firstRender.current}>
-							{({ ref }: IPoseHoc) => (
-								<SignInForm
-									handleUserSubmit={userSubmit}
-									changeForm={changeForm}
-									closeModal={closeModal}
-									firstRender={firstRender.current}
-									poseRef={ref}
-								/>
-							)}
-            </SignInPose>}
+							{/*SignIn Form*/}
+							{name === 'signin' &&
+              <SignInPose key='signIn' firstRender={firstRender.current}>
+								{({ ref }: IPoseHoc) => (
+									<SignInForm
+										handleUserSubmit={userSubmit}
+										changeForm={changeForm}
+										closeModal={closeModal}
+										firstRender={firstRender.current}
+										poseRef={ref}
+									/>
+								)}
+              </SignInPose>}
 
-						{/*SignUp Form*/}
-						{name === 'signup' &&
-            <SignInPose key='signUp' firstRender={firstRender.current}>
-							{({ ref }: IPoseHoc) => (
-								<div data-testid='signUp-form' ref={ref} key='signUp'>
-									Signup
-									<button onClick={changeForm} data-form='signin'>Sign In</button>
-								</div>
-							)}
-            </SignInPose>
-						}
+							{/*SignUp Form*/}
+							{name === 'signup' &&
+              <SignInPose key='signUp' firstRender={firstRender.current}>
+								{({ ref }: IPoseHoc) => (
+									<div data-testid='signUp-form' ref={ref} key='signUp'>
+										Signup
+										<button onClick={changeForm} data-form='signin'>Sign In</button>
+									</div>
+								)}
+              </SignInPose>
+							}
 
-					</PoseGroup>
-				</ContentContainer>
-			</LoginModalContent>
+						</PoseGroup>
+					</ContentContainer>
+				</LoginModalContent>
 
-			<button className='jestCartToggle' onClick={closeModal}>Close</button>
-		</LoginModalWrapper>
+				<button className='jestCartToggle' onClick={closeModal}>Close</button>
+			</LoginModalWrapper>
+		</ModalPose>
 	)
 }
 
@@ -129,8 +127,44 @@ const actions: any = {
 	loginAction
 }
 
-export default connect<null, IpropsReduxActions, IModalOptions, MixedFormProps>(null, actions)(LoginModal)
-
+export default connect<null, IpropsReduxActions, IModal, MixedFormProps>(null, actions)(LoginModal)
+const depth = 6
+const ModalStyled = styled.div`
+		border-radius: 15px;
+		box-shadow: 0 20px 45px -6px rgba(0,0,0,.2);
+		position: fixed;
+		// Double the top position so I can animate the Y transform for smoother animation. Does a reverse animation essentially
+		// top: ${(props: any) => props.top * 2}px;
+		top: 50%;
+		left: 50%;
+		transform: translateY(-50%) translateX(-50%);
+		background: #fff;
+		z-index: ${depth + 1};
+		opacity: 0;
+		overflow: hidden;
+`
+const ModalPose = posed(ModalStyled)({
+	exit: {
+		opacity: 0,
+		transition: {
+			default: { duration: 150 },
+			y: { ease: 'easeOut' }
+		},
+		x: `-50%`,
+		y: `-60%`
+	},
+	enter: {
+		opacity: 1,
+		delay: 300,
+		transition: {
+			default: { duration: 300 },
+			// y: { type: 'spring', stiffness: 1500, damping: 15 },
+			y: { type: 'spring', stiffness: 1500, damping: 35 }
+		},
+		x: `-50%`,
+		y: `-50%`
+	}
+})
 const LoginModalWrapper = styled.div`
 	position: relative;
 	display: flex;
@@ -163,6 +197,7 @@ const ContentContainer = styled.div<any>`
 const SignInPose = posed(PoseHoc)({
 	enter: {
 		// delay: ((props: any) => props.firstRender ? 0 : 150),
+
 		duration: ((props: any) => props.firstRender ? 0 : 50),
 		opacity: 1,
 		y: `0px`

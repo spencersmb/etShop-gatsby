@@ -1,10 +1,15 @@
 import { ComponentType } from 'react'
 
-interface IModalOptions {
+export interface IModalOptions {
   closeOutsideModal: boolean,
-  content: string,
   hasBackground: boolean,
-  name: string
+  content?: string,
+  name?: string,
+  data?: any
+}
+export interface IModal {
+  closeModal: () => void,
+  options: IModalOptions
 }
 export interface IModalState {
   component: ComponentType<any> | null,

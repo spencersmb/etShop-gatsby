@@ -52,3 +52,25 @@ export interface IBillingWc {
 	first_name: string
 	last_name: string
 }
+
+export interface IOrderResponse {
+	code: number,
+	message: string,
+	order: {
+		order_id: string;
+		email: string;
+		date: string;
+		downloads: IOderDownloadItem[],
+		total: string
+	}
+}
+
+export interface IOderDownloadItem {
+	download_url: string,
+	product_id: number,
+	product_name: string,
+	product_url: string,
+	order_id: number,
+	downloads_remaining: string,
+	access_expires: null
+}

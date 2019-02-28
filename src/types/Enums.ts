@@ -37,3 +37,11 @@ export enum CouponActionTypes {
   SUBMIT_COUPON_SUCCESS = '@@coupon/SUBMIT_SUCCESS',
   SUBMIT_COUPON_INVALID = '@@coupon/SUBMIT_INVALID',
 }
+
+export enum OrderActionTypes {
+  SUBMIT_ORDER = '@@checkout/SUBMIT_ORDER',
+  GET_ORDER_DOWNLOADS = '@@checkout/GET_ORDER_DOWNLOADS',
+  ORDER_SUCCESS = '@@checkout/ORDER_SUCCESS',
+  COMPLETE_PAYPAL_ORDER_SUCCESS = '@@checkout/PAYPAL_ORDER_SUCCESS',
+  REMOVE_ORDER_SUCCESS = '@@checkout/REMOVE_ORDER_SUCCESS',
+}

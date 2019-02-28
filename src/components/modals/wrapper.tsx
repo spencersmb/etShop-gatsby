@@ -1,35 +1,35 @@
 import React, {
-  ComponentType,
-  RefObject,
-  useRef,
-  useEffect
+	ComponentType,
+	RefObject,
+	useRef,
+	useEffect
 } from 'react'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { hideModal } from '@redux/actions/modalActions'
 import { connect } from 'react-redux'
-import posed, { PoseGroup } from 'react-pose';
+import posed, { PoseGroup } from 'react-pose'
 import styled from 'styled-components'
 import { IState } from '@et/types/State'
 
 interface IPropsPublic {
-  key?: string
+	key?: string
 }
 
 interface IPropsRedux {
-  // breakpoint: number;
-  show: boolean,
-  component: any | null,
-  options: any,
+	// breakpoint: number;
+	show: boolean,
+	component: any | null,
+	options: any,
 }
 
 interface IPropsActions {
-  hideModalAction: () => void,
+	hideModalAction: () => void,
 }
 
 function isChildOf (child: any, parent: any): any {
-  if (child.parentNode === parent) {
-    return true
-  } else { return child.parentNode !== null; }
+	if (child.parentNode === parent) {
+		return true
+	} else { return child.parentNode !== null }
 }
 
 /**
@@ -42,155 +42,137 @@ function isChildOf (child: any, parent: any): any {
  * On Resize we close the modal.
  */
 export const Modal = (props: IPropsActions & IPropsRedux) => {
-  const {show, component} = props
-  const modalContentRef: RefObject<any> = useRef(null)
-  const bodyRef: any = useRef(null)
+	const { show, component } = props
+	const modalContentRef: RefObject<any> = useRef(null)
+	const target: any = useRef(null)
+	const scrollPos: any = useRef(0)
+	const overlayMounted: any = useRef(false)
 
-  function forceClose () {
-    props.hideModalAction()
-  }
+	function handleOnOutsideClick (e: any) {
+		if (isChildOf(e.target, modalContentRef.current)) {
+			props.hideModalAction()
+		}
+	}
 
-  function handleOnOutsideClick (e: any)  {
-    if (isChildOf(e.target, modalContentRef.current)) {
-      props.hideModalAction()
-    }
-  }
+	function handleOnCloseClick () {
+		props.hideModalAction()
+	}
 
-  function handleOnCloseClick () {
-    props.hideModalAction()
-  }
+	function renderModal (ModalComponent: ComponentType<any>): any {
+		if (!ModalComponent) {
+			return (<div>No Modal Found</div>)
+		}
+		return <ModalComponent
+			key='modal'
+			options={props.options}
+			closeModal={handleOnCloseClick}
+			// showLoadingBar={props.showLoadingBarAction}
+			// hideLoadingBar={props.hideLoadingBarAction}
+			// isLoading={props.isLoading}
+		/>
+	}
 
-  function renderModal (ModalComponent: ComponentType<any>) {
-    if (!ModalComponent) {
-      return (<div>No Modal Found</div>)
-    }
-    return <ModalComponent
-      options={props.options}
-      closeModal={handleOnCloseClick}
-      // showLoadingBar={props.showLoadingBarAction}
-      // hideLoadingBar={props.hideLoadingBarAction}
-      // isLoading={props.isLoading}
-      />
-  }
+	// on mount get body
+	useEffect(() => {
+		console.log(' mounted')
+		target.current = document.querySelector('#___gatsby')
+		// bodyRef.current = document.getElementsByTagName('body')
+	}, [])
 
-  // on mount get body
-  useEffect(()=>{
-    bodyRef.current = document.getElementsByTagName('body')
-  },[])
+	useEffect(() => {
+		// if props.show means the modal should be open
+		if (show && target.current) {
+			scrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+			target.current.style.width = `100%`
+			target.current.style.top = `-${scrollPos.current}px`
+			target.current.style.position = 'fixed'
+		}
 
+		if (target.current && !show) {
+			// target.current.style.removeProperty('position')
+			// target.current.style.removeProperty('top')
+			// document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
+		}
 
-  useEffect(()=>{
-    // if props.show means the modal should be open
-    if(show){
-      if(bodyRef.current.length > 0){
-        bodyRef.current[0].setAttribute('style', 'overflow: hidden; height: 100vh;')
-      }
-    }
+	}, [show])
 
-    return () => {
-      if(show && bodyRef.current && bodyRef.current.length > 0){
-        bodyRef.current[0].setAttribute('style', 'overflow: visible; height: auto;')
-      }
-    }
-    // if (prevProps.breakpoint !== this.props.breakpoint && this.modalContentRef.current !== null && this.props.show) {
-    // 	// resized
-    // 	this.forceClose()
-    // }
+	return (
+		<PoseGroup>
+			{show && [
+				<ModalPose
+					key='modal'
+					ref={modalContentRef}
+				>
+					{renderModal(component)}
+				</ModalPose>,
+				<Overlay
+					data-testid='overlay'
+					key='overlay'
+					showOverlay={props.options.hasBackground}
+					onClick={handleOnOutsideClick}
+					onPoseComplete={() => {
+						overlayMounted.current = !overlayMounted.current
+						if (!overlayMounted.current) {
+							console.log('complete')
 
-  }, [show])
-
-  return (
-    <PoseGroup>
-      {show && [
-        <ModalPose
-          key='modal'
-          ref={modalContentRef}
-        >
-          {renderModal(component)}
-        </ModalPose>,
-        <Overlay
-        data-testid='overlay'
-        key='overlay'
-        onClick={handleOnOutsideClick}
-        />
-      ]}
-    </PoseGroup>
-  )
+							// bodyRef.current[0].setAttribute('style', 'overflow: visible; height: auto;')
+							target.current.style.removeProperty('position')
+							target.current.style.removeProperty('top')
+							document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
+						}
+					}}
+				/>
+			]}
+		</PoseGroup>
+	)
 }
 
 const mapStateToProps = (state: IState): IPropsRedux => {
-  return {
-    // breakpoint: state.breakPoint,
-    component: state.modal.component,
-    // isLoading: state.loadingBar.isLoading,
-    options: state.modal.options,
-    show: state.modal.show
-  }
+	return {
+		// breakpoint: state.breakPoint,
+		component: state.modal.component,
+		// isLoading: state.loadingBar.isLoading,
+		options: state.modal.options,
+		show: state.modal.show
+	}
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
-  return {
-    hideModalAction: bindActionCreators(hideModal, dispatch)
-    // hideLoadingBarAction: bindActionCreators(hideLoadingBar, dispatch),
-    // showLoadingBarAction: bindActionCreators(showLoadingBar, dispatch),
-  }
+	return {
+		hideModalAction: bindActionCreators(hideModal, dispatch)
+		// hideLoadingBarAction: bindActionCreators(hideLoadingBar, dispatch),
+		// showLoadingBarAction: bindActionCreators(showLoadingBar, dispatch),
+	}
 }
 
 export default connect<IPropsRedux, IPropsActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(Modal)
 
 // animations
 const depth = 6
-const ModalStyled = styled.div`
-		border-radius: 15px;
-		box-shadow: 0 20px 45px -6px rgba(0,0,0,.2);
-		position: fixed;
-		// Double the top position so I can animate the Y transform for smoother animation. Does a reverse animation essentially
-		// top: ${(props: any) => props.top * 2}px;
-		top: 50%;
-		left: 50%;
-		transform: translateY(-50%) translateX(-50%);
-		background: #fff;
-		z-index: ${depth + 1};
-		opacity: 0;
-		overflow: hidden;
-`
-const ModalPose = posed(ModalStyled)({
-  exit: {
-    opacity: 0,
-    transition: {
-      default: { duration: 150 },
-      y: { ease: 'easeOut' }
-    },
-    x: `-50%`,
-    y: `-60%`
-  },
-  enter: {
-    opacity: 1,
-    delay: 300,
-    transition: {
-      default: { duration: 300 },
-      // y: { type: 'spring', stiffness: 1500, damping: 15 },
-      y: { type: 'spring', stiffness: 1500, damping: 35 }
-    },
-    x: `-50%`,
-    y: `-50%`
-  }
+
+const ModalPose = posed.div({
+	exit: {
+		opacity: 1
+	},
+	enter: {
+		opacity: 1
+	}
 })
 const Shade = styled.div`
 		background: red;
-		height: 100vh;
+		height: 100%;
 		left: 0;
-		position: fixed;
+		position: absolute;
 		top: 0;
 		width: 100%;
 		z-index: ${depth};
 `
 const Overlay = posed(Shade)({
-  exit: {
-    opacity: 0,
-    // transition: {
-    //   default: { delay: 100 }
-    // }
-  },
-  enter: { opacity: 1 }
+	exit: {
+		opacity: 0,
+		transition: {}
+	},
+	enter: {
+		opacity: (props: any) => (props.showOverlay ? 1 : 0)
+	}
 })
 

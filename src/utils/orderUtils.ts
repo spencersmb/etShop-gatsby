@@ -1,6 +1,6 @@
 import { ICartItemWithKey, ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
-import { IUserState } from '@et/types/User'
+import { IAuthResponse, IUserState } from '@et/types/User'
 import { IBillingWc, IStripeFormData, IWcOrderItem } from '@et/types/WC_Order'
 import { displayCurrency } from '@utils/priceUtils'
 
@@ -46,4 +46,35 @@ export const wcCreateOrderLineItems = (cartItems: ICartItemWithKey, products: IP
 		},
 		quantity: typeof cartItems[key].qty === 'number' ? cartItems[key].qty : 0
 	}))
+}
+
+export const createHeaders = () => {
+	const token: string | null = getTokenFromLocalStorage()
+
+	if (token) {
+		return {
+			'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+			'Authorization': `Bearer ${token}`
+		}
+	}
+	return null
+}
+
+/**
+ * getTokenLocalStorage()
+ * - Get JWT from localstorage
+ *
+ */
+export const getTokenFromLocalStorage = (): string | null => {
+	// @ts-ignore
+	if (!process.browser) {
+		return null
+	}
+	const user: string | null = window.localStorage.getItem('et-shop-user')
+
+	if (user) {
+		const decoded: IAuthResponse = JSON.parse(user)
+		return decoded.token
+	}
+	return null
 }

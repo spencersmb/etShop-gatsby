@@ -2,6 +2,7 @@
 import { ICartState } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IProduct, IProducts } from '@et/types/Products'
+import { IUser } from '@et/types/User'
 import React from 'react'
 import initialState from '@redux/reducers/initialState'
 import { Provider } from 'react-redux'
@@ -533,4 +534,11 @@ export const coupons = {
 		type: 'fixed_cart',
 		valid: true
 	}
+}
+
+export const testUser:IUser = {
+	email: 'spencer@gmail.com',
+	firstName: 'testUser',
+	lastName: 'testLastName',
+	token: '123456789'
 }

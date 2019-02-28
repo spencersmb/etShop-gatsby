@@ -3,7 +3,7 @@ import { ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
-import { IBillingWc } from '@et/types/WC_Order'
+import { IBillingWc, IOrderResponse } from '@et/types/WC_Order'
 import { wc_createBilling, wc_createOrder } from '@utils/orderUtils'
 import React, { useRef, useState } from 'react'
 import { connect } from 'react-redux'
@@ -12,8 +12,8 @@ import { reduxForm, InjectedFormProps, reset } from 'redux-form'
 import { CardElement } from 'react-stripe-elements'
 
 interface IPropsPublic {
-	stripCheckoutSubmit: (formData: any) => Promise<boolean>
-	onSuccess: () => void
+	stripCheckoutSubmit: (formData: any) => Promise<IOrderResponse | null>
+	onSuccess: (completedOrder: IOrderResponse) => void
 	onFail: () => void
 }
 
@@ -42,14 +42,15 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllP
 		// get user data or return data from forms
 		const billing: IBillingWc = wc_createBilling(user, formData)
 
-		// Create WC object for order
-		const result: boolean = await stripCheckoutSubmit(wc_createOrder(cart, billing, products))
+		// Create wc_order type and send to wordpress db
+		// result should be a successful order
+		const result: IOrderResponse | null = await stripCheckoutSubmit(wc_createOrder(cart, billing, products))
 
 		if (result) {
 			// clear form
 			props.reset()
 			// controll success from parent
-			props.onSuccess()
+			props.onSuccess(result)
 		} else {
 			props.onFail()
 		}
@@ -67,7 +68,7 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllP
 	return (
 		<div>
 			<form onSubmit={handleSubmit(submit)}>
-				{user && <GuestBilling/>}
+				{!user && <GuestBilling/>}
 				<CardElement
 					onReady={(element: any) => stripeElement.current = element}
 					onChange={onCreditCardChange}
@@ -75,7 +76,7 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllP
 				<div>
 					{submitting && <div>Spinner</div>}
 					{!submitting && <button
-            disabled={invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}
+            disabled={user ? cart.totalPrice === 0 || !ccValid : invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}
           >Purchase</button>}
 				</div>
 

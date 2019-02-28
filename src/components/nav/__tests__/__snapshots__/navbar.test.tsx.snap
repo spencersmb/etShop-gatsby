@@ -5,7 +5,7 @@ exports[`Navbar Layout renders correctly 1`] = `
   data-testid="navbar"
 >
   <ul
-    className="sc-bZQynM ffHDVB"
+    className="sc-bxivhb gNFSQT"
   >
     <li>
       Home

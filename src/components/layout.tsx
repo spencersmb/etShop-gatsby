@@ -1,4 +1,5 @@
 import MyShoppingCart from '@components/cart/cartStore'
+import Receipt from '@components/modals/receipt'
 import React, { ReactNode, useEffect, useRef } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import ReduxToastr from 'react-redux-toastr'
@@ -55,9 +56,32 @@ const Layout = ({ children }: IlayoutProps) => {
 								transitionOut='fadeOut'
 								progressBar={false}
 							/>
-							<Modal key='modal'/>
 						</div>
 					</div>
+					<Modal key='modal'/>
+					{/*<Receipt*/}
+						{/*closeModal={()=>null}*/}
+						{/*options={{*/}
+							{/*data:{*/}
+								{/*total:'16',*/}
+								{/*orderId:'430',*/}
+								{/*email:'spencer@gmail.com',*/}
+								{/*type:'Stripe',*/}
+								{/*date:'1551315228792',*/}
+								{/*downloads:[*/}
+									{/*{*/}
+										{/*download_url: 'http://shopeverytuesday.local/?download_file=222&order=wc_order_WACJ4jqOmzcx5&uid=48005c9bfbb9cc0aa69d683a821861fbfa5929e61e7bb4d52aa9268db9893836&key=831ced27-6944-4747-a419-99c292de9c0c',*/}
+										{/*product_id: 222,*/}
+										{/*product_name: 'Watercolor texture kit Vol. 1',*/}
+										{/*product_url: 'http://shopeverytuesday.local/product/watercolor-texture-kit-vol-1/',*/}
+										{/*order_id: 430,*/}
+										{/*downloads_remaining: '',*/}
+										{/*access_expires: null*/}
+									{/*}*/}
+								{/*]*/}
+							{/*}*/}
+						{/*}}*/}
+						{/*/>*/}
 				</>
 			)}
 		/>

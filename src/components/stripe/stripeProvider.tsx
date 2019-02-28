@@ -2,14 +2,6 @@ import { CustomWindow } from '@et/types/Winodw'
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import React, { useEffect, useRef, useState } from 'react'
 
-interface IStripeProviderProps {
-	stripe: any | null
-}
-
-interface IState extends IStripeProviderProps {
-	show: boolean,
-}
-
 declare let window: CustomWindow
 
 export function StripeProviderWrapper (props: any) {
@@ -22,7 +14,6 @@ export function StripeProviderWrapper (props: any) {
 		if (window.Stripe) {
 			// console.log('has Stripe already')
 			setStripe(window.Stripe(stripeSecretKey))
-			console.log('stripe already loaded')
 
 		} else {
 			stripeScriptTag.current = document.querySelector('#stripe-js')
@@ -34,7 +25,6 @@ export function StripeProviderWrapper (props: any) {
 
 	function loadStripe () {
 		setStripe(window.Stripe(stripeSecretKey))
-		console.log('stripe loaded')
 	}
 
 	return (
