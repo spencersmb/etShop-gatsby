@@ -103,6 +103,7 @@ describe('Cart Reducer', () => {
 		})
 		const result: ICartState = state.cart
 		result.totalPrice = 16
+		result.originalPrice = 16
 
 		expect(reducer).toEqual(result)
 	})
@@ -247,7 +248,8 @@ describe('Cart Reducer', () => {
 				loaded: false,
 				paymentType: 'stripe',
 				totalItems: 0,
-				totalPrice: 0
+				totalPrice: 0,
+				originalPrice: 0
 			}
 		}
 		const action: Actions = {

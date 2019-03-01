@@ -114,4 +114,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 		showModal: bindActionCreators(showModal, dispatch)
 	}
 }
-export default injectStripe(connect(null, mapDispatchToProps)(StripeCheckout))
+export default injectStripe(connect<{}, IReduxActions, {}>(null, mapDispatchToProps)(StripeCheckout))

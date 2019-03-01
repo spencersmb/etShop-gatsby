@@ -1,4 +1,5 @@
 import { CheckoutTotal } from '@components/cart/checkout/checkoutTotal'
+import { testCartWithItem } from '@redux/reduxTestUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {
@@ -10,7 +11,7 @@ import 'jest-dom/extend-expect'
 afterEach(cleanup)
 
 const props = {
-	cartTotal: 12
+	cart: testCartWithItem
 }
 describe('Checkout Total', () => {
 

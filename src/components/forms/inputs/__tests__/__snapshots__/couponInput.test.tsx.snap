@@ -4,7 +4,13 @@ exports[`Coupon Input renders correctly 1`] = `
 <form
   onSubmit={[Function]}
 >
+  <label
+    htmlFor="coupon"
+  >
+    Coupon
+  </label>
   <input
+    aria-label="coupon"
     data-testid="couponInput"
     onChange={[Function]}
     readOnly={false}

@@ -74,7 +74,6 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 
 	// on mount get body
 	useEffect(() => {
-		console.log(' mounted')
 		target.current = document.querySelector('#___gatsby')
 		// bodyRef.current = document.getElementsByTagName('body')
 	}, [])
@@ -86,12 +85,6 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 			target.current.style.width = `100%`
 			target.current.style.top = `-${scrollPos.current}px`
 			target.current.style.position = 'fixed'
-		}
-
-		if (target.current && !show) {
-			// target.current.style.removeProperty('position')
-			// target.current.style.removeProperty('top')
-			// document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 		}
 
 	}, [show])
@@ -113,9 +106,6 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 					onPoseComplete={() => {
 						overlayMounted.current = !overlayMounted.current
 						if (!overlayMounted.current) {
-							console.log('complete')
-
-							// bodyRef.current[0].setAttribute('style', 'overflow: visible; height: auto;')
 							target.current.style.removeProperty('position')
 							target.current.style.removeProperty('top')
 							document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current

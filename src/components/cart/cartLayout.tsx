@@ -94,14 +94,6 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 				{checkout}
 				<hr/>
 
-				<div>
-					<button
-						type='button'
-						disabled={props.cart.totalPrice === 0
-							? !isPWYWItemInCart(props.cart.items, props.products)
-							: false}>Checkout temp btn
-					</button>
-				</div>
 			</div>
 		</CartWrapper>
 	)

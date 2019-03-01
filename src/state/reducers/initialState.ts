@@ -33,7 +33,8 @@ const initialState: IState = {
 		loaded: false,
 		paymentType: 'stripe',
 		totalItems: 0,
-		totalPrice: 0
+		totalPrice: 0,
+		originalPrice: 0
 	}
 }
 export default initialState

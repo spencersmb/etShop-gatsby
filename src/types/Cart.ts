@@ -32,6 +32,7 @@ export interface ICartState {
 	paymentType: string,
 	totalItems: number,
 	totalPrice: number,
+	originalPrice: number,
 	loaded: boolean,
 	isOpen: boolean,
 	items: {
@@ -71,4 +72,14 @@ export interface IChangeLicenseData {
 	products: IProducts,
 	currentCartItem: ICartItem,
 	bulkDiscount: boolean
+}
+
+export interface ITotalItem {
+	regularPrice: number,
+	discountedPrice: number
+}
+
+export interface ITotal {
+	total: number,
+	discountedTotal: number
 }

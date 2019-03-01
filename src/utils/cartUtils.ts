@@ -1,4 +1,12 @@
-import { ICartItem, ICartItemWithKey, ICartState, ICouponState, ILocalStorageCart } from '@et/types/Cart'
+import {
+	ICartItem,
+	ICartItemWithKey,
+	ICartState,
+	ICouponState,
+	ILocalStorageCart,
+	ITotal,
+	ITotalItem
+} from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import { calcCouponDiscount } from '@utils/priceUtils'
 import _ from 'lodash'
@@ -35,6 +43,11 @@ export const totalItemsInCart = (items: { [id: string]: ICartItem }): number => 
 /**
  * Calculates the Dollar Total of all items in the cart.
  *
+ * * Coupon - Fixed_cart - Tested ( Fixed price discount )
+ * * Coupon - Percentage(single item) - Tested
+ * * Coupon - Percentage Cart - Tested
+ * * Coupon - Fixed Item cost - Tested
+ *
  * How it works:
  * Get all the Keys of the Items in the cart and put them in an array.
  * Loop over each item, get its qty, and then match the slug of that item with
@@ -48,7 +61,7 @@ export const totalItemsInCart = (items: { [id: string]: ICartItem }): number => 
  * @param {ICouponCode} coupon Coupon in Redux State.
  * @return {number} The result of adding each item in the cart
  */
-export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): number => {
+export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): ITotal => {
 
 	// 1.a
 	// Create array with Item keys to reduce them to one number total
@@ -61,13 +74,15 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): num
 
 	// 2.
 	// reduce over each item checking for coupons
-	const totalPriceItems: number = itemKeysArray.reduce((total, slug: string) => {
+
+	const totalPriceItems: ITotalItem = itemKeysArray.reduce((total: ITotalItem, slug: string) => {
 
 		// 2.a
 		// convert String product price to a number to do calculations on it
 		const product: ICartItem = items[slug]
 
-		let productPrice: number = parseFloat(product.price)
+		const productPrice: number = parseFloat(product.price)
+		let discountedPrice: number = parseFloat(product.price)
 		// Ts check because we told interfaces it could be string or number,
 		// but coded it so that qty should never get to this point as a string
 		const qty: number = typeof product.qty === 'string' ? 0 : product.qty
@@ -75,14 +90,17 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): num
 		// 2.b
 		// check if coupon applies to a product
 		const couponFound: boolean = checkForCoupon(coupon.product_ids, product.id)
+		console.log('product', product.name)
 
 		// console.log('original price', productPrice) // log price before change check
 
 		// 2.c
 		// Check for individual coupon and re-calculate price
 		if (!couponIsForCart && couponFound && coupon.valid) {
-
-			productPrice = productPrice - calcCouponDiscount(coupon, productPrice)
+			console.log('couponFound', couponFound)
+			console.log('couponIsForCart', couponIsForCart)
+			discountedPrice = productPrice - calcCouponDiscount(coupon, productPrice)
+			console.log('discountedPrice', discountedPrice)
 
 			// Error checking for coupon
 			// console.log('coupon Found for', items[slug].id)
@@ -93,10 +111,10 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): num
 		// If the qty is greater than one, the coupon does not apply to every item,
 		// only the first item gets discounted.
 		// Check quantity
-		if (qty > 1) {
+		if (qty > 1 && (!couponIsForCart && couponFound && coupon.valid)) {
 
 			// store the current discounted price ( coupon was applied in step 2.c )
-			const singleSaleItem = productPrice
+			const singleSaleItem = discountedPrice
 
 			// store the original product price with no discount applied
 			const priceOfAllOtherItems = parseFloat(product.price)
@@ -108,14 +126,30 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): num
 
 			// the single discount item + the totaled up regular priced items
 			// then add them to the grand total
-			return total + (totalNormalPricedItems + singleSaleItem)
+			// return total + (totalNormalPricedItems + singleSaleItem)
+			return {
+				regularPrice: total.regularPrice + (productPrice * qty),
+				discountedPrice: total.discountedPrice + (totalNormalPricedItems + singleSaleItem)
+			}
 
 		}
 
 		// Finally return the current total + (product * its quantity)
 		// console.log('new price', productPrice)
-		return total + (productPrice * qty)
-	}, 0)
+		console.log('product total', {
+			regularPrice: total.regularPrice + (productPrice * qty),
+			discountedPrice: total.discountedPrice + (discountedPrice * qty)
+		})
+
+		return {
+			regularPrice: total.regularPrice + (productPrice * qty),
+			discountedPrice: total.discountedPrice + (discountedPrice * qty)
+		}
+	}, {
+		regularPrice: 0,
+		discountedPrice: 0
+	})
+	// console.log('totalPriceItems', totalPriceItems)
 
 	// 3.
 	// Calculate grand total
@@ -125,17 +159,27 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): num
 	// 3.a |
 	// If The total is greater than 0 and there is a coupon for the cart
 	// calculate the discount off, subtract it from the total and return that value
-	const totalWithDiscount: number = couponIsForCart && totalPriceItems > 0
-		? totalPriceItems - calcCouponDiscount(coupon, totalPriceItems)
-		: totalPriceItems
+
+	const totalWithDiscount: number = couponIsForCart && totalPriceItems.regularPrice > 0
+		? totalPriceItems.regularPrice - calcCouponDiscount(coupon, totalPriceItems.regularPrice)
+		: totalPriceItems.discountedPrice
+
+	console.log('total', {
+		total: _.round(totalPriceItems.regularPrice, 2),
+		discountedTotal: totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
+	})
 
 	// 4.
 	//
 	// check for negative number and return 0 if that's the case
 	// else round the total to string of 2 decimal places return that number
 
-	return totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
+	// return totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
 	// return totalWithDiscount < 0 ? 0 : parseFloat(totalWithDiscount.toFixed(2))
+	return {
+		total: totalPriceItems.regularPrice,
+		discountedTotal: totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
+	}
 
 }
 

@@ -53,7 +53,8 @@ export const testCartEmpty: ICartState = {
 	loaded: true,
 	paymentType: 'Stripe',
 	totalItems: 0,
-	totalPrice: 0
+	totalPrice: 0,
+	originalPrice: 0
 }
 
 export const standardItemAddToCart = {
@@ -433,8 +434,11 @@ export const testCartWithItem: ICartState = {
 	loaded: true,
 	paymentType: 'Stripe',
 	totalItems: 1,
-	totalPrice: 12
+	totalPrice: 12,
+	originalPrice: 12
 }
+
+// Todo: add coupon code
 export const testCartWithItemAndCoupon: ICartState = {
 	coupon: {
 		code: '',
@@ -461,7 +465,8 @@ export const testCartWithItemAndCoupon: ICartState = {
 	loaded: true,
 	paymentType: 'Stripe',
 	totalItems: 1,
-	totalPrice: 12
+	totalPrice: 12,
+	originalPrice: 12
 }
 export const testCartWithMultiples: ICartState = {
 	coupon: {
@@ -495,7 +500,8 @@ export const testCartWithMultiples: ICartState = {
 	loaded: true,
 	paymentType: 'Stripe',
 	totalItems: 2,
-	totalPrice: 25.99
+	totalPrice: 25.99,
+	originalPrice: 25.99
 }
 
 export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
@@ -536,7 +542,7 @@ export const coupons = {
 	}
 }
 
-export const testUser:IUser = {
+export const testUser: IUser = {
 	email: 'spencer@gmail.com',
 	firstName: 'testUser',
 	lastName: 'testLastName',

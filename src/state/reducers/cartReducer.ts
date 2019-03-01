@@ -1,5 +1,5 @@
 import { Actions } from '@et/types/Actions'
-import { ICartState, ICouponRaw } from '@et/types/Cart'
+import { ICartState, ICouponRaw, ITotal } from '@et/types/Cart'
 import { CartActionTypes, CouponActionTypes } from '@et/types/Enums'
 import initialState from '@redux/reducers/initialState'
 import { getCartTotal, totalItemsInCart } from '@utils/cartUtils'
@@ -39,7 +39,8 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				...state,
 				items: {},
 				totalItems: 0,
-				totalPrice: 0
+				totalPrice: 0,
+				originalPrice: 0
 			}
 
 		/*
@@ -59,25 +60,27 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 		case CartActionTypes.UPDATE_CART_PRICE:
 
 			// calc total items here so we dont use getState in Action creater
-			const updateTotalPrice = getCartTotal(state.items, state.coupon)
+			const updateTotalPrice: ITotal = getCartTotal(state.items, state.coupon)
 
 			return {
 				...state,
-				totalPrice: updateTotalPrice // es6 destructure totalItems: totalItems
+				totalPrice: updateTotalPrice.discountedTotal, // es6 destructure totalItems: totalItems
+				originalPrice: updateTotalPrice.total
 			}
 
 		/*
 		* * Tested!
 		*/
 		case CartActionTypes.UPDATE_CART_STATE:
-			const totalPrice = getCartTotal({ ...action.payload.cart.items }, state.coupon)
+			const totalPrice: ITotal = getCartTotal({ ...action.payload.cart.items }, state.coupon)
 			return {
 				...state,
 				items: {
 					...action.payload.cart.items
 				},
 				totalItems: Object.keys(action.payload.cart.items).length,
-				totalPrice
+				totalPrice: totalPrice.discountedTotal, // es6 destructure totalItems: totalItems
+				originalPrice: totalPrice.total
 			}
 
 		/*

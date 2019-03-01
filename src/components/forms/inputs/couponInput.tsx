@@ -38,8 +38,14 @@ export function CouponInput (props: IProps & IReduxActions) {
 		<form onSubmit={handleSubmit}>
 			{coupon.valid && <span data-testid='valid-notice'>Valid code!</span>}
 			{!coupon.valid && coupon.submitted && <span data-testid='invalid-notice'>Invalid code!</span>}
-			<input type='text' onChange={handleInputChange} data-testid='couponInput' value={input}
-						 readOnly={coupon.loading}/>
+			<label htmlFor='coupon'>Coupon</label>
+			<input
+				aria-label={'coupon'}
+				type='text'
+				onChange={handleInputChange}
+				data-testid='couponInput'
+				value={input}
+				readOnly={coupon.loading}/>
 			<button type='submit' data-testid='couponSubmitBtn'
 							disabled={coupon.loading || input === ''}>{coupon.loading ? 'Checking...' : 'Submit'}</button>
 		</form>
