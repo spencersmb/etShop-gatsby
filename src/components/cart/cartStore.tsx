@@ -1,17 +1,18 @@
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
+import { OnPoseComplete } from '@et/types/Modal'
 import { IState } from '@et/types/State'
 import { cartLoadedComplete as cartLoaded, updateCartState } from '@redux/actions/cartActions'
 import { getLocalStorageCart } from '@utils/cartUtils'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
 import posed, { PoseGroup } from 'react-pose'
-import { ICartState, ILocalStorageCart } from '@et/types/Cart'
+import { ILocalStorageCart } from '@et/types/Cart'
 import Cart from '@components/cart/cartLayout'
 
 interface IPropsPrivate {
-	cart: ICartState;
+	cartIsOpen: boolean;
 }
 
 interface IPrivateActions {
@@ -23,9 +24,15 @@ interface IPropsPublic {
 	defaultOpenState?: boolean
 }
 
+
 export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPublic) => {
+	const target = useRef<HTMLElement | null>(null)
+	const bodyScrollPos = useRef(0)
+	const { cartIsOpen } = props
 	// onComponent mount
 	useLayoutEffect(() => {
+		target.current = document.querySelector('#___gatsby')
+
 		const localStateCart: ILocalStorageCart = getLocalStorageCart()
 
 		if (Object.keys(localStateCart).length > 0) {
@@ -35,24 +42,42 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 		props.cartLoadedComplete()
 
 	}, [])
+
 	return (
-			<CartStyled style={{ position: 'relative', zIndex: 3 }}>
-				<PoseGroup>
-					{props.cart.isOpen &&
-          <CartPose key='cart'>
-						{({ ref }: IPoseHoc) => (
-							<Cart poseRef={ref}/>
-						)}
-          </CartPose>
+		<CartStyled style={{ position: 'relative', zIndex: 3 }}>
+			<PoseGroup>
+				{cartIsOpen &&
+        <CartPose key='cart' onPoseComplete={(type: OnPoseComplete) => {
+					const overlayOpen = document.querySelector('#overlay')
+					if (type === 'enter' && !overlayOpen && target.current) {
+						bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+						target.current.style.width = `100%`
+						target.current.style.top = `-${bodyScrollPos.current}px`
+						target.current.style.bottom = `0`
+						target.current.style.position = 'fixed'
 					}
-				</PoseGroup>
-			</CartStyled>
+
+					if (type === 'exit' && !overlayOpen && target.current) {
+						target.current.style.removeProperty('position')
+						target.current.style.removeProperty('top')
+						target.current.style.removeProperty('bottom')
+						document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
+					}
+
+				}}>
+					{({ ref }: IPoseHoc) => (
+						<Cart poseRef={ref}/>
+					)}
+        </CartPose>
+				}
+			</PoseGroup>
+		</CartStyled>
 	)
 }
 
-const mapStateToProps = (state: IState): { cart: ICartState } => {
+const mapStateToProps = (state: IState): { cartIsOpen: boolean } => {
 	return {
-		cart: state.cart
+		cartIsOpen: state.cart.isOpen
 	}
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>): IPrivateActions => {

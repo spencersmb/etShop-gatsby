@@ -9,20 +9,16 @@ exports[`Coupon Input renders correctly 1`] = `
   >
     Coupon
   </label>
+  <div>
+    false
+  </div>
   <input
     aria-label="coupon"
     data-testid="couponInput"
-    onChange={[Function]}
-    readOnly={false}
+    defaultValue=""
+    id="couponInput"
+    placeholder="Enter Promo Coupon"
     type="text"
-    value=""
   />
-  <button
-    data-testid="couponSubmitBtn"
-    disabled={true}
-    type="submit"
-  >
-    Submit
-  </button>
 </form>
 `;

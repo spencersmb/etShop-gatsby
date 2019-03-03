@@ -1,3 +1,4 @@
+import { OnPoseComplete } from '@et/types/Modal'
 import React, {
 	ComponentType,
 	RefObject,
@@ -46,7 +47,6 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 	const modalContentRef: RefObject<any> = useRef(null)
 	const target: any = useRef(null)
 	const scrollPos: any = useRef(0)
-	const overlayMounted: any = useRef(false)
 
 	function handleOnOutsideClick (e: any) {
 		if (isChildOf(e.target, modalContentRef.current)) {
@@ -75,16 +75,16 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 	// on mount get body
 	useEffect(() => {
 		target.current = document.querySelector('#___gatsby')
-		// bodyRef.current = document.getElementsByTagName('body')
 	}, [])
 
 	useEffect(() => {
-		// if props.show means the modal should be open
-		if (show && target.current) {
-			scrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-			target.current.style.width = `100%`
-			target.current.style.top = `-${scrollPos.current}px`
-			target.current.style.position = 'fixed'
+
+		// on close - render body before modal closes to stop safari from blinking text
+		if (!show && target.current) {
+			target.current.style.removeProperty('position')
+			target.current.style.removeProperty('top')
+			target.current.style.removeProperty('bottom')
+			document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 		}
 
 	}, [show])
@@ -99,16 +99,29 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 					{renderModal(component)}
 				</ModalPose>,
 				<Overlay
+					id={'overlay'}
 					data-testid='overlay'
 					key='overlay'
 					showOverlay={props.options.hasBackground}
 					onClick={handleOnOutsideClick}
-					onPoseComplete={() => {
-						overlayMounted.current = !overlayMounted.current
-						if (!overlayMounted.current) {
-							target.current.style.removeProperty('position')
-							target.current.style.removeProperty('top')
-							document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
+					onPoseComplete={(type: OnPoseComplete) => {
+						if (type === 'enter') {
+							// 1. Check if TOP is already set and get the value
+							const topExists = getComputedStyle(target.current).top || 'auto'
+							const topReverse = parseInt(topExists, 10) * -1
+							// console.log('top', isNaN(topReverse))
+
+							// 2. check if top has a value to start with instead of looking up body scroll position
+							const hasTop = !isNaN(topReverse)
+
+							scrollPos.current = hasTop
+								? topReverse
+								: document.body.scrollTop || document.documentElement.scrollTop || 0
+
+							target.current.style.width = `100%`
+							target.current.style.top = `-${scrollPos.current}px`
+							target.current.style.bottom = '0'
+							target.current.style.position = 'fixed'
 						}
 					}}
 				/>
@@ -152,7 +165,12 @@ const Shade = styled.div`
 		height: 100%;
 		left: 0;
 		position: absolute;
+		will-change: opacity;
+		backface-visibility: hidden;
+		//perspective: 1000;
+		transform: translate3d(0, 0, 0);
 		top: 0;
+		bottom: 0;
 		width: 100%;
 		z-index: ${depth};
 `

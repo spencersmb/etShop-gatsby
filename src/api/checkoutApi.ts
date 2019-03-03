@@ -21,7 +21,7 @@ export class CheckoutApi {
 				method: 'GET',
 				mode: 'cors'
 			}
-		)
+		).then(res => res.json())
 	}
 
 	static submitStripeOrder (orderData: IFinalOrder): Promise<Response> {

@@ -21,3 +21,5 @@ export interface IShowModalProps {
   modal: ComponentType<any>,
   options: IModalOptions
 }
+
+export type OnPoseComplete = string | string[]

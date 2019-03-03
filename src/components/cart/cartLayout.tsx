@@ -2,6 +2,7 @@ import CartList from '@components/cart/cartList'
 import StripeCheckout from '@components/stripe/stripeCheckout'
 import StripeProviderWrapper from '@components/stripe/stripeProvider'
 import CheckoutTabs from '@components/tabs/checkoutTabs'
+import { IModalState } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
@@ -21,6 +22,7 @@ interface IPropsPublic {
 
 interface IReduxState {
 	cart: ICartState,
+	modal: IModalState
 	products: IProducts,
 }
 
@@ -31,8 +33,6 @@ interface IReduxActions {
 }
 
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
-	const bodyScrollPos = useRef(0)
-	const target = useRef<HTMLElement | null>(null)
 	const checkout = useMemo(() => <CheckoutTabs
 		initialLoad='stripe'
 		handleChangeType={props.changeCheckout}
@@ -52,29 +52,11 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)
 	])
 
-	useEffect(() => {
-		target.current = document.querySelector('#___gatsby')
-		if (target.current) {
-			bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-			target.current.style.width = `100%`
-			target.current.style.top = `-${bodyScrollPos.current}px`
-			target.current.style.position = 'fixed'
-		}
-
-		return () => {
-
-			if (target.current) {
-				target.current.style.removeProperty('position')
-				target.current.style.removeProperty('top')
-
-				document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
-			}
-
-		}
-	}, [])
-
 	return (
-		<CartWrapper data-testid='cart-wrapper' ref={props.poseRef} id='cartWrapper'>
+		<CartWrapper
+			data-testid='cart-wrapper'
+			ref={props.poseRef}
+			id='cartWrapper'>
 			<button data-testid='close-btn' className='jestCloseCart' onClick={props.cartToggle}>Close</button>
 
 			<div>
@@ -104,11 +86,14 @@ const CartWrapper = styled.div`
 	top: 0;
 	left: 0;
 	//height: 100vh;
+	will-change: opacity;
+	backface-visibility: hidden;
+	transform: translate3d(0, 0, 0);
 	height: 100%;
 	width: 100%;
 	overflow-y: scroll;
 	background: #8ac3c0;
-	transform:translateY(0) translateX(0);
+	//transform:translateY(0) translateX(0);
 	z-index: 4;
 	//transition: all 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
 `
@@ -116,7 +101,8 @@ const CartWrapper = styled.div`
 const mapStateToProps = (state: IState): any => {
 	return {
 		cart: state.cart,
-		products: state.products
+		products: state.products,
+		modal: state.modal
 	}
 }
 

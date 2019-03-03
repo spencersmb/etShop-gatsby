@@ -70,11 +70,8 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 
 	function onSuccess (completedOrder: IOrderResponse) {
 		// toastr.success('Enjoy', 'Purchase successful')
-		props.emptyCart()
-		props.closeCart()
 		console.log('completedOrder', completedOrder)
 		const { order } = completedOrder
-		// open receipt modal
 		props.showModal({
 			modal: Receipt,
 			options: {
@@ -90,6 +87,13 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 				}
 			}
 		})
+		props.emptyCart()
+
+		setTimeout(() => {
+			props.closeCart()
+		}, 500)
+
+		// open receipt modal
 
 	}
 

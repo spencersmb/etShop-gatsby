@@ -14,7 +14,7 @@ const mockStore = configureMockStore(middlewares)
 afterEach(cleanup)
 describe('Cart Action tests', () => {
 
-	it('Should have 3 types SUBMIT_COUPON, COUPON_SUCCESS & UPDATE_CART_PRICE', () => {
+	xit('Should have 3 types SUBMIT_COUPON, COUPON_SUCCESS & UPDATE_CART_PRICE', () => {
 		const store = mockStore(initialState)
 		const bodyData = {
 			...coupons.rawValidFixedCart

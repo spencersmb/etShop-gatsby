@@ -1,4 +1,5 @@
 import { CheckoutApi } from '@api/checkoutApi'
+import { Actions } from '@et/types/Actions'
 import { ICouponApiResponse, ICouponRaw } from '@et/types/Cart'
 import { CouponActionTypes } from '@et/types/Enums'
 import { updateCartPrice } from '@redux/actions/cartActions'
@@ -49,6 +50,7 @@ export const submitCouponCode = (couponCode: string) => async (dispatch: Dispatc
 /*
 * * Tested!
 */
+export type ICouponSuccessAction = (coupon: ICouponRaw) => Actions
 export const loadCouponSuccess = (coupon: ICouponRaw) => {
 	return {
 		payload: {
@@ -64,5 +66,11 @@ export const loadCouponSuccess = (coupon: ICouponRaw) => {
 export const loadCouponInvalid = () => {
 	return {
 		type: CouponActionTypes.SUBMIT_COUPON_INVALID
+	}
+}
+
+export const submitCoupon = () => {
+	return {
+		type: CouponActionTypes.SUBMIT_COUPON
 	}
 }

@@ -6,21 +6,22 @@ import {
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import { combineReducers } from 'redux'
-import { cartReducer } from '../../../state/reducers/cartReducer'
-import { productReducer } from '../../../state/reducers/productReducer'
-import { renderWithRedux, testCartEmpty } from '../../../state/reduxTestUtils'
-import { IState } from '../../../types/State'
+import { cartReducer } from '@redux/reducers/cartReducer'
+import { productReducer } from '@redux/reducers/productReducer'
+import { renderWithRedux, testCartEmpty } from '@redux/reduxTestUtils'
+import { IState } from '@et/types/State'
 import { MyShoppingCart } from '../cartStore'
 
 afterEach(cleanup)
 
 const props = {
-	cart: testCartEmpty,
+	cartIsOpen: false,
 	updateCartState: jest.fn(),
 	cartLoadedComplete: jest.fn()
 }
 
 const propsShowCart = {
+	cartIsOpen: true,
 	updateCartState: jest.fn(),
 	cartLoadedComplete: jest.fn()
 }
