@@ -1,10 +1,13 @@
+import { ICouponRaw, ICouponState } from '@et/types/Cart'
+
 export interface IAuthResponse {
   token: string,
   user_email: string,
   user_nicename: string,
   user_display_name: string,
   first_name: string,
-  last_name: string
+  last_name: string,
+  coupon: ICouponRaw
 }
 
 export interface IUserSubmit {

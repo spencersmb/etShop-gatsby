@@ -1,7 +1,8 @@
 import AuthApi from '@api/authApi'
 import { Actions } from '@et/types/Actions'
 import { AuthActionTypes } from '@et/types/Enums'
-import { IAuthResponse, IUser } from '@et/types/User'
+import { IAuthResponse, IUser, IUserCreate } from '@et/types/User'
+import { loadCouponSuccess } from '@redux/actions/couponActions'
 import { statusCheck } from '@utils/apiUtils'
 import { removeUserLocalStorage, saveUserLocalStorage } from '@utils/authUtils'
 import { Action, Dispatch } from 'redux'
@@ -39,4 +40,24 @@ export const logout: ILogoutAction = () => {
 	return {
 		type: AuthActionTypes.LOGOUT
 	}
+}
+
+export const createUser: any = (user: IUserCreate) => async (dispatch: Dispatch<Action>): Promise<any> => {
+
+	// Add Loading Dispatch spinner
+	// insert LOADING BAR ACTION ?
+
+	const response: Response = await AuthApi.createUser(user)
+
+	await statusCheck(response, dispatch)
+
+	const body: IAuthResponse = await response.json()
+
+	dispatch(loginUserSuccess(body))
+	dispatch(loadCouponSuccess(body.coupon))
+	saveUserLocalStorage(body)
+	return {
+		firstName: body.first_name
+	}
+
 }

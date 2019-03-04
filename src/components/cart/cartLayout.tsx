@@ -33,6 +33,9 @@ interface IReduxActions {
 }
 
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
+
+	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
+	// to flip to the free checkout form
 	const checkout = useMemo(() => <CheckoutTabs
 		initialLoad='stripe'
 		handleChangeType={props.changeCheckout}

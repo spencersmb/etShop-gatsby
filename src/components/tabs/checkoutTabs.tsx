@@ -1,5 +1,6 @@
 import CheckoutTotal from '@components/cart/checkout/checkoutTotal'
 import CartLogin from '@components/cart/login/cartLogin'
+import FreeCheckoutForm from '@components/forms/freeItem-checkout'
 import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
 import { reduceChildrenByDataType } from '@utils/genUtils'
@@ -43,11 +44,10 @@ export const CheckoutTabs = (props: IProps) => {
 			setKey(props.initialLoad)
 		}
 
+		// onload check if there is a free item in the cart and the total is 0
+		// set the payment type to pwyw
 		if (props.freeCheckout) {
 			props.handleChangeType('pwyw')
-		}
-
-		return () => {
 		}
 
 	}, [])
@@ -77,12 +77,9 @@ export const CheckoutTabs = (props: IProps) => {
 			<CheckoutTotal/>
 			<CartLogin/>
 			{/*Possible dropdown for country code selecttion goes here*/}
-			{/*<div>*/}
-			{/*<CouponCodeInput/>*/}
 			<div>
 				<CouponInput/>
 			</div>
-			{/*</div>*/}
 
 			{/*Render Matching Content*/}
 			{!props.freeCheckout &&
@@ -94,7 +91,7 @@ export const CheckoutTabs = (props: IProps) => {
 					)}
       </div>
 			}
-			{props.freeCheckout && <div data-testid='freeCheckout'>Free item checkout</div>}
+			{props.freeCheckout && <FreeCheckoutForm/>}
 		</>
 	)
 }

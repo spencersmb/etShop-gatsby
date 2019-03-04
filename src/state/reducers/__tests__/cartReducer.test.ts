@@ -75,6 +75,15 @@ describe('Cart Reducer', () => {
 		result.totalPrice = 0
 		result.totalItems = 0
 		result.items = {}
+		result.coupon = {
+			code: '',
+			discount: '',
+			loading: false,
+			product_ids: [],
+			submitted: true,
+			type: '',
+			valid: false
+		}
 
 		expect(reducer).toEqual(result)
 	})

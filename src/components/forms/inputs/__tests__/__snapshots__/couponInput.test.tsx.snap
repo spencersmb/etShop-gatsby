@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Coupon Input renders correctly 1`] = `
-<form
-  onSubmit={[Function]}
->
+<form>
   <label
     htmlFor="coupon"
   >

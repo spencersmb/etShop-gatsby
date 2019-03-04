@@ -19,7 +19,7 @@ export interface IOrderDetails {
 			last_name?: string,
 			email: string
 		},
-	line_items: ILineItems[],
+	line_items: IWcOrderItem[],
 	paypal?: {
 		paid: boolean
 		cancelled: boolean

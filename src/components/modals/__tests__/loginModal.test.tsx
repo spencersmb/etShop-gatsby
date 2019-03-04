@@ -23,7 +23,10 @@ const signUpProps = {
 const modal = {
 	component: Login,
 	show: true,
+	createUser: jest.fn(),
 	options: {
+		hasBackground: true,
+		closeModal: false,
 		content: '',
 		name: 'signin'
 	}
@@ -43,7 +46,10 @@ const ConnectedSignUp = connect((state: IModalState) => {
 			...state,
 			component: Login,
 			show: true,
+			createUser: jest.fn(),
 			options: {
+				hasBackground: true,
+				closeModal: false,
 				content: '',
 				name: 'signup'
 			}
@@ -86,10 +92,9 @@ describe('Login Modal', () => {
 
 	it('Should render signup form and have sign button', () => {
 		const modalRender = renderWithRedux(<ConnectedSignUp {...signUpProps}/>, modalReducer)
-		const signUp = modalRender.getByTestId('signUp-form')
 		const signIn = modalRender.queryByTestId('signIn-form')
 		expect(modalRender.getByText('Sign In')).toBeTruthy()
-		expect(signUp).toBeTruthy()
+		expect(modalRender.getByTestId('signUp-form')).toBeTruthy()
 		expect(signIn).toBeNull()
 	})
 

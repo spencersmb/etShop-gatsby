@@ -37,6 +37,15 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 
 			return {
 				...state,
+				coupon: {
+					code: '',
+					discount: '',
+					loading: false,
+					product_ids: [],
+					submitted: true,
+					type: '',
+					valid: false
+				},
 				items: {},
 				totalItems: 0,
 				totalPrice: 0,

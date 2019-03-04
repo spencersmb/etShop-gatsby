@@ -1,7 +1,7 @@
 import { ComponentType } from 'react'
 
 export interface IModalOptions {
-  closeOutsideModal: boolean,
+  closeModal: boolean,
   hasBackground: boolean,
   content?: string,
   name?: string,

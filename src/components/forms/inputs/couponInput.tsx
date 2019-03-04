@@ -31,29 +31,6 @@ export function CouponInput (props: IProps & IReduxActions) {
 	const { coupon, submitCoupon, invalidCoupon, loadCoupon } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
 
-	// function test () {
-	// 	onSearch$.pipe(
-	// 		distinctUntilChanged(),
-	// 		debounceTime(500),
-	// 		filter(e => e !== '' && e.length > 4),
-	// 		switchMap(target => {
-	// 			submitCoupon()
-	// 			return from(CheckoutApi.checkCoupon(target))
-	// 		})
-	// 	).subscribe(
-	// 		async (response) => {
-	// 			switch (response.code) {
-	// 				case 200:
-	// 					loadCoupon(response.data.coupon)
-	// 					break
-	// 				default:
-	// 					invalidCoupon()
-	// 			}
-	// 			console.log('debounced', response)
-	// 		}
-	// 	)
-	// }
-
 	useEffect(() => {
 		let inputSubscribe: Subscription
 		if (inputRef.current) {
@@ -61,7 +38,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 			const inputPipe: any = inputObsv.pipe(
 				map((e: any) => e.target.value),
 				filter((e: string) => e !== '' && e.length > 4),
-				debounceTime(1000),
+				debounceTime(500),
 				distinctUntilChanged(),
 				switchMap((target: string) => {
 					submitCoupon()

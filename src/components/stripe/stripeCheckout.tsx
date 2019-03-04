@@ -75,7 +75,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 		props.showModal({
 			modal: Receipt,
 			options: {
-				closeOutsideModal: true,
+				closeModal: true,
 				hasBackground: false,
 				data: {
 					type: 'Stripe',
@@ -92,8 +92,6 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 		setTimeout(() => {
 			props.closeCart()
 		}, 500)
-
-		// open receipt modal
 
 	}
 

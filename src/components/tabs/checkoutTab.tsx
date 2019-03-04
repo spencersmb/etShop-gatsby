@@ -22,7 +22,9 @@ export class CheckoutTab extends Component<IProps, {}> {
 	// This could also just get called after the handleClick
 	// but because I wanted it to get called after setState, I passed it in as a CB fn
 	tabClick = () => {
-		this.props.handleClick(this.props.paymentType)
+		if (this.props.paymentType !== 'pwyw') {
+			this.props.handleClick(this.props.paymentType)
+		}
 	}
 
 	render () {

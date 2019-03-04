@@ -24,12 +24,15 @@ class AuthApi {
 		)
 	}
 
-	static resetPassword (reduxFormData: { email: string, password: string, key: string }): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/et-shop/reset`
+	static createUser (user: IUserCreate): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/createUser`
+
 		const formData = new FormData()
-		formData.append('email', reduxFormData.email)
-		formData.append('password', reduxFormData.password)
-		formData.append('key', reduxFormData.key)
+		formData.append('email', user.email)
+		formData.append('password', user.password)
+		formData.append('firstName', user.firstName)
+		formData.append('lastName', user.lastName)
+		formData.append('nonce', process.env.WPNONCE || '')
 
 		// log formData for debugging
 		// logFormData(formData)
@@ -44,15 +47,12 @@ class AuthApi {
 		)
 	}
 
-	static createUser (user: IUserCreate): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/et-shop/createUser`
-
+	static resetPassword (reduxFormData: { email: string, password: string, key: string }): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/et-shop/reset`
 		const formData = new FormData()
-		formData.append('email', user.email)
-		formData.append('password', user.password)
-		formData.append('firstName', user.firstName)
-		formData.append('lastName', user.lastName)
-		formData.append('nonce', '4*`R?rV+4uv>I-bj)t0^HbGLd*(^!4}Q}X-y0O%EWT@j7YkvFN@6bqdGwJY)aOE')
+		formData.append('email', reduxFormData.email)
+		formData.append('password', reduxFormData.password)
+		formData.append('key', reduxFormData.key)
 
 		// log formData for debugging
 		// logFormData(formData)

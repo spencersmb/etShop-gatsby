@@ -1,7 +1,7 @@
 import { ICartItemWithKey, ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import { IAuthResponse, IUserState } from '@et/types/User'
-import { IBillingWc, IStripeFormData, IWcOrderItem } from '@et/types/WC_Order'
+import { IBillingWc, IOrderDetails, IStripeFormData, IWcOrderItem } from '@et/types/WC_Order'
 import { displayCurrency } from '@utils/priceUtils'
 
 export function wc_createBilling (user: IUserState, formData: IStripeFormData): IBillingWc {
@@ -12,7 +12,7 @@ export function wc_createBilling (user: IUserState, formData: IStripeFormData): 
 	}
 }
 
-export function wc_createOrder (cart: ICartState, billing: IBillingWc, products: IProducts) {
+export function wc_createOrder (cart: ICartState, billing: IBillingWc, products: IProducts): IOrderDetails {
 	return {
 		billing,
 		coupon_code: cart.coupon.valid ? cart.coupon.code : null,

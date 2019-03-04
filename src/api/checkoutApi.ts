@@ -24,6 +24,22 @@ export class CheckoutApi {
 		).then(res => res.json())
 	}
 
+	static checkEmail (email: string): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/checkEmail?email=${email}`
+
+		return fetched(
+			url,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					'accept': 'application/json'
+				},
+				method: 'GET',
+				mode: 'cors'
+			}
+		).then(res => res.json())
+	}
+
 	static submitStripeOrder (orderData: IFinalOrder): Promise<Response> {
 		console.log('order to submit', orderData)
 		// TODO: secret addon from .env
