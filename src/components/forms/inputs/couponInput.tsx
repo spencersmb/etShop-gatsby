@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
-import { Subject, Observable, from, fromEvent, merge } from 'rxjs'
+import { Observable, from, fromEvent } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map, switchMap, filter } from 'rxjs/operators'
 import { Subscription } from 'rxjs/src/internal/Subscription'
 
@@ -26,12 +26,18 @@ interface IReduxActions {
 
 interface IProps {
 	coupon: ICouponState
+	total: number
 }
 
 export function CouponInput (props: IProps & IReduxActions) {
 	const [input, setInput] = useState('')
-	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice } = props
+	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
+	const prevTotal = useRef(total)
+
+	useEffect(() => {
+		prevTotal.current = total
+	})
 
 	useEffect(() => {
 		let inputSubscribe: Subscription
@@ -55,7 +61,9 @@ export function CouponInput (props: IProps & IReduxActions) {
 						break
 					default:
 						invalidCoupon()
-						updatePrice()
+						if (total !== prevTotal.current) {
+							updatePrice()
+						}
 				}
 			})
 		}
@@ -92,9 +100,10 @@ export function CouponInput (props: IProps & IReduxActions) {
 	)
 }
 
-const mapStateToProps = (state: IState): { coupon: ICouponState } => {
+const mapStateToProps = (state: IState): any => {
 	return {
-		coupon: state.cart.coupon
+		coupon: state.cart.coupon,
+		total: state.cart.totalPrice
 	}
 }
 

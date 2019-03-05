@@ -13,10 +13,12 @@ interface IProps {
 }
 
 export function PaypalCheckout (props: IProps) {
-	return useMemo(() =>
-			<RegisterPaypalForm
-				{...props}/>,
-		[props.cart.totalPrice, props.cart.coupon.valid])
+	// return useMemo(() =>
+	// 		<RegisterPaypalForm
+	// 			{...props}/>,
+	// 	[props.cart.totalPrice, props.cart.coupon.valid])
+	return <RegisterPaypalForm
+		{...props}/>
 }
 
 const mapStateToProps = (state: IState): any => {

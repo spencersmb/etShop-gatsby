@@ -42,7 +42,7 @@ type AllProps = IReduxActions & IPublicProps
 
 export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeGuestForm, AllProps>) {
 	const { submitting, invalid, valid, pristine, cart, handleSubmit, user, products, processPaypalOrder } = props
-	const { Paypal, PaypalButtonLoader } = paypalProvider()
+	const { PaypalButtonLoader } = paypalProvider()
 
 	// 1.
 	async function createOrder (data: any, actions: any): Promise<any> {
@@ -207,7 +207,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 				<h3>paypal checkout</h3>
 				{!user && <GuestBilling/>}
 
-				{Paypal && Button}
+				{Button}
 
 			</div>
 		</div>
@@ -230,5 +230,10 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 		showModal: bindActionCreators(showModal, dispatch)
 	}
 }
+// export default connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm)
+export default React.memo(connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
+	// console.log('prev', prev)
+	// console.log('next', next)
+	return !(prev.cart.totalPrice !== next.cart.totalPrice || prev.cart.coupon.valid !== prev.cart.coupon.valid)
 
-export default connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm)
+})
