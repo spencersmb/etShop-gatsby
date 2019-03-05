@@ -61,6 +61,7 @@ export const statusCheck = async (response: any, dispatch: any) => {
 	// // IE 500 status
 	if (response.status !== 200) {
 		const newError = await response.json()
+		console.log('newError', newError)
 
 		if (newError.message) {
 			toastr.error('Error:', newError.message, toastrOptions.noHover)

@@ -1,3 +1,4 @@
+import { IPaypalSuccessOrder } from '@et/types/Paypal'
 import { IOrderDetails } from '@et/types/WC_Order'
 import { createHeaders } from '@utils/orderUtils'
 import fetched from 'isomorphic-unfetch'
@@ -44,6 +45,22 @@ export class CheckoutApi {
 		console.log('order to submit', orderData)
 		// TODO: secret addon from .env
 		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/orders`
+		const headerOptions = createHeaders()
+		const options: any = {
+			body: JSON.stringify(orderData),
+			...(headerOptions && { headers: headerOptions }),
+			method: 'POST',
+			mode: 'cors'
+		}
+
+		return fetched(
+			url,
+			options
+		)
+	}
+
+	static processPaypalOrder(orderData: IPaypalSuccessOrder): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/paypalOrder`
 		const headerOptions = createHeaders()
 		const options: any = {
 			body: JSON.stringify(orderData),

@@ -12,9 +12,9 @@ import styled from 'styled-components'
 import { ICartState } from '@et/types/Cart'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { Actions } from '@et/types/Actions'
-import React, { RefObject, useEffect, useMemo, useRef, Suspense } from 'react'
+import React, { RefObject, useMemo, Suspense } from 'react'
 
-const PaypalProvider = React.lazy(() => import('@components/paypal/paypalProvider'))
+const PaypalCheckout = React.lazy(() => import('@components/paypal/paypalCheckout'))
 
 interface IPropsPublic {
 	poseRef: RefObject<any>;
@@ -47,8 +47,8 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			</StripeProviderWrapper>
 		</div>
 		<div data-payment='paypal'>
-			<Suspense fallback={<div>Loading...</div>}>
-				<PaypalProvider/>
+			<Suspense fallback={null}>
+				<PaypalCheckout/>
 			</Suspense>
 		</div>
 	</CheckoutTabs>, [

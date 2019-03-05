@@ -3,7 +3,7 @@ import { ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
-import { IBillingWc, IOrderResponse } from '@et/types/WC_Order'
+import { IBillingWc, IOrderResponse, IStripeGuestForm } from '@et/types/WC_Order'
 import { wc_createBilling, wc_createOrder } from '@utils/orderUtils'
 import React, { useRef, useState } from 'react'
 import { connect } from 'react-redux'
@@ -29,15 +29,20 @@ interface IReduxActions {
 
 type AllProps = IProps & IPropsPublic & IReduxActions
 
-export function StripeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllProps>) {
+export function StripeCheckoutForm (props: AllProps & InjectedFormProps<IStripeGuestForm, AllProps>) {
 	const stripeElement = useRef(null)
 	const { submitting, invalid, valid, pristine, cart, handleSubmit, stripCheckoutSubmit, user, products } = props
 	const [ccValid, setccValid] = useState(false)
 
-	async function submit (formData: any) {
-
-		// form logic here
-
+	/**
+	 * * Stripe Checkout Process
+	 * ? 1. Create the Order Object structure that WC will read via 'wc_createOrder'
+	 * ? 2. Send the Order to Stripe payment gateway to approve a token and then to WordPress DB
+	 * ? 3. If it's successful, clear Redux form and send result (successful order response) to
+	 * ? parents success function handler
+	 * @param formData
+	 */
+	async function submit (formData: IStripeGuestForm): Promise<any> {
 		// create billing depending on if user is logged in
 		// get user data or return data from forms
 		const billing: IBillingWc = wc_createBilling(user, formData)
@@ -79,13 +84,12 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllP
             disabled={user ? cart.totalPrice === 0 || !ccValid : invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}
           >Purchase</button>}
 				</div>
-
 			</form>
 		</div>
 	)
 }
 
-export const RegisterStripeForm = reduxForm<{}, AllProps>({
+export const RegisterStripeForm = reduxForm<IStripeGuestForm, AllProps>({
 	destroyOnUnmount: false, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
 	form: 'stripeForm'

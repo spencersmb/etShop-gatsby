@@ -1,7 +1,8 @@
 import React from 'react'
 
 interface IPaypalButton {
-	Button: {
+	Buttons: {
+		driver: any
 		react: any
 	}
 }
@@ -9,5 +10,5 @@ interface IPaypalButton {
 export interface CustomWindow extends Window {
 	__REDUX_DEVTOOLS_EXTENSION__: any;
 	Stripe?: any;
-	paypal: React.ComponentType<{} & IPaypalButton>;
+	paypal:IPaypalButton;
 }

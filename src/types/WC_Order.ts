@@ -1,8 +1,7 @@
-interface ILineItems {
-	product_id: number,
-	name: string,
-	quantity: number,
-	price: string
+export interface IStripeGuestForm {
+	email: string,
+	firstName: string,
+	lastName: string
 }
 
 export interface IOrderDetails {

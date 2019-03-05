@@ -2,7 +2,7 @@ import RxEmailField from '@components/forms/inputs/rxjsEmail_input'
 import ReduxValidation from '@components/forms/validations'
 import { svgs } from '@svg'
 import styled from 'styled-components'
-import React, { RefObject } from 'react'
+import React, { RefObject, useState } from 'react'
 import { reduxForm } from 'redux-form'
 import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
 import RenderField from '@components/forms/inputs/renderField'
@@ -20,7 +20,7 @@ const tooOld = (value: any) =>
 	value && value > 65 ? 'You might be too old for this' : undefined
 
 export const SignUpForm = (props: any) => {
-
+	const [emailTaken, setEmailTaken] = useState(false)
 	const { handleSubmit, poseRef, firstRender, submitting, invalid, handleUserSubmit } = props
 	const { required, email } = ReduxValidation
 
@@ -59,6 +59,8 @@ export const SignUpForm = (props: any) => {
 						validate={[required, email]}
 						label='Email:'
 						svg={svgs.CreditCard}
+						setEmailTaken={setEmailTaken}
+						emailTaken={emailTaken}
 					/>
 				</div>
 				<div>
@@ -74,7 +76,7 @@ export const SignUpForm = (props: any) => {
 						svg={svgs.CreditCard}
 					/>
 				</div>
-				<button type='submit' disabled={invalid || submitting}>Submit</button>
+				<button type='submit' disabled={invalid || submitting || emailTaken}>Submit</button>
 			</form>
 
 			<button type='button' onClick={props.changeForm} data-form='signin'>Sign In</button>

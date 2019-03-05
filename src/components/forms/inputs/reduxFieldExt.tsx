@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Dispatch, SetStateAction, useEffect } from 'react'
 import { Field, Validator } from 'redux-form'
 
 interface IReduxField {
@@ -12,22 +12,21 @@ interface IReduxField {
 	validate?: Validator | Validator[];
 	warn?: Validator | Validator[];
 	withRef?: boolean;
+	setEmailTaken?: (state: SetStateAction<boolean>) => void
+	emailTaken?: boolean
+
 	// dirty: boolean;
 	// pristine: boolean;
 	// value: any;
 }
 
-export class ReduxFieldExt extends React.Component<IReduxField>{
-	constructor(props: IReduxField) {
-		super(props)
-	}
-	render(){
-		return(
-			<>
-				<Field {...this.props}/>
-			</>
-		)
-	}
+export function ReduxFieldExt (props: IReduxField) {
+
+	return (
+		<>
+			<Field {...props}/>
+		</>
+	)
 }
 
 export default ReduxFieldExt

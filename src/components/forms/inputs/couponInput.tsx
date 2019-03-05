@@ -1,6 +1,7 @@
 import { CheckoutApi } from '@api/checkoutApi'
 import { ICouponApiResponse, ICouponState } from '@et/types/Cart'
 import { IState } from '@et/types/State'
+import { updateCartPrice } from '@redux/actions/cartActions'
 import {
 	ICouponSuccessAction,
 	loadCouponInvalid,
@@ -20,6 +21,7 @@ interface IReduxActions {
 	loadCoupon: ICouponSuccessAction
 	invalidCoupon: () => void
 	submitCoupon: () => void
+	updatePrice: () => void
 }
 
 interface IProps {
@@ -28,7 +30,7 @@ interface IProps {
 
 export function CouponInput (props: IProps & IReduxActions) {
 	const [input, setInput] = useState('')
-	const { coupon, submitCoupon, invalidCoupon, loadCoupon } = props
+	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
 
 	useEffect(() => {
@@ -49,9 +51,11 @@ export function CouponInput (props: IProps & IReduxActions) {
 				switch (x.code) {
 					case 200:
 						loadCoupon(x.data.coupon)
+						updatePrice()
 						break
 					default:
 						invalidCoupon()
+						updatePrice()
 				}
 			})
 		}
@@ -99,7 +103,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 		checkCoupon: bindActionCreators(submitCouponCode, dispatch),
 		submitCoupon: bindActionCreators(submitCouponAction, dispatch),
 		loadCoupon: bindActionCreators(loadCouponSuccess, dispatch),
-		invalidCoupon: bindActionCreators(loadCouponInvalid, dispatch)
+		invalidCoupon: bindActionCreators(loadCouponInvalid, dispatch),
+		updatePrice: bindActionCreators(updateCartPrice, dispatch)
 
 	}
 }

@@ -50,7 +50,9 @@ interface IProps {
 	disabled?: boolean,
 	svg?: string,
 	price?: string,
-	autoComplete?: boolean
+	autoComplete?: boolean,
+	setEmailTaken: (state: boolean) => void
+	emailTaken: boolean
 }
 
 //
@@ -62,7 +64,7 @@ interface IProps {
 // }
 export const RxEmailField = (props: IProps) => {
 	const [loading, setLoading] = useState(false)
-	const [emailTaken, setEmailTaken] = useState(false)
+	// const [emailTaken, setEmailTaken] = useState(false)
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const {
 		key,
@@ -72,11 +74,13 @@ export const RxEmailField = (props: IProps) => {
 		disabled,
 		placeholder,
 		svg,
+		setEmailTaken,
+		emailTaken,
 		meta: { pristine, touched, invalid, active, dirty, error, warning }
 	} = props
 
 	const renderSvgColor: string = !pristine || touched
-		? invalid
+		? invalid || emailTaken
 			? 'red'
 			: 'green'
 		: 'grey' // silver
@@ -112,7 +116,7 @@ export const RxEmailField = (props: IProps) => {
 				map((e: any) => e.target.value),
 				filter((e: string) => {
 					const validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e)
-					if (e === '' || !validEmail) {
+					if (e === '' || !validEmail && !emailTaken) {
 						setEmailTaken(false)
 					}
 					return e !== '' && validEmail
@@ -151,6 +155,8 @@ export const RxEmailField = (props: IProps) => {
 		}
 	}, [])
 
+	console.log('emailTaken', emailTaken)
+
 	return (
 		<div key={key} style={{ position: 'relative' }}>
 			<input
@@ -168,7 +174,7 @@ export const RxEmailField = (props: IProps) => {
 				{renderSvg(svg)}
       </Svg>}
 
-			{touched && !invalid && emailTaken && <div>Sorry, email is already in use.</div>}
+			{!invalid && emailTaken && <div>Sorry, email is already in use.</div>}
 			{touched && messageTest(error)}
 			{messageTest(warning)}
 

@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react'
+import Helmet from 'react-helmet'
 import { Provider } from 'react-redux'
 import { navigate } from 'gatsby'
 import createStore from './src/state/store/createStore'
@@ -46,6 +47,13 @@ export default ({ element }: { element: ReactNode }) => {
 			// redirect
 			navigate(`/page-2`)
 		})
+// TODO: merchant ID for ET PAypal shop not test shop
+	return <Provider store={store}>
+		<Helmet>
 
-	return <Provider store={store}>{element}</Provider>
+			<script id='paypal-js'
+							src={`https://www.paypal.com/sdk/js?client-id=${process.env.PAYPAL_TEST_KEY}&disable-funding=credit,card&commit=true&locale=en_US&merchant-id=6Q52LNH4ART22`}/>
+		</Helmet>
+		{element}
+	</Provider>
 }

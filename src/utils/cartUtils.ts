@@ -43,10 +43,10 @@ export const totalItemsInCart = (items: { [id: string]: ICartItem }): number => 
 /**
  * Calculates the Dollar Total of all items in the cart.
  *
- * * Coupon - Fixed_cart - Tested ( Fixed price discount )
- * * Coupon - Percentage(single item) - Tested
- * * Coupon - Percentage Cart - Tested
- * * Coupon - Fixed Item cost - Tested
+ * * Coupon - Fixed_cart - Calculator Tested ( Fixed price discount )
+ * * Coupon - Percentage(single item) - Calculator Tested
+ * * Coupon - Percentage Cart - Calculator Tested
+ * * Coupon - Fixed Item cost - Calculator Tested
  *
  * How it works:
  * Get all the Keys of the Items in the cart and put them in an array.
@@ -177,7 +177,7 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): ITo
 	// return totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
 	// return totalWithDiscount < 0 ? 0 : parseFloat(totalWithDiscount.toFixed(2))
 	return {
-		total: totalPriceItems.regularPrice,
+		total: _.round(totalPriceItems.regularPrice, 2),
 		discountedTotal: totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
 	}
 
