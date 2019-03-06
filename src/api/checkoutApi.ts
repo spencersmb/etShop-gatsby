@@ -42,7 +42,6 @@ export class CheckoutApi {
 	}
 
 	static submitStripeOrder (orderData: IFinalOrder): Promise<Response> {
-		console.log('order to submit', orderData)
 		// TODO: secret addon from .env
 		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/orders`
 		const headerOptions = createHeaders()
@@ -59,7 +58,7 @@ export class CheckoutApi {
 		)
 	}
 
-	static processPaypalOrder(orderData: IPaypalSuccessOrder): Promise<Response> {
+	static processPaypalOrder (orderData: IPaypalSuccessOrder): Promise<Response> {
 		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/paypalOrder`
 		const headerOptions = createHeaders()
 		const options: any = {

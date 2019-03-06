@@ -5,6 +5,9 @@ import { IOrderDetails, IOrderResponse } from '@et/types/WC_Order'
 import { statusCheck } from '@utils/apiUtils'
 import { Action, Dispatch } from 'redux'
 
+/**
+ * * Tested
+ */
 export type ICreateOrderAction = (orderData: IOrderDetails, stripeToken?: stripe.Token) => Promise<IOrderResponse>
 export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token) => async (dispatch: Dispatch<Action>): Promise<IOrderResponse> => {
 	dispatch({
@@ -36,7 +39,6 @@ export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token
 
 export type IProcessPaypalOrderAction = (paypalOrderData: IPaypalSuccessOrder) => Promise<IOrderResponse>
 export const processPaypalOrder = (paypalOrderData: IPaypalSuccessOrder) => async (dispatch: Dispatch<Action>): Promise<IOrderResponse> => {
-	console.log('sent to DB paypal', paypalOrderData)
 
 	const request: Response = await CheckoutApi.processPaypalOrder(paypalOrderData)
 	await statusCheck(request, dispatch)
