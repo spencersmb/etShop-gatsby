@@ -7,7 +7,7 @@ import { statusCheck } from '@utils/apiUtils'
 import { Action, Dispatch } from 'redux'
 
 /*
-* * Tested!
+* * Tested! - BUT NOT USED
 	Coupon Flow:
 	1. Get coupon from server and store in cart.couponCode
 	2. When viewing cart - line items in cart Calculate coupon price on the fly
@@ -69,6 +69,9 @@ export const loadCouponInvalid = () => {
 	}
 }
 
+/*
+* * Tested!
+*/
 export const submitCoupon = () => {
 	return {
 		type: CouponActionTypes.SUBMIT_COUPON

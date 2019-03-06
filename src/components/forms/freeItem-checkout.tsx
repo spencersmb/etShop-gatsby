@@ -83,19 +83,6 @@ export function FreeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllPro
 			return null
 		}
 
-		// Create wc_order type and send to wordpress db
-		// result should be a successful order
-		// const result: IOrderResponse | null = await stripCheckoutSubmit(wc_createOrder(cart, billing, products))
-
-		// if (result) {
-		// 	// clear form
-		// 	props.reset()
-		// 	// controll success from parent
-		// 	props.onSuccess(result)
-		// } else {
-		// 	props.onFail()
-		// }
-
 	}
 
 	return (
@@ -103,8 +90,8 @@ export function FreeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllPro
 			<form onSubmit={handleSubmit(submit)}>
 				{!user && <GuestBilling/>}
 				<div>
-					{submitting && <div>Spinner</div>}
-					{!submitting && <button
+					{submitting && <div data-testid='checkoutSpinner'>Spinner</div>}
+					{!submitting && <button data-testid='checkoutBtn'
             disabled={invalid || valid && pristine}
           >Purchase</button>}
 				</div>

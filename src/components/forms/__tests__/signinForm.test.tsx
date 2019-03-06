@@ -7,7 +7,7 @@ import SignInForm from '@components/forms/signin'
 import { combineReducers, createStore } from 'redux'
 import { reducer, FormReducer } from 'redux-form'
 import sinon from 'sinon'
-import { renderWithRedux } from '../../../state/reduxTestUtils'
+import { renderWithRedux } from '@redux/reduxTestUtils'
 afterEach(cleanup)
 
 const ConnectedFull = connect((state: FormReducer) =>{
@@ -28,7 +28,6 @@ const props = {
 }
 
 const setup = (): any => {
-	// @ts-ignore
 	const mounted = renderWithRedux(<ConnectedFull {...props}/>, reducer)
 	const emailInput = mounted.getByLabelText('Email:')
 	const passwordInput = mounted.getByLabelText('Password:')

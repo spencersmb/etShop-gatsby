@@ -232,8 +232,5 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 }
 // export default connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm)
 export default React.memo(connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
-	// console.log('prev', prev)
-	// console.log('next', next)
 	return !(prev.cart.totalPrice !== next.cart.totalPrice || prev.cart.coupon.valid !== prev.cart.coupon.valid)
-
 })
