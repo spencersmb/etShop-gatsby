@@ -15,18 +15,26 @@ import {
 	IProcessPaypalOrderAction,
 	processPaypalOrder as processPaypalOrderAction
 } from '@redux/actions/orderActions'
-import { wcCreateOrderLineItems } from '@utils/orderUtils'
+import { wc_createBilling, wcCreateOrderLineItems } from '@utils/orderUtils'
 import { getPaypalFormatItems } from '@utils/paypalUtils'
 import { displayCurrency } from '@utils/priceUtils'
 import React, { useMemo } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
-import { reduxForm, InjectedFormProps, reset } from 'redux-form'
+import { reduxForm, InjectedFormProps, reset, formValueSelector } from 'redux-form'
 
 interface IPublicProps {
 	cart: ICartState
 	products: IProducts
 	user: IUserState
+}
+
+interface IReduxState {
+	formProps: {
+		firstName: string
+		lastName: string
+		email: string
+	}
 }
 
 interface IReduxActions {
@@ -38,10 +46,10 @@ interface IReduxActions {
 	processPaypalOrder: IProcessPaypalOrderAction
 }
 
-type AllProps = IReduxActions & IPublicProps
+type AllProps = IReduxActions & IPublicProps & IReduxState
 
 export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeGuestForm, AllProps>) {
-	const { submitting, invalid, valid, pristine, cart, handleSubmit, user, products, processPaypalOrder } = props
+	const { submitting, invalid, valid, pristine, cart, formProps, user, products, processPaypalOrder } = props
 	const { PaypalButtonLoader } = paypalProvider()
 
 	// 1.
@@ -62,7 +70,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 				},
 				invoice_id: Math.random().toString(36).substring(14),
 				items: getPaypalFormatItems(cart, products),
-				soft_descriptor: 'shop.every-Tuesday.com', // appears on CC statement
+				soft_descriptor: 'Digital Purchase', // appears on CC statement
 				description: 'Paypal payment for digital products on shop.every-Tuesday.com' // 127 characters
 			}],
 			application_context: {
@@ -97,7 +105,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 
 				// Go back to server with Paypal approval and finish order
 				// send if paypal approved or not so we can complete or delete order
-				const result = await processPaypalOrder({
+				const result: IOrderResponse = await processPaypalOrder({
 					first_name: paymentData.payer.name.given_name,
 					last_name: paymentData.payer.name.surname,
 					paypal_email: paymentData.payer.email_address,
@@ -113,22 +121,23 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 				if (result) {
 					// clear form
 					// controll success from parent
-					// props.showModal({
-					// 	modal: Receipt,
-					// 	options: {
-					// 		closeModal: true,
-					// 		hasBackground: false,
-					// 		data: {
-					// 			type: 'Stripe',
-					// 			orderId: order.order_id,
-					// 			date: order.date,
-					// 			email: order.email,
-					// 			downloads: order.downloads,
-					// 			total: order.total
-					// 		}
-					// 	}
-					// })
-					// props.emptyCart()
+					const { order } = result
+					props.showModal({
+						modal: Receipt,
+						options: {
+							closeModal: true,
+							hasBackground: false,
+							data: {
+								type: 'Stripe',
+								orderId: order.order_id,
+								date: order.date,
+								email: order.email,
+								downloads: order.downloads,
+								total: order.total
+							}
+						}
+					})
+					props.emptyCart()
 					props.reset()
 					setTimeout(() => {
 						props.closeCart()
@@ -152,15 +161,11 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 
 	// 2b. When the order is authed, create the order on our DB - set to pending
 	async function createWcOrder (): Promise<IOrderResponse> {
-		const myOrderData: IOrderDetails = {
-			billing:
-				{
-					email: 'spencer@gmail.com', // email they used with paypal
-					first_name: 'emailProps.email',
-					last_name: 'emailProps.email'
-				},
+		const billing = wc_createBilling(user, formProps)
+		return props.createOrder({
+			billing,
 			coupon_code: cart.coupon.valid ? cart.coupon.code : null,
-			customer_user_agent: 'emailProps.email',
+			customer_user_agent: billing.email,
 			line_items: wcCreateOrderLineItems(cart.items, products),
 			payment_method: 'paypal_express',
 			payment_method_title: 'Paypal Express',
@@ -168,9 +173,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 			set_paid: false,
 			total: displayCurrency(cart.totalPrice).substring(1),
 			total_tax: displayCurrency(cart.totalPrice).substring(1)
-		}
-
-		return props.createOrder(myOrderData)
+		})
 	}
 
 	// this gets fired so far ...beacuse an error creating an order on our server
@@ -191,7 +194,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 				sandbox: process.env.PAYPAL_TEST_KEY || ''
 			}
 		}
-		invalid={invalid}
+		invalid={invalid && pristine}
 		PaypalCheckoutButton={PaypalButtonLoader}
 		createOrder={createOrder}
 		onApprove={onApproval}
@@ -199,7 +202,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		onError={onError}
 	/>, [PaypalButtonLoader, invalid, cart.totalPrice])
 
-	console.log('render form')
+	console.log('render form', props.formProps)
 
 	return (
 		<div>
@@ -220,6 +223,12 @@ export const RegisterPaypalForm = reduxForm<IStripeGuestForm, AllProps>({
 	form: 'paypalForm'
 })(PaypalCheckoutForm)
 
+const selector = formValueSelector('paypalForm')
+const mapStateToProps = (state: IState) => {
+	return {
+		formProps: selector(state, 'email', 'firstName', 'lastName')
+	}
+}
 const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 	return {
 		resetReduxForms: bindActionCreators(reset, dispatch),
@@ -230,7 +239,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 		showModal: bindActionCreators(showModal, dispatch)
 	}
 }
+
 // export default connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm)
-export default React.memo(connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
+export default React.memo(connect<{}, IReduxActions, IPublicProps, IState>(mapStateToProps, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
 	return !(prev.cart.totalPrice !== next.cart.totalPrice || prev.cart.coupon.valid !== prev.cart.coupon.valid)
 })

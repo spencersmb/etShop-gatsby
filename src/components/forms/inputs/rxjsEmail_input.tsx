@@ -55,16 +55,8 @@ interface IProps {
 	emailTaken: boolean
 }
 
-//
-// const upperCaseFirstLetter = (element: string) => {
-// 	return element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()
-// }
-// const removeDotFromName = (name: string) => {
-// 	// return name.split('.')[0]
-// }
 export const RxEmailField = (props: IProps) => {
 	const [loading, setLoading] = useState(false)
-	// const [emailTaken, setEmailTaken] = useState(false)
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const {
 		key,
@@ -154,8 +146,6 @@ export const RxEmailField = (props: IProps) => {
 			}
 		}
 	}, [])
-
-	console.log('emailTaken', emailTaken)
 
 	return (
 		<div key={key} style={{ position: 'relative' }}>

@@ -21,6 +21,7 @@ interface IPropsRedux {
 	show: boolean,
 	component: any | null,
 	options: any,
+	cartIsOpen: boolean
 }
 
 interface IPropsActions {
@@ -43,7 +44,7 @@ function isChildOf (child: any, parent: any): any {
  * On Resize we close the modal.
  */
 export const Modal = (props: IPropsActions & IPropsRedux) => {
-	const { show, component } = props
+	const { show, component, cartIsOpen } = props
 	const modalContentRef: RefObject<any> = useRef(null)
 	const target: any = useRef(null)
 	const scrollPos: any = useRef(0)
@@ -80,7 +81,7 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 	useEffect(() => {
 
 		// on close - render body before modal closes to stop safari from blinking text
-		if (!show && target.current) {
+		if (!show && target.current && !cartIsOpen) {
 			target.current.style.removeProperty('position')
 			target.current.style.removeProperty('top')
 			target.current.style.removeProperty('bottom')
@@ -135,6 +136,7 @@ const mapStateToProps = (state: IState): IPropsRedux => {
 		// breakpoint: state.breakPoint,
 		component: state.modal.component,
 		// isLoading: state.loadingBar.isLoading,
+		cartIsOpen: state.cart.isOpen,
 		options: state.modal.options,
 		show: state.modal.show
 	}

@@ -3,7 +3,7 @@ import { ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 interface IProps {
@@ -13,10 +13,6 @@ interface IProps {
 }
 
 export function PaypalCheckout (props: IProps) {
-	// return useMemo(() =>
-	// 		<RegisterPaypalForm
-	// 			{...props}/>,
-	// 	[props.cart.totalPrice, props.cart.coupon.valid])
 	return <RegisterPaypalForm
 		{...props}/>
 }

@@ -37,6 +37,9 @@ export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token
 	return json
 }
 
+/**
+ * * Tested
+ */
 export type IProcessPaypalOrderAction = (paypalOrderData: IPaypalSuccessOrder) => Promise<IOrderResponse>
 export const processPaypalOrder = (paypalOrderData: IPaypalSuccessOrder) => async (dispatch: Dispatch<Action>): Promise<IOrderResponse> => {
 
