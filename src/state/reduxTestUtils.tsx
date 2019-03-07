@@ -3,6 +3,7 @@ import { ICartState } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IUser } from '@et/types/User'
+import { IGuestFormData } from '@et/types/WC_Order'
 import React from 'react'
 import initialState from '@redux/reducers/initialState'
 import { Provider } from 'react-redux'
@@ -357,7 +358,7 @@ export const testProducts: IProducts = {
 		pwyw: false,
 		regular_price: '13',
 		sale_price: '9.99',
-		slug: 'honeymoon',
+		slug: 'skinny-jeans',
 		description: 'description',
 		short_description: 'short desc',
 		on_sale: true,
@@ -441,7 +442,7 @@ export const testCartWithItem: ICartState = {
 // Todo: add coupon code
 export const testCartWithItemAndCoupon: ICartState = {
 	coupon: {
-		code: '',
+		code: 'test',
 		discount: '',
 		loading: false,
 		product_ids: [
@@ -571,7 +572,13 @@ export const coupons = {
 
 export const testUser: IUser = {
 	email: 'spencer@gmail.com',
-	firstName: 'testUser',
-	lastName: 'testLastName',
+	firstName: 'spencer',
+	lastName: 'bigum',
 	token: '123456789'
+}
+
+export const testGuest: IGuestFormData = {
+	email: 'guest@gmail.com',
+	firstName: 'guest',
+	lastName: 'user'
 }

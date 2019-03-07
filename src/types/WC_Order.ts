@@ -40,7 +40,7 @@ export interface IWcOrderItem {
 	quantity: number | string
 }
 
-export interface IStripeFormData {
+export interface IGuestFormData {
 	email: string,
 	firstName: string
 	lastName: string

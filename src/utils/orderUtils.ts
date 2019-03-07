@@ -1,10 +1,20 @@
 import { ICartItemWithKey, ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import { IAuthResponse, IUserState } from '@et/types/User'
-import { IBillingWc, IOrderDetails, IStripeFormData, IWcOrderItem } from '@et/types/WC_Order'
+import { IBillingWc, IOrderDetails, IGuestFormData, IWcOrderItem } from '@et/types/WC_Order'
 import { displayCurrency } from '@utils/priceUtils'
 
-export function wc_createBilling (user: IUserState, formData: IStripeFormData): IBillingWc {
+/**
+ * * Tested
+ * Create Billing structure for WC
+ * Takes in user and formData. If user is logged in return user credentials
+ * Else return the guest data entered in the form
+ *
+ * @param {IUserState} user
+ * @param {IGuestFormData} formData
+ * @return IBillingWc
+ */
+export function wc_createBilling (user: IUserState, formData: IGuestFormData): IBillingWc {
 	return {
 		email: user ? user.email : formData.email,
 		first_name: user ? user.firstName : formData.firstName,
@@ -12,6 +22,17 @@ export function wc_createBilling (user: IUserState, formData: IStripeFormData): 
 	}
 }
 
+/**
+ * * Tested
+ * Create Order structure for WC
+ * Takes in the cart, billing, and all products to return an object ready to submit as
+ * an order to WC
+ *
+ * @param {ICartState} cart
+ * @param {IBillingWc} billing
+ * @param {IProducts} products
+ * @return IOrderDetails
+ */
 export function wc_createOrder (cart: ICartState, billing: IBillingWc, products: IProducts): IOrderDetails {
 	return {
 		billing,
@@ -28,7 +49,8 @@ export function wc_createOrder (cart: ICartState, billing: IBillingWc, products:
 }
 
 /**
- * Create line item specifically for Stripe + WC backend
+ * * Tested
+ * Create line item specifically for Stripe + WC backend DB
  *
  * @param {ICartState} cartItems - Cart Object from Redux Store
  * @param {IProducts} products - Products from Redux Store
@@ -48,6 +70,12 @@ export const wcCreateOrderLineItems = (cartItems: ICartItemWithKey, products: IP
 	}))
 }
 
+/**
+ * Create Headers for API calls
+ * If token is found in localstorage pass that along with the headers
+ *
+ * @return {Object}
+ */
 export const createHeaders = () => {
 	const token: string | null = getTokenFromLocalStorage()
 
@@ -57,7 +85,9 @@ export const createHeaders = () => {
 			'Authorization': `Bearer ${token}`
 		}
 	}
-	return null
+	return {
+		'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+	}
 }
 
 /**
