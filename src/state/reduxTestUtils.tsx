@@ -539,6 +539,33 @@ export const coupons = {
 		submitted: true,
 		type: 'fixed_cart',
 		valid: true
+	},
+	fixedProduct: {
+		code: 'fixed-item-test',
+		discount: '12.54',
+		loading: false,
+		product_ids: [222],
+		submitted: true,
+		type: 'fixed_product',
+		valid: true
+	},
+	percentCart: {
+		code: 'percent-cart',
+		discount: '33',
+		loading: false,
+		product_ids: [],
+		submitted: true,
+		type: 'percent',
+		valid: true
+	},
+	percentItem: {
+		code: 'percent-test',
+		discount: '33',
+		loading: false,
+		product_ids: [222],
+		submitted: true,
+		type: 'percent',
+		valid: true
 	}
 }
 

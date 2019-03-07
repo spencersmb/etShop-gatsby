@@ -10,7 +10,10 @@ export const socialUtils = {
 		defaultImage: 'https://twitter.com/teelacunningham'
 	}
 }
+
+
 /**
+ * * Tested
  * matchString(str, regexPattern)
  * - matchRegex and return true or false
  *
@@ -23,6 +26,7 @@ export const matchString = (str: string, regexPattern: string): boolean => {
 }
 
 /**
+ * * Tested
  * Twitter Card default
  * - Add-on and override default twitter props
  *
@@ -64,6 +68,7 @@ export const twitterDefaultMeta = (additionalProps: IMeta[] = []): IMeta[] => {
 }
 
 /**
+ * * Tested
  * JSONLD Image array
  * - return image thumbnail urls into an array
  *

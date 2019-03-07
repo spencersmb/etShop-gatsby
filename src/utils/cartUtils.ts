@@ -41,6 +41,7 @@ export const totalItemsInCart = (items: { [id: string]: ICartItem }): number => 
 }
 
 /**
+ * * Tested ALL COUPONS
  * Calculates the Dollar Total of all items in the cart.
  *
  * * Coupon - Fixed_cart - Calculator Tested ( Fixed price discount )
@@ -90,21 +91,18 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): ITo
 		// 2.b
 		// check if coupon applies to a product
 		const couponFound: boolean = checkForCoupon(coupon.product_ids, product.id)
-		console.log('product', product.name)
+		// console.log('product', product.name)
 
 		// console.log('original price', productPrice) // log price before change check
 
 		// 2.c
 		// Check for individual coupon and re-calculate price
 		if (!couponIsForCart && couponFound && coupon.valid) {
-			console.log('couponFound', couponFound)
-			console.log('couponIsForCart', couponIsForCart)
 			discountedPrice = productPrice - calcCouponDiscount(coupon, productPrice)
-			console.log('discountedPrice', discountedPrice)
 
 			// Error checking for coupon
-			// console.log('coupon Found for', items[slug].id)
-			// console.log('couponFound', couponFound)
+			// console.log('discountedPrice', discountedPrice)
+			// console.log('coupon Found for', product.id)
 		}
 
 		// 2.d
@@ -135,11 +133,10 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): ITo
 		}
 
 		// Finally return the current total + (product * its quantity)
-		// console.log('new price', productPrice)
-		console.log('product total', {
-			regularPrice: total.regularPrice + (productPrice * qty),
-			discountedPrice: total.discountedPrice + (discountedPrice * qty)
-		})
+		// console.log('product total', {
+		// 	regularPrice: total.regularPrice + (productPrice * qty),
+		// 	discountedPrice: total.discountedPrice + (discountedPrice * qty)
+		// })
 
 		return {
 			regularPrice: total.regularPrice + (productPrice * qty),
@@ -164,10 +161,10 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): ITo
 		? totalPriceItems.regularPrice - calcCouponDiscount(coupon, totalPriceItems.regularPrice)
 		: totalPriceItems.discountedPrice
 
-	console.log('total', {
-		total: _.round(totalPriceItems.regularPrice, 2),
-		discountedTotal: totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
-	})
+	// console.log('total', {
+	// 	total: _.round(totalPriceItems.regularPrice, 2),
+	// 	discountedTotal: totalWithDiscount < 0 ? 0 : _.round(totalWithDiscount, 2)
+	// })
 
 	// 4.
 	//
