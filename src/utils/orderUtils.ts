@@ -71,6 +71,7 @@ export const wcCreateOrderLineItems = (cartItems: ICartItemWithKey, products: IP
 }
 
 /**
+ * * Tested
  * Create Headers for API calls
  * If token is found in localstorage pass that along with the headers
  *

@@ -3,8 +3,10 @@ import { IPaypalItem } from '@et/types/Paypal'
 import { IProducts } from '@et/types/Products'
 import { checkForCoupon } from '@utils/cartUtils'
 import { calcCouponDiscount, displayCurrency } from '@utils/priceUtils'
+import _ from 'lodash'
 
 /**
+ * * Tested
  * Create array of items details in cart specifically for Paypal Purchases.
  *
  * How it works:
@@ -26,7 +28,6 @@ import { calcCouponDiscount, displayCurrency } from '@utils/priceUtils'
  * @return {IPaypalItem[] | []} The result of all items in the cart
  */
 export const getPaypalFormatItems = (cart: ICartState, products: IProducts): IPaypalItem[] => {
-	console.log('recalc paypal items')
 
 	const cartItems = cart.items
 	const cartItemKeys = Object.keys(cartItems)
@@ -118,27 +119,9 @@ export const getPaypalFormatItems = (cart: ICartState, products: IProducts): IPa
 			// and if the items price is not zero so we dont add coupon to PWYW item
 		} else if (hasCoupon && couponDiscount && price !== 0) {
 			// console.log('Total discount off each item', couponDiscount)
-
-			// 1. Percentage Base
-			//    if type is percent we must return the new price of the item by
-			// 		(itemOriginalPrice - (price * percent)) = new item price for percentage based cart coupons
-			if (cart.coupon.type === 'percent') {
-				const discountOffEachItem = (price * couponDiscount)
-				// console.log('price of original Item', price)
-				// console.log('percent discount off item', discountOffEachItem)
-
-				price = price - discountOffEachItem
-				// price = parseFloat(((price - discountOffEachItem)).toFixed(2))
-				// console.log('percent discount new price of each item', price)
-
-			} else {
-				// 2. Fixed_price Base
-				//    if type is fixed we must subtract price - coupondiscount
-				// 		(itemOriginalPrice - discountOffEachItem) = new item price for percentage based cart coupons
-				price = price - couponDiscount
-				// console.log('new price of each item fixed cart', price)
-			}
+			price = price - couponDiscount
 		}
+		// console.log('price', price)
 
 		// discount message
 		// product only? ** $12 discount **
@@ -169,11 +152,10 @@ export const numberOfFreeItemsInCart = (cartItems: ICartItemWithKey): number => 
 }
 
 /**
- * Calculate Discount of coupon for percentage or fixed price.
+ * Calculate Discount of coupon for percentage or fixed price for Cart.
  *
  * How it works:
- * If percent based, we only calculate the discount off the total cart and then use that for
- * each individual item to calculate its own price because its not an even distribution between products.
+ * If percent based, we only convert to decimal and return the number to calc percent off each item
  *
  * If Fixed_price - then the returned number is the discount per item.
  *
@@ -183,7 +165,7 @@ export const numberOfFreeItemsInCart = (cartItems: ICartItemWithKey): number => 
  * @param  {ICouponCode} coupon
  * @return number
  */
-const calcCartDiscountPerItem = (cartTotalPrice: number, totalItems: number, coupon: ICouponState): number => {
+export const calcCartDiscountPerItem = (cartTotalPrice: number, totalItems: number, coupon: ICouponState): number => {
 // return the discount off each item
 	switch (coupon.type) {
 		case 'percent':
@@ -191,7 +173,11 @@ const calcCartDiscountPerItem = (cartTotalPrice: number, totalItems: number, cou
 			// console.log('percent', parseFloat((cartTotalPrice / totalItems).toFixed(2)))
 			// return parseFloat((cartTotalPrice / totalItems).toFixed(2))// discount off cart total
 			// console.log('discount percentage off', total * percentage)
-			return (parseInt(coupon.discount, 10) / 100)
+
+			const percent = (parseInt(coupon.discount, 10) / 100)
+			const newTotal = percent * cartTotalPrice // discount off total
+			return _.round(newTotal / totalItems, 2)
+
 		default :
 			const couponDiscount: number = parseFloat(coupon.discount)
 

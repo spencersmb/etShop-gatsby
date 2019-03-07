@@ -504,6 +504,141 @@ export const testCartWithMultiples: ICartState = {
 	totalPrice: 25.99,
 	originalPrice: 25.99
 }
+export const testCartWithMultiplesFixedCartCoupon: ICartState = {
+	coupon: {
+		code: 'fixed_cart',
+		discount: '12.54',
+		loading: false,
+		product_ids: [],
+		submitted: true,
+		type: 'fixed_cart',
+		valid: true
+	},
+	isOpen: false,
+	items: {
+		...testCartWithMultiples.items
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 2,
+	totalPrice: 25.99,
+	originalPrice: 25.99
+}
+export const testCartWithMultiplesFixedCartCouponWithFREEITEM: ICartState = {
+	coupon: {
+		code: 'fixed_cart',
+		discount: '12.54',
+		loading: false,
+		product_ids: [],
+		submitted: true,
+		type: 'fixed_cart',
+		valid: true
+	},
+	isOpen: false,
+	items: {
+		...testCartWithMultiples.items,
+		[ProductKey.Honeymoon]: {
+			extended: false,
+			id: testProducts[ProductKey.Honeymoon].product_id,
+			name: testProducts[ProductKey.Honeymoon].name,
+			price: testProducts[ProductKey.Honeymoon].price,
+			qty: 1,
+			slug: testProducts[ProductKey.Honeymoon].slug
+		}
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 3,
+	totalPrice: 25.99,
+	originalPrice: 25.99
+}
+export const testCartWithMultiplesPercentCartCoupon: ICartState = {
+	coupon: {
+		code: 'percent_cart',
+		discount: '33',
+		loading: false,
+		product_ids: [],
+		submitted: true,
+		type: 'percent',
+		valid: true
+	},
+	isOpen: false,
+	items: {
+		...testCartWithMultiples.items
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 2,
+	totalPrice: 25.99,
+	originalPrice: 25.99
+}
+export const testCartWithMultiplesFixedSingleItemCoupon: ICartState = {
+	coupon: {
+		code: 'fixed-item',
+		discount: '12.54',
+		loading: false,
+		product_ids: [222],
+		submitted: true,
+		type: 'fixed_product',
+		valid: true
+	},
+	isOpen: false,
+	items: {
+		...testCartWithMultiples.items
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 2,
+	totalPrice: 25.99,
+	originalPrice: 25.99
+}
+export const testCartWithMultiplesPercentageSingleItemCoupon: ICartState = {
+	coupon: {
+		code: 'percent-item',
+		discount: '33',
+		loading: false,
+		product_ids: [222],
+		submitted: true,
+		type: 'percent',
+		valid: true
+	},
+	isOpen: false,
+	items: {
+		...testCartWithMultiples.items
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 2,
+	totalPrice: 25.99,
+	originalPrice: 25.99
+}
+export const testCartWithFreeItem: ICartState = {
+	coupon: {
+		code: '',
+		discount: '',
+		loading: false,
+		product_ids: [],
+		submitted: false,
+		type: '',
+		valid: false
+	},
+	isOpen: false,
+	items: {
+		[ProductKey.Honeymoon]: {
+			extended: false,
+			id: testProducts[ProductKey.Honeymoon].product_id,
+			name: testProducts[ProductKey.Honeymoon].name,
+			price: testProducts[ProductKey.Honeymoon].price,
+			qty: 1,
+			slug: testProducts[ProductKey.Honeymoon].slug
+		}
+	},
+	loaded: true,
+	paymentType: 'Stripe',
+	totalItems: 2,
+	totalPrice: 0,
+	originalPrice: 0
+}
 
 export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 	site: {
