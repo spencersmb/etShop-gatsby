@@ -142,6 +142,18 @@ export const getPaypalFormatItems = (cart: ICartState, products: IProducts): IPa
 	})
 }
 
+/**
+ * * Tested
+ * Returns the number of free items in the cart
+ *
+ * How it works:
+ * Loop over cartItem keys array and filter out any items that don't have a price of 0
+ * Then return the length of that array
+ *
+ *
+ * @param {ICartItemWithKey} cartItems
+ * @return number
+ */
 export const numberOfFreeItemsInCart = (cartItems: ICartItemWithKey): number => {
 	const itemKeys = Object.keys(cartItems)
 	return itemKeys.filter(key => {
@@ -152,17 +164,18 @@ export const numberOfFreeItemsInCart = (cartItems: ICartItemWithKey): number => 
 }
 
 /**
+ * * Tested
  * Calculate Discount of coupon for percentage or fixed price for Cart.
  *
  * How it works:
- * If percent based, we only convert to decimal and return the number to calc percent off each item
+ * If percent based, (percent * total) / totalItems = discount off each item
  *
  * If Fixed_price - then the returned number is the discount per item.
  *
  *
  * @param {number} cartTotalPrice
  * @param {number} totalItems
- * @param  {ICouponCode} coupon
+ * @param  {ICouponState} coupon
  * @return number
  */
 export const calcCartDiscountPerItem = (cartTotalPrice: number, totalItems: number, coupon: ICouponState): number => {
@@ -170,18 +183,11 @@ export const calcCartDiscountPerItem = (cartTotalPrice: number, totalItems: numb
 	switch (coupon.type) {
 		case 'percent':
 
-			// console.log('percent', parseFloat((cartTotalPrice / totalItems).toFixed(2)))
-			// return parseFloat((cartTotalPrice / totalItems).toFixed(2))// discount off cart total
-			// console.log('discount percentage off', total * percentage)
-
 			const percent = (parseInt(coupon.discount, 10) / 100)
-			const newTotal = percent * cartTotalPrice // discount off total
-			return _.round(newTotal / totalItems, 2)
+			return _.round((percent * cartTotalPrice) / totalItems, 2)
 
 		default :
 			const couponDiscount: number = parseFloat(coupon.discount)
-
-			// switch to _.round?
 			return parseFloat((couponDiscount / totalItems).toFixed(2))
 	}
 }

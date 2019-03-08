@@ -34,17 +34,17 @@ export function Receipt (props: IReceiptProps) {
 					<button onClick={closeModal}>Close</button>
 					<h1>Order Complete</h1>
 					<p>Thank you for your order from Every-Tuesday.com</p>
-					<span>Copy sent to {data.email}</span>
+					<span data-testid='emailCopy'>Copy sent to {data.email}</span>
 				</div>
 				<div>
-					<div>
+					<div data-testid='receiptTotal'>
 						total: {displayCurrency(data.total)}
 					</div>
 					<div>
-						<div>
+						<div data-testid='receiptOrderId'>
 							order #{data.orderId}
 						</div>
-						<div>
+						<div data-testid='receiptDate'>
 							date: {data.date}
 						</div>
 						<div>
@@ -53,9 +53,9 @@ export function Receipt (props: IReceiptProps) {
 					</div>
 				</div>
 				<div>
-					<ul>
+					<ul data-testid='orderDownloads'>
 						{data.downloads && data.downloads.map(download =>
-							<li key={download.product_id}>
+							<li key={download.product_id} data-testid={`download-${download.product_id}`}>
 								<a href={download.download_url}>
 									{download.product_name}
 								</a>
