@@ -42,6 +42,8 @@ export class CheckoutApi {
 	}
 
 	static submitStripeOrder (orderData: IFinalOrder): Promise<Response> {
+		console.log('order submitted', orderData)
+
 		// TODO: secret addon from .env
 		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/orders`
 		const headerOptions = createHeaders()

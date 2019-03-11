@@ -90,3 +90,18 @@ export function reduceChildrenByDataType (type: string, children: ReactChild, da
 		}
 	})
 }
+
+export function getCurrentPage (path: string) {
+	const split = path
+		.split(/(=)/)
+		.splice(2, 2)
+		.reduce((a, b) => {
+			return parseInt(b, 10)
+		}, 0)
+	console.log('split', split)
+
+	if (split !== 0) {
+		return split
+	}
+	return 1
+}

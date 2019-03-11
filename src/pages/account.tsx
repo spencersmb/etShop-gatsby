@@ -1,8 +1,9 @@
 import PrivateRoute from '@components/account/privateRoutes'
+import Layout from '@components/layout'
+import OrdersList from '@components/user/ordersList'
 import { IUserState } from '@et/types/User'
 import React from 'react'
 import { Router } from '@reach/router'
-import Layout from '@components/layout'
 import Profile from '@components/account/profile'
 import UserHoc from '@components/account/userHoc'
 
@@ -11,7 +12,8 @@ const Account = () => (
 		<UserHoc>
 			{({ user }: { user: IUserState }) => (
 				<Router>
-					<PrivateRoute Component={Profile} path='/account/profile' user={user}/>
+					<PrivateRoute Component={OrdersList} path='/account' user={user}/>
+					{/*<PrivateRoute Component={Profile} path='/account' user={user}/>*/}
 					{/*<Profile path='/app/profile'/>*/}
 				</Router>
 			)}

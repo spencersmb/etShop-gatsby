@@ -1,10 +1,12 @@
 import { ICartItem, ICouponRaw, ILocalStorageCart } from '@et/types/Cart'
+import { ILoadPaginationSuccess } from '@et/types/Pagination'
 import { IProducts } from '@et/types/Products'
+import { IOrderResponse } from '@et/types/WC_Order'
 import {
   AuthActionTypes,
   CartActionTypes,
   CouponActionTypes,
-  ModalActionTypes,
+  ModalActionTypes, PaginationTypes,
   ProductsActionTypes,
   WindowActionTypes
 } from './Enums'
@@ -122,6 +124,27 @@ export interface ICouponSubmitInvalid {
   type: CouponActionTypes.SUBMIT_COUPON_INVALID,
 }
 
+export interface ILoadingPaginationOrders {
+  type: PaginationTypes.FETCHING_ORDERS
+}
+
+export interface IGetAllOrdersSuccess {
+  payload: {
+    page: number,
+    data: ILoadPaginationSuccess
+  },
+  type: PaginationTypes.LOAD_ORDERS_SUCCESS
+}
+
+export interface IUpdatePaginationAfterOrder {
+  payload: IOrderResponse
+  type: PaginationTypes.UPDATE_PAGINATION_AFTER_ORDER
+}
+
+export interface IClearFirstPage {
+  type: PaginationTypes.CLEAR_ALL_PAGES
+}
+
 export type WindowActions =
   | IChangeBreakPoint
 
@@ -156,6 +179,12 @@ type CouponActions =
   | ICouponSubmitSuccess
   | ICouponSubmitInvalid
 
+type PaginationActions =
+  | ILoadingPaginationOrders
+  | IGetAllOrdersSuccess
+  | IUpdatePaginationAfterOrder
+  | IClearFirstPage
+
 export type Actions =
   | AuthActions
   | ProductActions
@@ -163,3 +192,4 @@ export type Actions =
   | WindowActions
   | CartActions
   | CouponActions
+  | PaginationActions

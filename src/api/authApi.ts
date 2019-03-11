@@ -1,4 +1,5 @@
 import { IUserCreate, IUserSubmit } from '@et/types/User'
+import { createHeaders } from '@utils/orderUtils'
 import fetched from 'isomorphic-unfetch'
 
 // import {logFormData} from '@et/utils/errorHandling'
@@ -80,6 +81,19 @@ class AuthApi {
 				method: 'POST',
 				mode: 'cors'
 			}
+		)
+	}
+
+	static getAllOrders (page: number): Promise<Response> {
+		const url: string = `${process.env.DB}/wp-json/et-shop/user/getAllOrdersExt/?page=${page}`
+		const options: any = {
+			headers: createHeaders(),
+			method: 'GET',
+			mode: 'cors'
+		}
+		return fetched(
+			url,
+			options
 		)
 	}
 }

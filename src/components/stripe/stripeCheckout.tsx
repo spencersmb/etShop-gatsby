@@ -20,7 +20,6 @@ interface IReduxActions {
 export function StripeCheckout (props: IReduxActions & ReactStripeElements.InjectedStripeProps) {
 
 	async function stripCheckoutSubmit (order: IOrderDetails): Promise<IOrderResponse | null> {
-		console.log('order submitted', order)
 
 		if (!props.stripe) {
 			console.error('stripe not loaded')
@@ -50,7 +49,11 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			console.log('result from stripe', result.token)
 
 			// send approved order to DB
-			return sendOrderToBackend(result.token, order)
+
+			return sendOrderToBackend(result.token, {
+				...order,
+				'cardType': result.token.card ? result.token.card.brand : 'CreditCard',
+			})
 		} else {
 			return null
 		}

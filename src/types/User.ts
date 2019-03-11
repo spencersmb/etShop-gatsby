@@ -1,4 +1,4 @@
-import { ICouponRaw, ICouponState } from '@et/types/Cart'
+import { ICouponRaw } from '@et/types/Cart'
 
 export interface IAuthResponse {
   token: string,

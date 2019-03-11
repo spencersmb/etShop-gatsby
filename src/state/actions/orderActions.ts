@@ -1,7 +1,9 @@
 import { CheckoutApi } from '@api/checkoutApi'
-import { OrderActionTypes } from '@et/types/Enums'
+import { OrderActionTypes, PaginationTypes } from '@et/types/Enums'
 import { IPaypalSuccessOrder } from '@et/types/Paypal'
+import { IState } from '@et/types/State'
 import { IOrderDetails, IOrderResponse } from '@et/types/WC_Order'
+import { addItemAfterOrder, clearFirstPage } from '@redux/actions/paginationActions'
 import { statusCheck } from '@utils/apiUtils'
 import { Action, Dispatch } from 'redux'
 
@@ -9,7 +11,7 @@ import { Action, Dispatch } from 'redux'
  * * Tested
  */
 export type ICreateOrderAction = (orderData: IOrderDetails, stripeToken?: stripe.Token) => Promise<IOrderResponse>
-export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token) => async (dispatch: Dispatch<Action>): Promise<IOrderResponse> => {
+export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token) => async (dispatch: Dispatch<Action>, getState: any): Promise<IOrderResponse> => {
 	dispatch({
 		type: OrderActionTypes.SUBMIT_ORDER
 	})
@@ -30,9 +32,14 @@ export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token
 
 	const json: IOrderResponse = await request.json()
 
-	dispatch({
-		type: OrderActionTypes.ORDER_SUCCESS
-	})
+	// if an order was made
+	// clear all pages
+
+	const state: IState = getState()
+	if(state.pagination.pages[1]){
+		dispatch(clearFirstPage())
+	}
+
 	// return order
 	return json
 }

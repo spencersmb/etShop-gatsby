@@ -1,5 +1,5 @@
 import { IUserState } from '@et/types/User'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { navigate } from 'gatsby'
 
 interface IPropsPublic {
@@ -12,6 +12,7 @@ interface RouterProps {
 	location?: {
 		pathname: string
 	}
+	children?: ReactNode
 }
 
 const PrivateRoute = (props: IPropsPublic & RouterProps) => {
@@ -27,6 +28,7 @@ const PrivateRoute = (props: IPropsPublic & RouterProps) => {
 	}
 	const innerProps = {
 		...rest,
+		location,
 		user
 	}
 	return <Component {...innerProps} />

@@ -1,3 +1,4 @@
+import UserLayout from '@components/userLayout'
 import { IUser } from '@et/types/User'
 import React from 'react'
 
@@ -6,6 +7,7 @@ interface IProps {
 }
 
 const Profile = (props: IProps) => {
+
 	const { user } = props
 	return (
 		<>
@@ -18,4 +20,4 @@ const Profile = (props: IProps) => {
 	)
 }
 
-export default Profile
+export default UserLayout(Profile)

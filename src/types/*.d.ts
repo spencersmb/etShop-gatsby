@@ -6,20 +6,26 @@
 
 // And to shim assets, use (one file extension per `declare`):
 // declare module "*.png"
-import React from 'react'
+
 
 declare module '*.svg' {
-  const content: any;
-  export default content;
+	const content: any
+	export default content
+}
+declare module 'redux-paginator' {
+	const content: {
+		createPaginator: any
+	}
+	export {createPaginator}
 }
 declare module '*.png'
 declare module '*.jpg'
 
 declare module 'process' {
-  const browser: {
-    browser: boolean
-  }
-  export default browser
+	const browser: {
+		browser: boolean
+	}
+	export default browser
 }
 
 

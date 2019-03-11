@@ -32,7 +32,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 				modal: Login,
 				// modal: Receipt,
 				options: {
-					closeOutsideModal: true,
+					closeModal: true,
 					hasBackground: true,
 					name
 				}
@@ -44,7 +44,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 		props.showModal({
 			modal: Receipt,
 			options: {
-				closeOutsideModal: true,
+				closeModal: true,
 				hasBackground: false,
 				data: {
 					total: '16',
@@ -72,7 +72,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 		<div data-testid='navbar'>
 			<UlStyled>
 				<li>Home</li>
-				<li><Link to='/account/profile'>your profile</Link></li>
+				<li><Link to='/account'>your profile</Link></li>
 				{!user &&
         <>
           <li onClick={openSignInModal('signin')}>Sign In</li>

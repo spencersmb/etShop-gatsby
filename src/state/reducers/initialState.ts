@@ -35,6 +35,12 @@ const initialState: IState = {
 		totalItems: 0,
 		totalPrice: 0,
 		originalPrice: 0
+	},
+	pagination: {
+		loading: false,
+		pages: {},
+		totalOrders: '0',
+		totalPages: 0
 	}
 }
 export default initialState

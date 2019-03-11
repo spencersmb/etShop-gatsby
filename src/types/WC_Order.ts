@@ -18,6 +18,7 @@ export interface IOrderDetails {
 			last_name?: string,
 			email: string
 		},
+	cardType: string,
 	line_items: IWcOrderItem[],
 	paypal?: {
 		paid: boolean
@@ -72,4 +73,29 @@ export interface IOderDownloadItem {
 	order_id: number,
 	downloads_remaining: string,
 	access_expires: null
+}
+
+export interface IOrderRefund {
+	total_refunded: string
+	reason: string
+}
+
+export interface IUserOrderDisplay {
+	id: number
+	total: string
+	date: string
+	status: string
+	transactionId: string
+	refund?: IOrderRefund
+	payment_type: string
+	order_id: string
+	email: string
+	date_completed: string
+	totals: string
+	subtotal: string
+	cardType: null | string
+	discounts: string // 0 if no discount
+	discounts_reverse: number; // 0 if no discount
+	coupon_used: string[] // will have one item if used
+	downloads: IOderDownloadItem[]
 }
