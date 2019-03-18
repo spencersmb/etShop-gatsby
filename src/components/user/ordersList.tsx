@@ -1,8 +1,8 @@
 import PaginationBar from '@components/nav/paginationBar'
 import OrderItem from '@components/user/orderItem'
-import { IPaginateState} from '@et/types/Pagination'
+import { IPaginateState } from '@et/types/Pagination'
 import { IState } from '@et/types/State'
-import { IUserOrderDisplay } from '@et/types/WC_Order'
+import { IReceipt } from '@et/types/WC_Order'
 import { addItemAfterOrder, fetchOrders } from '@redux/actions/paginationActions'
 import React, { useEffect, useReducer, Dispatch as ReactDispatch } from 'react'
 import { connect } from 'react-redux'
@@ -63,30 +63,41 @@ export function useSetState (initialState: any): useSetStateType {
 }
 
 const OrdersList = (props: IProps & IReduxActions & IReduxState) => {
-	const { orders = {}, pagination } = props
-	const [state, setState] = useSetState({
-		selectedOrder: null
-	})
+	const { pagination } = props
+	// const [state, setState] = useSetState({
+	// 	selectedOrder: null
+	// })
 	const page = getCurrentPage(props.location.search)
 
 	console.log('Orderlist render', props.pagination.pages[page])
 	useEffect(() => {
-		console.log('page', page)
+		// console.log('page to fetch', page)
 		props.getOrders(page)
 	}, [props.location.search])
+
+	function addItem () {
+		// props.add({
+		// 	order: {
+		// 		date: '03-09-2019',
+		// 		id: 999,
+		// 		total: '3.46'
+		// 	}
+		// })
+	}
 
 	return (
 		<div>
 			<h3>Orders:</h3>
+			<button onClick={addItem}>Test</button>
 			<div>
 				{pagination.pages[page] && Object.keys(pagination.pages[page]).map((key: any, index) => {
-						const pageItem: IUserOrderDisplay = pagination.pages[page][key]
+						const pageItem: IReceipt = pagination.pages[page][key]
 						return (
 							<OrderItem
 								key={pageItem.id}
 								itemIndex={index}
-								isOpen={pageItem.id === state.selectedOrder}
-								handleClick={setState}
+								// isOpen={pageItem.id === state.selectedOrder}
+								// handleClick={setState}
 								{...pageItem}
 							/>
 						)

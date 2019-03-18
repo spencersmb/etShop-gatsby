@@ -56,13 +56,7 @@ export interface IBillingWc {
 export interface IOrderResponse {
 	code: number,
 	message: string,
-	order: {
-		order_id: string;
-		email: string;
-		date: string;
-		downloads: IOderDownloadItem[],
-		total: string
-	}
+	order: IReceipt
 }
 
 export interface IOderDownloadItem {
@@ -75,18 +69,18 @@ export interface IOderDownloadItem {
 	access_expires: null
 }
 
-export interface IOrderRefund {
+export interface IRefund {
 	total_refunded: string
 	reason: string
 }
 
-export interface IUserOrderDisplay {
+export interface IReceipt {
 	id: number
 	total: string
 	date: string
 	status: string
 	transactionId: string
-	refund?: IOrderRefund
+	refund?: IRefund
 	payment_type: string
 	order_id: string
 	email: string

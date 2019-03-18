@@ -38,30 +38,42 @@ export const paginationReducer = (state: IPaginateState = initialState.paginatio
 		case PaginationTypes.UPDATE_PAGINATION_AFTER_ORDER:
 			console.log('action', action)
 
-			const itemsByPage = 3
+			const itemsByPage = 10
 			let count = 1
 			let pageId = 1
+
+			// 1. Put all allItems into an array from the pagination
 			const allItems: any = Object.keys(state.pages).map((pageKey: any) => {
 				const orders = Object.keys(state.pages[pageKey])
 				return orders.map((orderKey: any) => {
 					return state.pages[pageKey][orderKey]
 				})
 			})
-			allItems[0].unshift({
-				date: '03-09-2019',
-				id: 999,
-				total: '3.46'
+
+			// 2. Add the new item from the completed order to the front of the array
+			// use reverse so we start at the most recent item
+			allItems[0].reverse().unshift({
+				date: action.payload.order.date,
+				id: action.payload.order.order_id,
+				total: action.payload.order.total
 			})
 			console.log('allItems', allItems)
 
+			// 3. Flatten both arrays
+			// 4. Then Reduce everything into an object
+			// Only take items into the first page, remove all other pages.
 			const flattened = [].concat.apply([], allItems)
 				.reduce((prev: any, next: any) => {
-					prev[pageId] = {
-						...prev[pageId],
-						[next.id]: { ...next }
+					if (pageId === 1) {
+						prev[pageId] = {
+							...prev[pageId],
+							[next.id]: { ...next }
+						}
+					} else {
+						return prev
 					}
 
-					if (count % 3 === 0) {
+					if (count % itemsByPage === 0) {
 						pageId = pageId + 1
 					}
 					count = count + 1
@@ -69,28 +81,11 @@ export const paginationReducer = (state: IPaginateState = initialState.paginatio
 					return prev
 				}, {})
 
-			// flattened[1] = {
-			// 	...flattened[1],
-			// 	[999]: {
-			// 		date: '03-09-2019',
-			// 		id: 999,
-			// 		total: '3.46'
-			// 	}
-			// }
 			console.log('flattened', flattened)
 
 			const totalOrders = parseInt(state.totalOrders, 10) + 1
 			const totalPages = _.round(totalOrders / itemsByPage)
-			const updated = state.pages
-			const id = parseInt(action.payload.order.order_id, 10)
-			// updated[1] = {
-			// 	...state.pages[1],
-			// 	[id]: {
-			// 		date: action.payload.order.date,
-			// 		id,
-			// 		total: action.payload.order.total
-			// 	}
-			// }
+
 			return {
 				...state,
 				pages: {

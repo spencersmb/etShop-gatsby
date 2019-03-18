@@ -1,5 +1,3 @@
-import { IOderDownloadItem } from '@et/types/WC_Order'
-
 export interface IPaginateState {
 	loading: boolean,
 	pages: IPaginateOrder,

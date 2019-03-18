@@ -1,5 +1,7 @@
+import { logout } from '@redux/actions/authActions'
 import { matchString } from '@utils/genUtils'
 import { toastr } from 'react-redux-toastr'
+import { navigate } from 'gatsby'
 
 /**
  * statusCheck(res, dispatch)
@@ -20,7 +22,8 @@ export const statusCheck = async (response: any, dispatch: any) => {
 
 	// check for JWT AUTH ERRORS
 	// WordPress returns html so we convert them manually
-	if (response.status === 403 && matchString(response.url, 'jwt-auth')) {
+	// && matchString(response.url, 'jwt-auth')
+	if (response.status === 403) {
 
 		const newError: { code: string, data?: { status: string } } = await response.json()
 
@@ -28,8 +31,12 @@ export const statusCheck = async (response: any, dispatch: any) => {
 			toastr.error('Error:', 'The password you entered is incorrect.', toastrOptions.noHover)
 		} else if (newError.code === '[jwt_auth] invalid_email') {
 			toastr.error('Error:', 'The email and password you entered is incorrect.', toastrOptions.noHover)
+		} else if (newError.code === 'jwt_auth_invalid_token') {
+			toastr.error('User Expired:', 'Please login again.', toastrOptions.noHover)
+			dispatch(logout())
+			navigate(`/page-2`)
 		} else {
-			toastr.error('Error:', 'Auth Error', toastrOptions.noHover)
+			toastr.error('Error:', 'Authentication Error', toastrOptions.noHover)
 		}
 		throw newError
 	}

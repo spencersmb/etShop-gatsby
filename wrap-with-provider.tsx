@@ -20,37 +20,38 @@ export default ({ element }: { element: ReactNode }) => {
 	// if no user found do nothing
 	loadUser()
 		.then((user) => {
+			console.log('user', user)
+
 			if (user) {
 				store.dispatch(loginUserSuccess(user))
 			}
 		})
 		.catch((e) => {
-			console.error('user token error', e)
+			// console.error('user token error', e)
 			// remove user from localstorage
 			removeUserLocalStorage()
 
-			// que toaster
-			const action = {
-				type: '@ReduxToastr/toastr/ADD',
-				payload: {
-					type: 'error',
-					position: 'bottom-right',
-					options: {
-						removeOnHover: false,
-						showCloseButton: true
-					},
-					title: 'Invalid User',
-					message: 'Please login again.'
-				}
-			}
-			store.dispatch(action)
-			// redirect
-			navigate(`/page-2`)
+			// // que toaster
+			// const action = {
+			// 	type: '@ReduxToastr/toastr/ADD',
+			// 	payload: {
+			// 		type: 'error',
+			// 		position: 'bottom-right',
+			// 		options: {
+			// 			removeOnHover: false,
+			// 			showCloseButton: true
+			// 		},
+			// 		title: 'Invalid User',
+			// 		message: 'Please login again.'
+			// 	}
+			// }
+			// store.dispatch(action)
+			// // redirect
+			// navigate(`/page-2`)
 		})
 // TODO: merchant ID for ET PAypal shop not test shop
 	return <Provider store={store}>
 		<Helmet>
-
 			<script id='paypal-js'
 							src={`https://www.paypal.com/sdk/js?client-id=${process.env.PAYPAL_TEST_KEY}&disable-funding=credit,card&commit=true&locale=en_US&merchant-id=6Q52LNH4ART22`}/>
 		</Helmet>

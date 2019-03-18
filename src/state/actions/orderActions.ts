@@ -36,8 +36,9 @@ export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token
 	// clear all pages
 
 	const state: IState = getState()
-	if(state.pagination.pages[1]){
-		dispatch(clearFirstPage())
+	if (state.pagination.pages[1]) {
+		// dispatch(clearFirstPage())
+		dispatch(addItemAfterOrder(json))
 	}
 
 	// return order
