@@ -30,7 +30,7 @@ const IndexPage = () => (
 				}
 			]}
 		>
-			<link rel='canonical' href='http://mysite.com/'/>
+			<link rel='canonical' href={process.env.GATSBY_DB}/>
 			<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
 		</SEO>
 		<h1>Hi people</h1>

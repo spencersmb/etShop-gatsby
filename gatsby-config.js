@@ -148,7 +148,20 @@ module.exports = {
 
         }
       }
+    },
+    // make sure to put last in the array
+    {
+      resolve: ` gatsby-plugin-netlify-headers`,
+      options: {
+        headers: {},                                  // option to add more headers. `Link` headers are transformed by the below criteria
+        allPageHeaders: [
+          `Link: </icons/icon-48x48.png>; rel=preload; as=image`
+        ],                           // option to add headers for all pages. `Link` headers are transformed by the below criteria
+        mergeSecurityHeaders: true,                   // boolean to turn off the default security headers
+        mergeLinkHeaders: false,                      // boolean to turn off the default gatsby js headers (disabled by default, until gzip is fixed for server push)
+        mergeCachingHeaders: true                    // boolean to turn off the default caching headers
+        // transformHeaders: (headers, path) => headers, // optional transform for manipulating headers under each path (e.g.sorting), etc.
+      }
     }
-
   ]
 }
