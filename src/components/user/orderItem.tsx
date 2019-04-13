@@ -1,5 +1,6 @@
 import { IReceipt } from '@et/types/WC_Order'
 import React, { useState } from 'react'
+import styled from 'styled-components'
 
 interface IProps {
 	// isOpen: boolean,
@@ -8,9 +9,14 @@ interface IProps {
 }
 
 function OrderItem (props: IProps & IReceipt) {
-	const { id, date, total } = props
+	const { id, date, total, handleClick, selectedOrder } = props
 
 	const [isOpen, setisOpen] = useState(false)
+	console.log('selectedOrder === id', selectedOrder)
+
+	const orderClick = () => {
+		return handleClick(id)
+	}
 	//
 	// function click () {
 	// 	console.log('itemIndex', props.itemIndex)
@@ -22,14 +28,15 @@ function OrderItem (props: IProps & IReceipt) {
 	// 	// 	selectedOrder: id
 	// 	// })
 	// }
+	{/*<div key={1} style={{ marginBottom: 20 }} onClick={() => (setisOpen(!isOpen))}>*/}
 
 	return (
-		<div key={1} style={{ marginBottom: 20 }} onClick={() => (setisOpen(!isOpen))}>
-			<div>
+		<div key={1} style={{ marginBottom: 20 }} onClick={orderClick}>
+			<SelectedItem selected={selectedOrder === id}>
 				<div>order# {id}</div>
 				<div>date: {date}</div>
 				<div>total {total}</div>
-			</div>
+			</SelectedItem>
 			{isOpen &&
       <div>
         content
@@ -41,5 +48,9 @@ function OrderItem (props: IProps & IReceipt) {
 		</div>
 	)
 }
+
+const SelectedItem = styled.div`
+	color: ${props => props.selected ? 'red' : 'black'}
+`
 
 export default OrderItem

@@ -8,6 +8,7 @@ import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
 import SignInForm from '@components/forms/signin'
 import SignUpForm from '@components/forms/signup'
+import { navigate } from 'gatsby'
 // import SignUpForm from '@et/forms/signUp'
 import React, { useState, useEffect, useRef } from 'react'
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
@@ -63,6 +64,7 @@ export const LoginModal = (props: MixedFormProps) => {
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 			closeModal()
+			navigate(`/account/`)
 		} catch (e) {
 			console.error('user login fail:', e)
 		}
@@ -76,6 +78,7 @@ export const LoginModal = (props: MixedFormProps) => {
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 			closeModal()
+			navigate(`/account/`)
 		} catch (e) {
 			console.error('user signup fail:', e)
 		}

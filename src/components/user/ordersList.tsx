@@ -9,36 +9,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
 
 interface IProps {
-	orders: any
-	path: string,
-	uri: string,
-	navigate: any,
-	location: {
-		search: string
-	}
-}
-
-interface IReduxState {
+	page: number;
 	pagination: IPaginateState
-}
-
-interface IReduxActions {
-	getOrders: (page: number) => void
-}
-
-function getCurrentPage (path: string) {
-	const split = path
-		.split(/(=)/)
-		.splice(2, 2)
-		.reduce((a, b) => {
-			return parseInt(b, 10)
-		}, 0)
-	console.log('split', split)
-
-	if (split !== 0) {
-		return split
-	}
-	return 1
+	handleClick: (item: any) => void
 }
 
 interface IPublicState {
@@ -62,33 +35,14 @@ export function useSetState (initialState: any): useSetStateType {
 	]
 }
 
-const OrdersList = (props: IProps & IReduxActions & IReduxState) => {
-	const { pagination } = props
-	// const [state, setState] = useSetState({
-	// 	selectedOrder: null
-	// })
-	const page = getCurrentPage(props.location.search)
+const OrdersList = (props: IProps) => {
+	const { pagination, page, handleClick, selectedOrder } = props
 
-	console.log('Orderlist render', props.pagination.pages[page])
-	useEffect(() => {
-		// console.log('page to fetch', page)
-		props.getOrders(page)
-	}, [props.location.search])
-
-	function addItem () {
-		// props.add({
-		// 	order: {
-		// 		date: '03-09-2019',
-		// 		id: 999,
-		// 		total: '3.46'
-		// 	}
-		// })
-	}
+	console.log('Orderlist render page defined?', props)
 
 	return (
 		<div>
 			<h3>Orders:</h3>
-			<button onClick={addItem}>Test</button>
 			<div>
 				{pagination.pages[page] && Object.keys(pagination.pages[page]).map((key: any, index) => {
 						const pageItem: IReceipt = pagination.pages[page][key]
@@ -96,8 +50,9 @@ const OrdersList = (props: IProps & IReduxActions & IReduxState) => {
 							<OrderItem
 								key={pageItem.id}
 								itemIndex={index}
+								selectedOrder={selectedOrder}
 								// isOpen={pageItem.id === state.selectedOrder}
-								// handleClick={setState}
+								handleClick={handleClick}
 								{...pageItem}
 							/>
 						)
@@ -110,12 +65,6 @@ const OrdersList = (props: IProps & IReduxActions & IReduxState) => {
 	)
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-	return {
-		getOrders: bindActionCreators(fetchOrders, dispatch),
-		add: bindActionCreators(addItemAfterOrder, dispatch)
-	}
-}
-export default connect((state: IState) => ({
-	pagination: state.pagination
-}), mapDispatchToProps)(OrdersList)
+export default React.memo(OrdersList, (prev: any, next: any): boolean => {
+	return !(prev.page !== next.page || prev.selectedOrder !== next.selectedOrder)
+})

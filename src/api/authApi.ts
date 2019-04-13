@@ -88,8 +88,8 @@ class AuthApi {
 		const url: string = `${process.env.DB}/wp-json/et-shop/user/getAllOrdersExt/?page=${page}`
 		const options: any = {
 			headers: createHeaders(),
-			method: 'GET',
-			mode: 'cors'
+			method: 'GET'
+			// mode: 'cors'
 		}
 		return fetched(
 			url,

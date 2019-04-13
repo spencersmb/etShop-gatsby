@@ -72,7 +72,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 		<div data-testid='navbar'>
 			<UlStyled>
 				<li>Home</li>
-				<li><Link to='/account'>your profile</Link></li>
+
 				{!user &&
         <>
           <li onClick={openSignInModal('signin')}>Sign In</li>
@@ -80,7 +80,10 @@ function Navbar (props: IPropsActions & IPropsState) {
         </>
 				}
 				{user &&
-        <li onClick={logout}>Sign Out</li>
+        <>
+          <li><Link to='/account'>your profile</Link></li>
+          <li onClick={logout}>Sign Out</li>
+        </>
 				}
 				<li onClick={props.cartToggle}>Cart ({props.cart.totalItems})</li>
 				<li onClick={receipt}>Receipt test</li>

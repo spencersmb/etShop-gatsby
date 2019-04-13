@@ -10,13 +10,14 @@ export const fetchOrders: any = (page: number) => async (dispatch: Dispatch<Acti
 
 	// 2. check if orders are in state
 	const currentState: IState = getState()
-	// const currentPage: number = getCurrentPage(page)
 
 	console.log('currentState.pagination.orders[currentPage]', currentState.pagination.pages[page])
 
 	if (currentState.pagination.pages[page]) {
 		console.log('orders already loaded')
-		return null
+		return {
+			orders: currentState.pagination.pages[page]
+		}
 	}
 
 	// 2. if none found dispatch fetch loading
@@ -33,9 +34,9 @@ export const fetchOrders: any = (page: number) => async (dispatch: Dispatch<Acti
 
 	dispatch(loadOrdersSuccess(body.data, page))
 	// saveUserLocalStorage(body)
-	// return {
-	// 	firstName: body.first_name
-	// }
+	return {
+		orders: body.data.orders
+	}
 
 }
 
@@ -55,14 +56,14 @@ export const loadOrdersSuccess = (data: ILoadPaginationSuccess, page: number) =>
 	}
 }
 
-export const addItemAfterOrder = (order: IOrderResponse) =>{
+export const addItemAfterOrder = (order: IOrderResponse) => {
 	return {
 		payload: order,
 		type: PaginationTypes.UPDATE_PAGINATION_AFTER_ORDER
 	}
 }
 
-export const clearFirstPage = () =>{
+export const clearFirstPage = () => {
 	return {
 		type: PaginationTypes.CLEAR_ALL_PAGES
 	}

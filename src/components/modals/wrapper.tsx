@@ -183,6 +183,7 @@ const Overlay = posed(Shade)({
 	},
 	enter: {
 		opacity: (props: any) => (props.showOverlay ? 1 : 0)
+		// delay: 300
 	}
 })
 

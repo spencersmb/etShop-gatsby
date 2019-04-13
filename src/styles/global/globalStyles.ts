@@ -1,7 +1,7 @@
 // import { injectGlobal } from 'styled-components'
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 import cssReset from './cssReset'
-import {colors} from './colors'
+import { colors } from './colors'
 import toastr from '@styles/modules/toastr'
 
 export default createGlobalStyle`
@@ -21,6 +21,10 @@ export default createGlobalStyle`
     &.mobileNavOpen{
       overflow-y: hidden;
     }
+  }
+  
+  #___gatsby{
+  	min-height: 100vh;
   }
   
   ${toastr}

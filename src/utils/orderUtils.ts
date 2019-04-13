@@ -82,12 +82,13 @@ export const createHeaders = () => {
 
 	if (token) {
 		return {
-			'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+			'Accept': 'application/json, application/xml, text/plain, text/html, *.*, +json',
 			'Authorization': `Bearer ${token}`
 		}
 	}
 	return {
-		'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+		'Accept': 'application/json, application/xml, text/plain, text/html, *.*, +json',
+		'Content-Type': 'application/json'
 	}
 }
 
