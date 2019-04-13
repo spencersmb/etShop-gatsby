@@ -40,8 +40,6 @@ const IndexPage = () => (
 		</div>
 		<Link to='/page-2/'>Go to page 2</Link>
 		<h3>Vars</h3>
-		<li>{process.env.GATSBY_DESCRIPTION}</li>
-		<li>{process.env.GATSBY_PAYPAL_KEY}</li>
 	</Layout>
 )
 

@@ -6,7 +6,7 @@ import fetched from 'isomorphic-unfetch'
 
 class AuthApi {
 	static login (user: IUserSubmit): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/jwt-auth/v1/token`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/jwt-auth/v1/token`
 
 		const formData = new FormData()
 		formData.append('username', user.email)
@@ -26,14 +26,14 @@ class AuthApi {
 	}
 
 	static createUser (user: IUserCreate): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/createUser`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/createUser`
 
 		const formData = new FormData()
 		formData.append('email', user.email)
 		formData.append('password', user.password)
 		formData.append('firstName', user.firstName)
 		formData.append('lastName', user.lastName)
-		formData.append('nonce', process.env.WPNONCE || '')
+		formData.append('nonce', process.env.GATSBY_WPNONCE || '')
 
 		// log formData for debugging
 		// logFormData(formData)
@@ -49,7 +49,7 @@ class AuthApi {
 	}
 
 	static resetPassword (reduxFormData: { email: string, password: string, key: string }): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/et-shop/reset`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/et-shop/reset`
 		const formData = new FormData()
 		formData.append('email', reduxFormData.email)
 		formData.append('password', reduxFormData.password)
@@ -70,7 +70,7 @@ class AuthApi {
 
 	static forgotPasswordRequest ({ email }: { email: string }): Promise<Response> {
 
-		const url: string = `${process.env.DB}/wp-json/et-shop/forgotPassword`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/et-shop/forgotPassword`
 		const formData = new FormData()
 		formData.append('email', email)
 
@@ -85,7 +85,7 @@ class AuthApi {
 	}
 
 	static getAllOrders (page: number): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/et-shop/user/getAllOrdersExt/?page=${page}`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/et-shop/user/getAllOrdersExt/?page=${page}`
 		const options: any = {
 			headers: createHeaders(),
 			method: 'GET'

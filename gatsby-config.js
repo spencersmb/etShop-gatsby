@@ -4,8 +4,8 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `${process.env.TITLE}`,
-    description: `${process.env.DESCRIPTION}`,
+    title: `${process.env.GATSBY_TITLE}`,
+    description: `${process.env.GATSBY_DESCRIPTION}`,
     author: `@Teelac`,
     authorUrl: "https://every-tuesday.com/about/#teela",
     siteUrl: `https://shop.every-tuesday.com`,

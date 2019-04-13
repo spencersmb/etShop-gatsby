@@ -7,7 +7,7 @@ import nock from 'nock'
 import initialState from '@redux/reducers/initialState'
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
-const dataBase: string = process.env.DB || 'http://shopeverytuesday.local'
+const dataBase: string = process.env.GATSBY_DB || 'http://shopeverytuesday.local'
 
 describe('Auth Action tests', () => {
 

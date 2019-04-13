@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import initialState from '@redux/reducers/initialState'
 
-const dataBase: string = process.env.DB || 'http://shopeverytuesday.local'
+const dataBase: string = process.env.GATSBY_DB || 'http://shopeverytuesday.local'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)

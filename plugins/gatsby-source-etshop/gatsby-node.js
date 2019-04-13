@@ -54,7 +54,7 @@ exports.sourceNodes = async (
 
   const dev = process.env.NODE_ENV !== "production"
 
-  const apiUrl = `${process.env.DB}/wp-json/et-shop/graphql/products`
+  const apiUrl = `${process.env.GATSBY_DB}/wp-json/et-shop/graphql/products`
   const apiResponse = await fetch(apiUrl)
   const results = await apiResponse.json()
 

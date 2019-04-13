@@ -10,7 +10,7 @@ import initialState from '@redux/reducers/initialState'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
-const dataBase: string = process.env.DB || 'http://shopeverytuesday.local'
+const dataBase: string = process.env.GATSBY_DB || 'http://shopeverytuesday.local'
 
 describe('Auth Action tests', () => {
 
@@ -66,7 +66,7 @@ describe('Auth Action tests', () => {
 			.defaultReplyHeaders({
 				'Content-Type': 'application/json'
 			})
-			.post(`/wp-json/${process.env.ROUTE}/orders`)
+			.post(`/wp-json/${process.env.GATSBY_ROUTE}/orders`)
 			.reply(200, bodyData)
 
 		// @ts-ignore
@@ -119,7 +119,7 @@ describe('Auth Action tests', () => {
 			.defaultReplyHeaders({
 				'Content-Type': 'application/json'
 			})
-			.post(`/wp-json/${process.env.ROUTE}/paypalOrder`)
+			.post(`/wp-json/${process.env.GATSBY_ROUTE}/paypalOrder`)
 			.reply(200, bodyData)
 
 		// @ts-ignore

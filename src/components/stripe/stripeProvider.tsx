@@ -6,7 +6,7 @@ declare let window: CustomWindow
 
 export function StripeProviderWrapper (props: any) {
 
-	const stripeSecretKey: string = process.env.STRIPE_SECRET_KEY || ''
+	const stripeSecretKey: string = process.env.GATSBY_STRIPE_SECRET_KEY || ''
 	const [stripe, setStripe] = useState(null)
 	const stripeScriptTag = useRef<Element | null>(null)
 

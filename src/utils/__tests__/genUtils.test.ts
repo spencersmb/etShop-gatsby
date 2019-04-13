@@ -21,11 +21,11 @@ describe('General Utils', () => {
 			},
 			{
 				name: `twitter:title`,
-				content: `${process.env.TITLE}`
+				content: `${process.env.GATSBY_TITLE}`
 			},
 			{
 				name: `twitter:description`,
-				content: `${process.env.DESCRIPTION}`
+				content: `${process.env.GATSBY_DESCRIPTION}`
 			},
 			{
 				name: `twitter:creator`,

@@ -10,7 +10,7 @@ interface IFinalOrder extends IOrderDetails {
 
 export class CheckoutApi {
 	static checkCoupon (couponCode: string): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/getCoupon/${couponCode}`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/getCoupon/${couponCode}`
 
 		return fetched(
 			url,
@@ -26,7 +26,7 @@ export class CheckoutApi {
 	}
 
 	static checkEmail (email: string): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/checkEmail?email=${email}`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/checkEmail?email=${email}`
 
 		return fetched(
 			url,
@@ -45,7 +45,7 @@ export class CheckoutApi {
 		console.log('order submitted', orderData)
 
 		// TODO: secret addon from .env
-		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/orders`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/orders`
 		const headerOptions = createHeaders()
 		const options: any = {
 			body: JSON.stringify(orderData),
@@ -61,7 +61,7 @@ export class CheckoutApi {
 	}
 
 	static processPaypalOrder (orderData: IPaypalSuccessOrder): Promise<Response> {
-		const url: string = `${process.env.DB}/wp-json/${process.env.ROUTE}/paypalOrder`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/paypalOrder`
 		const headerOptions = createHeaders()
 		const options: any = {
 			body: JSON.stringify(orderData),
