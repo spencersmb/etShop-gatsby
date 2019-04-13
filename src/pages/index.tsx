@@ -39,6 +39,9 @@ const IndexPage = () => (
 			<Image/>
 		</div>
 		<Link to='/page-2/'>Go to page 2</Link>
+		<h3>Vars</h3>
+		<li>{process.env.DESCRIPTION}</li>
+		<li>{process.env.PAYPAL_KEY}</li>
 	</Layout>
 )
 
