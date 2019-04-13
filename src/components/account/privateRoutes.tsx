@@ -21,7 +21,7 @@ interface RouterProps {
 const PrivateRoute = (props: IPropsPublic & RouterProps) => {
 	const { Component, location, user, ...rest } = props
 
-	if (!window) {
+	if (typeof window === `undefined`) {
 		return null
 	}
 
