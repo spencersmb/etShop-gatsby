@@ -1,4 +1,0 @@
-# A path:
-/static/*
-   # Headers for that path:
-   Cache-Control: public, max-age=360000
