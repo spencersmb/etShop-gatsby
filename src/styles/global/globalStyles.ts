@@ -23,6 +23,10 @@ export default createGlobalStyle`
     }
   }
   
+  h1{
+      color: ${colors.text};
+  }
+  
   #___gatsby{
   	min-height: 100vh;
   }

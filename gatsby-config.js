@@ -8,7 +8,7 @@ module.exports = {
     description: `${process.env.GATSBY_DESCRIPTION}`,
     author: `@Teelac`,
     authorUrl: "https://every-tuesday.com/about/#teela",
-    siteUrl: `https://shop.every-tuesday.com`,
+    siteUrl: `${process.env.GATSBY_DB}`,
     siteName: `Every-Tuesday Shop`
   },
   plugins: [
@@ -85,8 +85,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: "https://www.example.com",
-        sitemap: "https://www.example.com/sitemap.xml"
+        host: process.env.GATSBY_DB,
+        sitemap: `${process.env.GATSBY_DB}/sitemap.xml`
         // policy: [{ userAgent: '*', allow: '/' }]
       }
     },

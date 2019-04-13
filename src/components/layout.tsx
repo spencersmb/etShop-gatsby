@@ -4,7 +4,6 @@ import React, { ReactNode, useEffect, useRef } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import ReduxToastr from 'react-redux-toastr'
 import Header from './header'
-import './layout.css'
 import Modal from '@components/modals/wrapper'
 import GlobalStyle from '@styles/global/globalStyles'
 
