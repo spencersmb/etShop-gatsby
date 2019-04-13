@@ -98,8 +98,8 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 								? meta
 								: [])}
 					>
-						<link rel='dns-prefetch' href='//assets.pinterest.com'/>
-						<link rel='dns-prefetch' href='//apis.google.com'/>
+						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}
+						{/*<link rel='dns-prefetch' href='//apis.google.com'/>*/}
 						{children ? children : null}
 					</Helmet>
 				)
