@@ -14,7 +14,6 @@
     "gatsby-plugin-manifest": "^2.0.17",
     "gatsby-plugin-module-resolver": "^1.0.3",
     "gatsby-plugin-netlify": "^2.0.10",
-    "gatsby-plugin-netlify-headers": "^1.0.1",
     "gatsby-plugin-offline": "^2.0.23",
     "gatsby-plugin-playground": "^1.0.6",
     "gatsby-plugin-react-helmet": "^3.0.6",

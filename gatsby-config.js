@@ -78,7 +78,6 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-playground`,
-    `gatsby-plugin-netlify`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     "gatsby-plugin-offline",
@@ -151,7 +150,7 @@ module.exports = {
     },
     // make sure to put last in the array
     {
-      resolve: ` gatsby-plugin-netlify-headers`,
+      resolve: `gatsby-plugin-netlify`,
       options: {
         headers: {},                                  // option to add more headers. `Link` headers are transformed by the below criteria
         allPageHeaders: [
