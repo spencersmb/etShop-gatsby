@@ -1,6 +1,9 @@
 import { IUserState } from '@et/types/User'
+import { CustomWindow } from '@et/types/Winodw'
 import React, { ReactNode } from 'react'
 import { navigate } from 'gatsby'
+
+declare let window: CustomWindow
 
 interface IPropsPublic {
 	Component: any,
@@ -17,6 +20,10 @@ interface RouterProps {
 
 const PrivateRoute = (props: IPropsPublic & RouterProps) => {
 	const { Component, location, user, ...rest } = props
+
+	if (!window) {
+		return null
+	}
 
 	if (!location) {
 		navigate(`/`)
