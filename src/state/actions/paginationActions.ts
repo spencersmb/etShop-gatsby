@@ -63,7 +63,7 @@ export const addItemAfterOrder = (order: IOrderResponse) => {
 	}
 }
 
-export const clearFirstPage = () => {
+export const clearPagination = () => {
 	return {
 		type: PaginationTypes.CLEAR_ALL_PAGES
 	}

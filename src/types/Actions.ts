@@ -141,7 +141,7 @@ export interface IUpdatePaginationAfterOrder {
   type: PaginationTypes.UPDATE_PAGINATION_AFTER_ORDER
 }
 
-export interface IClearFirstPage {
+export interface IClearPagination {
   type: PaginationTypes.CLEAR_ALL_PAGES
 }
 
@@ -183,7 +183,7 @@ type PaginationActions =
   | ILoadingPaginationOrders
   | IGetAllOrdersSuccess
   | IUpdatePaginationAfterOrder
-  | IClearFirstPage
+  | IClearPagination
 
 export type Actions =
   | AuthActions

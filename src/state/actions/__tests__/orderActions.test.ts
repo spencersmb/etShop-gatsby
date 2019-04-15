@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { AuthActionTypes, OrderActionTypes } from '@et/types/Enums'
-import { IOderDownloadItem, IWcOrderItem } from '@et/types/WC_Order'
-import { login, logout } from '@redux/actions/authActions'
+import { OrderActionTypes } from '@et/types/Enums'
 import { createOrder, processPaypalOrder } from '@redux/actions/orderActions'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -12,7 +10,7 @@ const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 const dataBase: string = process.env.GATSBY_DB || 'http://shopeverytuesday.local'
 
-describe('Auth Action tests', () => {
+describe('Order Action tests', () => {
 
 	afterEach(() => {
 		nock.cleanAll()
@@ -52,9 +50,6 @@ describe('Auth Action tests', () => {
 		const actionResponse = [
 			{
 				type: OrderActionTypes.SUBMIT_ORDER
-			},
-			{
-				type: OrderActionTypes.ORDER_SUCCESS
 			}
 		]
 
@@ -74,7 +69,7 @@ describe('Auth Action tests', () => {
 			.then(() => {
 				const expectedActions = store.getActions()
 
-				expect(expectedActions.length).toBe(2)
+				expect(expectedActions.length).toBe(1)
 				expect(expectedActions).toEqual(actionResponse)
 			})
 

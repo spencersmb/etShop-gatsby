@@ -42,7 +42,7 @@ const UserLayout = (Component: React.ComponentType<any>) => (props: IlayoutProps
 			<div>
 				<Component {...props}/>
 			</div>
-			<PaginationBar currentPage={props.location.search} total={total}/>
+			{/*<PaginationBar currentPage={props.location.search} total={total}/>*/}
 		</Layout>
 	)
 }

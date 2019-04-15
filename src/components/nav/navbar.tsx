@@ -4,8 +4,9 @@ import { IState } from '@et/types/State'
 import { IUser } from '@et/types/User'
 import { ILogoutAction, logout as logoutAction } from '@redux/actions/authActions'
 import { cartToggle } from '@redux/actions/cartActions'
+import { clearPagination } from '@redux/actions/paginationActions'
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
@@ -20,11 +21,12 @@ interface IPropsState {
 interface IPropsActions {
 	showModal: IShowModalAction,
 	logout: ILogoutAction,
+	clearPagination: () => void,
 	cartToggle: () => void
 }
 
 function Navbar (props: IPropsActions & IPropsState) {
-	const { user, logout } = props
+	const { user, logout, clearPagination } = props
 
 	function openSignInModal (name: string) {
 		return () => [
@@ -68,6 +70,14 @@ function Navbar (props: IPropsActions & IPropsState) {
 		})
 	}
 
+	function signOut () {
+		navigate('/')
+		clearPagination()
+		setTimeout(() => {
+			logout()
+		}, 100)
+	}
+
 	return (
 		<div data-testid='navbar'>
 			<UlStyled>
@@ -82,7 +92,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 				{user &&
         <>
           <li><Link to='/account'>your profile</Link></li>
-          <li onClick={logout}>Sign Out</li>
+          <li onClick={signOut}>Sign Out</li>
         </>
 				}
 				<li onClick={props.cartToggle}>Cart ({props.cart.totalItems})</li>
@@ -112,7 +122,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 	return {
 		showModal: bindActionCreators(showModal, dispatch),
 		logout: bindActionCreators(logoutAction, dispatch),
-		cartToggle: bindActionCreators(cartToggle, dispatch)
+		cartToggle: bindActionCreators(cartToggle, dispatch),
+		clearPagination: bindActionCreators(clearPagination, dispatch)
 	}
 }
 // export default Navbars

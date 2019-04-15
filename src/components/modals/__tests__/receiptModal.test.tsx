@@ -1,7 +1,5 @@
 import Receipt from '@components/modals/receipt'
-import { IOderDownloadItem } from '@et/types/WC_Order'
 import React from 'react'
-import renderer from 'react-test-renderer'
 import {
 	render,
 	cleanup
@@ -19,26 +17,23 @@ const props = {
 			orderId: '324',
 			date: 'March 8, 2019',
 			email: 'everytues-buyer@gmail.com',
-			downloads: [
-				{
-					access_expires: null,
-					download_url: 'http://shopeverytuesday.local/?download_file=222&order=wc_order_EdNHrViFaMtUl&uid=c24e829363b796166ef3bf065a6d18155b8cea36bbb5f692c52e02b6c0d70d20&key=831ced27-6944-4747-a419-99c292de9c0c',
-					downloads_remaining: '',
-					order_id: 657,
-					product_id: 222,
-					product_name: 'Watercolor texture kit Vol. 1',
-					product_url: 'http://shopeverytuesday.local/product/watercolor-texture-kit'
-				},
-				{
-					access_expires: null,
-					download_url: 'http://shopeverytuesday.local/?download_file=222&order=wc_order_EdNHrViFaMtUl&uid=c24e829363b796166ef3bf065a6d18155b8cea36bbb5f692c52e02b6c0d70d20&key=831ced27-6944-4747-a419-99c292de9c0c',
-					downloads_remaining: '',
-					order_id: 657,
-					product_id: 100,
-					product_name: 'Watercolor texture kit Vol. 2',
-					product_url: 'http://shopeverytuesday.local/product/watercolor-texture-kit'
-				}
-			]
+			downloads: {
+				exp_date: 1313131321,
+				products: [
+					{
+						url: 'asdadaa',
+						id: 222,
+						name: 'Watercolor',
+						filename: '*.zip'
+					},
+					{
+						url: 'asdadaa',
+						id: 16,
+						name: 'Skinny Jeans',
+						filename: '*.zip'
+					}
+				]
+			}
 		}
 	}
 }
@@ -73,8 +68,8 @@ describe('Reciept Modal', () => {
 		const modalRender = render(<Receipt {...props}/>)
 		const item = modalRender.getByTestId('download-222')
 		const attrs: any = item.children[0].getAttribute('href')
-		expect(attrs).toBe(props.options.data.downloads[0].download_url)
-		expect(item.children[0].innerHTML).toEqual('Watercolor texture kit Vol. 1')
+		expect(attrs).toBe(props.options.data.downloads.products[0].url)
+		expect(item.children[0].innerHTML).toEqual('Watercolor')
 	})
 
 })

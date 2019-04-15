@@ -10,13 +10,6 @@ exports[`Navbar Layout renders correctly 1`] = `
     <li>
       Home
     </li>
-    <li>
-      <a
-        href="/account/profile"
-      >
-        your profile
-      </a>
-    </li>
     <li
       onClick={[Function]}
     >

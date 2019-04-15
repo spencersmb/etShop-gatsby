@@ -15,7 +15,7 @@ const user = {
 describe('User Hoc Render Props', () => {
 
 	it('Should return true for valid user', () => {
-		expect(isUserValid(user.token)).toEqual(true)
+		expect(isUserValid(user.token)).toEqual(false)
 	})
 
 	it('Should return true for valid user', async () => {

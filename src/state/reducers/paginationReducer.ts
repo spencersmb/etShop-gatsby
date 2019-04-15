@@ -30,7 +30,10 @@ export const paginationReducer = (state: IPaginateState = initialState.paginatio
 		case PaginationTypes.CLEAR_ALL_PAGES:
 			return {
 				...state,
-				pages: {}
+				pages: {},
+				loading: false,
+				totalPages: 0,
+				totalOrders: '0'
 			}
 
 		// Use Flattened object, then keep page 1 but remove others if they exist,
@@ -53,9 +56,10 @@ export const paginationReducer = (state: IPaginateState = initialState.paginatio
 			// 2. Add the new item from the completed order to the front of the array
 			// use reverse so we start at the most recent item
 			allItems[0].reverse().unshift({
-				date: action.payload.order.date,
-				id: action.payload.order.order_id,
-				total: action.payload.order.total
+				...action.payload.order
+				// date: action.payload.order.date,
+				// id: action.payload.order.order_id,
+				// total: action.payload.order.total,
 			})
 			console.log('allItems', allItems)
 

@@ -41,6 +41,7 @@ describe('Order Utility Tests', () => {
 		const billing = wc_createBilling(null, testGuest)
 		const order = wc_createOrder(testCartWithMultiples, billing, testProducts)
 		const result = {
+			cardType: 'Paypal',
 			billing,
 			coupon_code: null,
 			customer_user_agent: billing.email,
@@ -59,6 +60,7 @@ describe('Order Utility Tests', () => {
 		const billing = wc_createBilling(null, testGuest)
 		const order = wc_createOrder(testCartWithItemAndCoupon, billing, testProducts)
 		const result = {
+			cardType: 'Paypal',
 			billing,
 			coupon_code: testCartWithItemAndCoupon.coupon.code,
 			customer_user_agent: billing.email,

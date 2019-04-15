@@ -35,6 +35,7 @@ export function wc_createBilling (user: IUserState, formData: IGuestFormData): I
  */
 export function wc_createOrder (cart: ICartState, billing: IBillingWc, products: IProducts): IOrderDetails {
 	return {
+		cardType: 'Paypal',
 		billing,
 		coupon_code: cart.coupon.valid ? cart.coupon.code : null,
 		customer_user_agent: billing.email,
@@ -82,13 +83,12 @@ export const createHeaders = () => {
 
 	if (token) {
 		return {
-			'Accept': 'application/json, application/xml, text/plain, text/html, *.*, +json',
+			'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
 			'Authorization': `Bearer ${token}`
 		}
 	}
 	return {
-		'Accept': 'application/json, application/xml, text/plain, text/html, *.*, +json',
-		'Content-Type': 'application/json'
+		'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
 	}
 }
 

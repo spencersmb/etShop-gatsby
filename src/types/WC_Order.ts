@@ -59,14 +59,16 @@ export interface IOrderResponse {
 	order: IReceipt
 }
 
-export interface IOderDownloadItem {
-	download_url: string,
-	product_id: number,
-	product_name: string,
-	product_url: string,
-	order_id: number,
-	downloads_remaining: string,
-	access_expires: null
+export interface IOrderDownload {
+	exp_date: number;
+	products: IOrderDownloadItem[]
+}
+
+export interface IOrderDownloadItem {
+	url: string
+	id: number
+	name: string
+	filename: string
 }
 
 export interface IRefund {
@@ -91,5 +93,5 @@ export interface IReceipt {
 	discounts: string // 0 if no discount
 	discounts_reverse: number; // 0 if no discount
 	coupon_used: string[] // will have one item if used
-	downloads: IOderDownloadItem[]
+	downloads: IOrderDownload
 }

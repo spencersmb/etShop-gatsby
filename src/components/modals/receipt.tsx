@@ -1,5 +1,5 @@
 import { IModal } from '@et/types/Modal'
-import { IOderDownloadItem } from '@et/types/WC_Order'
+import { IOrderDownload } from '@et/types/WC_Order'
 import { displayCurrency } from '@utils/priceUtils'
 import React from 'react'
 import posed from 'react-pose'
@@ -16,7 +16,7 @@ type IReceiptProps = Merge<IModal, {
 			orderId: string,
 			date: string,
 			email: string,
-			downloads: IOderDownloadItem[]
+			downloads: IOrderDownload
 		}
 	}
 }>
@@ -54,10 +54,10 @@ export function Receipt (props: IReceiptProps) {
 				</div>
 				<div>
 					<ul data-testid='orderDownloads'>
-						{data.downloads && data.downloads.map(download =>
-							<li key={download.product_id} data-testid={`download-${download.product_id}`}>
-								<a href={download.download_url}>
-									{download.product_name}
+						{data.downloads.products && data.downloads.products.map(product =>
+							<li key={product.id} data-testid={`download-${product.id}`}>
+								<a href={product.url} target='_blank'>
+									{product.name}
 								</a>
 							</li>)}
 					</ul>

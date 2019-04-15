@@ -1,5 +1,7 @@
+import ReduxToastr from '@components/layout'
 import { logout } from '@redux/actions/authActions'
 import { matchString } from '@utils/genUtils'
+import React from 'react'
 import { toastr } from 'react-redux-toastr'
 import { navigate } from 'gatsby'
 

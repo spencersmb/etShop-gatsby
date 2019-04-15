@@ -57,7 +57,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		// console.log('payment', actions.payment)
 		// console.log('payment data', data)
 		const currency = 'USD'
-		console.log('total', cart.totalPrice)
+		// console.log('total', cart.totalPrice)
 
 		return actions.order.create({
 			purchase_units: [{
@@ -85,7 +85,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 	// 2a.
 	async function onApproval (data: any, actions: any): Promise<any> {
 		console.log('onApprove', data)
-		console.log('onApprove actions', actions)
+		// console.log('onApprove actions', actions)
 
 		try {
 			// 2b.
@@ -164,6 +164,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		const billing = wc_createBilling(user, formProps)
 		return props.createOrder({
 			billing,
+			cardType: 'Paypal',
 			coupon_code: cart.coupon.valid ? cart.coupon.code : null,
 			customer_user_agent: billing.email,
 			line_items: wcCreateOrderLineItems(cart.items, products),
@@ -241,6 +242,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 }
 
 // export default connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm)
-export default React.memo(connect<{}, IReduxActions, IPublicProps, IState>(mapStateToProps, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
+export default React.memo(connect<IReduxState, IReduxActions, IPublicProps, IState>(mapStateToProps, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
 	return !(prev.cart.totalPrice !== next.cart.totalPrice || prev.cart.coupon.valid !== prev.cart.coupon.valid)
 })
