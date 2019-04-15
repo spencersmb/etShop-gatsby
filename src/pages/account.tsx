@@ -1,6 +1,6 @@
 import PrivateRoute from '@components/account/privateRoutes'
 import Layout from '@components/layout'
-import Dashboard from '@components/user/dashboard'
+import Dashboard from '@components/account/dashboard'
 import { IUserState } from '@et/types/User'
 import React from 'react'
 import { Router } from '@reach/router'

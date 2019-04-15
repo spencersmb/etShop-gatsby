@@ -3,7 +3,7 @@ import { ICartState } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IUser } from '@et/types/User'
-import { IGuestFormData } from '@et/types/WC_Order'
+import { IGuestFormData, IOrderDownload, IOrderDownloadItem, IReceipt, IRefund } from '@et/types/WC_Order'
 import React from 'react'
 import initialState from '@redux/reducers/initialState'
 import { Provider } from 'react-redux'
@@ -716,4 +716,33 @@ export const testGuest: IGuestFormData = {
 	email: 'guest@gmail.com',
 	firstName: 'guest',
 	lastName: 'user'
+}
+
+export const testReceipt: IReceipt = {
+	id: 667,
+	total: '16',
+	date: '02-12-22',
+	status: 'completed',
+	transactionId: 'abc123',
+	payment_type: 'stripe',
+	order_id: '123',
+	email: 'spencer.bigum@gmail.com',
+	date_completed: '02-12-22',
+	totals: '16',
+	subtotal: '16',
+	cardType: 'Visa',
+	discounts: '0', // 0 if no discount
+	discounts_reverse: 0, // 0 if no discount
+	coupon_used: [], // will have one item if used
+	downloads: {
+		exp_date: 15252525,
+		products: [
+			{
+				url: 'http://google.com',
+				id: 222,
+				name: 'Watercolor kit',
+				filename: 'watercolor.zip'
+			}
+		]
+	}
 }

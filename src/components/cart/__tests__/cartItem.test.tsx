@@ -23,7 +23,7 @@ const props = {
 	removeItem: jest.fn()
 }
 
-describe('User Hoc Render Props', () => {
+describe('Cart Item tests', () => {
 
 	// TODO: add coupon & discount tests
 	it('renders correctly', () => {

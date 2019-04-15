@@ -1,7 +1,8 @@
-import OrderDisplay from '@components/user/orderDisplay'
-import OrdersList from '@components/user/ordersList'
+import OrderDisplay from '@components/account/orderDisplay'
+import OrdersList from '@components/account/ordersList'
 import { IPaginateState } from '@et/types/Pagination'
 import { IState } from '@et/types/State'
+import { IReceipt } from '@et/types/WC_Order'
 import { addItemAfterOrder, fetchOrders } from '@redux/actions/paginationActions'
 import React, { Dispatch as ReactDispatch, useEffect, useReducer } from 'react'
 import { connect } from 'react-redux'
@@ -26,17 +27,16 @@ interface IReduxActions {
 }
 
 interface IPublicState {
-	selectedOrder: number
+	selectedOrder: IReceipt | null
 }
 
 interface INewState {
-	type: string,
-	selectedOrder?: number
+	selectedOrder?: IReceipt | null
 }
 
 type useSetStateType = [IPublicState, ReactDispatch<INewState>]
 
-export function useSetState (initialState: any): useSetStateType {
+export function useSetState (initialState: IPublicState): useSetStateType {
 	const [state, setState] = useReducer((originalState: IPublicState, newState: INewState) => ({ ...originalState, ...newState }),
 		initialState)
 
@@ -64,25 +64,7 @@ function getCurrentPage (path: string) {
 function Dashboard (props: IProps & IReduxActions & IReduxState) {
 	const { pagination } = props
 	const page = getCurrentPage(props.location.search)
-	const getSelectedItem = (page: any) => {
-		if (!page || !pagination.pages[page]) {
-			return null
-		}
-		const itemsOnPage = Object.keys(pagination.pages[page]).reverse()
-		return page[itemsOnPage[0]]
-	}
 	const [state, setState] = useSetState({ selectedOrder: null })
-
-	// useEffect(() => {
-	// 	console.log('dashboard mount', pagination.pages[page])
-	//
-	// 	if (pagination.pages[page]) {
-	// 		const itemsOnPage = Object.keys(pagination.pages[page]).reverse()
-	// 		console.log('item', pagination.pages[page][itemsOnPage[0]])
-	//
-	// 		setState({ selectedOrder: pagination.pages[page][itemsOnPage[0]] })
-	// 	}
-	// }, [])
 
 	console.log('dashboard render', state)
 
@@ -90,7 +72,6 @@ function Dashboard (props: IProps & IReduxActions & IReduxState) {
 		console.log('page to fetch', page)
 		props.getOrders(page).then(({ orders }) => {
 			// set item to display if its null
-			console.log('state', state)
 			// console.log('pagination.pages[page]', orders)
 
 			if (!state.selectedOrder && orders) {
@@ -102,9 +83,8 @@ function Dashboard (props: IProps & IReduxActions & IReduxState) {
 		})
 	}, [props.location.search])
 
-	function orderClick (item) {
-		console.log('item', item)
-		setState({ selectedOrder: pagination.pages[page][item] })
+	function orderClick (orderId: number) {
+		setState({ selectedOrder: pagination.pages[page][orderId] })
 	}
 
 	return (

@@ -130,7 +130,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 						...twitterDefaultMeta(this.twitterAddons)
 					]}
 				>
-					<link rel='canonical' href='http://mysite.com/product1'/>
+					<link rel='canonical' href={`${process.env.GATSBY_DB}/products/${wcProduct.slug}`}/>
 					<script type='application/ld+json'>{JSON.stringify(this.jsonld)}</script>
 				</SEO>
 				<ProductLayout product={wcProduct}/>

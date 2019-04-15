@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order Item Tests renders correctly 1`] = `
+<div
+  data-testid="orderItem"
+  onClick={[Function]}
+  style={
+    Object {
+      "marginBottom": 20,
+    }
+  }
+>
+  <div
+    className="sc-bdVaJa cudFOr"
+    data-testid="orderItem-wrapper"
+    selected={false}
+  >
+    <div
+      data-testid="orderItem-id"
+    >
+      order# 
+      667
+    </div>
+    <div
+      data-testid="orderItem-date"
+    >
+      date: 
+      02-12-22
+    </div>
+    <div
+      data-testid="orderItem-total"
+    >
+      total 
+      16
+    </div>
+  </div>
+</div>
+`;
