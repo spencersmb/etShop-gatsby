@@ -1,6 +1,7 @@
 // this is a handy function that I normally make available for all my tests
 import { ICartState } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
+import { IPaginateOrder, IPaginateState } from '@et/types/Pagination'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IUser } from '@et/types/User'
 import { IGuestFormData, IOrderDownload, IOrderDownloadItem, IReceipt, IRefund } from '@et/types/WC_Order'
@@ -745,4 +746,30 @@ export const testReceipt: IReceipt = {
 			}
 		]
 	}
+}
+
+export const testPaginationEmpty: IPaginateState = {
+	loading: false,
+	pages: {},
+	totalOrders: '0',
+	totalPages: 0
+}
+
+export const testPaginationFull: IPaginateState = {
+	loading: false,
+	pages: {
+		1: {
+			667: {
+				...testReceipt
+			},
+			668: {
+				...testReceipt,
+				id: 668,
+				total: '56.00',
+				date: '12-12-22'
+			}
+		}
+	},
+	totalOrders: '1',
+	totalPages: 1
 }

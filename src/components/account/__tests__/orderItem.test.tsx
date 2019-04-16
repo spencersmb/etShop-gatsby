@@ -1,13 +1,10 @@
 import OrderItem from '@components/account/orderItem'
-import { CartItem } from '@components/cart/cartItem'
-import { ProductKey, testProducts, testReceipt } from '@redux/reduxTestUtils'
-import { calcBulkDiscount, displayCurrency, getPrice } from '@utils/priceUtils'
+import { testReceipt } from '@redux/reduxTestUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {
 	render,
-	cleanup,
-	fireEvent
+	cleanup
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
 
@@ -69,32 +66,6 @@ describe('Order Item Tests', () => {
 		const calledWidth = props.id
 		expect(props.handleClick).toHaveBeenCalledTimes(1)
 		expect(props.handleClick).toHaveBeenCalledWith(calledWidth)
-
-	})
-
-	xit('Should call changeLicense action', () => {
-		const modalRender = render(<CartItem {...props}/>)
-		const select = modalRender.getByTestId('selectID')
-		fireEvent.change(select)
-
-		const calledWith = {
-			currentCartItem: props.cart.items[props.cartIndex], // item in cart
-			extended: false, // value from dropdown
-			cartItemIndex: props.cartIndex, // redundent?
-			products: testProducts, // all our products
-			bulkDiscount: true // is bulkdiscount enabled
-		}
-		expect(props.changeLicense).toHaveBeenCalledTimes(1)
-		expect(props.changeLicense).toHaveBeenCalledWith(calledWith)
-
-	})
-
-	xit('Should call removeItem action with correct item index', () => {
-		const modalRender = render(<CartItem {...props}/>)
-		const btn = modalRender.getByTestId('removeItemBtn')
-		btn.click()
-		expect(props.removeItem).toHaveBeenCalledTimes(1)
-		expect(props.removeItem).toHaveBeenCalledWith(ProductKey.WatercolorStd)
 	})
 
 })

@@ -1,3 +1,5 @@
+import { IReceipt } from '@et/types/WC_Order'
+
 export interface IPaginateState {
 	loading: boolean,
 	pages: IPaginateOrder,
@@ -7,9 +9,7 @@ export interface IPaginateState {
 
 export interface IPaginateOrder {
 	[id: string]: {
-		id: number
-		total: string
-		date: string
+		[id: string]: IReceipt
 	}
 }
 
