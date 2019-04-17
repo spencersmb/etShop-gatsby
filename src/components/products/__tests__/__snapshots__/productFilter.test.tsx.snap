@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`product Filter renders correctly 1`] = `
+<div>
+  Filter items
+  <ul>
+    <li
+      data-filtertype="textures"
+      data-testid="filterItems"
+      onClick={[Function]}
+    >
+      Textures
+    </li>
+    <li
+      data-filtertype="fonts"
+      data-testid="filterItems"
+      onClick={[Function]}
+    >
+      Fonts
+    </li>
+    <li
+      data-filtertype=""
+      data-testid="filterItems"
+      onClick={[Function]}
+    >
+      View all
+    </li>
+  </ul>
+</div>
+`;

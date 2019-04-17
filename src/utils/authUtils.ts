@@ -54,10 +54,9 @@ export function isUserValid (token: string) {
 	const today = new Date()
 	const exp = new Date(decodedUser.exp * 1000)
 	// console.log('return isUserValid', exp.getTime() > today.getTime())
-	console.log('return isUserValid reverse', exp.getTime() >= today.getTime())
-	console.log('today', today.getTime()) // Sunday, March 17, 2019 7:58:52.039 PM
-	console.log('exp', exp.getTime()) // Sunday, March 17, 2019 7:53:53 PM
-
+	// console.log('return isUserValid reverse', exp.getTime() >= today.getTime())
+	// console.log('today', today.getTime()) // Sunday, March 17, 2019 7:58:52.039 PM
+	// console.log('exp', exp.getTime()) // Sunday, March 17, 2019 7:53:53 PM
 	// console.log('todays date', today.getTime()) // Sunday, March 17, 2019 4:35:41.540 PM
 	// console.log('exp date', decodedUser.exp) // Sunday, March 17, 2019 4:36:08 PM
 

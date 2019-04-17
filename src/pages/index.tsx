@@ -1,4 +1,6 @@
+import ProductFilter from '@components/products/productFilter'
 import ProductsListLayout from '@components/products/productsListLayout'
+import { useSetFilterState } from '@utils/stateUtils'
 import React from 'react'
 import { Link } from 'gatsby'
 import Layout from '../components/layout'
@@ -17,30 +19,49 @@ const jsonld = {
 		['query-input']: 'required name=search_term_string'
 	}
 }
-const IndexPage = () => (
-	<Layout>
-		<SEO
-			title='home'
-			description={`description for home`}
-			keywords={[`gatsby`, `application`, `react`]}
-			meta={[
-				{
-					property: `og:type`,
-					content: `website`
-				}
-			]}
-		>
-			<link rel='canonical' href={process.env.GATSBY_DB}/>
-			<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
-		</SEO>
-		<h1>Hi people</h1>
-		<ProductsListLayout/>
-		<div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-			<Image/>
-		</div>
-		<Link to='/page-2/'>Go to page 2</Link>
-		<h3>Vars</h3>
-	</Layout>
-)
+
+const IndexPage = () => {
+	const [state, setFilterState] = useSetFilterState({
+		selectedFilter: ''
+	})
+
+	function handleFilterClick (filter: string) {
+		console.log('filter', filter)
+		if (filter === '') {
+			setFilterState({
+				selectedFilter: ''
+			})
+		} else {
+			setFilterState({
+				selectedFilter: filter
+			})
+		}
+	}
+
+	return (
+		<Layout>
+			<SEO
+				title='home'
+				description={`description for home`}
+				keywords={[`gatsby`, `application`, `react`]}
+				meta={[
+					{
+						property: `og:type`,
+						content: `website`
+					}
+				]}
+			>
+				<link rel='canonical' href={process.env.GATSBY_DB}/>
+				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
+			</SEO>
+			<ProductFilter handleClick={handleFilterClick}/>
+			<ProductsListLayout filter={state.selectedFilter}/>
+			<div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
+				<Image/>
+			</div>
+			<Link to='/page-2/'>Go to page 2</Link>
+		</Layout>
+	)
+}
 
 export default IndexPage

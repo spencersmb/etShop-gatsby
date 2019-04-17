@@ -16,7 +16,6 @@ beforeEach(() => {
 				edges: [
 					{
 						node: {
-
 							id: '367dd45d-e237-591c-9da7-c29d657da816',
 							name: 'Honeymoon',
 							slug: 'honeymoon',
@@ -28,7 +27,14 @@ beforeEach(() => {
 								extendedItem: {
 									slug: 'watercolor-texture-kit-vol'
 								}
-							}
+							},
+							categories: [
+								{
+									id: 2,
+									name: 'Fonts',
+									slug: 'fonts'
+								}
+							]
 						}
 					},
 					{
@@ -70,7 +76,37 @@ beforeEach(() => {
 								extendedItem: {
 									slug: 'watercolor-texture-kit-vol-1-ext'
 								}
-							}
+							},
+							categories: [
+								{
+									id: 2,
+									name: 'Textures',
+									slug: 'textures'
+								}
+							]
+						}
+					},
+					{
+						node: {
+							id: '367dd45d-e237-591c-9da7-c29d657da816',
+							name: 'Honeymoon',
+							slug: 'honeymoon',
+							date_created_gmt: '2018-10-10T14:47:44',
+							images: [],
+							license: {
+								hasExtendedLicense: true,
+								type: 'standard',
+								extendedItem: {
+									slug: 'watercolor-texture-kit-vol'
+								}
+							},
+							categories: [
+								{
+									id: 2,
+									name: 'Fonts',
+									slug: 'fonts'
+								}
+							]
 						}
 					}
 				]
@@ -85,14 +121,20 @@ describe('Product List Layout', () => {
 	it('renders correctly', () => {
 		const tree = renderer
 			.create(
-				<ProductsListLayout/>
+				<ProductsListLayout filter=''/>
 			)
 			.toJSON()
 		expect(tree).toMatchSnapshot()
 	})
 
 	it('Should render correct items', () => {
-		const modalRender = render(<ProductsListLayout/>)
+		const modalRender = render(<ProductsListLayout filter=''/>)
+		const list = modalRender.getByTestId('productList')
+		expect(list.children.length).toEqual(2)
+	})
+
+	it('Should render filter correct items', () => {
+		const modalRender = render(<ProductsListLayout filter='fonts'/>)
 		const list = modalRender.getByTestId('productList')
 		expect(list.children.length).toEqual(1)
 	})

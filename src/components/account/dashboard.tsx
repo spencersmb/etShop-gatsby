@@ -84,21 +84,10 @@ export function Dashboard (props: IProps & IReduxActions & IReduxState) {
 		getMyOrders().catch((e) => {
 			console.error(e)
 		})
-		// props.getOrders(page).then(({ orders }) => {
-		// 	// set item to display if its null
-		// 	// console.log('pagination.pages[page]', orders)
-		//
-		// 	if (!state.selectedOrder && orders) {
-		// 		const itemsOnPage = Object.keys(orders).reverse()
-		// 		// console.log('selectedPage[itemsOnPage[0]]', itemsOnPage)
-		//
-		// 		setState({ selectedOrder: orders[itemsOnPage[0]] })
-		// 	}
-		// })
+
 	}, [props.location.search])
 
 	function orderClick (orderId: number) {
-		console.log('click')
 		if (state.selectedOrder && orderId !== state.selectedOrder.id) {
 			setState({ selectedOrder: pagination.pages[page][orderId] })
 		}

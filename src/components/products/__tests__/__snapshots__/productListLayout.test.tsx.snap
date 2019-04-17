@@ -12,6 +12,13 @@ exports[`Product List Layout renders correctly 1`] = `
         Watercolor texture kit Vol. 1
       </a>
     </li>
+    <li>
+      <a
+        href="/products/honeymoon"
+      >
+        Honeymoon
+      </a>
+    </li>
   </ul>
 </div>
 `;
