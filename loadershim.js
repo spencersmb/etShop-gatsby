@@ -15,3 +15,4 @@ global.___loader = {
 }
 
 jest.spyOn(global.console, "warn").mockImplementation(() => jest.fn())
+

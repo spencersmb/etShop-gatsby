@@ -4,7 +4,7 @@ import {
 	cleanup
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
-import { IUserState } from '../../../types/User'
+import { IUserState } from '@et/types/User'
 import { UserHoc } from '../userHoc'
 
 afterEach(cleanup)

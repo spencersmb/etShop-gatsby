@@ -13,8 +13,7 @@ interface IProps {
 
 const OrdersList = (props: IProps) => {
 	const { pagination, page, handleClick, selectedOrder } = props
-
-	console.log('Order list render page defined?', props)
+	// console.log('Order list render page defined?', props)
 
 	return (
 		<div>
@@ -27,7 +26,6 @@ const OrdersList = (props: IProps) => {
 								key={pageItem.id}
 								itemIndex={index}
 								selectedOrder={selectedOrder}
-								// isOpen={pageItem.id === state.selectedOrder}
 								handleClick={handleClick}
 								{...pageItem}
 							/>

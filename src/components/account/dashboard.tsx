@@ -9,10 +9,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
 
 interface IProps {
-	orders: any
-	path: string,
-	uri: string,
-	navigate: any,
+	// orders: any
+	// path: string,
+	// uri: string,
+	// navigate: any,
 	location: {
 		search: string
 	}
@@ -61,30 +61,47 @@ function getCurrentPage (path: string) {
 	return 1
 }
 
-function Dashboard (props: IProps & IReduxActions & IReduxState) {
+export function Dashboard (props: IProps & IReduxActions & IReduxState) {
 	const { pagination } = props
 	const page = getCurrentPage(props.location.search)
 	const [state, setState] = useSetState({ selectedOrder: null })
 
-	console.log('dashboard render', state)
+	// console.log('dashboard render', state)
 
 	useEffect(() => {
-		console.log('page to fetch', page)
-		props.getOrders(page).then(({ orders }) => {
-			// set item to display if its null
-			// console.log('pagination.pages[page]', orders)
+		// console.log('page to fetch', page)
+		const getMyOrders = async () => {
+			const { orders } = await props.getOrders(page)
 
+			// set item to be displayed if no order is selected
 			if (!state.selectedOrder && orders) {
 				const itemsOnPage = Object.keys(orders).reverse()
-				// console.log('selectedPage[itemsOnPage[0]]', itemsOnPage)
-
+				// console.log('items on page', itemsOnPage)
 				setState({ selectedOrder: orders[itemsOnPage[0]] })
 			}
+		}
+
+		getMyOrders().catch((e) => {
+			console.error(e)
 		})
+		// props.getOrders(page).then(({ orders }) => {
+		// 	// set item to display if its null
+		// 	// console.log('pagination.pages[page]', orders)
+		//
+		// 	if (!state.selectedOrder && orders) {
+		// 		const itemsOnPage = Object.keys(orders).reverse()
+		// 		// console.log('selectedPage[itemsOnPage[0]]', itemsOnPage)
+		//
+		// 		setState({ selectedOrder: orders[itemsOnPage[0]] })
+		// 	}
+		// })
 	}, [props.location.search])
 
 	function orderClick (orderId: number) {
-		setState({ selectedOrder: pagination.pages[page][orderId] })
+		console.log('click')
+		if (state.selectedOrder && orderId !== state.selectedOrder.id) {
+			setState({ selectedOrder: pagination.pages[page][orderId] })
+		}
 	}
 
 	return (
