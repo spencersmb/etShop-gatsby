@@ -6,6 +6,7 @@ import { Link } from 'gatsby'
 import Layout from '../components/layout'
 import Image from '../components/image'
 import SEO from '../components/seo'
+import { CssGrid12 } from '@styles/global/cssGrid'
 
 const jsonld = {
 	['@context']: 'https://schema.org',
@@ -54,12 +55,13 @@ const IndexPage = () => {
 				<link rel='canonical' href={process.env.GATSBY_DB}/>
 				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
 			</SEO>
-			<ProductFilter handleClick={handleFilterClick}/>
-			<ProductsListLayout filter={state.selectedFilter}/>
-			<div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-				<Image/>
-			</div>
-			<Link to='/page-2/'>Go to page 2</Link>
+			<CssGrid12>
+				<ProductFilter handleClick={handleFilterClick}/>
+				<ProductsListLayout filter={state.selectedFilter}/>
+				<div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
+					<Image/>
+				</div>
+			</CssGrid12>
 		</Layout>
 	)
 }

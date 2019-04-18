@@ -33,11 +33,7 @@ const Layout = ({ children }: IlayoutProps) => {
 					<MyShoppingCart key='myCart' defaultOpenState={false}/>
 					<div id='app' style={{ position: 'relative', width: '100%' }}>
 						<Header siteTitle={data.site.siteMetadata.title}/>
-						<div style={{
-							margin: `auto 0`,
-							maxWidth: 960,
-							padding: `200px 1.0875rem 1.45rem`
-						}}>
+						<div>
 							<main>{children}</main>
 							<footer>
 								© {new Date().getFullYear()}, Built with

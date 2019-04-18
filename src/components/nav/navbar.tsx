@@ -5,7 +5,10 @@ import { IUser } from '@et/types/User'
 import { ILogoutAction, logout as logoutAction } from '@redux/actions/authActions'
 import { cartToggle } from '@redux/actions/cartActions'
 import { clearPagination } from '@redux/actions/paginationActions'
-import React from 'react'
+import { device } from '@styles/global/breakpoints'
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
+import React, { useState } from 'react'
 import { Link, navigate } from 'gatsby'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -21,12 +24,13 @@ interface IPropsState {
 interface IPropsActions {
 	showModal: IShowModalAction,
 	logout: ILogoutAction,
-	clearPagination: () => void,
+	clearPaginationAction: () => void,
 	cartToggle: () => void
 }
 
 function Navbar (props: IPropsActions & IPropsState) {
-	const { user, logout, clearPagination } = props
+	const { user, logout, clearPaginationAction } = props
+	const [isOpen, setIsOpen] = useState(false)
 
 	function openSignInModal (name: string) {
 		return () => [
@@ -78,37 +82,148 @@ function Navbar (props: IPropsActions & IPropsState) {
 		}, 100)
 	}
 
-	return (
-		<div data-testid='navbar'>
-			<UlStyled>
-				<li>Home</li>
+	function navToggle () {
+		setIsOpen(!isOpen)
+	}
 
-				{!user &&
-        <>
-          <li onClick={openSignInModal('signin')}>Sign In</li>
-          <li onClick={openSignInModal('signup')}>Sign Up</li>
-        </>
-				}
-				{user &&
-        <>
-          <li><Link to='/account'>your profile</Link></li>
-          <li onClick={signOut}>Sign Out</li>
-        </>
-				}
-				<li onClick={props.cartToggle}>Cart ({props.cart.totalItems})</li>
-				<li onClick={receipt}>Receipt test</li>
-			</UlStyled>
-		</div>
+	console.log('isOpen', isOpen)
+
+	return (
+		<Nav data-testid='navbar'>
+			<Logo>
+				<LogoContainer>
+					<Link
+						to='/'>
+						{renderSvg(svgs.ETLogo)}
+					</Link>
+				</LogoContainer>
+			</Logo>
+			<Hamburger onClick={navToggle}>
+				Button
+			</Hamburger>
+			<NavInner isOpen={isOpen}>
+				<LogoDesktop>
+					<LogoContainer>
+						<Link
+							to='/'>
+							{renderSvg(svgs.ETLogo)}
+						</Link>
+					</LogoContainer>
+				</LogoDesktop>
+				<NavCenter>
+					<li>Products</li>
+					<li>Blog</li>
+					<li>Support</li>
+					{/*<li onClick={receipt}>Receipt test</li>*/}
+				</NavCenter>
+				<NavRight>
+					{!user &&
+          <>
+            <li onClick={openSignInModal('signin')}>Sign In</li>
+            <li onClick={openSignInModal('signup')}>Sign Up</li>
+          </>
+					}
+					{user &&
+          <>
+            <li><Link to='/account'>your profile</Link></li>
+            <li onClick={signOut}>Sign Out</li>
+          </>
+					}
+					<li onClick={props.cartToggle}>Cart ({props.cart.totalItems})</li>
+				</NavRight>
+			</NavInner>
+		</Nav>
 	)
 }
 
-const UlStyled = styled.ul`
+const Hamburger = styled.div`
+	display: block;
+	@media ${device.tablet} {
+		display: none;
+	}
+`
+const Nav = styled.nav`
+	background: green;
+	//height: 100%;
+	//height: 100vh;
+	height: 55px;
+	width: 100%;
+	//flex-direction: column;
+	
+	@media ${device.tablet} {
+		position: relative;
+		height: auto;
+		flex-direction: row;
+		display: flex;
+	}
+`
+
+const NavInner = styled.div`
+	position: absolute;
+	top: ${props => props.isOpen ? 70 : 0}px;
+	left: 0;
+	width: 100%;
+	display: ${props => props.isOpen ? 'flex' : 'none'};
+	flex-direction: column;
+	
+	@media ${device.tablet} {
+		position: relative;
+		top: 0;
+		display: flex;
+		flex-direction: row;
+		flex: 1;
+	}
+	
+`
+
+const Logo = styled.div`
+	flex: 0 33.3333%;
+	@media ${device.tablet}{
+		display: none;
+	}
+`
+const LogoDesktop = styled.div`
+	flex: 0;
+	display: none;
+	svg{
+		width: 100%;
+	}
+
+	@media ${device.tablet}{
+		flex: 1;
+		display: block;
+	}
+`
+const LogoContainer = styled.div`
+		max-width: 140px;
+	@media ${device.tablet}{
+		max-width: 234px;
+	}
+`
+const NavCenter = styled.ul`
+	flex: 2;
 	display: flex;
 	flex-direction: row;
 	margin: 0;
+	background: olivedrab;
+	padding: 0;
 	li{
 		list-style: none;
 		margin: 0 10px;
+	}
+	
+	@media ${device.tablet}{
+		align-items: center;
+    justify-content: center;
+	}
+	
+`
+
+const NavRight = styled.div`
+	flex: 1;
+	background: red;
+	li{
+		list-style: none;
 	}
 `
 const mapStateToProps = (state: IState): { user: IUser | null, cart: ICartState } => {
@@ -123,7 +238,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 		showModal: bindActionCreators(showModal, dispatch),
 		logout: bindActionCreators(logoutAction, dispatch),
 		cartToggle: bindActionCreators(cartToggle, dispatch),
-		clearPagination: bindActionCreators(clearPagination, dispatch)
+		clearPaginationAction: bindActionCreators(clearPagination, dispatch)
 	}
 }
 // export default Navbars

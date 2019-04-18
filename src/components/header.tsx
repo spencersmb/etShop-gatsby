@@ -1,3 +1,5 @@
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import { Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
@@ -8,47 +10,31 @@ interface Iheader {
 }
 
 const Header = ({ siteTitle = `` }: Iheader) => (
-	<HeaderStyled>
-		<div
-			style={{
-				margin: `0 auto`,
-				maxWidth: 960,
-				padding: `1.45rem 1.0875rem`
-			}}
-		>
-			<h1 style={{ margin: 0 }}>
-				<Link
-					to='/'
-					style={{
-						color: `white`,
-						textDecoration: `none`
-					}}
-				>
-					{siteTitle}
-				</Link>
-			</h1>
-		</div>
-		<div
-			style={{
-				margin: `0 auto`,
-				maxWidth: 960,
-				padding: `1.45rem 1.0875rem`,
-				color: `#fff`,
-				listStyle: `none`
-			}}
-		>
+	<HeaderWrapper>
+		<HeaderStyled>
 			<Navbar/>
-		</div>
-	</HeaderStyled>
+		</HeaderStyled>
+	</HeaderWrapper>
 )
 
 export default Header
 
-const HeaderStyled = styled.div`
+const HeaderWrapper = styled.header`
   background: rebeccapurple;
-  margin-bottom: 1.45rem;
-  position: fixed;
-  top: 0;
+	position: fixed;
+	top: 0;
   left: 0;
   width: 100%;
+	z-index: 100;
+`
+const HeaderStyled = styled.div`
+	background: #0074D9;
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+  margin: 0 auto;
+`
+
+const NavContainer = styled.div`
+	flex: 1;
 `

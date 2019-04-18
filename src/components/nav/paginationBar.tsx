@@ -9,7 +9,7 @@ interface IProps {
 const PaginationBar = (props: IProps) => {
 	const { currentPage, total } = props
 	return (
-		<div data-testid="paginationBar">
+		<div data-testid='paginationBar'>
 			<div>
 				{currentPage !== 1 && <Link
           to={`/account/?page=${currentPage - 1}`}>Prev</Link>}

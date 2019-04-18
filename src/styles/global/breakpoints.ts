@@ -1,5 +1,5 @@
 /* tslint:disable */
-import {css, ThemedCssFunction} from 'styled-components'
+import { css, ThemedCssFunction } from 'styled-components'
 
 interface IMedia {
 	desktop: number,
@@ -25,10 +25,10 @@ interface IMediaKeys {
 	xLarge: ThemedCssFunction<any>
 }
 
-export const media: IMediaKeys = Object.keys(sizes).reduce((finalMedia: any, size: string) => {
+export const mediaOld: IMediaKeys = Object.keys(sizes).reduce((finalMedia: any, size: string) => {
 	return {
 		...finalMedia,
-		[size]: function (...args: TemplateStringsArray[]) {
+		[size]: function(...args: TemplateStringsArray[]) {
 			return css`
         @media(min-width: ${sizes[size]}px) {
           ${css(Object.assign(args))}
@@ -38,10 +38,22 @@ export const media: IMediaKeys = Object.keys(sizes).reduce((finalMedia: any, siz
 	}
 }, {})
 
+export const media: IMediaKeys = Object.keys(sizes).reduce((acc: any, label: string) => {
+	acc[label] = (...args: any) => {
+		return css`
+			@media (min-width: ${sizes[label]}px) {
+				// @ts-ignore
+				${css(...args)}
+			}
+		`
+	}
+	return acc
+}, {})
+
 export const maxMedia: IMediaKeys = Object.keys(sizes).reduce((finalMedia: any, size: string) => {
 	return {
 		...finalMedia,
-		[size]: function (...args: TemplateStringsArray[]) {
+		[size]: function(...args: TemplateStringsArray[]) {
 			return css`
         @media(max-width: ${sizes[size]}px) {
           ${css(Object.assign(args))}
@@ -50,3 +62,34 @@ export const maxMedia: IMediaKeys = Object.keys(sizes).reduce((finalMedia: any, 
 		}
 	}
 }, {})
+
+const size: {[id: string] : string} = {
+	mobileS: '320px',
+	mobileM: '375px',
+	mobileL: '425px',
+	tablet: '768px',
+	laptop: '1024px',
+	laptopL: '1440px',
+	desktop: '2560px'
+}
+
+interface IDeviceKeys {
+	mobileS: string,
+	mobileM: string,
+	mobileL: string,
+	tablet: string,
+	laptop: string,
+	laptopL: string,
+	desktop: string,
+	desktopL: string
+}
+export const device: IDeviceKeys = {
+	mobileS: `(min-width: ${size.mobileS})`,
+	mobileM: `(min-width: ${size.mobileM})`,
+	mobileL: `(min-width: ${size.mobileL})`,
+	tablet: `(min-width: ${size.tablet})`,
+	laptop: `(min-width: ${size.laptop})`,
+	laptopL: `(min-width: ${size.laptopL})`,
+	desktop: `(min-width: ${size.desktop})`,
+	desktopL: `(min-width: ${size.desktop})`
+}
