@@ -1,6 +1,6 @@
 /* tslint:disable */
 import { device, media } from '@styles/global/breakpoints'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const gutterMobile = 20
 const colMobile = (450 - (gutterMobile)) / 2
@@ -18,21 +18,6 @@ const mobileGrid = `
 		grid-gap: ${gutterMobile}px;
 		padding: 0;
 `
-const tabletGrid = `
-		grid-template-columns:
-			minmax(0, 1fr)
-			repeat(12, minmax(30px, 72.5px))
-			minmax(0, 1fr)
-    ;
-      grid-gap: 30px;
-`
-console.log('col', col)
-// const size = {
-// 	small: 400,
-// 	med: 960,
-// 	large: 1140
-// }
-
 export const CssGrid12 = styled.div`
 	padding: 0 20px;
 	@supports(display: grid){
@@ -45,5 +30,18 @@ export const CssGrid12 = styled.div`
 				;
 				grid-gap: ${gutter}px;
 			}
+	}
+`
+export const GridBoxed = styled.div`
+	display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+`
+
+export const FlexRow = styled.div`
+	display: flex;
+	
+	@media ${device.laptop} {
+	    flex-direction: row;
 	}
 `

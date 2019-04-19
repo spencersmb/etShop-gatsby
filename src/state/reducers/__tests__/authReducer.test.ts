@@ -13,7 +13,8 @@ describe('Auth Reducer', () => {
 			user_nicename: 'test@gmail.com',
 			user_display_name: 'test@gmail.com',
 			first_name: 'Ted',
-			last_name: 'Bundy'
+			last_name: 'Bundy',
+			gravatar: 'asdadadsads'
 		}
 		const reducer = userReducer(initialState.user, {
 			type: AuthActionTypes.LOGIN_USER,
@@ -26,7 +27,8 @@ describe('Auth Reducer', () => {
 			token: '1231313213',
 			email: 'test@gmail.com',
 			firstName: 'Ted',
-			lastName: 'Bundy'
+			lastName: 'Bundy',
+			gravatar: 'asdadadsads'
 		}
 		expect(reducer).toEqual(result)
 	})
@@ -36,7 +38,7 @@ describe('Auth Reducer', () => {
 		const reducer = userReducer(initialState.user, {
 			type: AuthActionTypes.LOGOUT
 		})
-		
+
 		expect(reducer).toEqual(null)
 	})
 

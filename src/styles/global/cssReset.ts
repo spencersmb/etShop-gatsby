@@ -1,4 +1,4 @@
-import {css} from 'styled-components'
+import { css } from 'styled-components'
 
 export const version = '1.0.0'
 
@@ -137,7 +137,7 @@ a {
 
 a:hover {
   color: #0056b3;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:not([href]):not([tabindex]) {

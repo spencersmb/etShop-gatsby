@@ -1,7 +1,7 @@
 import AuthApi from '@api/authApi'
 import { Actions } from '@et/types/Actions'
 import { AuthActionTypes } from '@et/types/Enums'
-import { IAuthResponse, IUser, IUserCreate } from '@et/types/User'
+import { IAuthResponse, ICreateAuthResponse, IUser, IUserCreate } from '@et/types/User'
 import { loadCouponSuccess } from '@redux/actions/couponActions'
 import { statusCheck } from '@utils/apiUtils'
 import { removeUserLocalStorage, saveUserLocalStorage } from '@utils/authUtils'
@@ -51,7 +51,7 @@ export const createUser: any = (user: IUserCreate) => async (dispatch: Dispatch<
 
 	await statusCheck(response, dispatch)
 
-	const body: IAuthResponse = await response.json()
+	const body: ICreateAuthResponse = await response.json()
 
 	dispatch(loginUserSuccess(body))
 	dispatch(loadCouponSuccess(body.coupon))

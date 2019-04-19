@@ -1,37 +1,108 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Navbar Layout renders correctly 1`] = `
-<div
+<nav
+  className="sc-cSHVUG GlAJn"
   data-testid="navbar"
 >
-  <ul
-    className="sc-VigVT fJQgYr"
+  <div
+    className="sc-chPdSV foqicM"
+    data-testid="nav-logo"
   >
-    <li>
-      Home
-    </li>
-    <li
+    <div
+      className="sc-kgoBCf Sslkk"
+    >
+      <a
+        href="/"
+      >
+        <test-file-stub />
+      </a>
+    </div>
+  </div>
+  <div
+    className="sc-kAzzGY jgrfly"
+    data-testid="hamburger"
+    onClick={[Function]}
+  >
+    Button
+  </div>
+  <div
+    className="sc-kGXeez gjxpoK"
+  >
+    <div
+      className="sc-kpOJdX gaqBmP"
+      data-testid="nav-close"
       onClick={[Function]}
     >
-      Sign In
-    </li>
-    <li
-      onClick={[Function]}
+      Close
+    </div>
+    <ul
+      className="sc-dxgOiQ Zpblb"
+      data-testid="nav-center"
     >
-      Sign Up
-    </li>
-    <li
-      onClick={[MockFunction]}
+      <li>
+        <a
+          href="/"
+        >
+          Products
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://every-tuesday.com"
+          target="_blank"
+        >
+          Blog
+        </a>
+      </li>
+      <li>
+        <a
+          href="/support"
+        >
+          Support
+        </a>
+      </li>
+    </ul>
+    <div
+      className="sc-ckVGcZ iHzeIt"
     >
-      Cart (
-      0
-      )
-    </li>
-    <li
-      onClick={[Function]}
-    >
-      Receipt test
-    </li>
-  </ul>
-</div>
+      <div
+        className="sc-jzJRlG sc-jKJlTe iQvVzX"
+      >
+        <div
+          className="sc-VigVT sc-hMqMXs iUIxnH"
+          color="transparent"
+          onClick={[Function]}
+        >
+          Sign In
+        </div>
+        <div
+          className="sc-VigVT sc-eNQAEJ cwzEHe"
+          color="#A182E9"
+          onClick={[Function]}
+        >
+          Join Now
+        </div>
+      </div>
+      <div
+        className="sc-jzJRlG sc-iAyFgw dGbPKB"
+        onClick={[MockFunction]}
+      >
+        <div
+          className="sc-hSdWYo iScogX"
+        >
+          <test-file-stub />
+        </div>
+        <div
+          className="sc-eHgmQL dxnjWZ"
+          data-testid="cart-count"
+        >
+          <span>
+            
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 `;

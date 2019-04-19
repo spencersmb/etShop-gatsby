@@ -710,7 +710,8 @@ export const testUser: IUser = {
 	email: 'spencer@gmail.com',
 	firstName: 'spencer',
 	lastName: 'bigum',
-	token: '123456789'
+	token: '123456789',
+	gravatar: '1123131313213'
 }
 
 export const testGuest: IGuestFormData = {

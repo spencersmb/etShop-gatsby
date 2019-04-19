@@ -5,7 +5,7 @@ import { IUser } from '@et/types/User'
 import { ILogoutAction, logout as logoutAction } from '@redux/actions/authActions'
 import { cartToggle } from '@redux/actions/cartActions'
 import { clearPagination } from '@redux/actions/paginationActions'
-import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React, { useState } from 'react'
@@ -13,8 +13,9 @@ import { Link, navigate } from 'gatsby'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
-import styled from 'styled-components'
 import Login from '@components/modals/login'
+import { Nav, Hamburger, Logo, LogoContainer, NavLinks, CloseButton, NavCenter, NavRight, LoginStatus, JoinButton, SignInButton, MyAccount, SignOutBtn, CartWrapper, CartSvg, CartCount, } from '@styles/modules/nav'
+
 
 interface IPropsState {
 	user: IUser | null,
@@ -76,7 +77,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 	function signOut () {
 		navigate('/')
-		clearPagination()
+		clearPaginationAction()
 		setTimeout(() => {
 			logout()
 		}, 100)
@@ -86,11 +87,9 @@ function Navbar (props: IPropsActions & IPropsState) {
 		setIsOpen(!isOpen)
 	}
 
-	console.log('isOpen', isOpen)
-
 	return (
 		<Nav data-testid='navbar'>
-			<Logo>
+			<Logo data-testid='nav-logo'>
 				<LogoContainer>
 					<Link
 						to='/'>
@@ -98,134 +97,82 @@ function Navbar (props: IPropsActions & IPropsState) {
 					</Link>
 				</LogoContainer>
 			</Logo>
-			<Hamburger onClick={navToggle}>
+			<Hamburger
+				data-testid='hamburger'
+				onClick={navToggle}>
 				Button
 			</Hamburger>
-			<NavInner isOpen={isOpen}>
-				<LogoDesktop>
-					<LogoContainer>
+
+			<NavLinks isOpen={isOpen}>
+				<CloseButton
+					data-testid='nav-close'
+					onClick={navToggle}>Close</CloseButton>
+				<NavCenter data-testid='nav-center'>
+					<li>
 						<Link
 							to='/'>
-							{renderSvg(svgs.ETLogo)}
+							Products
 						</Link>
-					</LogoContainer>
-				</LogoDesktop>
-				<NavCenter>
-					<li>Products</li>
-					<li>Blog</li>
-					<li>Support</li>
+					</li>
+					<li>
+						<a href='https://every-tuesday.com' target='_blank'>Blog</a>
+					</li>
+					<li>
+						<Link
+							to='/support'>
+							Support
+						</Link>
+					</li>
 					{/*<li onClick={receipt}>Receipt test</li>*/}
 				</NavCenter>
 				<NavRight>
 					{!user &&
-          <>
-            <li onClick={openSignInModal('signin')}>Sign In</li>
-            <li onClick={openSignInModal('signup')}>Sign Up</li>
-          </>
+          <LoginStatus>
+            <SignInButton
+              color='transparent'
+              textColor={colors.purple.i500}
+              hoverColor='transparent'
+              hoverTextColor={colors.purple.i600}
+              onClick={openSignInModal('signin')}>Sign In</SignInButton>
+            <JoinButton
+              color={colors.purple.i500}
+              hoverColor={colors.purple.i600}
+              onClick={openSignInModal('signup')}>Join Now</JoinButton>
+          </LoginStatus>
 					}
 					{user &&
-          <>
-            <li><Link to='/account'>your profile</Link></li>
-            <li onClick={signOut}>Sign Out</li>
-          </>
+          <LoginStatus>
+            <MyAccount>
+              <Link to='/account'>
+                <img src={`https://www.gravatar.com/avatar/${user.gravatar}`} alt='user gravatar image'/>
+                <span>
+									My account
+								</span>
+              </Link>
+            </MyAccount>
+            <SignOutBtn
+              color='transparent'
+              textColor={colors.primary.pink}
+              hoverColor='transparent'
+              hoverTextColor={colors.primary.pink}
+              onClick={signOut}>Sign Out</SignOutBtn>
+          </LoginStatus>
 					}
-					<li onClick={props.cartToggle}>Cart ({props.cart.totalItems})</li>
+					<CartWrapper onClick={props.cartToggle}>
+						<CartSvg>{renderSvg(svgs.Cart)}</CartSvg>
+						<CartCount data-testid='cart-count'>
+							<span>
+								{props.cart.totalItems > 0 ? props.cart.totalItems : ''}
+							</span>
+						</CartCount>
+					</CartWrapper>
 				</NavRight>
-			</NavInner>
+			</NavLinks>
 		</Nav>
 	)
 }
 
-const Hamburger = styled.div`
-	display: block;
-	@media ${device.tablet} {
-		display: none;
-	}
-`
-const Nav = styled.nav`
-	background: green;
-	//height: 100%;
-	//height: 100vh;
-	height: 55px;
-	width: 100%;
-	//flex-direction: column;
-	
-	@media ${device.tablet} {
-		position: relative;
-		height: auto;
-		flex-direction: row;
-		display: flex;
-	}
-`
 
-const NavInner = styled.div`
-	position: absolute;
-	top: ${props => props.isOpen ? 70 : 0}px;
-	left: 0;
-	width: 100%;
-	display: ${props => props.isOpen ? 'flex' : 'none'};
-	flex-direction: column;
-	
-	@media ${device.tablet} {
-		position: relative;
-		top: 0;
-		display: flex;
-		flex-direction: row;
-		flex: 1;
-	}
-	
-`
-
-const Logo = styled.div`
-	flex: 0 33.3333%;
-	@media ${device.tablet}{
-		display: none;
-	}
-`
-const LogoDesktop = styled.div`
-	flex: 0;
-	display: none;
-	svg{
-		width: 100%;
-	}
-
-	@media ${device.tablet}{
-		flex: 1;
-		display: block;
-	}
-`
-const LogoContainer = styled.div`
-		max-width: 140px;
-	@media ${device.tablet}{
-		max-width: 234px;
-	}
-`
-const NavCenter = styled.ul`
-	flex: 2;
-	display: flex;
-	flex-direction: row;
-	margin: 0;
-	background: olivedrab;
-	padding: 0;
-	li{
-		list-style: none;
-		margin: 0 10px;
-	}
-	
-	@media ${device.tablet}{
-		align-items: center;
-    justify-content: center;
-	}
-	
-`
-
-const NavRight = styled.div`
-	flex: 1;
-	background: red;
-	li{
-		list-style: none;
-	}
-`
 const mapStateToProps = (state: IState): { user: IUser | null, cart: ICartState } => {
 	return {
 		cart: state.cart,

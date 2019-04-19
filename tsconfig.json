@@ -56,7 +56,9 @@
   },
   "exclude": [
     "build",
+    ".cache",
     "dist",
+    "coverage",
     "scripts",
     "node_modules",
     "public",

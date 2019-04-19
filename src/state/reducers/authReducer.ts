@@ -11,7 +11,8 @@ export const userReducer: Reducer<IUserState> = (state: IUserState = initialStat
 				email: action.payload.user_email,
 				firstName: action.payload.first_name,
 				lastName: action.payload.last_name,
-				token: action.payload.token,
+				gravatar: action.payload.gravatar,
+				token: action.payload.token
 			}
 		case AuthActionTypes.LOGOUT:
 			return null

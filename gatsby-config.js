@@ -66,6 +66,22 @@ module.exports = {
       }
     },
     {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Fira Sans`,
+            subsets: [`latin`],
+            variants: [`400`, `500`, `600`, `700`]
+          }
+        ],
+        formats: [
+          "woff",
+          "woff2"
+        ]
+      }
+    },
+    {
       resolve: "gatsby-plugin-react-svg",
       options: {
         rule: {

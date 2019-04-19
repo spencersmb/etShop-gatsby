@@ -8,11 +8,9 @@ export default createGlobalStyle`
 
   ${cssReset}
   
-  @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-  
   body{
-    font-family: 'Roboto', sans-serif;
-    letter-spacing: .8px;
+    font-family: 'Fira Sans', sans-serif;
+    //letter-spacing: .8px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     color: ${colors.text};
@@ -25,6 +23,14 @@ export default createGlobalStyle`
   
   h1{
       color: ${colors.text};
+  }
+  
+  a{
+  	transition: color .3s;
+  	will-change: color;
+  	&:hover{
+  		color: ${colors.primary.pink}
+  	}
   }
   
   #___gatsby{

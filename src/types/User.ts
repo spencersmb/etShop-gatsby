@@ -7,6 +7,17 @@ export interface IAuthResponse {
   user_display_name: string,
   first_name: string,
   last_name: string,
+  gravatar: string
+}
+
+export interface ICreateAuthResponse {
+  token: string,
+  user_email: string,
+  user_nicename: string,
+  user_display_name: string,
+  first_name: string,
+  last_name: string,
+  gravatar: string,
   coupon: ICouponRaw
 }
 
@@ -28,14 +39,15 @@ export interface IUser {
   email: string,
   firstName: string,
   lastName: string,
+  gravatar: string,
   token: string,
 }
 
 export interface IJWTDecoded {
   iss: string, // server
-  iat: 1550335086, // issued at
-  nbf: 1550335086, // not valid before
-  exp: 1550939886, // Expires
+  iat: number, // issued at
+  nbf: number, // not valid before
+  exp: number, // Expires
   data: {
     user: {
       id: string

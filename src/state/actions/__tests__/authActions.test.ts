@@ -24,7 +24,8 @@ describe('Auth Action tests', () => {
 			user_nicename: 'everytues-buyergmail-com',
 			user_display_name: 'everytues-buyer@gmail.com',
 			first_name: 'Spencer',
-			last_name: 'Bigum'
+			last_name: 'Bigum',
+			gravatar: 'adsadadad'
 		}
 
 		const payload = {
