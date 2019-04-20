@@ -14,8 +14,24 @@ import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import Login from '@components/modals/login'
-import { Nav, Hamburger, Logo, LogoContainer, NavLinks, CloseButton, NavCenter, NavRight, LoginStatus, JoinButton, SignInButton, MyAccount, SignOutBtn, CartWrapper, CartSvg, CartCount, } from '@styles/modules/nav'
-
+import {
+	Nav,
+	Hamburger,
+	Logo,
+	LogoContainer,
+	NavLinks,
+	CloseButton,
+	NavCenter,
+	NavRight,
+	LoginStatus,
+	JoinButton,
+	SignInButton,
+	MyAccount,
+	SignOutBtn,
+	CartWrapper,
+	CartSvg,
+	CartCount
+} from '@styles/modules/nav'
 
 interface IPropsState {
 	user: IUser | null,
@@ -115,7 +131,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 						</Link>
 					</li>
 					<li>
-						<a href='https://every-tuesday.com' target='_blank'>Blog</a>
+						<a href='https://every-tuesday.com' rel='noreferrer' target='_blank'>Blog</a>
 					</li>
 					<li>
 						<Link
@@ -171,7 +187,6 @@ function Navbar (props: IPropsActions & IPropsState) {
 		</Nav>
 	)
 }
-
 
 const mapStateToProps = (state: IState): { user: IUser | null, cart: ICartState } => {
 	return {

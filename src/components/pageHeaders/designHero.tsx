@@ -105,7 +105,11 @@ const HeroImage = () => (
         }
       }
     `}
-		render={data => <Img fluid={data.desktopHero.childImageSharp.fluid}/>}
+		render={data => <Img
+			alt='Every-Tuesday Digital Shop'
+			fluid={data.desktopHero.childImageSharp.fluid}
+			fadeIn={false}
+		/>}
 	/>
 )
 export default DesignHero
