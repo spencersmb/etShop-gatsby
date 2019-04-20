@@ -13,14 +13,13 @@ import { loadUser, removeUserLocalStorage } from './src/utils/authUtils'
 export default ({ element }: { element: ReactNode }) => {
 	const store = createStore()
 	store.dispatch(loadProducts())
-	console.log('new store')
 
 	// check localstorage for user
 	// decode jwt and check if expired - if expired throw error and logout
 	// if no user found do nothing
 	loadUser()
 		.then((user) => {
-			console.log('user', user)
+			// console.log('user', user)
 
 			if (user) {
 				store.dispatch(loginUserSuccess(user))
