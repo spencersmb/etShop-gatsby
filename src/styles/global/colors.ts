@@ -9,7 +9,8 @@ export const colors = {
 	text: '#95989A',
 	grey: {
 		i800: `#3F4B5B`,
-		i600: `#A3B2C2`
+		i600: `#A3B2C2`,
+		i200: `#F7F8FC`
 	},
 	purple: {
 		i500: `#A182E9`,

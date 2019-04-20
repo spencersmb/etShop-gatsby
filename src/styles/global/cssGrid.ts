@@ -18,7 +18,7 @@ const mobileGrid = `
 		grid-gap: ${gutterMobile}px;
 		padding: 0;
 `
-export const CssGrid12 = styled.div`
+export const GridFluid = styled.div`
 	padding: 0 20px;
 	@supports(display: grid){
 			${mobileGrid}
@@ -32,7 +32,7 @@ export const CssGrid12 = styled.div`
 			}
 	}
 `
-export const GridBoxed = styled.div`
+export const FlexGridContained = styled.div`
 	display: flex;
   max-width: 1200px;
   margin: 0 auto;

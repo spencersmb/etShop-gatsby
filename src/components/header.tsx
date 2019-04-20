@@ -1,4 +1,4 @@
-import { GridBoxed } from '@styles/global/cssGrid'
+import { FlexGridContained } from '@styles/global/cssGrid'
 import React from 'react'
 import styled from 'styled-components'
 import Navbar from './nav/navbar'
@@ -9,9 +9,9 @@ interface Iheader {
 
 const Header = ({ siteTitle = `` }: Iheader) => (
 	<HeaderWrapper>
-		<GridBoxed>
+		<FlexGridContained>
 			<Navbar/>
-		</GridBoxed>
+		</FlexGridContained>
 	</HeaderWrapper>
 )
 
