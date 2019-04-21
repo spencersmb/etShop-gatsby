@@ -12,6 +12,25 @@ export interface Image {
 	},
 	thumbnail: {
 		url: string
+	},
+	// Graphgql Images
+	localFile: {
+		name: string
+		id: string
+		childImageSharp: {
+			fluid: {
+				src: string
+				aspectRatio: number
+				base64: string
+				sizes: string
+				srcSet: string
+			},
+			fixed: {
+				width: string
+				height: string
+				src: string
+			}
+		}
 	}
 }
 
@@ -63,21 +82,6 @@ export interface IProduct {
 		title: string,
 		desc: string
 	},
-	// Graphgql Images
-	localFile: {
-		name: string
-		id: string
-		childImageSharp: {
-			fluid: {
-				src: string
-			},
-			fixed: {
-				width: string
-				height: string
-				src: string
-			}
-		}
-	}
 
 }
 

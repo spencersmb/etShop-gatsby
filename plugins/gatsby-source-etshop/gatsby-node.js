@@ -1,7 +1,5 @@
 const utils = require("./utils")
-
 const fetch = require("node-fetch")
-const queryString = require("query-string")
 const fs = require("fs-extra")
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
@@ -20,18 +18,26 @@ exports.sourceNodes = async (
 
   // Helper function that processes a product to match Gatsby's node structure
   const processProduct = async (product, args) => {
-    // console.log("product", product)
 
-    //  https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#createremotefilenode
-    // download and add image to local file
-    await product.images.map(async image => {
+    // https://flaviocopes.com/javascript-async-await-array-map/
+    product.images = await Promise.all(product.images.map(async image => {
+      let fileNode
 
-      const fileNode = await createRemoteFileNode({
-        ...args,
-        url: image.fullSize.url
-      })
-      image.localFile___NODE = fileNode.id
-    })
+      try {
+        fileNode = await createRemoteFileNode({
+          url: image.fullSize.url,
+          ...args
+        })
+
+      } catch (e) {
+        console.log("e", e)
+
+      }
+      if (fileNode) {
+        image.localFile___NODE = fileNode.id
+        return image
+      }
+    }))
 
     const nodeId = createNodeId(`wc-product-${product.id}`)
     const nodeContent = JSON.stringify(product)
@@ -49,11 +55,6 @@ exports.sourceNodes = async (
     })
   }
 
-  // const apiOptions = queryString.stringify(configOptions)
-  // console.log('apiOptions', apiOptions)
-
-  const dev = process.env.NODE_ENV !== "production"
-
   const apiUrl = `${process.env.GATSBY_DB}/wp-json/et-shop/graphql/products`
   const apiResponse = await fetch(apiUrl)
   const results = await apiResponse.json()
@@ -61,11 +62,114 @@ exports.sourceNodes = async (
   const jsonResults = JSON.stringify(utils.transformNormalizedData(results.data))
   fs.writeFileSync("src/state/products.json", jsonResults)
 
-  results.data.forEach(async (product) => {
-    // Process the product data to match the structure of a Gatsby node
+  await asyncForEach(results.data, async (product) => {
     const productNode = await processProduct(product, { store, cache, createNode, createNodeId })
 
-    // Use Gatsby's createNode helper to create a node from the node data
     createNode(productNode)
   })
 }
+
+// https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
+async function asyncForEach (array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
+
+// exports.onCreateNode = async ({
+//                                 node,
+//                                 actions,
+//                                 createNodeId,
+//                                 store,
+//                                 cache
+//                               }) => {
+//   const { createNodeField, createNode } = actions
+//   if (node.internal.type === "wcProduct") {
+//     // console.log('productNdoe', node.featuredImage.fullSize.url)
+//     const itemsToAdd = []
+//     await asyncForEach(node.images, async (image) => {
+//       try {
+//
+//         const galleryImageFileNode = await createRemoteFileNode({
+//           url: image.fullSize.url,
+//           store,
+//           cache,
+//           createNode,
+//           createNodeId
+//         })
+//
+//         // createNodeField({
+//         //   node,
+//         //   name: `wcProductImages___NODE`,
+//         //   value: galleryImageFileNode.id
+//         // })
+//
+//         itemsToAdd.push(galleryImageFileNode.id)
+//
+//       } catch (e) {
+//         console.log(e)
+//       }
+//     })
+//
+//     // node.images.forEach(async (image, index) => {
+//     //     //   try {
+//     //     //
+//     //     //     const galleryImageFileNode = await createRemoteFileNode({
+//     //     //       url: image.fullSize.url,
+//     //     //       store,
+//     //     //       cache,
+//     //     //       createNode,
+//     //     //       createNodeId
+//     //     //     })
+//     //     //     createNodeField({
+//     //     //       node,
+//     //     //       name: `wcProductImages___NODE`,
+//     //     //       value: galleryImageFileNode.id
+//     //     //     })
+//     //     //
+//     //     //     itemsToAdd.push(galleryImageFileNode.id)
+//     //     //
+//     //     //   } catch (e) {
+//     //     //     console.log(e)
+//     //     //   }
+//     //     // })
+//     createNodeField({
+//       node,
+//       name: `wcProductImages___NODE`,
+//       value: itemsToAdd
+//     })
+//     try {
+//
+//       // const featureImageFileNode = await createRemoteFileNode({
+//       //   url: node.featuredImage.fullSize.url,
+//       //   store,
+//       //   cache,
+//       //   createNode,
+//       //   createNodeId
+//       // })
+//       // const featureImageThumbNode = await createRemoteFileNode({
+//       //   url: node.featuredImage.thumbnail.url,
+//       //   store,
+//       //   cache,
+//       //   createNode,
+//       //   createNodeId
+//       // })
+//
+//       // Feature Image
+//       // createNodeField({
+//       //   node,
+//       //   name: "etFeatureImageFullSize___NODE",
+//       //   value: featureImageFileNode.id
+//       // })
+//       //
+//       // // Feature Thumb
+//       // createNodeField({
+//       //   node,
+//       //   name: "etFeatureImageThumb___NODE",
+//       //   value: featureImageThumbNode.id
+//       // })
+//     } catch (err) {
+//       console.log(err)
+//     }
+//   }
+// }

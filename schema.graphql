@@ -261,6 +261,7 @@ type File implements Node {
     size: Int
     sourceInstanceName: String
     uid: Int
+    url: String
 }
 
 type FileConnection {
@@ -457,12 +458,12 @@ type Query {
     allSitePlugin(filter: SitePluginFilterInput, limit: Int, skip: Int, sort: SitePluginSortInput): SitePluginConnection
     allWcProduct(filter: wcProductFilterInput, limit: Int, skip: Int, sort: wcProductSortInput): wcProductConnection
     directory(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: IntQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): Directory
-    file(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: IntQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, publicURL: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): File
+    file(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: IntQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, publicURL: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput, url: StringQueryOperatorInput): File
     imageSharp(children: NodeFilterListInput, fixed: ImageSharpFixedFilterInput, fluid: ImageSharpFluidFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, original: ImageSharpOriginalFilterInput, parent: NodeFilterInput, resize: ImageSharpResizeFilterInput, resolutions: ImageSharpResolutionsFilterInput, sizes: ImageSharpSizesFilterInput): ImageSharp
     site(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, host: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, pathPrefix: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, port: IntQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput): Site
     sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, componentPath: StringQueryOperatorInput, context: SitePageContextFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, isCreatedByStatefulCreatePages: BooleanQueryOperatorInput, jsonName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput, pluginCreatorId: StringQueryOperatorInput): SitePage
     sitePlugin(browserAPIs: StringQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, name: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, packageJson: SitePluginPackageJsonFilterInput, parent: NodeFilterInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: SitePluginPluginOptionsFilterInput, resolve: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, version: StringQueryOperatorInput): SitePlugin
-    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, features: wcProductFeaturesFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, internal: InternalFilterInput, license: wcProductLicenseFilterInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
+    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, internal: InternalFilterInput, license: wcProductLicenseFilterInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
 }
 
 type Site implements Node {
@@ -630,6 +631,8 @@ type SitePluginPluginOptions {
     background_color: String
     display: String
     displayName: Boolean
+    fonts: [SitePluginPluginOptionsFonts]
+    formats: [String]
     host: String
     icon: String
     mergeCachingHeaders: Boolean
@@ -659,6 +662,12 @@ type SitePluginPluginOptionsAliases {
 type SitePluginPluginOptionsAliasesStatic {
     alias: String
     root: String
+}
+
+type SitePluginPluginOptionsFonts {
+    family: String
+    subsets: [String]
+    variants: [String]
 }
 
 type SiteSiteMetadata {
@@ -695,6 +704,7 @@ type wcProduct implements Node {
         locale: String
     ): Date
     description: String
+    featuredImage: wcProductFeaturedImage
     features: wcProductFeatures
     id: ID!
     images: [wcProductImages]
@@ -741,6 +751,23 @@ type wcProductEdge {
     previous: wcProduct
 }
 
+type wcProductFeaturedImage {
+    fullSize: wcProductFeaturedImageFullSize
+    thumbnail: wcProductFeaturedImageThumbnail
+}
+
+type wcProductFeaturedImageFullSize {
+    height: Int
+    url: String
+    width: Int
+}
+
+type wcProductFeaturedImageThumbnail {
+    height: Int
+    url: String
+    width: Int
+}
+
 type wcProductFeatures {
     description: String
     items: [wcProductFeaturesItems]
@@ -765,6 +792,7 @@ type wcProductImages {
     alt: String
     fullSize: wcProductImagesFullSize
     id: Int
+    localFile: File
     thumbnail: wcProductImagesThumbnail
 }
 
@@ -1045,6 +1073,7 @@ enum FileFieldsEnum {
     size
     sourceInstanceName
     uid
+    url
 }
 
 enum ImageCropFocus {
@@ -1490,6 +1519,11 @@ enum SitePageFieldsEnum {
     pluginCreator___pluginOptions___background_color
     pluginCreator___pluginOptions___display
     pluginCreator___pluginOptions___displayName
+    pluginCreator___pluginOptions___fonts
+    pluginCreator___pluginOptions___fonts___family
+    pluginCreator___pluginOptions___fonts___subsets
+    pluginCreator___pluginOptions___fonts___variants
+    pluginCreator___pluginOptions___formats
     pluginCreator___pluginOptions___host
     pluginCreator___pluginOptions___icon
     pluginCreator___pluginOptions___mergeCachingHeaders
@@ -1627,6 +1661,11 @@ enum SitePluginFieldsEnum {
     pluginOptions___background_color
     pluginOptions___display
     pluginOptions___displayName
+    pluginOptions___fonts
+    pluginOptions___fonts___family
+    pluginOptions___fonts___subsets
+    pluginOptions___fonts___variants
+    pluginOptions___formats
     pluginOptions___host
     pluginOptions___icon
     pluginOptions___mergeCachingHeaders
@@ -1699,6 +1738,12 @@ enum wcProductFieldsEnum {
     date_created_gmt
     date_modified_gmt
     description
+    featuredImage___fullSize___height
+    featuredImage___fullSize___url
+    featuredImage___fullSize___width
+    featuredImage___thumbnail___height
+    featuredImage___thumbnail___url
+    featuredImage___thumbnail___width
     features___description
     features___items
     features___items___description
@@ -1709,6 +1754,55 @@ enum wcProductFieldsEnum {
     images___alt
     images___fullSize___url
     images___id
+    images___localFile___absolutePath
+    images___localFile___accessTime
+    images___localFile___atime
+    images___localFile___atimeMs
+    images___localFile___base
+    images___localFile___birthTime
+    images___localFile___birthtime
+    images___localFile___birthtimeMs
+    images___localFile___blksize
+    images___localFile___blocks
+    images___localFile___changeTime
+    images___localFile___children
+    images___localFile___children___children
+    images___localFile___children___id
+    images___localFile___ctime
+    images___localFile___ctimeMs
+    images___localFile___dev
+    images___localFile___dir
+    images___localFile___ext
+    images___localFile___extension
+    images___localFile___gid
+    images___localFile___id
+    images___localFile___ino
+    images___localFile___internal___content
+    images___localFile___internal___contentDigest
+    images___localFile___internal___description
+    images___localFile___internal___fieldOwners
+    images___localFile___internal___ignoreType
+    images___localFile___internal___mediaType
+    images___localFile___internal___owner
+    images___localFile___internal___type
+    images___localFile___mode
+    images___localFile___modifiedTime
+    images___localFile___mtime
+    images___localFile___mtimeMs
+    images___localFile___name
+    images___localFile___nlink
+    images___localFile___parent___children
+    images___localFile___parent___id
+    images___localFile___prettySize
+    images___localFile___publicURL
+    images___localFile___rdev
+    images___localFile___relativeDirectory
+    images___localFile___relativePath
+    images___localFile___root
+    images___localFile___size
+    images___localFile___sourceInstanceName
+    images___localFile___uid
+    images___localFile___url
     images___thumbnail___url
     internal___content
     internal___contentDigest
@@ -1886,6 +1980,7 @@ input FileFilterInput {
     size: IntQueryOperatorInput
     sourceInstanceName: StringQueryOperatorInput
     uid: IntQueryOperatorInput
+    url: StringQueryOperatorInput
 }
 
 input FileSortInput {
@@ -2155,6 +2250,8 @@ input SitePluginPluginOptionsFilterInput {
     background_color: StringQueryOperatorInput
     display: StringQueryOperatorInput
     displayName: BooleanQueryOperatorInput
+    fonts: SitePluginPluginOptionsFontsFilterListInput
+    formats: StringQueryOperatorInput
     host: StringQueryOperatorInput
     icon: StringQueryOperatorInput
     mergeCachingHeaders: BooleanQueryOperatorInput
@@ -2168,6 +2265,16 @@ input SitePluginPluginOptionsFilterInput {
     sitemap: StringQueryOperatorInput
     start_url: StringQueryOperatorInput
     theme_color: StringQueryOperatorInput
+}
+
+input SitePluginPluginOptionsFontsFilterInput {
+    family: StringQueryOperatorInput
+    subsets: StringQueryOperatorInput
+    variants: StringQueryOperatorInput
+}
+
+input SitePluginPluginOptionsFontsFilterListInput {
+    elemMatch: SitePluginPluginOptionsFontsFilterInput
 }
 
 input SitePluginSortInput {
@@ -2213,6 +2320,23 @@ input wcProductCategoriesFilterListInput {
     elemMatch: wcProductCategoriesFilterInput
 }
 
+input wcProductFeaturedImageFilterInput {
+    fullSize: wcProductFeaturedImageFullSizeFilterInput
+    thumbnail: wcProductFeaturedImageThumbnailFilterInput
+}
+
+input wcProductFeaturedImageFullSizeFilterInput {
+    height: IntQueryOperatorInput
+    url: StringQueryOperatorInput
+    width: IntQueryOperatorInput
+}
+
+input wcProductFeaturedImageThumbnailFilterInput {
+    height: IntQueryOperatorInput
+    url: StringQueryOperatorInput
+    width: IntQueryOperatorInput
+}
+
 input wcProductFeaturesFilterInput {
     description: StringQueryOperatorInput
     items: wcProductFeaturesItemsFilterListInput
@@ -2235,6 +2359,7 @@ input wcProductFilterInput {
     date_created_gmt: DateQueryOperatorInput
     date_modified_gmt: DateQueryOperatorInput
     description: StringQueryOperatorInput
+    featuredImage: wcProductFeaturedImageFilterInput
     features: wcProductFeaturesFilterInput
     id: StringQueryOperatorInput
     images: wcProductImagesFilterListInput
@@ -2259,6 +2384,7 @@ input wcProductImagesFilterInput {
     alt: StringQueryOperatorInput
     fullSize: wcProductImagesFullSizeFilterInput
     id: IntQueryOperatorInput
+    localFile: FileFilterInput
     thumbnail: wcProductImagesThumbnailFilterInput
 }
 

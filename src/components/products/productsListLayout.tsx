@@ -1,5 +1,6 @@
 import { IProduct } from '@et/types/Products'
 import { graphql, Link, StaticQuery } from 'gatsby'
+import Img from 'gatsby-image'
 import React, { Component } from 'react'
 
 interface IProps {
@@ -32,15 +33,25 @@ class ProductsListLayout extends Component<IProps> {
               license{
               	type
               }
+              images{
+								localFile{
+									childImageSharp {
+										fluid(maxWidth: 435) {
+											...GatsbyImageSharpFluid
+										}
+									}
+								}
+              }
             }
           }
-        }
-      }
+        },
+      },
+      
     `}
 				render={data => (
 					<>
 						<div>
-							<ul data-testid='productList'>
+							<div data-testid='productList'>
 								{data.allWcProduct.edges
 									.filter(({ node }: { node: IProduct }) => node.license.type === 'standard')
 									.filter(({ node }: { node: IProduct }) => {
@@ -53,15 +64,21 @@ class ProductsListLayout extends Component<IProps> {
 										}).length > 0
 									})
 									.map(({ node }: { node: IProduct }) => {
+										console.log('node', node)
+
 										return (
-											<li key={node.id}>
+											<div key={node.id}>
 												<Link to={`/products/${node.slug}`}>
 													{node.name}
+													<Img
+														alt='Every-Tuesday Digital Shop'
+														fluid={node.images[0].localFile.childImageSharp.fluid}
+													/>
 												</Link>
-											</li>
+											</div>
 										)
 									})}
-							</ul>
+							</div>
 						</div>
 					</>
 				)}

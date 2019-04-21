@@ -1,6 +1,7 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`
 })
+console.log("process.env.NODE_ENV", process.env.NODE_ENV)
 
 module.exports = {
   siteMetadata: {
@@ -89,10 +90,11 @@ module.exports = {
         }
       }
     },
-    `gatsby-source-etshop`,
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-source-etshop`,
+    // `gatsby-source-test`,
     `gatsby-plugin-playground`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline

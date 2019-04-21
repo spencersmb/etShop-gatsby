@@ -142,54 +142,54 @@ export class ProductDetailPage extends Component<IProductQuery> {
 export default ProductDetailPage
 
 export const productQuery = graphql`
-    query SingleProductQuery($slug: String!){
-        site {
-            siteMetadata {
-                title
-            }
-        }
-        wcProduct(
-            slug:{
-                eq: $slug
-            }
-        ){
-            name
-            id
-            images{
-                thumbnail{
-                    url
-                }
-            }
-            categories{
-                name
-            }
-            license{
-                extendedItem{
-                    slug
-                }
-                hasExtendedLicense
-                standardItem{
-                    slug
-                }
-                type
-            }
-            date_created_gmt
-            date_modified_gmt
-            price
-            product_id
-            regular_price
-            pwyw
-            sale_price
-            seo{
-                desc
-                title
-            }
-            slug
-            tags{
-                name
-                slug
-            }
-            type
-        }
-    }
+	query SingleProductQuery($slug: String!){
+		site {
+			siteMetadata {
+				title
+			}
+		}
+		wcProduct(
+			slug:{
+				eq: $slug
+			}
+		){
+			name
+			id
+			images{
+				thumbnail{
+					url
+				}
+			}
+			categories{
+				name
+			}
+			license{
+				extendedItem{
+					slug
+				}
+				hasExtendedLicense
+				standardItem{
+					slug
+				}
+				type
+			}
+			date_created_gmt
+			date_modified_gmt
+			price
+			product_id
+			regular_price
+			pwyw
+			sale_price
+			seo{
+				desc
+				title
+			}
+			slug
+			tags{
+				name
+				slug
+			}
+			type
+		}
+	}
 `

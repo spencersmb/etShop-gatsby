@@ -1,3 +1,4 @@
+import { logout } from '@redux/actions/authActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
@@ -132,15 +133,27 @@ const HeroImage = () => (
               ...GatsbyImageSharpFluid
             }
           }
+        },
+        desktopSmall: file(relativePath: { eq: "Skinny-Jeans-product.jpg" }) {
+          childImageSharp {
+            fluid(maxWidth: 1200) {
+              ...GatsbyImageSharpFluid
+            }
+          }
         }
       }
     `}
-		render={data => <Img
-			alt='Every-Tuesday Digital Shop'
-			fluid={data.desktopHero.childImageSharp.fluid}
-			fadeIn={false}
-			critical={true}
-		/>}
+		render={data => {
+			console.log('data', data)
+
+			return <Img
+				alt='Every-Tuesday Digital Shop'
+				fluid={data.desktopHero.childImageSharp.fluid}
+				fadeIn={false}
+				critical={true}
+			/>
+		}
+		}
 	/>
 )
 export default DesignHero
