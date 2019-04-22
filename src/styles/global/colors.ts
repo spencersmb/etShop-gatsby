@@ -6,6 +6,9 @@ export const colors = {
 		text: `#333F4F`,
 		pink: `#F95A86`
 	},
+	secondary:{
+		text: `#6A7E90`
+	},
 	text: '#95989A',
 	grey: {
 		i800: `#3F4B5B`,
@@ -16,6 +19,7 @@ export const colors = {
 		i400: `#B09AE3`,
 		i500: `#A182E9`,
 		i600: `#755FA7`,
+		i700: `#6A539F`,
 	},
 	teal:{
 		i500: `#18C3C3`

@@ -25,12 +25,12 @@ const filterItems: IFilterItem[] = [
 	{
 		slug: 'textures',
 		name: 'Textures',
-		icon: 'Fonts'
+		icon: 'Textures'
 	},
 	{
 		slug: 'templates',
 		name: 'Templates',
-		icon: 'Fonts'
+		icon: 'Templates'
 	}
 ]
 
@@ -39,8 +39,6 @@ function ProductFilter (props: IProps) {
 
 	function elementClick (e: any) {
 		e.preventDefault()
-		console.log('e.currentTarget', e.currentTarget)
-
 		handleClick(e.currentTarget.getAttribute('data-filtertype'))
 	}
 
@@ -65,18 +63,22 @@ function ProductFilter (props: IProps) {
 							data-filtertype={item.slug}
 						>
 							<FilterContent>
-								<Svg>
+								<Svg selectedFilter={props.filter === item.slug}>
 									{renderSvg(svgs[item.icon])}
 								</Svg>
 								{item.name}
 							</FilterContent>
-							<Slider className='slider'/>
+							<Slider className='slider' selectedFilter={props.filter === item.slug}/>
 						</FilterListItem>
 					))}
-					<li data-testid='filterItems' onClick={elementClick} data-filtertype=''>
-						View all
-					</li>
 				</ul>
+				<FilterViewAll
+					data-testid='filterItems'
+					onClick={elementClick}
+					selectedFilter={props.filter === ''}
+					data-filtertype=''>
+					View all
+				</FilterViewAll>
 			</Filter>
 		</FilterContainer>
 	)
@@ -92,10 +94,11 @@ const Filter = styled.div`
 	background: ${colors.purple.i600};
 	border-radius: 15px;
 	${shadowStyles.shadow3};
-	padding: 15px 0 20px 20px;
+	padding: 15px 0 0 0;
 	ul{
 		margin:0;
-		padding: 20px 0 0;
+		padding: 20px 0 10px;
+		border-bottom: 2px solid ${colors.purple.i700};
 	}
 `
 
@@ -108,8 +111,8 @@ const FilterListItem = styled.li<IFilterListItem>`
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
-	margin: 10px 0;
-	padding-bottom: 2px;
+	margin: 0 0 0 20px;
+	padding: 10px 0;
 	font-size: 15px;
 	font-weight: 400;
 	text-transform: uppercase;
@@ -141,27 +144,27 @@ const FilterContent = styled.div`
 	flex-direction: row;
 	align-items: center;
 `
-const Svg = styled.span`
+const Svg = styled.span<IFilterListItem>`
 	width: 20px;
 	height: 20px;
 	margin-right: 15px;
 	svg{
 		path{
 			transition: .3s;
-			fill: ${colors.purple.i400};
+			fill: ${props => props.selectedFilter ? colors.teal.i500 : colors.purple.i400};
 		}
 	}
 `
-const Slider = styled.span`
+const Slider = styled.span<IFilterListItem>`
 	height: 2px;
-	width: 0;
+	width: ${props => props.selectedFilter ? '100%' : '0%'};
 	display: block;
-	background: ${colors.purple.i600};
-	transition: color .3s, width .4s ease-out;
+	background: ${colors.teal.i500};
+	transition: color .3s, width .4s ;
 	margin-top: 2px;
 `
 const FilterHeader = styled.div`
-	padding: 0 20px 0 0;
+	padding: 0 20px 0 20px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -176,5 +179,11 @@ const FilterHeader = styled.div`
 	span{
 		width: 22px;
 	}
+`
+const FilterViewAll = styled.div<IFilterListItem>`
+	padding: 20px;
+	text-transform: uppercase;
+	color: ${props => props.selectedFilter ? 'white' : colors.purple.i400};
+	cursor: pointer;
 `
 export default ProductFilter

@@ -4,7 +4,8 @@ import renderer from 'react-test-renderer'
 import { render } from 'react-testing-library'
 
 const props = {
-	handleClick: jest.fn()
+	handleClick: jest.fn(),
+	filter: ''
 }
 
 describe('product Filter', () => {
@@ -18,10 +19,10 @@ describe('product Filter', () => {
 	})
 
 	it('Should handleClick correctly', () => {
-		const modalRender = render(<ProductFilter {...props} />)
+		const modalRender = render(<ProductFilter {...props} filter=''/>)
 		const button = modalRender.getAllByTestId('filterItems')[0]
 		button.click()
 		expect(props.handleClick).toHaveBeenCalledTimes(1)
-		expect(props.handleClick).toHaveBeenCalledWith('textures')
+		expect(props.handleClick).toHaveBeenCalledWith('fonts')
 	})
 })

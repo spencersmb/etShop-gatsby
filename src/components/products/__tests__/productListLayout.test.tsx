@@ -20,7 +20,6 @@ beforeEach(() => {
 							name: 'Honeymoon',
 							slug: 'honeymoon',
 							date_created_gmt: '2018-10-10T14:47:44',
-							images: [],
 							license: {
 								hasExtendedLicense: true,
 								type: 'extended',
@@ -33,6 +32,23 @@ beforeEach(() => {
 									id: 2,
 									name: 'Fonts',
 									slug: 'fonts'
+								}
+							],
+							images: [
+								{
+									localFile: {
+										childImageSharp: {
+											id: 13,
+											name: 'image',
+											fluid: {
+												aspectRatio: 1234,
+												src: 'src',
+												srcSet: 'srcSet',
+												size: 'size',
+												base64: 'base64'
+											}
+										}
+									}
 								}
 							]
 						}
@@ -58,8 +74,10 @@ beforeEach(() => {
 											fluid: {
 												sizes: '(max-width: 1000px) 100vw, 1000px',
 												src: '/static/a5ca9e682952d79588dee87feeec37a5/1a92f/seamless-watercolor-patterns-preview.jpg',
-												presentationHeight: 509,
-												presentationWidth: 1000
+												aspectRatio: 1234,
+												srcSet: 'srcSet',
+												size: 'size',
+												base64: 'base64'
 											},
 											fixed: {
 												width: 300,

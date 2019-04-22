@@ -50,6 +50,7 @@ exports[`Navbar Layout renders correctly 1`] = `
       <li>
         <a
           href="https://every-tuesday.com"
+          rel="noreferrer"
           target="_blank"
         >
           Blog

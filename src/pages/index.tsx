@@ -31,7 +31,9 @@ const IndexPage = () => {
 	})
 
 	function handleFilterClick (filter: string) {
-		if (filter === '') {
+		if (filter === state.selectedFilter) {
+			return
+		} else if (filter === '') {
 			setFilterState({
 				selectedFilter: ''
 			})
@@ -64,15 +66,17 @@ const IndexPage = () => {
 					<ProductListContainer>
 						<StickyWrapper>
 							<Sticky
-								topOffset={-13}
+								topOffset={0}
 								bottomOffset={80}
-								disableCompensation={true}>
+								disableCompensation={true}
+							>
 								{({ style, isSticky }) => {
 									return (
 										<div
 											style={{
 												...style,
-												marginTop: isSticky ? 98 : 0
+												marginTop: isSticky ? 150 : 85,
+												transition: 'margin .8s'
 											}}>
 											<ProductFilter
 												filter={state.selectedFilter}
@@ -100,7 +104,7 @@ const PageContainer = styled.div`
 `
 const FilterBackground = styled.div`
 	display: none;
-	@media ${device.tablet} {
+	@media ${device.laptop} {
 		display: block;
 		background: white;
 		grid-column: 1 / 6;
@@ -117,13 +121,13 @@ const ProductListContainer = styled(GridFluid)`
 const StickyWrapper = styled.div`
 	display: none;
 	
-	@media ${device.tablet} {
+	@media ${device.laptop} {
 		display: block;
 		position: relative;
 		z-index: 1;
 		grid-column: 2 / 5;
 		grid-row: 1;
-		padding-top: 85px;
+		//padding-top: 85px;
 	}
 		
 	
