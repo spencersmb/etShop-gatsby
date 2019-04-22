@@ -106,6 +106,24 @@ export const singleProduct: IProduct = {
 			},
 			thumbnail: {
 				url: 'image-url'
+			},
+			localFile:{
+				id: '12',
+				name: 'localfile',
+				childImageSharp:{
+					fixed:{
+						src:'src',
+						height: 'height',
+						width: 'width'
+					},
+					fluid: {
+						src: 'src',
+						aspectRatio: 12345,
+						base64: 'base64',
+						sizes: 'sizes',
+						srcSet: 'srcSet'
+					}
+				}
 			}
 		}
 	],
@@ -123,21 +141,7 @@ export const singleProduct: IProduct = {
 	tags: [
 		{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 		{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
-	],
-	localFile: {
-		name: 'file name',
-		id: '1234',
-		childImageSharp: {
-			fluid: {
-				src: 'src'
-			},
-			fixed: {
-				width: '400',
-				height: '400',
-				src: 'src'
-			}
-		}
-	}
+	]
 }
 
 export enum ProductKey {
@@ -184,6 +188,24 @@ export const testProducts: IProducts = {
 				},
 				thumbnail: {
 					url: 'image-url'
+				},
+				localFile:{
+					id: '12',
+					name: 'localfile',
+					childImageSharp:{
+						fixed:{
+							src:'src',
+							height: 'height',
+							width: 'width'
+						},
+						fluid: {
+							src: 'src',
+							aspectRatio: 12345,
+							base64: 'base64',
+							sizes: 'sizes',
+							srcSet: 'srcSet'
+						}
+					}
 				}
 			}
 		],
@@ -201,21 +223,7 @@ export const testProducts: IProducts = {
 		tags: [
 			{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 			{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
-		],
-		localFile: {
-			name: 'file name',
-			id: '1234',
-			childImageSharp: {
-				fluid: {
-					src: 'src'
-				},
-				fixed: {
-					width: '400',
-					height: '400',
-					src: 'src'
-				}
-			}
-		}
+		]
 	},
 	[ProductKey.WatercolorExt]: {
 		type: 'simple',
@@ -253,6 +261,24 @@ export const testProducts: IProducts = {
 				},
 				thumbnail: {
 					url: 'image-url'
+				},
+				localFile:{
+					id: '12',
+					name: 'localfile',
+					childImageSharp:{
+						fixed:{
+							src:'src',
+							height: 'height',
+							width: 'width'
+						},
+						fluid: {
+							src: 'src',
+							aspectRatio: 12345,
+							base64: 'base64',
+							sizes: 'sizes',
+							srcSet: 'srcSet'
+						}
+					}
 				}
 			}
 		],
@@ -271,20 +297,7 @@ export const testProducts: IProducts = {
 			{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 			{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
 		],
-		localFile: {
-			name: 'file name',
-			id: '1234',
-			childImageSharp: {
-				fluid: {
-					src: 'src'
-				},
-				fixed: {
-					width: '400',
-					height: '400',
-					src: 'src'
-				}
-			}
-		}
+
 	},
 	[ProductKey.Honeymoon]: {
 		type: 'simple',
@@ -321,6 +334,24 @@ export const testProducts: IProducts = {
 				},
 				thumbnail: {
 					url: 'image-url'
+				},
+				localFile:{
+					id: '12',
+					name: 'localfile',
+					childImageSharp:{
+						fixed:{
+							src:'src',
+							height: 'height',
+							width: 'width'
+						},
+						fluid: {
+							src: 'src',
+							aspectRatio: 12345,
+							base64: 'base64',
+							sizes: 'sizes',
+							srcSet: 'srcSet'
+						}
+					}
 				}
 			}
 		],
@@ -333,20 +364,7 @@ export const testProducts: IProducts = {
 			title: 'Honeymoon seo title'
 		},
 		tags: [],
-		localFile: {
-			name: 'file name',
-			id: '1234',
-			childImageSharp: {
-				fluid: {
-					src: 'src'
-				},
-				fixed: {
-					width: '400',
-					height: '400',
-					src: 'src'
-				}
-			}
-		}
+
 	},
 	[ProductKey.Skinnyjeans]: {
 		type: 'simple',
@@ -383,6 +401,24 @@ export const testProducts: IProducts = {
 				},
 				thumbnail: {
 					url: 'image-url'
+				},
+				localFile:{
+					id: '12',
+					name: 'localfile',
+					childImageSharp:{
+						fixed:{
+							src:'src',
+							height: 'height',
+							width: 'width'
+						},
+						fluid: {
+							src: 'src',
+							aspectRatio: 12345,
+							base64: 'base64',
+							sizes: 'sizes',
+							srcSet: 'srcSet'
+						}
+					}
 				}
 			}
 		],
@@ -395,20 +431,6 @@ export const testProducts: IProducts = {
 			title: 'Skinny Jeans seo title'
 		},
 		tags: [],
-		localFile: {
-			name: 'file name',
-			id: '1234',
-			childImageSharp: {
-				fluid: {
-					src: 'src'
-				},
-				fixed: {
-					width: '400',
-					height: '400',
-					src: 'src'
-				}
-			}
-		}
 	}
 }
 

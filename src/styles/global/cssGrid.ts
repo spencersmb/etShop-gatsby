@@ -5,8 +5,8 @@ import styled from 'styled-components'
 const gutterMobile = 20
 const colMobile = (450 - (gutterMobile)) / 2
 const colMobileHorizontal = `${(600 - (gutterMobile)) / 2}px`
-const gutter = 30
-const col = `${(1200 - (11 * gutter)) / 12}px`
+export const gutter = 30
+export const col = `${(1200 - (11 * gutter)) / 12}px`
 
 const mobileGrid = `
 		display: grid;

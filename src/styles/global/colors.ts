@@ -13,7 +13,11 @@ export const colors = {
 		i200: `#F7F8FC`
 	},
 	purple: {
+		i400: `#B09AE3`,
 		i500: `#A182E9`,
 		i600: `#755FA7`,
+	},
+	teal:{
+		i500: `#18C3C3`
 	}
 }

@@ -1,4 +1,3 @@
-import { logout } from '@redux/actions/authActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
@@ -7,7 +6,7 @@ import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
 
-function DesignHero (props: any) {
+function DesignHero () {
 	return (
 		<HeroContainer>
 			<GridFluid>
@@ -144,8 +143,6 @@ const HeroImage = () => (
       }
     `}
 		render={data => {
-			console.log('data', data)
-
 			return <Img
 				alt='Every-Tuesday Digital Shop'
 				fluid={data.desktopHero.childImageSharp.fluid}

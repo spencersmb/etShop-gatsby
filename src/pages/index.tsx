@@ -1,13 +1,16 @@
 import DesignHero from '@components/pageHeaders/designHero'
 import ProductFilter from '@components/products/productFilter'
 import ProductsListLayout from '@components/products/productsListLayout'
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
+import { GridFluid } from '@styles/global/cssGrid'
 import { useSetFilterState } from '@utils/stateUtils'
 import React from 'react'
 import styled from 'styled-components'
 import Layout from '../components/layout'
 import Image from '../components/image'
 import SEO from '../components/seo'
+import { StickyContainer, Sticky } from 'react-sticky'
 
 const jsonld = {
 	['@context']: 'https://schema.org',
@@ -28,7 +31,6 @@ const IndexPage = () => {
 	})
 
 	function handleFilterClick (filter: string) {
-		console.log('filter', filter)
 		if (filter === '') {
 			setFilterState({
 				selectedFilter: ''
@@ -58,17 +60,73 @@ const IndexPage = () => {
 			</SEO>
 			<PageContainer>
 				<DesignHero/>
-				<ProductFilter handleClick={handleFilterClick}/>
-				<ProductsListLayout filter={state.selectedFilter}/>
+				<StickyContainer>
+					<ProductListContainer>
+						<StickyWrapper>
+							<Sticky
+								topOffset={-13}
+								bottomOffset={80}
+								disableCompensation={true}>
+								{({ style, isSticky }) => {
+									return (
+										<div
+											style={{
+												...style,
+												marginTop: isSticky ? 98 : 0
+											}}>
+											<ProductFilter
+												filter={state.selectedFilter}
+												handleClick={handleFilterClick}/>
+										</div>
+									)
+								}}
+							</Sticky>
+						</StickyWrapper>
+						<FilterBackground/>
+						<ProductsListLayout filter={state.selectedFilter}/>
+					</ProductListContainer>
+				</StickyContainer>
+
 				<div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
 					<Image/>
 				</div>
+
 			</PageContainer>
 		</Layout>
 	)
 }
 const PageContainer = styled.div`
 	background: ${colors.grey.i200};
+`
+const FilterBackground = styled.div`
+	display: none;
+	@media ${device.tablet} {
+		display: block;
+		background: white;
+		grid-column: 1 / 6;
+		grid-row: 1;
+		z-index: 0;
+		position: relative;
+	}
+`
+
+const ProductListContainer = styled(GridFluid)`
+	position: relative;
+`
+
+const StickyWrapper = styled.div`
+	display: none;
+	
+	@media ${device.tablet} {
+		display: block;
+		position: relative;
+		z-index: 1;
+		grid-column: 2 / 5;
+		grid-row: 1;
+		padding-top: 85px;
+	}
+		
+	
 `
 
 export default IndexPage
