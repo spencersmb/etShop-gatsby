@@ -12,7 +12,7 @@ import { withPrefix } from 'gatsby'
 export default ({ element }: { element: ReactNode }) => {
 	const store = createStore()
 	store.dispatch(loadProducts())
-	const customFont = withPrefix('/fonts/Sentinel-Medium.oft')
+	const customFont = withPrefix('/fonts/Sentinel-Medium.otf')
 
 	// check localstorage for user
 	// decode jwt and check if expired - if expired throw error and logout
