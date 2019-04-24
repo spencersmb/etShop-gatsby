@@ -171,7 +171,7 @@ module.exports = {
       options: {
         headers: {
           "/*": [
-            `Referrer-Policy: origin-when-cross-origin`,
+            `Referrer-Policy: origin`,
             `Access-Control-Allow-Origin: *`,
             `Expect-CT: enforce,max-age=604800`
           ]
