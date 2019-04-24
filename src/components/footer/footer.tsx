@@ -3,6 +3,7 @@ import SubmitButton from '@components/buttons/submitButton'
 import PinkEmailForm from '@components/footer/emailForm'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
+import { SentinelFamily } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
@@ -164,7 +165,8 @@ const FooterHeader = styled.div`
 	display: flex;
 	flex-direction: column;
 	h4{
-		font-family: Sentinel, serif;
+		//font-family: Sentinel, serif;
+		${SentinelFamily};
 		font-weight: 600;
 		font-style: italic;
 		color: ${colors.grey.i800};

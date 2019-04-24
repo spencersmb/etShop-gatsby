@@ -98,6 +98,9 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 								? meta
 								: [])}
 					>
+						// @ts-ignore
+						<link rel='preload' as='style' onLoad='this.rel = `stylesheet`' type='text/css'
+									href='https://cloud.typography.com/7389876/6653412/css/fonts.css'/>
 						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}
 						{/*<link rel='dns-prefetch' href='//apis.google.com'/>*/}
 						{children ? children : null}
@@ -111,13 +114,13 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 export default SEO
 
 const detailsQuery = graphql`
-    query DefaultSEOQuery {
-        site {
-            siteMetadata {
-                title
-                description
-                author
-            }
-        }
-    }
+	query DefaultSEOQuery {
+		site {
+			siteMetadata {
+				title
+				description
+				author
+			}
+		}
+	}
 `

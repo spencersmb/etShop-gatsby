@@ -2,6 +2,7 @@ import { IProduct } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { col, gutter } from '@styles/global/cssGrid'
+import { SentinelFamily } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
@@ -187,14 +188,14 @@ const ListItemTitle = styled.div`
 	justify-content: center;
 	h2{
 		font-size: 21px;
-		font-family: Sentinel, serif;
+		${SentinelFamily};
 		font-weight: bold;
 		line-height: 24px;
 		color: ${colors.grey.i800}
 	}
 	p{
 		font-size: 14px;
-		font-family: Sentinel, serif;
+		${SentinelFamily};
 		font-weight: 500;
 		font-style: italic;
 		color: ${colors.secondary.text};

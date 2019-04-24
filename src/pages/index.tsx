@@ -1,5 +1,6 @@
 import DesignHero from '@components/pageHeaders/designHero'
 import ProductFilter from '@components/products/productFilter'
+import ProductsDisplay from '@components/products/productsDisplay'
 import ProductsListLayout from '@components/products/productsListLayout'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
@@ -26,22 +27,22 @@ const jsonld = {
 }
 
 const IndexPage = () => {
-	const [state, setFilterState] = useSetFilterState({
-		selectedFilter: ''
-	})
+	// const [state, setFilterState] = useSetFilterState({
+	// 	selectedFilter: ''
+	// })
 
 	function handleFilterClick (filter: string) {
-		if (filter === state.selectedFilter) {
-			return
-		} else if (filter === '') {
-			setFilterState({
-				selectedFilter: ''
-			})
-		} else {
-			setFilterState({
-				selectedFilter: filter
-			})
-		}
+		// if (filter === state.selectedFilter) {
+		// 	return
+		// } else if (filter === '') {
+		// 	setFilterState({
+		// 		selectedFilter: ''
+		// 	})
+		// } else {
+		// 	setFilterState({
+		// 		selectedFilter: filter
+		// 	})
+		// }
 	}
 
 	return (
@@ -62,33 +63,7 @@ const IndexPage = () => {
 			</SEO>
 			<PageContainer>
 				<DesignHero/>
-				<StickyContainer>
-					<ProductListContainer>
-						<StickyWrapper>
-							<Sticky
-								topOffset={-30}
-								bottomOffset={110}
-								disableCompensation={true}
-							>
-								{({ style, isSticky }) => {
-									return (
-										<div
-											style={{
-												...style,
-												marginTop: isSticky ? 115 : 0
-											}}>
-											<ProductFilter
-												filter={state.selectedFilter}
-												handleClick={handleFilterClick}/>
-										</div>
-									)
-								}}
-							</Sticky>
-						</StickyWrapper>
-						<FilterBackground/>
-						<ProductsListLayout filter={state.selectedFilter}/>
-					</ProductListContainer>
-				</StickyContainer>
+				<ProductsDisplay/>
 			</PageContainer>
 		</Layout>
 	)
@@ -100,36 +75,6 @@ const PageContainer = styled.div`
 		padding-bottom: 70px;
 	}
 
-`
-const FilterBackground = styled.div`
-	display: none;
-	@media ${device.laptop} {
-		display: block;
-		background: white;
-		grid-column: 1 / 6;
-		grid-row: 1;
-		z-index: 0;
-		position: relative;
-	}
-`
-
-const ProductListContainer = styled(GridFluid)`
-	position: relative;
-`
-
-const StickyWrapper = styled.div`
-	display: none;
-	
-	@media ${device.laptop} {
-		display: block;
-		position: relative;
-		z-index: 1;
-		grid-column: 2 / 5;
-		grid-row: 1;
-		padding-top: 85px;
-	}
-		
-	
 `
 
 export default IndexPage

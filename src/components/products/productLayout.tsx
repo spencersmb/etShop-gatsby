@@ -5,6 +5,8 @@ import Layout from '@components/layout'
 import { ICartItem, ICartState } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
+import { colors } from '@styles/global/colors'
+import { SentinelFamily } from '@styles/global/fonts'
 import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
 import { Link } from 'gatsby'
@@ -199,7 +201,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 
 	return (
 		<Layout>
-			<h1>Item name: {name}</h1>
+			<ProductTitle>Item name: {name}</ProductTitle>
 			{/*Convert to readable price helper fn?*/}
 			<h2>price: {displayCurrency(state.price)}</h2>
 			<hr/>
@@ -267,6 +269,14 @@ const NumberDialStyled = styled(NumberDial)`
 			margin: 0;
 		};
 	}
+`
+
+const ProductTitle = styled.h1`
+		${SentinelFamily};
+		font-weight: 600;
+		font-style: normal;
+		color: ${colors.grey.i800};
+		font-size: 48px;
 `
 const mapStateToProps = (state: IState) => ({
 	cart: state.cart,

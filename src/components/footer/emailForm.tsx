@@ -1,5 +1,6 @@
 import SubmitButton from '@components/buttons/submitButton'
 import { colors } from '@styles/global/colors'
+import { SentinelFamily } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
@@ -88,7 +89,7 @@ const EmailBoxLeft = styled.div`
 		font-size: 21px;
 		font-style: italic;
 		font-weight: 600;
-		font-family: Sentinel, serif;
+		${SentinelFamily};
 		color: white;
 		margin-bottom: 0;
 		opacity: 1;
@@ -107,7 +108,7 @@ const EmailBoxLeft = styled.div`
 		font-size: 21px;
 		font-style: italic;
 		font-weight: 600;
-		font-family: Sentinel, serif;
+		${SentinelFamily};
 		position: relative;
 		z-index: 2;
 	}
