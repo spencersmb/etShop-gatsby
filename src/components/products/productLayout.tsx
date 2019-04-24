@@ -270,7 +270,6 @@ const NumberDialStyled = styled(NumberDial)`
 		};
 	}
 `
-
 const ProductTitle = styled.h1`
 		${SentinelFamily};
 		font-weight: 600;
