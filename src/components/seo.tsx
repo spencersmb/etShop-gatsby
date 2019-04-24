@@ -98,7 +98,7 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 								? meta
 								: [])}
 					>
-						<link rel='preload' as='stylesheet' type='text/css'
+						<link rel='preload' as='style' type='text/css'
 									href='https://cloud.typography.com/7389876/7273412/css/fonts.css'/>
 						<link rel='stylesheet' type='text/css'
 									href='https://cloud.typography.com/7389876/7273412/css/fonts.css'/>
