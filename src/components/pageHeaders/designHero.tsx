@@ -45,20 +45,22 @@ const HeroText = styled.div`
 	grid-row: 1;
 	
 	h1{
-		font-family: 'Sentinel', serif;
-		letter-spacing: -2px;
+		font-family: "Sentinel A", "Sentinel B", serif;
+		font-style: normal;
+		font-weight: 600;
+		letter-spacing: -.5px;
 		color: ${colors.primary.text};
 		font-size: 55px;
 		line-height: 53px;
 		margin-top: 80px;
 	}
 	h3{
-		font-family: 'Sentinel', serif;
+		font-family: "Sentinel A", "Sentinel B", serif;
 		font-style: italic;
+		font-weight: 600;
 		color: ${colors.primary.pink};
 		font-size: 24px;
 		line-height: 32px;
-		font-weight: 600;
 		margin-bottom: 30px;
 	}
 	p{

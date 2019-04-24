@@ -62,6 +62,7 @@
     "scripts",
     "node_modules",
     "public",
+    "plugins",
     "next.config.js",
     "next-seo.config.js",
     "**/*.spec.ts",

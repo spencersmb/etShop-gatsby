@@ -1,7 +1,4 @@
-import ReduxToastr from '@components/layout'
 import { logout } from '@redux/actions/authActions'
-import { matchString } from '@utils/genUtils'
-import React from 'react'
 import { toastr } from 'react-redux-toastr'
 import { navigate } from 'gatsby'
 
@@ -102,4 +99,23 @@ export const toastrOptions = {
 		showCloseButton: true, // true by default
 		timeOut: 3000 // by setting to 0 it will prevent the auto close
 	}
+}
+
+export const fakeApiCall = (type?: string): Promise<any> => {
+	return new Promise((resolve, reject) => {
+
+		if (type === 'reject') {
+			setTimeout(() => {
+				return reject({
+					data: 'done'
+				})
+			}, 3000)
+		} else {
+			setTimeout(() => {
+				return resolve({
+					data: 'done'
+				})
+			}, 3000)
+		}
+	})
 }

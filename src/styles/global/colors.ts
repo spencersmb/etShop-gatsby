@@ -1,7 +1,10 @@
 export const colors = {
 	disabled: '#b5b5b5',
 	green: '#7ACC28',
-	red: '#FF6D4A',
+	red:{
+		i500:'#963753',
+		i800: `#541829`
+	},
 	primary: {
 		text: `#333F4F`,
 		pink: `#F95A86`
@@ -22,6 +25,7 @@ export const colors = {
 		i700: `#6A539F`,
 	},
 	teal:{
-		i500: `#18C3C3`
+		i300: `#98E8F1`,
+		i500: `#18C3C3`,
 	}
 }

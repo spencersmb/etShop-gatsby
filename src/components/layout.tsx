@@ -1,4 +1,5 @@
 import MyShoppingCart from '@components/cart/cartStore'
+import Footer from '@components/footer/footer'
 import React, { ReactNode, useEffect, useRef } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import ReduxToastr from 'react-redux-toastr'
@@ -35,11 +36,7 @@ const Layout = ({ children }: IlayoutProps) => {
 						<Header siteTitle={data.site.siteMetadata.title}/>
 						<PageContainer>
 							<main>{children}</main>
-							<footer>
-								© {new Date().getFullYear()}, Built with
-								{` `}
-								<a href='https://www.gatsbyjs.org'>Gatsby</a>
-							</footer>
+							<Footer/>
 							<ReduxToastr
 								key='toastr'
 								timeOut={3000}

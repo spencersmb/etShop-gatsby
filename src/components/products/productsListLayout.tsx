@@ -34,6 +34,7 @@ class ProductsListLayout extends Component<IProps> {
               name
               slug
               price
+              sub_header
               categories{
               	slug
               }
@@ -82,9 +83,7 @@ class ProductsListLayout extends Component<IProps> {
 														<h2>
 															{node.name}
 														</h2>
-														<p>
-															Font Trio: Script, Caps + Symbols
-														</p>
+														{node.sub_header && <p>{node.sub_header}</p>}
 													</ListItemTitle>
 												</ListItemTop>
 												<ListItemFooter className='ListItemFooter'>
@@ -122,12 +121,14 @@ const ListContainer = styled.div`
 	}
 
 	@media ${device.laptop} {
-		grid-column: 5 / 14;
+		grid-column: 5 / -1;
 		display: grid;
-		grid-template-columns: repeat(9, minmax(30px, ${col}));
+		//grid-template-columns: repeat(9, minmax(30px, ${col}));
+		grid-template-columns: repeat(9,minmax(30px,1fr));
 		grid-gap: ${gutter}px;
-		padding:85px 0 0;
+		padding:85px 30px 0 0;
 		align-items: stretch;
+		max-width: 1600px;
 	}
 	
 	@media ${device.laptop}{

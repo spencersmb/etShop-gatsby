@@ -36,8 +36,8 @@ interface INewState {
 
 type useSetStateType = [IPublicState, ReactDispatch<INewState>]
 
-export function useSetState (initialState: IPublicState): useSetStateType {
-	const [state, setState] = useReducer((originalState: IPublicState, newState: INewState) => ({ ...originalState, ...newState }),
+export function useSetState (initialState: any): any {
+	const [state, setState] = useReducer((originalState: any, newState: any) => ({ ...originalState, ...newState }),
 		initialState)
 
 	return [

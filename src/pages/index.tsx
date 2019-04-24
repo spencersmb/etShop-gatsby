@@ -66,8 +66,8 @@ const IndexPage = () => {
 					<ProductListContainer>
 						<StickyWrapper>
 							<Sticky
-								topOffset={0}
-								bottomOffset={80}
+								topOffset={-30}
+								bottomOffset={110}
 								disableCompensation={true}
 							>
 								{({ style, isSticky }) => {
@@ -75,8 +75,7 @@ const IndexPage = () => {
 										<div
 											style={{
 												...style,
-												marginTop: isSticky ? 150 : 85,
-												transition: 'margin .8s'
+												marginTop: isSticky ? 115 : 0
 											}}>
 											<ProductFilter
 												filter={state.selectedFilter}
@@ -90,17 +89,17 @@ const IndexPage = () => {
 						<ProductsListLayout filter={state.selectedFilter}/>
 					</ProductListContainer>
 				</StickyContainer>
-
-				<div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-					<Image/>
-				</div>
-
 			</PageContainer>
 		</Layout>
 	)
 }
 const PageContainer = styled.div`
 	background: ${colors.grey.i200};
+	padding-bottom: 30px;
+	@media ${device.laptop} {
+		padding-bottom: 70px;
+	}
+
 `
 const FilterBackground = styled.div`
 	display: none;
@@ -127,7 +126,7 @@ const StickyWrapper = styled.div`
 		z-index: 1;
 		grid-column: 2 / 5;
 		grid-row: 1;
-		//padding-top: 85px;
+		padding-top: 85px;
 	}
 		
 	

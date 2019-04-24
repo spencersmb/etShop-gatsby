@@ -44,6 +44,7 @@ export interface IProduct {
 	product_id: number,
 	id: string,
 	name: string,
+	sub_header: string,
 	slug: string,
 	type: string,
 	description: string,
