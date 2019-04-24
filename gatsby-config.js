@@ -172,6 +172,7 @@ module.exports = {
         headers: {
           "/*": [
             `Referrer-Policy: origin-when-cross-origin`,
+            `Access-Control-Allow-Origin: *`,
             `Expect-CT: enforce,max-age=604800`
           ]
         },                                  // option to add more headers. `Link` headers are transformed by the below criteria
