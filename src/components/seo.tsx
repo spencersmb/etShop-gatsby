@@ -100,6 +100,8 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 					>
 						<link rel='preload' as='stylesheet' type='text/css'
 									href='https://cloud.typography.com/7389876/7273412/css/fonts.css'/>
+						<link rel='stylesheet' type='text/css'
+									href='https://cloud.typography.com/7389876/7273412/css/fonts.css'/>
 						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}
 						{/*<link rel='dns-prefetch' href='//apis.google.com'/>*/}
 						{children ? children : null}
