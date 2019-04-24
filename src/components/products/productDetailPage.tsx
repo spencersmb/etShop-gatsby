@@ -133,7 +133,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 				>
 					// @ts-ignore
 					<link rel='preload' as='style' onLoad='this.rel = `stylesheet`' type='text/css'
-								href='https://cloud.typography.com/7389876/6653412/css/fonts.css'/>
+								href='https://cloud.typography.com/726336/6653412/css/fonts.css'/>
 					<link rel='canonical' href={`${process.env.GATSBY_DB}/products/${wcProduct.slug}`}/>
 					<script type='application/ld+json'>{JSON.stringify(this.jsonld)}</script>
 				</SEO>
