@@ -1,12 +1,28 @@
-// import { injectGlobal } from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 import cssReset from './cssReset'
 import { colors } from './colors'
 import toastr from '@styles/modules/toastr'
+import { withPrefix } from 'gatsby'
 
+// @ts-ignore
+// import SentinelSemiBoldItalic from '../../assets/fonts/Sentinel-SemiBoldItal.otf'
+// // @ts-ignore
+// import SentinelSemiBold from '../../assets/fonts/Sentinel-SemiBold.otf'
+// // @ts-ignore
+// import SentinelBold from '../../assets/fonts/Sentinel-Bold.otf'
+const customFont = withPrefix('/fonts/Sentinel-Semibold.woff2')
 export default createGlobalStyle`
 
   ${cssReset}
+  
+
+		
+	@font-face {
+    font-family: "Sentinel";
+    font-style: normal;
+    font-weight: 600;
+		src: url(${customFont}) format("woff2")
+	}
   
   body{
     font-family: 'Fira Sans', sans-serif;

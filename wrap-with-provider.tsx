@@ -12,7 +12,8 @@ import { withPrefix } from 'gatsby'
 export default ({ element }: { element: ReactNode }) => {
 	const store = createStore()
 	store.dispatch(loadProducts())
-	const customFont = withPrefix('/fonts/Sentinel-Medium.otf')
+	// const customFont = withPrefix('/fonts/Sentinel-Medium.otf')
+	// const css = withPrefix('/fonts/custom.css')
 
 	// check localstorage for user
 	// decode jwt and check if expired - if expired throw error and logout
@@ -49,23 +50,23 @@ export default ({ element }: { element: ReactNode }) => {
 			// navigate(`/page-2`)
 		})
 	// TODO: merchant ID for ET PAypal shop not test shop
-	console.log('customFont', customFont)
+	// console.log('customFont', customFont)
 
 	return <Provider store={store}>
 		<Helmet>
 			<script id='paypal-js'
 							src={`https://www.paypal.com/sdk/js?client-id=${process.env.GATSBY_PAYPAL_KEY}&disable-funding=credit,card&commit=true&locale=en_US&merchant-id=6Q52LNH4ART22`}/>
 			// @ts-ignore
-			<link rel='preload' as='style' onLoad='this.rel = `stylesheet`' type='text/css'
-						href='https://cloud.typography.com/7389876/6653412/css/fonts.css'/>
-			<link rel='preload' as='font' type='text/css'
-						href={customFont}/>
-			<noscript>
-				{
-					`<link rel='stylesheet' type='text/css'
-								href='https://cloud.typography.com/7389876/6653412/css/fonts.css'/>`
-				}
-			</noscript>
+			{/*<link rel='preload' as='style' onLoad='this.rel = `stylesheet`' type='text/css'*/}
+			{/*href='https://cloud.typography.com/7389876/6653412/css/fonts.css'/>*/}
+			{/*<link rel='preload' as='font' type='text/css'*/}
+			{/*/!*href={customFont}/>*!/*/}
+			{/*<noscript>*/}
+			{/*{*/}
+			{/*`<link rel='stylesheet' type='text/css'*/}
+			{/*href='https://cloud.typography.com/7389876/6653412/css/fonts.css'/>`*/}
+			{/*}*/}
+			{/*</noscript>*/}
 		</Helmet>
 		{element}
 	</Provider>
