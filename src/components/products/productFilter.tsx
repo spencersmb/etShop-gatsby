@@ -112,13 +112,14 @@ const FilterListItem = styled.li<IFilterListItem>`
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
-	margin: 0 0 0 20px;
-	padding: 10px 0;
+	margin: 20px 0 20px 20px;
+	padding: 0;
 	font-size: 15px;
 	font-weight: 400;
 	text-transform: uppercase;
 	color: ${props => props.selectedFilter ? 'white' : colors.purple.i400};
 	transition: color .3s;
+	position: relative;
 	
 	&:first-child{
 		padding-top: 0;
@@ -144,6 +145,7 @@ const FilterContent = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	padding-bottom: 3px;
 `
 const Svg = styled.span<IFilterListItem>`
 	width: 20px;
@@ -161,8 +163,10 @@ const Slider = styled.span<IFilterListItem>`
 	width: ${props => props.selectedFilter ? '100%' : '0%'};
 	display: block;
 	background: ${colors.teal.i500};
-	transition: color .3s, width .4s ;
-	margin-top: 2px;
+	transition: color .3s, width .4s;
+	position: absolute;
+	bottom: 0;
+	left: 0;
 `
 const FilterHeader = styled.div`
 	padding: 0 20px 0 20px;

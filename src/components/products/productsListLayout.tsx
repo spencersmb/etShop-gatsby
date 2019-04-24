@@ -112,6 +112,8 @@ const ListContainer = styled.div`
 	z-index: 1;
 	grid-row: 1;
 	padding: 50px 20px 0;
+	min-height: 600px;
+
 	
 	@media ${device.tablet} {
 		grid-column: 1 / -1;

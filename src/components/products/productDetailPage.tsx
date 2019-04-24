@@ -6,7 +6,6 @@ import { IMeta, IOGType } from '@et/types/SEO'
 import { jsonldImages, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
 import { graphql } from 'gatsby'
 import React, { Component } from 'react'
-import Helmet from '../../../wrap-with-provider'
 
 type Response = IGatsbyConfig & { wcProduct: IProduct }
 
@@ -131,9 +130,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 						...twitterDefaultMeta(this.twitterAddons)
 					]}
 				>
-					// @ts-ignore
-					<link rel='preload' as='style' onLoad='this.rel = `stylesheet`' type='text/css'
-								href='https://cloud.typography.com/726336/6653412/css/fonts.css'/>
+					
 					<link rel='canonical' href={`${process.env.GATSBY_DB}/products/${wcProduct.slug}`}/>
 					<script type='application/ld+json'>{JSON.stringify(this.jsonld)}</script>
 				</SEO>
