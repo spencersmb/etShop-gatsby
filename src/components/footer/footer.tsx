@@ -6,6 +6,7 @@ import { colors } from '@styles/global/colors'
 import { SentinelFamily } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
+import { fakeApiCall } from '@utils/apiUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { Link } from 'gatsby'
 import React from 'react'
@@ -33,6 +34,8 @@ const Footer = () => {
 		formData.append('email', state.email)
 		// formData.append('first_name', 'spencer')
 		try {
+			// const testResult = fakeApiCall()
+			// await testResult
 
 			// WORKING DATA
 			const result = await fetched(
@@ -157,13 +160,13 @@ const FooterContainer = styled.footer`
 	background: ${colors.grey.i200};
 	display: flex;
 	flex-direction: column;
-	padding: 0 20px;
 	overflow: hidden;
 `
 const FooterHeader = styled.div`
 	text-align: center;
 	display: flex;
 	flex-direction: column;
+	padding: 0 20px;
 	h4{
 		//font-family: Sentinel, serif;
 		${SentinelFamily};
@@ -194,37 +197,53 @@ const SvgCircle = styled.div`
 	width: 2300px;
 	z-index: 0;
 `
-const Logo = styled.div`
-	width: 260px;
-	svg{
-		width: 100%;
-	}
-`
 
 // footer nav
 const FooterNav = styled.nav`
-	padding: 45px 0 65px;
+	padding: 45px 0;
 	width: 100%;
 	background: white;
 	position: relative;
 	z-index: 0;
+	
+	@media ${device.laptop}{
+		padding: 45px 0 65px;
+	}
 `
+
 const FooterNavInner = styled.div`
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	max-width: 1200px;
 	margin: 0 auto;
 	z-index: 1;
 	position: relative;
+	align-items: center;
+	
+	@media ${device.laptop}{
+		flex-direction: row;
+		align-items: baseline;
+	}
+`
+const Logo = styled.div`
+	width: 260px;
+	margin-bottom: 30px;
+	svg{
+		width: 100%;
+	}
+	
+	@media ${device.laptop}{
+		margin-bottom: 0;
+	}
 `
 const Links = styled.ul`
 	display: flex;
-	flex-direction: row;
-	margin: 0;
+	flex-direction: column;
 	padding: 0;
 	flex: 1;
 	align-items: center;
 	justify-content: center;
+	margin-bottom: 30px;
 	li{
 		list-style: none;
 		text-transform: uppercase;
@@ -232,9 +251,22 @@ const Links = styled.ul`
 		color: ${colors.secondary.text};
 		font-size: 18px;
 		padding: 0 20px;
+		margin-bottom: 20px;
 	}
 	a{
 		color: ${colors.secondary.text};
+	}
+	
+	@media ${device.tablet}{
+		flex-direction: row;
+		
+		li{
+			margin-bottom: 0;
+		}
+	}
+	
+	@media ${device.laptop}{
+		margin-bottom: 0;
 	}
 `
 const SocialMediaLinks = styled.ul`

@@ -42,7 +42,7 @@ const HeroText = styled.div`
 	z-index: 2;
 	grid-column: 1 / -1;
 	max-width: 372px;
-	margin: 0 auto 60px;
+	margin: 60px auto 30px;
 	grid-row: 1;
 	
 	h1{
@@ -74,6 +74,8 @@ const HeroText = styled.div`
 	@media ${device.tablet}{
 		grid-column: 2 / 8;
 		max-width: none;
+		margin: 0 auto 60px;
+
 		h1{
 			font-size: 95px;
 			font-weight: 600;
@@ -95,15 +97,17 @@ const HeroImageContainer = styled.div`
 	position: relative;
 	grid-column: 3 / -1;
 	grid-row: 1;
-	width: 350px;
-	left: -50px;
-	top:-30px;
-	transform: rotate(30deg);
+	width: 519px;
+	left: -387px;
+	top:-125px;
+	transform: rotate(-203deg);
 	@media ${device.tablet}{
+		top:-30px;
 		width: 720px;
 		left: -20px;
 		position: relative;
 		grid-column: 8 / -1;
+		transform: rotate(30deg);
 	}
 	@media ${device.laptop}{
 		grid-column: 7 / -1;
@@ -121,8 +125,8 @@ const HeroImageContainer = styled.div`
 
 		}
 		@media ${device.laptop}{
-			width: 1000px;
-			top: -190px;
+			width: 1170px;
+			top: -137px;
 		}
 	}
 `

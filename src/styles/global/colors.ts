@@ -27,5 +27,6 @@ export const colors = {
 	teal:{
 		i300: `#98E8F1`,
 		i500: `#18C3C3`,
+		i800: `#147590`,
 	}
 }

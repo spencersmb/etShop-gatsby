@@ -169,7 +169,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-netlify`,
       options: {
-        headers: {},                                  // option to add more headers. `Link` headers are transformed by the below criteria
+        headers: {
+          ReferrerPolicy: "origin"
+        },                                  // option to add more headers. `Link` headers are transformed by the below criteria
         allPageHeaders: [
           // `Link: </icons/icon-48x48.png>; rel=preload; as=image`
         ],                           // option to add headers for all pages. `Link` headers are transformed by the below criteria
