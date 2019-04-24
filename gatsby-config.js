@@ -170,7 +170,10 @@ module.exports = {
       resolve: `gatsby-plugin-netlify`,
       options: {
         headers: {
-          ReferrerPolicy: "origin"
+          "/*": [
+            `Referrer-Policy: same-origin`,
+            `Expect-CT: enforce,max-age=604800`
+          ]
         },                                  // option to add more headers. `Link` headers are transformed by the below criteria
         allPageHeaders: [
           // `Link: </icons/icon-48x48.png>; rel=preload; as=image`
