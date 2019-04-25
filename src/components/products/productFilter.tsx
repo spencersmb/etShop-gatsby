@@ -94,12 +94,15 @@ const FilterContainer = styled.div`
 const Filter = styled.div`
 	background: ${colors.purple.i600};
 	border-radius: 15px;
-	box-shadow: 0px 30px 40px rgba(45, 45, 45, 0.26), 0px 10px 20px rgba(161,161,161,0.37);
+	box-shadow: 0 30px 40px rgba(45, 45, 45, 0.26), 0px 10px 20px rgba(161,161,161,0.37);
 	padding: 15px 0 0 0;
+	display: flex;
+	flex-direction: column;
 	ul{
 		margin:0;
 		padding: 20px 0 10px;
 		border-bottom: 2px solid ${colors.purple.i700};
+		flex: 1px;
 	}
 `
 
@@ -145,7 +148,7 @@ const FilterContent = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding-bottom: 3px;
+	margin-bottom: 4px;
 `
 const Svg = styled.span<IFilterListItem>`
 	width: 20px;

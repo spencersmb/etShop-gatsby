@@ -1,7 +1,8 @@
 import { css } from 'styled-components'
 import { withPrefix } from 'gatsby'
 
-const customFont = withPrefix('/fonts/Sentinel-Semibold.woff2')
+const testEnv = process.env.NODE_ENV === 'test'
+const customFont = testEnv ? '' : withPrefix('/fonts/Sentinel-Semibold.woff2')
 export const SentinelFamily = `font-family: "Sentinel A", "Sentinel B", serif;`
 export default css`
 	@font-face {

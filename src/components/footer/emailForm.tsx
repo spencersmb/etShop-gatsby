@@ -20,25 +20,28 @@ interface IProps {
 const PinkEmailForm = (props: IProps) => {
 	const { handleSubmit, handleTextInput, completed, error, hasError, submitting } = props
 	return (
-		<EmailBox onSubmit={handleSubmit}
-							completed={completed}>
+		<EmailBox
+			data-testid='emailBox'
+			onSubmit={handleSubmit}
+			completed={completed}>
 			<EmailBoxLeft>
 				<EmailIconSmall>
 					{renderSvg(svgs.Email)}
 				</EmailIconSmall>
 
 				{!completed && <input
+          data-testid='email-input'
           type='email'
           required={true}
           onChange={handleTextInput}
           placeholder='Enter your email address'/>}
 
 				{completed &&
-        <div className='success'>
+        <div data-testid='success' className='success'>
           Success! Please check your email to confirm subscription.
         </div>}
 				{hasError &&
-        <div className='error'>
+        <div data-testid='error' className='error'>
           There was a problem with your email. Please try again.
         </div>}
 			</EmailBoxLeft>

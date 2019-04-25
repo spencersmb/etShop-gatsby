@@ -19,6 +19,7 @@ const SubmitButton = (props: IProps) => {
 
 	return (
 		<ButtonWrapper
+			data-testid='submitBtn'
 			completed={completed}
 			submitting={submitting}
 			error={error}
@@ -30,11 +31,11 @@ const SubmitButton = (props: IProps) => {
 					{completed && renderSvg(svgs.Checkmark)}
 					{error && renderSvg(svgs.Close)}
 				</div>
-				<div className='submit__spinner'>
-					<svg className='spinner' viewBox='0 0 50 50'>
-						<circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
-					</svg>
-				</div>
+				{submitting && <div className='submit__spinner'>
+          <svg className='spinner' viewBox='0 0 50 50'>
+            <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
+          </svg>
+        </div>}
 			</button>
 		</ButtonWrapper>
 	)

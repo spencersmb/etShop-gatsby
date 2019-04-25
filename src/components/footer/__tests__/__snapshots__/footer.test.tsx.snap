@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product ListItem Tests renders correctly 1`] = `
+<footer
+  className="sc-gzVnrw kSfBgO"
+>
+  <div
+    className="sc-htoDjs iATXHD"
+  >
+    <h4>
+      Get notified
+    </h4>
+    <p>
+      when I release new products, send out promos or freebies.
+    </p>
+  </div>
+  <form
+    className="sc-htpNat cLLlHQ"
+    data-testid="emailBox"
+    onSubmit={[Function]}
+  >
+    <div
+      className="sc-bxivhb jrCKNH"
+    >
+      <div
+        className="sc-ifAKCX kwgzyd"
+      >
+        <test-file-stub />
+      </div>
+      <input
+        data-testid="email-input"
+        onChange={[Function]}
+        placeholder="Enter your email address"
+        required={true}
+        type="email"
+      />
+    </div>
+    <div
+      className="sc-EHOje jdwvFl"
+    >
+      <div
+        className="sc-bwzfXH iWASIS"
+      >
+        <button
+          disabled={false}
+          onClick={[Function]}
+        >
+          <div
+            className="buttonText"
+          >
+            Submit
+          </div>
+          <div
+            className="submitBtn--completed"
+          />
+          <div
+            className="submit__spinner"
+          >
+            <svg
+              className="spinner"
+              viewBox="0 0 50 50"
+            >
+              <circle
+                className="path"
+                cx="25"
+                cy="25"
+                fill="none"
+                r="20"
+                strokeWidth="6"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      className="sc-bZQynM jQZnaq"
+    >
+      <test-file-stub />
+    </div>
+  </form>
+  <nav
+    className="sc-iwsKbI cZdbVP"
+  >
+    <div
+      className="sc-dnqmqq gYokKc"
+    >
+      <test-file-stub />
+    </div>
+    <div
+      className="sc-gZMcBi iIeuLj"
+    >
+      <div
+        className="sc-gqjmRU imqYJd"
+        data-testid="footer-logo"
+      >
+        <test-file-stub />
+      </div>
+      <ul
+        className="sc-VigVT exqcIW"
+        data-testid="footer-links"
+      >
+        <li>
+          <a
+            href="/products"
+          >
+            Products
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://every-tuesday.com"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Blog
+          </a>
+        </li>
+        <li>
+          <a
+            href="/support"
+          >
+            Support
+          </a>
+        </li>
+        <li>
+          <a
+            href="/privacy"
+          >
+            Privacy Policy
+          </a>
+        </li>
+      </ul>
+      <ul
+        className="sc-jTzLTM hssemj"
+        data-testid="social-links"
+      >
+        <li>
+          <a
+            href="https://www.youtube.com/user/everytues"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <test-file-stub />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.instagram.com/everytuesday/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <test-file-stub />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.pinterest.com/teelac/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <test-file-stub />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.facebook.com/everytues"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <test-file-stub />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://twitter.com/teelacunningham"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <test-file-stub />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</footer>
+`;

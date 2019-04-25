@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Email Form Tests renders correctly 1`] = `
+<form
+  className="sc-bwzfXH itslVQ"
+  data-testid="emailBox"
+  onSubmit={[MockFunction]}
+>
+  <div
+    className="sc-htpNat heFObI"
+  >
+    <div
+      className="sc-bxivhb ibqzTF"
+    >
+      <test-file-stub />
+    </div>
+    <input
+      data-testid="email-input"
+      onChange={[MockFunction]}
+      placeholder="Enter your email address"
+      required={true}
+      type="email"
+    />
+  </div>
+  <div
+    className="sc-ifAKCX ccTkOJ"
+  >
+    <div
+      className="sc-bdVaJa grajUL"
+      data-testid="submitBtn"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        <div
+          className="buttonText"
+        >
+          Submit
+        </div>
+        <div
+          className="submitBtn--completed"
+        />
+      </button>
+    </div>
+  </div>
+  <div
+    className="sc-EHOje cqGxhS"
+  >
+    <test-file-stub />
+  </div>
+</form>
+`;
+
+exports[`Product ListItem Tests renders correctly 1`] = `
+<form
+  className="sc-bwzfXH itslVQ"
+  data-testid="emailBox"
+  onSubmit={[MockFunction]}
+>
+  <div
+    className="sc-htpNat heFObI"
+  >
+    <div
+      className="sc-bxivhb ibqzTF"
+    >
+      <test-file-stub />
+    </div>
+    <input
+      data-testid="email-input"
+      onChange={[MockFunction]}
+      placeholder="Enter your email address"
+      required={true}
+      type="email"
+    />
+  </div>
+  <div
+    className="sc-ifAKCX ccTkOJ"
+  >
+    <div
+      className="sc-bdVaJa grajUL"
+      data-testid="submitBtn"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        <div
+          className="buttonText"
+        >
+          Submit
+        </div>
+        <div
+          className="submitBtn--completed"
+        />
+      </button>
+    </div>
+  </div>
+  <div
+    className="sc-EHOje cqGxhS"
+  >
+    <test-file-stub />
+  </div>
+</form>
+`;

@@ -1,10 +1,8 @@
 import { useSetState } from '@components/account/dashboard'
-import SubmitButton from '@components/buttons/submitButton'
 import PinkEmailForm from '@components/footer/emailForm'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { SentinelFamily } from '@styles/global/fonts'
-import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { fakeApiCall } from '@utils/apiUtils'
 import { renderSvg } from '@utils/styleUtils'
@@ -98,10 +96,10 @@ const Footer = () => {
 					{renderSvg(svgs.FooterCircle)}
 				</SvgCircle>
 				<FooterNavInner>
-					<Logo>
+					<Logo data-testid='footer-logo'>
 						{renderSvg(svgs.ETLogo)}
 					</Logo>
-					<Links>
+					<Links data-testid='footer-links'>
 						<li>
 							<Link to={'/products'}>
 								Products
@@ -123,7 +121,7 @@ const Footer = () => {
 							</Link>
 						</li>
 					</Links>
-					<SocialMediaLinks>
+					<SocialMediaLinks data-testid='social-links'>
 						<li>
 							<a href='https://www.youtube.com/user/everytues' target='_blank' rel='noreferrer'>
 								{renderSvg(svgs.Youtube)}

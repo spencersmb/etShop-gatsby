@@ -2,20 +2,20 @@
 
 exports[`Product List Layout renders correctly 1`] = `
 <div
-  className="sc-bxivhb FOEMx"
+  className="sc-htoDjs dUAVdz"
   data-testid="productList"
 >
   <div
-    className="sc-ifAKCX cOQHPA"
+    className="sc-bdVaJa emmDvk"
   >
     <a
       href="/products/watercolor-texture-kit-vol-1"
     >
       <div
-        className="sc-EHOje lcXTeO"
+        className="sc-bwzfXH djTlgz"
       >
         <div
-          className="ListItemTop sc-gzVnrw emakLy"
+          className="ListItemTop sc-bxivhb cXSKfV"
         >
           <div
             className=" gatsby-image-wrapper"
@@ -82,18 +82,15 @@ exports[`Product List Layout renders correctly 1`] = `
             />
           </div>
           <div
-            className="sc-bZQynM jEOOWp"
+            className="sc-htpNat dKspSx"
           >
             <h2>
               Watercolor texture kit Vol. 1
             </h2>
-            <p>
-              Font Trio: Script, Caps + Symbols
-            </p>
           </div>
         </div>
         <div
-          className="ListItemFooter sc-htoDjs ctXSOi"
+          className="ListItemFooter sc-ifAKCX gYZfIE"
         >
           <span />
           <p>
@@ -105,30 +102,27 @@ exports[`Product List Layout renders correctly 1`] = `
     </a>
   </div>
   <div
-    className="sc-ifAKCX cOQHPA"
+    className="sc-bdVaJa emmDvk"
   >
     <a
       href="/products/honeymoon"
     >
       <div
-        className="sc-EHOje lcXTeO"
+        className="sc-bwzfXH djTlgz"
       >
         <div
-          className="ListItemTop sc-gzVnrw emakLy"
+          className="ListItemTop sc-bxivhb cXSKfV"
         >
           <div
-            className="sc-bZQynM jEOOWp"
+            className="sc-htpNat dKspSx"
           >
             <h2>
               Honeymoon
             </h2>
-            <p>
-              Font Trio: Script, Caps + Symbols
-            </p>
           </div>
         </div>
         <div
-          className="ListItemFooter sc-htoDjs ctXSOi"
+          className="ListItemFooter sc-ifAKCX gYZfIE"
         >
           <span />
           <p>

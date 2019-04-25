@@ -5,7 +5,6 @@ import createStore from './src/state/store/createStore'
 import { loadProducts } from './src/state/actions/productActions'
 import { loginUserSuccess } from './src/state/actions/authActions'
 import { loadUser, removeUserLocalStorage } from './src/utils/authUtils'
-import { withPrefix } from 'gatsby'
 // Instantiating store in `wrapRootElement` handler ensures:
 //  - there is fresh store for each SSR page
 //  - it will be called only once in browser, when React mounts

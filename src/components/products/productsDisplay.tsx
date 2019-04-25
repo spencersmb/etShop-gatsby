@@ -54,6 +54,7 @@ function ProductsDisplay () {
 
 const FilterBackground = styled.div`
 	display: none;
+	overflow: hidden;
 	span{
 		position: absolute;
 		font-size: 220px;

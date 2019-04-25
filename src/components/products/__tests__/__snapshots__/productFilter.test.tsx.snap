@@ -5,10 +5,10 @@ exports[`product Filter renders correctly 1`] = `
   className="sc-bdVaJa cBCgwi"
 >
   <div
-    className="sc-bwzfXH jhWzsf"
+    className="sc-bwzfXH drPIGs"
   >
     <div
-      className="sc-bZQynM ehDRkq"
+      className="sc-bZQynM emaqhv"
     >
       <h4>
         Filter
@@ -19,13 +19,13 @@ exports[`product Filter renders correctly 1`] = `
     </div>
     <ul>
       <li
-        className="sc-htpNat fKksXt"
+        className="sc-htpNat jCPLFI"
         data-filtertype="fonts"
         data-testid="filterItems"
         onClick={[Function]}
       >
         <div
-          className="sc-bxivhb eVrkJD"
+          className="sc-bxivhb fMBBWZ"
         >
           <span
             className="sc-ifAKCX dSdAbX"
@@ -35,17 +35,17 @@ exports[`product Filter renders correctly 1`] = `
           Fonts
         </div>
         <span
-          className="slider sc-EHOje dNVnlz"
+          className="slider sc-EHOje eSOWhS"
         />
       </li>
       <li
-        className="sc-htpNat fKksXt"
+        className="sc-htpNat jCPLFI"
         data-filtertype="textures"
         data-testid="filterItems"
         onClick={[Function]}
       >
         <div
-          className="sc-bxivhb eVrkJD"
+          className="sc-bxivhb fMBBWZ"
         >
           <span
             className="sc-ifAKCX dSdAbX"
@@ -55,17 +55,17 @@ exports[`product Filter renders correctly 1`] = `
           Textures
         </div>
         <span
-          className="slider sc-EHOje dNVnlz"
+          className="slider sc-EHOje eSOWhS"
         />
       </li>
       <li
-        className="sc-htpNat fKksXt"
+        className="sc-htpNat jCPLFI"
         data-filtertype="templates"
         data-testid="filterItems"
         onClick={[Function]}
       >
         <div
-          className="sc-bxivhb eVrkJD"
+          className="sc-bxivhb fMBBWZ"
         >
           <span
             className="sc-ifAKCX dSdAbX"
@@ -75,7 +75,7 @@ exports[`product Filter renders correctly 1`] = `
           Templates
         </div>
         <span
-          className="slider sc-EHOje dNVnlz"
+          className="slider sc-EHOje eSOWhS"
         />
       </li>
     </ul>
