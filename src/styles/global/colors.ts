@@ -16,6 +16,7 @@ export const colors = {
 	grey: {
 		i800: `#3F4B5B`,
 		i600: `#A3B2C2`,
+		i400: `#E2EAF2`,
 		i200: `#F7F8FC`
 	},
 	purple: {

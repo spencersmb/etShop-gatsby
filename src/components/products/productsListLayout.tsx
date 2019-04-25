@@ -189,14 +189,14 @@ const ListItemTitle = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	h2{
-		font-size: 21px;
+		font-size: 23px;
 		${SentinelFamily};
 		font-weight: bold;
 		line-height: 24px;
 		color: ${colors.grey.i800}
 	}
 	p{
-		font-size: 14px;
+		font-size: 16px;
 		${SentinelFamily};
 		font-weight: 500;
 		font-style: italic;
@@ -226,7 +226,7 @@ const ListItemFooter = styled.div`
 			left: 50%;
 			top: 50%;
 			transform: translateY(-50%) translateX(-50%);
-			font-size: 18px;
+			font-size: 21px;
 			font-family: Sentinel, serif;
 			font-weight: bold;
 			color: ${colors.grey.i800}

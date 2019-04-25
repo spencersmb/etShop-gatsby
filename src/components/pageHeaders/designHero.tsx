@@ -141,13 +141,6 @@ const HeroImage = () => (
               ...GatsbyImageSharpFluid
             }
           }
-        },
-        desktopSmall: file(relativePath: { eq: "Skinny-Jeans-product.jpg" }) {
-          childImageSharp {
-            fluid(maxWidth: 1200) {
-              ...GatsbyImageSharpFluid
-            }
-          }
         }
       }
     `}
