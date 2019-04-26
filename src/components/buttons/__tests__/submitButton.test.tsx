@@ -1,3 +1,4 @@
+import SubmitButton from '@components/buttons/submitButton'
 import PinkEmailForm from '@components/footer/emailForm'
 import React from 'react'
 import renderer from 'react-test-renderer'
@@ -10,12 +11,14 @@ import 'jest-dom/extend-expect'
 
 afterEach(cleanup)
 const defaultProps = {
-	handleSubmit: jest.fn(),
 	completed: false,
-	hasError: false,
 	submitting: false,
-	error: null,
-	handleTextInput: jest.fn((input: string) => (input))
+	error: null
+}
+
+const submittingProps = {
+	...defaultProps,
+	submitting: true
 }
 
 const completedProps = {
@@ -25,7 +28,6 @@ const completedProps = {
 
 const errorProps = {
 	...defaultProps,
-	hasError: true,
 	error: true
 
 }
@@ -34,16 +36,39 @@ describe('Submit Button Tests', () => {
 	it('renders correctly', () => {
 		const tree = renderer
 			.create(
-				<PinkEmailForm {...defaultProps}/>
+				<SubmitButton {...defaultProps}/>
 			)
 			.toJSON()
 		expect(tree).toMatchSnapshot()
 	})
 
-	it('Should render correct placeholder text', () => {
-		const modalRender = render(<PinkEmailForm {...defaultProps} />)
-		const element = modalRender.getByTestId('email-input')
-		expect(element.getAttribute('placeholder')).toEqual('Enter your email address')
+	it('Should render correct button text', () => {
+		const modalRender = render(<SubmitButton {...defaultProps} />)
+		const element = modalRender.getByText('Submit')
+		expect(element.innerHTML).toEqual('Submit')
 	})
 
+	it('Should not show spinner or completed contents', () => {
+		const modalRender = render(<SubmitButton {...defaultProps} />)
+		const element = modalRender.getByTestId('button')
+		expect(element.children.length).toEqual(1)
+	})
+
+	it('Should show spinner', () => {
+		const modalRender = render(<SubmitButton {...submittingProps} />)
+		const element = modalRender.getByTestId('spinner')
+		expect(element).toBeTruthy()
+	})
+
+	it('Should show error div', () => {
+		const modalRender = render(<SubmitButton {...errorProps} />)
+		const element = modalRender.getByTestId('error')
+		expect(element).toBeTruthy()
+	})
+
+	it('Should show success div', () => {
+		const modalRender = render(<SubmitButton {...completedProps} />)
+		const element = modalRender.getByTestId('success')
+		expect(element).toBeTruthy()
+	})
 })

@@ -25,13 +25,11 @@ const SubmitButton = (props: IProps) => {
 			error={error}
 			show={completed || !!error}
 		>
-			<button onClick={handleClick} disabled={submitting}>
+			<button onClick={handleClick} disabled={submitting} data-testid='button'>
 				<div className='buttonText'>Submit</div>
-				<div className='submitBtn--completed'>
-					{completed && renderSvg(svgs.Checkmark)}
-					{error && renderSvg(svgs.Close)}
-				</div>
-				{submitting && <div className='submit__spinner'>
+				{completed && <Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}
+				{error && <Error data-testid='error' show={error}>{renderSvg(svgs.Close)}</Error>}
+				{submitting && <div data-testid='spinner' className='submit__spinner'>
           <svg className='spinner' viewBox='0 0 50 50'>
             <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
           </svg>
@@ -48,6 +46,43 @@ interface IButtonProps {
 	show: boolean
 }
 
+interface ISVGProps {
+	show: boolean
+}
+
+const ButtonSvg = styled.div<ISVGProps>`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%) translateZ(0);
+	opacity: ${props => props.show ? 1 : 0};
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 101%;
+	height: 101%;
+	svg{
+		transition: .4s cubic-bezier(.82,-0.3,.11,1.26);
+		width: 25px;
+		height: 25px;
+		transform: scale(${props => props.show ? 1 : 0});
+	}
+`
+const Completed = styled(ButtonSvg)`
+	background: ${colors.teal.i300};
+	
+	svg{
+		fill: ${colors.teal.i500};
+	}
+`
+const Error = styled(ButtonSvg)`
+	background: ${colors.red.i500};
+	
+	svg{
+		fill: ${colors.red.i800};
+	}
+`
 const ButtonWrapper = styled.div<IButtonProps>`
 	width: 160px;
 	max-width: 160px;
@@ -77,43 +112,6 @@ const ButtonWrapper = styled.div<IButtonProps>`
 		
 		&:focus{
 			outline: none;
-		}
-	}
-	
-	.submitBtn--completed{
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translateX(-50%) translateY(-50%) translateZ(0);
-		opacity: ${props => props.show ? 1 : 0};
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		background: ${(props) => {
-	if (props.completed) {
-		return colors.teal.i300
-	}
-	if (props.error) {
-		return colors.red.i500
-	}
-	return 'transparent'
-}};
-		width: 101%;
-		height: 101%;
-		
-		svg{
-			transition: .4s cubic-bezier(.82,-0.3,.11,1.26);
-			width: 25px;
-			height: 25px;
-			transform: scale(${props => props.show ? 1 : 0});
-			fill: ${props => {
-	if (props.error) {
-		return colors.red.i800
-	} else {
-		return colors.teal.i500
-	}
-}};
 		}
 	}
 	

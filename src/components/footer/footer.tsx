@@ -32,8 +32,8 @@ const Footer = () => {
 		formData.append('email', state.email)
 		// formData.append('first_name', 'spencer')
 		try {
-			// const testResult = fakeApiCall()
-			// await testResult
+			const testResult = fakeApiCall('reject')
+			await testResult
 
 			// WORKING DATA
 			const result = await fetched(
