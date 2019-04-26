@@ -55,9 +55,8 @@ export default ({ element }: { element: ReactNode }) => {
 		<Helmet>
 			<script id='paypal-js'
 							src={`https://www.paypal.com/sdk/js?client-id=${process.env.GATSBY_PAYPAL_KEY}&disable-funding=credit,card&commit=true&locale=en_US&merchant-id=6Q52LNH4ART22`}/>
-			// @ts-ignore
-			<link rel='preload' as='style' onLoad='this.rel = `stylesheet`' type='text/css'
-						href='https://cloud.typography.com/7389876/7273412/css/fonts.css'/>
+			{/*<link rel='preload' as='style' onLoad='this.rel = `stylesheet`' type='text/css'*/}
+			{/*href='https://cloud.typography.com/7389876/7273412/css/fonts.css'/>*/}
 			{/*<noscript>*/}
 			{/*{*/}
 			{/*`<link rel='stylesheet' type='text/css'*/}

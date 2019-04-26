@@ -1,12 +1,13 @@
 import { createGlobalStyle } from 'styled-components'
 import cssReset from './cssReset'
-// import fonts from './fonts'
+import fonts from './fonts'
 import { colors } from './colors'
 import toastr from '@styles/modules/toastr'
 
 export default createGlobalStyle`
 
   ${cssReset}
+  ${fonts}
   
   body{
     font-family: 'Fira Sans', sans-serif;

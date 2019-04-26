@@ -1,9 +1,8 @@
 import { colors } from '@styles/global/colors'
 import { SentinelFamily } from '@styles/global/fonts'
-import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import React, { LiHTMLAttributes, ReactHTML } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 interface IProps {
