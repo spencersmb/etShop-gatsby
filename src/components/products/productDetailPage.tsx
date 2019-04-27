@@ -130,7 +130,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 						...twitterDefaultMeta(this.twitterAddons)
 					]}
 				>
-					
+
 					<link rel='canonical' href={`${process.env.GATSBY_DB}/products/${wcProduct.slug}`}/>
 					<script type='application/ld+json'>{JSON.stringify(this.jsonld)}</script>
 				</SEO>
@@ -155,6 +155,7 @@ export const productQuery = graphql`
 			}
 		){
 			name
+			sub_header
 			id
 			images{
 				thumbnail{
@@ -190,6 +191,7 @@ export const productQuery = graphql`
 				name
 				slug
 			}
+
 			type
 		}
 	}

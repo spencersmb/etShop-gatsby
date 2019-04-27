@@ -23,7 +23,7 @@ export default createGlobalStyle`
   }
   
   h1{
-      color: ${colors.text};
+		color: ${colors.text};
   }
   
   a{

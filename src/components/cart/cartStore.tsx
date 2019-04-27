@@ -1,7 +1,7 @@
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 import { OnPoseComplete } from '@et/types/Modal'
 import { IState } from '@et/types/State'
-import { cartLoadedComplete as cartLoaded, updateCartState } from '@redux/actions/cartActions'
+import { cartLoadedComplete as cartLoaded, cartToggle, updateCartState } from '@redux/actions/cartActions'
 import { getLocalStorageCart } from '@utils/cartUtils'
 import React, { useLayoutEffect, useRef } from 'react'
 import { connect } from 'react-redux'
@@ -17,13 +17,13 @@ interface IPropsPrivate {
 
 interface IPrivateActions {
 	cartLoadedComplete: () => any;
-	updateCartState: (cart: ILocalStorageCart) => any
+	updateCartState: (cart: ILocalStorageCart) => any,
+	openCart: () => void
 }
 
 interface IPropsPublic {
 	defaultOpenState?: boolean
 }
-
 
 export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPublic) => {
 	const target = useRef<HTMLElement | null>(null)
@@ -40,6 +40,10 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 			props.updateCartState(localStateCart)
 		}
 		props.cartLoadedComplete()
+
+		if (props.defaultOpenState) {
+			props.openCart()
+		}
 
 	}, [])
 
@@ -83,6 +87,7 @@ const mapStateToProps = (state: IState): { cartIsOpen: boolean } => {
 const mapDispatchToProps = (dispatch: Dispatch<Action>): IPrivateActions => {
 	return {
 		cartLoadedComplete: bindActionCreators(cartLoaded, dispatch),
+		openCart: bindActionCreators(cartToggle, dispatch),
 		updateCartState: bindActionCreators(updateCartState, dispatch)
 	}
 }

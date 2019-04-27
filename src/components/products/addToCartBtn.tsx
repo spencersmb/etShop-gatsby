@@ -1,4 +1,5 @@
 import { IState } from '@et/types/State'
+import { displayCurrency } from '@utils/priceUtils'
 import { addProductToCart, cartToggle as cartToggleAction, IAddProductAction } from '../../state/actions/cartActions'
 import React from 'react'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -47,7 +48,7 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 	return (
 		<>
 			<button data-testid='addToCart' onClick={handleAddToCart} disabled={disabled}>
-				Add To Cart
+				I want this <span>{displayCurrency(price)}</span>
 			</button>
 			{disabled && <div data-testid='warning'>Must have at least one computer license selected</div>}
 		</>

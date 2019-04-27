@@ -6,7 +6,8 @@ import { ICartItem, ICartState } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { colors } from '@styles/global/colors'
-import { SentinelFamily } from '@styles/global/fonts'
+import { GridFluid } from '@styles/global/cssGrid'
+import { SentinelBlack, SentinelFamily, SentinelMedItl } from '@styles/global/fonts'
 import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
 import { Link } from 'gatsby'
@@ -151,25 +152,27 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 	})
 
 	function selectChange (e: any) {
-		setState({
-			selectedLicense: e.target.value
-		})
+		console.log('e', e)
 
-		if (e.target.value === 'standard') {
-			setState({
-				selectedProduct: standardItem.current,
-				price: standardItem.current.on_sale
-					? standardItem.current.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price)
-			})
-		} else if (e.target.value === 'extended' && extendedItem.current) {
-			setState({
-				selectedProduct: extendedItem.current,
-				price: extendedItem.current.on_sale
-					? extendedItem.current.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price)
-			})
-		}
+		// setState({
+		// 	selectedLicense: e.target.value
+		// })
+		//
+		// if (e.target.value === 'standard') {
+		// 	setState({
+		// 		selectedProduct: standardItem.current,
+		// 		price: standardItem.current.on_sale
+		// 			? standardItem.current.sale_price
+		// 			: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price)
+		// 	})
+		// } else if (e.target.value === 'extended' && extendedItem.current) {
+		// 	setState({
+		// 		selectedProduct: extendedItem.current,
+		// 		price: extendedItem.current.on_sale
+		// 			? extendedItem.current.sale_price
+		// 			: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price)
+		// 	})
+		// }
 	}
 
 	function onDialChange (total: number | string) {
@@ -197,68 +200,95 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 
 	}
 
-	const { name, license: { hasExtendedLicense } } = props.product
+	const { name, sub_header, license: { hasExtendedLicense } } = props.product
 
 	return (
 		<Layout>
-			<ProductTitle>Item name: {name}</ProductTitle>
-			{/*Convert to readable price helper fn?*/}
-			<h2>price: {displayCurrency(state.price)}</h2>
-			<hr/>
-			<div>
-				<p>State:</p>
-				<p>Product: <b>{state.selectedProduct.slug}</b></p>
-				<p># of licenses: <b>{state.numberOfLicenses}</b></p>
-			</div>
-			<hr/>
-			<p>has extended license: <span
-				style={{ color: hasExtendedLicense ? 'green' : 'blue' }}>{JSON.stringify(hasExtendedLicense)}</span>
-			</p>
-			<div>
-				{state.payWhatYouWant && <div>
-          <span>PWYW enabled</span>
-          <NumberDialStyled
-            label='Pay what you want'
-            qty={state.price}
-            disableInput={state.inCart}
-            inputOnChange={onPwywChange}/>
-        </div>}
-			</div>
-			<hr/>
-			<p>
-				<LicenseSelect
-					onChange={selectChange}
-					selectedLicense={state.selectedLicense}
-					showDropdown={hasExtendedLicense}
-					inCart={state.inCart}
-				/>
-			</p>
-			<hr/>
-			<div style={{ paddingBottom: 20 }}>
-				{state.bulkDiscount && <span>Bulk discount of {CartPricingConfig.bulkDiscount} applied</span>}
-				{!state.payWhatYouWant && <NumberDialStyled
-          label='Select number of license'
-          qty={state.numberOfLicenses}
-          disableInput={state.inCart}
-          inputOnChange={onDialChange}/>}
-			</div>
-			<hr/>
-			<div>
-				{React.useMemo(() => (
-					<AddToCartBtn
-						handleAddToCartState={() => (setState({ inCart: true }))}
-						isInCart={state.inCart}
-						slug={product.slug}
-						selectedProduct={state.selectedProduct}
-						licenseQty={state.numberOfLicenses}
-						price={state.price}
-					/>), [state.inCart, state.price])}
-			</div>
-			<Link to='/page-2/'>Go to page 2</Link>
+			<ProductWrapper>
+				<SliderGrid>
+					<FlickityWrapper>
+
+					</FlickityWrapper>
+					<ProductTitle>
+						<h1>{name}</h1>
+						{sub_header && <p>{sub_header}</p>}
+					</ProductTitle>
+					{/*Convert to readable price helper fn?*/}
+
+					<LicenseSelectWrapper>
+						<LicenseSelect
+							standardLicPrice={standardItem.current.price}
+							extendedLicPrice={extendedItem.current ? extendedItem.current.price : ''}
+							onChange={selectChange}
+							selectedLicense={state.selectedLicense}
+							showDropdown={hasExtendedLicense}
+							inCart={state.inCart}
+						/>
+					</LicenseSelectWrapper>
+					{/*<div>*/}
+					{/*<p>Product: <b>{state.selectedProduct.slug}</b></p>*/}
+					{/*<p># of licenses: <b>{state.numberOfLicenses}</b></p>*/}
+					{/*</div>*/}
+
+					<LicenseTotal>
+						{state.bulkDiscount && <span>Bulk discount of {CartPricingConfig.bulkDiscount} applied</span>}
+						{!state.payWhatYouWant && <NumberDialStyled
+              label='Select number of license'
+              qty={state.numberOfLicenses}
+              disableInput={state.inCart}
+              inputOnChange={onDialChange}/>}
+					</LicenseTotal>
+
+					<Price>
+						{React.useMemo(() => (
+							<AddToCartBtn
+								handleAddToCartState={() => (setState({ inCart: true }))}
+								isInCart={state.inCart}
+								slug={product.slug}
+								selectedProduct={state.selectedProduct}
+								licenseQty={state.numberOfLicenses}
+								price={state.price}
+							/>), [state.inCart, state.price, state.numberOfLicenses])}
+					</Price>
+
+					{/*<p>has extended license: <span*/}
+					{/*style={{ color: hasExtendedLicense ? 'green' : 'blue' }}>{JSON.stringify(hasExtendedLicense)}</span>*/}
+					{/*</p>*/}
+
+					<div>
+						{state.payWhatYouWant && <div>
+              <span>PWYW enabled</span>
+              <NumberDialStyled
+                label='Pay what you want'
+                qty={state.price}
+                disableInput={state.inCart}
+                inputOnChange={onPwywChange}/>
+            </div>}
+					</div>
+
+
+				</SliderGrid>
+			</ProductWrapper>
+
 		</Layout>
 	)
 
 }
+const ProductWrapper = styled.div`
+	margin-top: 60px;
+	background: ${colors.grey.i200};
+`
+const SliderGrid = styled(GridFluid)`
+	grid-template-rows: auto auto auto 1fr;
+`
+const FlickityWrapper = styled.div`
+	grid-column: 2 / 9;
+	height: 686px; // remember to remove
+	background: #87DEDF;
+	margin: 0 15px 0 -30px;
+	grid-row: 1 / span 4;
+`
+
 const NumberDialStyled = styled(NumberDial)`
 	input{
 		color: red;
@@ -270,12 +300,42 @@ const NumberDialStyled = styled(NumberDial)`
 		};
 	}
 `
-const ProductTitle = styled.h1`
-		${SentinelFamily};
-		font-weight: 600;
-		font-style: normal;
-		color: ${colors.grey.i800};
-		font-size: 48px;
+const ProductTitle = styled.div`
+		margin: 50px 0 0;
+		grid-column: 9 / 14;
+		grid-row: 1;
+		
+		h1{
+			${SentinelBlack};
+			font-weight: 900;
+			font-style: normal;
+			color: ${colors.grey.i800};
+			font-size: 42px;
+			margin-bottom: 0;
+			line-height: 42px;
+		}
+		p{
+			${SentinelMedItl};
+			font-size: 25px;
+			color: ${colors.secondary.text};
+			font-weight: 500;
+			letter-spacing: -.8px;
+			margin:0;
+		}
+`
+const LicenseSelectWrapper = styled.div`
+	grid-column: 9 / 14;
+	grid-row: 2;
+`
+const LicenseTotal = styled.div`
+	background: #7f882f;
+	grid-column: 9 / 14;
+	grid-row: 3;
+`
+const Price = styled.div`
+	background: #885b21;
+	grid-column: 9 / 14;
+	grid-row: 4;
 `
 const mapStateToProps = (state: IState) => ({
 	cart: state.cart,

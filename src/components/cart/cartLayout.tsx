@@ -6,6 +6,7 @@ import { IModalState } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
+import { colors } from '@styles/global/colors'
 import { isPWYWItemInCart } from '@utils/cartUtils'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -95,7 +96,7 @@ const CartWrapper = styled.div`
 	height: 100%;
 	width: 100%;
 	overflow-y: scroll;
-	background: #8ac3c0;
+	background: ${colors.grey.i200};
 	//transform:translateY(0) translateX(0);
 	z-index: 4;
 	//transition: all 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);

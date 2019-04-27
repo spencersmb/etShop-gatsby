@@ -2,9 +2,11 @@
 const CreditCard = require('./svg-icons/genericCreditCard.svg')
 const Pinterest = require('./svg-icons/Pinterest.svg')
 const CardSmall = require('./svg-icons/Card-small.svg')
+const CardTop = require('./svg-icons/Card-top.svg')
 const Cart = require('./svg-icons/Cart.svg')
 const Checkmark = require('./svg-icons/Checkmark.svg')
 const Close = require('./svg-icons/Close.svg')
+const DottedLine = require('./svg-icons/Dotted-line.svg')
 const Email = require('./svg-icons/Email_outline.svg')
 const ETLogo = require('./svg-icons/et-shop-logo.svg')
 const Filter = require('./svg-icons/Filter.svg')
@@ -19,10 +21,12 @@ const Youtube = require('./svg-icons/Youtube.svg')
 
 export const svgs = {
 	CardSmall,
+	CardTop,
 	Cart,
 	Checkmark,
 	Close,
 	CreditCard,
+	DottedLine,
 	Email,
 	ETLogo,
 	Facebook,
