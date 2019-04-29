@@ -4,6 +4,7 @@ import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
 
 interface IProps {
@@ -15,6 +16,8 @@ interface IProps {
 	inCart?: boolean
 }
 
+const shadowHidden = '0px 30px 40px rgba(143,143,143,0), 0px 10px 20px rgba(161,161,161,0)'
+const shadow3 = '0px 30px 40px rgba(143, 143, 143, 0.26), 0px 10px 20px rgba(161, 161, 161, 0.37)'
 const ProductSelect = (
 	{ standardLicPrice, extendedLicPrice, onChange, selectedLicense, showDropdown, inCart }: IProps) => {
 
@@ -23,36 +26,39 @@ const ProductSelect = (
 		onChange(e.currentTarget.getAttribute('data-lic'))
 	}
 
-	function triggerLic (e: any) {
+	function triggerViewLicense (e: any) {
 		e.preventDefault()
 		console.log('view license')
-
 	}
-
-	console.log('std selected', selectedLicense === 'standard')
 
 	if (showDropdown) {
 		return (
 			<LicenseCardWrapper>
 				{/*standard lic*/}
-				<LicenseCard isSelected={selectedLicense === 'standard'}>
-					<div className='licenseCard__Header' onClick={handleLicClick} data-lic='standard'>
-						{renderSvg(svgs.CardTop)}
-						<div className='licenseCard__HeaderContent'>
-							<div className='licenseCard__title'>
+				<LicCard pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+					<LicHeader
+						pose={selectedLicense === 'standard' ? 'open' : 'closed'}
+						onClick={handleLicClick}
+						data-lic='standard'>
+						<LicSvg>
+							{renderSvg(svgs.CardTop)}
+						</LicSvg>
+						<LicHeaderContent>
+							<LicTitle pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
 								<span>type</span>
 								Standard License
-							</div>
-							<div className='licenseCard__price'>
+							</LicTitle>
+							<LicPrice pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
 								<span>$</span>
 								{standardLicPrice}
-							</div>
-						</div>
-						<div className='licenseCard__dash'>
+							</LicPrice>
+						</LicHeaderContent>
+						<LicDash pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
 							{renderSvg(svgs.DottedLine)}
-						</div>
-					</div>
-					<div className='licenseCard__content'>
+						</LicDash>
+					</LicHeader>
+					<LicFooterContent
+						pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
 						<ul>
 							<li>
 								<span>{renderSvg(svgs.Checkmark)}</span>
@@ -67,31 +73,37 @@ const ProductSelect = (
 								bullet 1
 							</li>
 						</ul>
-						<div className='licenseCard__viewLicBtn' onClick={triggerLic}>
+						<LicViewBtn onClick={triggerViewLicense}>
 							View license
-						</div>
-					</div>
-				</LicenseCard>
+						</LicViewBtn>
+					</LicFooterContent>
+				</LicCard>
 
 				{/*extended lic*/}
-				<LicenseCard isSelected={selectedLicense === 'extended'}>
-					<div className='licenseCard__Header' onClick={handleLicClick} data-lic='extended'>
-						{renderSvg(svgs.CardTop)}
-						<div className='licenseCard__HeaderContent'>
-							<div className='licenseCard__title'>
+				<LicCard pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
+					<LicHeader
+						pose={selectedLicense === 'extended' ? 'open' : 'closed'}
+						onClick={handleLicClick}
+						data-lic='extended'>
+						<LicSvg>
+							{renderSvg(svgs.CardTop)}
+						</LicSvg>
+						<LicHeaderContent>
+							<LicTitle pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
 								<span>type</span>
 								Extended License
-							</div>
-							<div className='licenseCard__price'>
+							</LicTitle>
+							<LicPrice pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
 								<span>$</span>
 								{extendedLicPrice}
-							</div>
-						</div>
-						<div className='licenseCard__dash'>
+							</LicPrice>
+						</LicHeaderContent>
+						<LicDash pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
 							{renderSvg(svgs.DottedLine)}
-						</div>
-					</div>
-					<div className='licenseCard__content'>
+						</LicDash>
+					</LicHeader>
+					<LicFooterContent
+						pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
 						<ul>
 							<li>
 								<span>{renderSvg(svgs.Checkmark)}</span>
@@ -106,11 +118,11 @@ const ProductSelect = (
 								bullet 1
 							</li>
 						</ul>
-						<div className='licenseCard__viewLicBtn' onClick={triggerLic}>
+						<LicViewBtn onClick={triggerViewLicense}>
 							View license
-						</div>
-					</div>
-				</LicenseCard>
+						</LicViewBtn>
+					</LicFooterContent>
+				</LicCard>
 				{/*<select*/}
 				{/*disabled={inCart}*/}
 				{/*data-testid='selectID'*/}
@@ -151,91 +163,138 @@ interface ILicenseCard {
 const LicenseCardWrapper = styled.div`
 	margin-bottom: 30px;
 `
-const LicenseCard = styled.div<ILicenseCard>`
-	border-top: 4px solid #DFE6ED;
-	${shadowStyles.shadow3};
-	
-	.licenseCard__Header{
-		position: relative;
-		svg{
-			display: block;
-		}
+const LicCardPosed = posed.div({
+	closed: {
+		borderColor: colors.grey.i600,
+		boxShadow: shadowHidden,
+		marginBottom: 0
+	},
+	open: {
+		borderColor: colors.purple.i500,
+		boxShadow: shadow3,
+		marginBottom: 20
 	}
-	
-	.licenseCard__HeaderContent{
+})
+const LicCard = styled(LicCardPosed)`
+	//margin-bottom: 15px;
+	border-radius: 0 0 15px 15px;
+	border-top: 4px solid;
+	overflow: hidden;
+`
+const LicCardTitleColor = posed.div({
+	closed: {
+		color: colors.grey.i600
+	},
+	open: {
+		color: colors.purple.i500
+	}
+})
+const LicTitle = styled(LicCardTitleColor)`
+	${SentinelMedItl};
+	font-weight: 500;
+	font-size: 28px;
+	font-style: italic;
+	color: ${colors.secondary.text};
+	position: relative;
+	line-height: 28px;
+	transition: .3s;
+	span{
 		position: absolute;
-		top: 15px;
+		top: -25px;	
 		left: 0;
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: baseline;
-		padding: 0 30px;
-	}	
-	
-	.licenseCard__title{
-		${SentinelMedItl};
-		font-weight: 500;
-		font-size: 28px;
 		color: ${colors.secondary.text};
-		position: relative;
-		line-height: 28px;
-		
-		span{
-			position: absolute;
-			top: -25px;	
-			left: 0;
-			color: ${colors.secondary.text};
-			font-family: Fira, sans-serif;
-			font-size: 12px;
-			letter-spacing: 3px;
-			text-transform: uppercase;
+		font-family: Fira, sans-serif;
+		font-size: 12px;
+		letter-spacing: 3px;
+		text-transform: uppercase;
+	}
+`
+const LicPrice = styled(LicCardTitleColor)`
+	${SentinelFamily};
+	font-weight: 600;
+	font-size: 44px;
+	color: ${colors.secondary.text};
+	line-height: 44px;
+	position: relative;
+	transition: .3s;
+	
+	span{
+		position: absolute;
+		top: 4px;
+		left: -13px;
+		font-size: 24px;
+		line-height: 24px;
+	}
+`
+const LicHeaderPosed = posed.div({
+	closed: {
+		height: 73
+	},
+	open: {
+		height: 'auto'
+	}
+})
+const LicHeader = styled(LicHeaderPosed)`
+	position: relative;
+	cursor: pointer;
+	
+	&:hover {
+		${LicTitle}, ${LicPrice} {
+			 color: ${colors.purple.i500} !important;
+		 }
+  }
+`
+const LicSvgPosed = posed.div({
+	closed: {
+		opacity: 0,
+		background: 'rgb(218, 218, 218, 0)'
+	},
+	open: {
+		opacity: 1,
+		background: 'rgb(218, 218, 218, 1)'
+	}
+})
+const LicSvg = styled(LicSvgPosed)`
+	display: flex;
+	opacity: 0;
+	svg{
+		height: 100%;
+		max-height: 81px;
+		flex:1;
+	}
+`
+const LicHeaderContent = styled.div`
+	position: absolute;
+	top: 15px;
+	left: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: baseline;
+	padding: 0 30px;
+`
+const ContentPosed = posed.div({
+	closed: {
+		height: 0,
+		opacity: 0
+	},
+	open: {
+		height: 'auto',
+		opacity: 1,
+		transition: {
+			delay: 200,
+			ease: 'backInOut'
 		}
 	}
-	
-	.licenseCard__price{
-		${SentinelFamily};
-		font-weight: 600;
-		font-size: 44px;
-		color: ${colors.secondary.text};
-		line-height: 44px;
-		position: relative;
-		
-		span{
-			position: absolute;
-			top: 4px;
-			left: -13px;
-			font-size: 24px;
-			line-height: 24px;
-		}
-	}
-	
-	.licenseCard__dash{
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    width: 100%;
-    height: 3px;
-    max-width: 465px;
-    margin: 0 auto;
-    transform: translateX(-50%);
-    opacity: .5;
-		
-		svg{
-			width: 100%;
-		}
-	}
-	
-	.licenseCard__content{
-		background: #fff;
-		border-radius: 0 0 15px 15px;
-		position: relative;
-		padding: 0 0 0 30px;
-		ul{
+})
+const LicFooterContent = styled(ContentPosed)`
+	overflow: hidden;
+	background: #fff;
+	padding-left: 30px;
+	ul{
 			margin: 0 0 15px;
 			padding: 10px 0 0;
-			
 			li{
 				list-style: none;
 				position: relative;
@@ -253,16 +312,40 @@ const LicenseCard = styled.div<ILicenseCard>`
 				}
 			}
 		}
+`
+const LicViewBtn = styled.div`
+	position: relative;
+	display: inline-block;
+	font-size: 14px;
+	text-transform: uppercase;
+	color: ${colors.teal.i500};
+	font-weight: 600;
+	padding-bottom: 20px;
+	cursor: pointer;
+`
+const LicDashPosed = posed.div({
+	closed: {
+		opacity: 0
+	},
+	open: {
+		opacity: .8
 	}
+})
+const LicDash = styled(LicDashPosed)`
+	position: absolute;
+	bottom: 12px;
+	left: 50%;
+	width: 100%;
+	height: 3px;
+	max-width: 465px;
+	margin: 0 auto;
+	transform: translateX(-50%);
+	opacity: 0;
 	
-	.licenseCard__viewLicBtn{
-		position: relative;
-		font-size: 14px;
-		text-transform: uppercase;
-		color: ${colors.teal.i500};
-		font-weight: 600;
-		padding-bottom: 20px;
-		cursor: pointer;
+	svg{
+		display: block;
+		width: 100%;
 	}
 `
+
 export default ProductSelect

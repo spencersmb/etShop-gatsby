@@ -32,7 +32,7 @@ const Footer = () => {
 		formData.append('email', state.email)
 		// formData.append('first_name', 'spencer')
 		try {
-			const testResult = fakeApiCall('reject')
+			const testResult = fakeApiCall()
 			await testResult
 
 			// WORKING DATA

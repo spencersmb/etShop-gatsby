@@ -151,28 +151,28 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 		previousCart.current = cart
 	})
 
-	function selectChange (e: any) {
-		console.log('e', e)
+	function selectChange (license: string) {
+		console.log('license', license)
 
-		// setState({
-		// 	selectedLicense: e.target.value
-		// })
-		//
-		// if (e.target.value === 'standard') {
-		// 	setState({
-		// 		selectedProduct: standardItem.current,
-		// 		price: standardItem.current.on_sale
-		// 			? standardItem.current.sale_price
-		// 			: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price)
-		// 	})
-		// } else if (e.target.value === 'extended' && extendedItem.current) {
-		// 	setState({
-		// 		selectedProduct: extendedItem.current,
-		// 		price: extendedItem.current.on_sale
-		// 			? extendedItem.current.sale_price
-		// 			: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price)
-		// 	})
-		// }
+		setState({
+			selectedLicense: license
+		})
+
+		if (license === 'standard') {
+			setState({
+				selectedProduct: standardItem.current,
+				price: standardItem.current.on_sale
+					? standardItem.current.sale_price
+					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price)
+			})
+		} else if (license === 'extended' && extendedItem.current) {
+			setState({
+				selectedProduct: extendedItem.current,
+				price: extendedItem.current.on_sale
+					? extendedItem.current.sale_price
+					: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price)
+			})
+		}
 	}
 
 	function onDialChange (total: number | string) {
@@ -206,9 +206,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 		<Layout>
 			<ProductWrapper>
 				<SliderGrid>
-					<FlickityWrapper>
-
-					</FlickityWrapper>
+					<FlickityWrapper/>
 					<ProductTitle>
 						<h1>{name}</h1>
 						{sub_header && <p>{sub_header}</p>}
@@ -275,7 +273,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 
 }
 const ProductWrapper = styled.div`
-	margin-top: 60px;
+	padding-top: 60px;
 	background: ${colors.grey.i200};
 `
 const SliderGrid = styled(GridFluid)`
@@ -318,6 +316,7 @@ const ProductTitle = styled.div`
 			${SentinelMedItl};
 			font-size: 25px;
 			color: ${colors.secondary.text};
+			font-style: italic;
 			font-weight: 500;
 			letter-spacing: -.8px;
 			margin:0;

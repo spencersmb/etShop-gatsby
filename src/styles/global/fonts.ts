@@ -10,7 +10,7 @@ const medItal = testEnv ? '' : withPrefix('/fonts/Sentinel-MediumItal.woff2')
 // export const SentinelFamily = `font-family: "Sentinel A", "Sentinel B", serif;`
 export const SentinelFamily = `font-family: "Sentinel", serif;`
 export const SentinelBlack = `font-family: "Sentinel Black", serif;`
-export const SentinelMedItl = `font-family: "Sentinel MediumItal", serif;`
+export const SentinelMedItl = `font-family: "Sentinel MediumItal", "Sentinel", serif;`
 export default css`
 	@font-face {
     font-family: "Sentinel";
