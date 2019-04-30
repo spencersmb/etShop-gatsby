@@ -152,7 +152,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 	})
 
 	function selectChange (license: string) {
-		console.log('license', license)
+		console.log('selected license', license)
 
 		setState({
 			selectedLicense: license

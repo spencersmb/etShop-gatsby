@@ -2,15 +2,15 @@
 
 exports[`Email Form Tests renders correctly 1`] = `
 <form
-  className="sc-bwzfXH itslVQ"
+  className="sc-ifAKCX cQEnyl"
   data-testid="emailBox"
   onSubmit={[MockFunction]}
 >
   <div
-    className="sc-htpNat heFObI"
+    className="sc-EHOje knnPKq"
   >
     <div
-      className="sc-bxivhb ibqzTF"
+      className="sc-bZQynM NwqNj"
     >
       <test-file-stub />
     </div>
@@ -23,13 +23,14 @@ exports[`Email Form Tests renders correctly 1`] = `
     />
   </div>
   <div
-    className="sc-ifAKCX ccTkOJ"
+    className="sc-gzVnrw ftOABS"
   >
     <div
-      className="sc-bdVaJa grajUL"
+      className="sc-bxivhb cJSPeO"
       data-testid="submitBtn"
     >
       <button
+        data-testid="button"
         disabled={false}
         onClick={[Function]}
       >
@@ -38,14 +39,11 @@ exports[`Email Form Tests renders correctly 1`] = `
         >
           Submit
         </div>
-        <div
-          className="submitBtn--completed"
-        />
       </button>
     </div>
   </div>
   <div
-    className="sc-EHOje cqGxhS"
+    className="sc-htoDjs krmHYt"
   >
     <test-file-stub />
   </div>

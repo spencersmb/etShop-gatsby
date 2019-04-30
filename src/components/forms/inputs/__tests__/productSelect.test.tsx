@@ -10,46 +10,72 @@ import ProductSelect from '../productSelect'
 
 afterEach(cleanup)
 const showDropDown = {
+	standardLicPrice: '15',
+	extendedLicPrice: '40',
 	showDropdown: true,
 	onChange: jest.fn(),
 	selectedLicense: 'standard'
 }
 const noDropDown = {
+	standardLicPrice: '15',
+	extendedLicPrice: '40',
 	showDropdown: false,
 	onChange: jest.fn(),
 	selectedLicense: 'standard'
 }
 describe('Product Select', () => {
 
-	it('renders correctly', () => {
-		const tree = renderer
-			.create(
-				<ProductSelect {...showDropDown}/>
-			)
-			.toJSON()
-		expect(tree).toMatchSnapshot()
+	it('Should render correct text for both licenses', () => {
+		const modalRender = render(<ProductSelect {...showDropDown}/>)
+		const standardSelect = modalRender.getByTestId('standard')
+		const extendedSelect = modalRender.getByTestId('extended')
+		expect(standardSelect.children.length).toEqual(1)
+		expect(extendedSelect.children.length).toEqual(1)
+		expect(standardSelect.innerHTML).toEqual('<span>type</span>Standard License')
+		expect(extendedSelect.innerHTML).toEqual('<span>type</span>Extended License')
 	})
 
-	it('Should render correct text for select options', () => {
+	it('Should render correct price for both licenses', () => {
 		const modalRender = render(<ProductSelect {...showDropDown}/>)
-		const select = modalRender.getByTestId('selectID')
-		expect(select.children.length).toEqual(2)
-		expect(select.children[0].innerHTML).toEqual('Standard')
-		expect(select.children[1].innerHTML).toEqual('Extended')
+		const standardSelect = modalRender.getByTestId('standardPrice')
+		const extendedSelect = modalRender.getByTestId('extendedPrice')
+		expect(standardSelect.children.length).toEqual(1)
+		expect(extendedSelect.children.length).toEqual(1)
+		expect(standardSelect.innerHTML).toEqual('<span>$</span>15')
+		expect(extendedSelect.innerHTML).toEqual('<span>$</span>40')
 	})
 
-	it('Should call onChange when clicked', () => {
+	it('Should call onChange when clicked with the correct extended type', () => {
 		const modalRender = render(<ProductSelect {...showDropDown}/>)
-		const select = modalRender.getByTestId('selectID')
-		fireEvent.change(select)
+		const select = modalRender.getByTestId('header')
+		select.click()
 		expect(showDropDown.onChange).toHaveBeenCalledTimes(1)
+		expect(showDropDown.onChange).toHaveBeenCalledWith('extended')
 	})
 
-	it('Should render no select item', () => {
+	it('Should render single select item', () => {
 		const modalRender = render(<ProductSelect {...noDropDown}/>)
-		const result = `<div><span>Standard</span></div>`
+		const wrapper = modalRender.getByTestId('wrapper')
 
-		expect(modalRender.baseElement.innerHTML).toEqual(result)
+		expect(wrapper.children.length).toEqual(1)
 	})
+
+	xit('Should call triggerViewLic when clicked', () => {
+		const modalRender = render(<ProductSelect {...showDropDown}/>)
+		const select = modalRender.getByTestId('viewLicBtn')
+		select.click()
+		expect(showDropDown.onChange).toHaveBeenCalledTimes(1)
+		expect(showDropDown.onChange).toHaveBeenCalledWith('extended')
+	})
+
+	// cant do snapshopts with Pose Elements
+	// xit('renders correctly', () => {
+	// 	const tree = renderer
+	// 		.create(
+	// 			<ProductSelect {...showDropDown}/>
+	// 		)
+	// 		.toJSON()
+	// 	expect(tree).toMatchSnapshot()
+	// })
 
 })

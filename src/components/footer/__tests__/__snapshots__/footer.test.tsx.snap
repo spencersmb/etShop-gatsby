@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Product ListItem Tests renders correctly 1`] = `
+exports[`Footer Tests renders correctly 1`] = `
 <footer
-  className="sc-gzVnrw kSfBgO"
+  className="sc-iwsKbI iIYczS"
 >
   <div
-    className="sc-htoDjs iATXHD"
+    className="sc-gZMcBi hElqkJ"
   >
     <h4>
       Get notified
@@ -15,15 +15,15 @@ exports[`Product ListItem Tests renders correctly 1`] = `
     </p>
   </div>
   <form
-    className="sc-htpNat cLLlHQ"
+    className="sc-EHOje gxOBQB"
     data-testid="emailBox"
     onSubmit={[Function]}
   >
     <div
-      className="sc-bxivhb jrCKNH"
+      className="sc-bZQynM hQazJB"
     >
       <div
-        className="sc-ifAKCX kwgzyd"
+        className="sc-gzVnrw kmLGqm"
       >
         <test-file-stub />
       </div>
@@ -36,12 +36,14 @@ exports[`Product ListItem Tests renders correctly 1`] = `
       />
     </div>
     <div
-      className="sc-EHOje jdwvFl"
+      className="sc-htoDjs bhZFqV"
     >
       <div
-        className="sc-bwzfXH iWASIS"
+        className="sc-ifAKCX kIktAd"
+        data-testid="submitBtn"
       >
         <button
+          data-testid="button"
           disabled={false}
           onClick={[Function]}
         >
@@ -50,54 +52,34 @@ exports[`Product ListItem Tests renders correctly 1`] = `
           >
             Submit
           </div>
-          <div
-            className="submitBtn--completed"
-          />
-          <div
-            className="submit__spinner"
-          >
-            <svg
-              className="spinner"
-              viewBox="0 0 50 50"
-            >
-              <circle
-                className="path"
-                cx="25"
-                cy="25"
-                fill="none"
-                r="20"
-                strokeWidth="6"
-              />
-            </svg>
-          </div>
         </button>
       </div>
     </div>
     <div
-      className="sc-bZQynM jQZnaq"
+      className="sc-dnqmqq jgwIwO"
     >
       <test-file-stub />
     </div>
   </form>
   <nav
-    className="sc-iwsKbI cZdbVP"
+    className="sc-VigVT fEPntw"
   >
     <div
-      className="sc-dnqmqq gYokKc"
+      className="sc-gqjmRU evmKLe"
     >
       <test-file-stub />
     </div>
     <div
-      className="sc-gZMcBi iIeuLj"
+      className="sc-jTzLTM kIerjd"
     >
       <div
-        className="sc-gqjmRU imqYJd"
+        className="sc-fjdhpX cyLcxw"
         data-testid="footer-logo"
       >
         <test-file-stub />
       </div>
       <ul
-        className="sc-VigVT exqcIW"
+        className="sc-jzJRlG fOqSXj"
         data-testid="footer-links"
       >
         <li>
@@ -132,7 +114,7 @@ exports[`Product ListItem Tests renders correctly 1`] = `
         </li>
       </ul>
       <ul
-        className="sc-jTzLTM hssemj"
+        className="sc-cSHVUG bctMro"
         data-testid="social-links"
       >
         <li>

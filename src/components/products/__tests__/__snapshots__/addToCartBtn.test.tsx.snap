@@ -7,7 +7,10 @@ Array [
     disabled={true}
     onClick={[Function]}
   >
-    Add To Cart
+    I want this 
+    <span>
+      $16.00
+    </span>
   </button>,
   <div
     data-testid="warning"

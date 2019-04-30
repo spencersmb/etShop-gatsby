@@ -1,5 +1,4 @@
 import { AddToCartBtn } from '@components/products/addToCartBtn'
-import { IProduct } from '@et/types/Products'
 import { ProductKey, testCartEmpty, testProducts } from '@redux/reduxTestUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
@@ -48,7 +47,7 @@ describe('AddToCart Button', () => {
 
 	it('Should render Add To Cart text', () => {
 		const modalRender = render(<AddToCartBtn {...propsDefault}/>)
-		expect(modalRender.getByTestId('addToCart').innerHTML).toEqual('Add To Cart')
+		expect(modalRender.getByTestId('addToCart').innerHTML).toEqual('I want this <span>$16.00</span>')
 	})
 
 	it('Should call not be able call addToCart Action', () => {

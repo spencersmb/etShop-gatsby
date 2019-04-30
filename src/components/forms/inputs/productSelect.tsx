@@ -1,6 +1,5 @@
 import { colors } from '@styles/global/colors'
 import { SentinelFamily, SentinelMedItl } from '@styles/global/fonts'
-import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
@@ -9,7 +8,7 @@ import styled from 'styled-components'
 
 interface IProps {
 	standardLicPrice: string,
-	extendedLicPrice: string,
+	extendedLicPrice?: string,
 	onChange: any,
 	selectedLicense: string,
 	showDropdown: boolean
@@ -33,7 +32,7 @@ const ProductSelect = (
 
 	if (showDropdown) {
 		return (
-			<LicenseCardWrapper>
+			<LicenseCardWrapper data-testid='wrapper'>
 				{/*standard lic*/}
 				<LicCard pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
 					<LicHeader
@@ -44,11 +43,15 @@ const ProductSelect = (
 							{renderSvg(svgs.CardTop)}
 						</LicSvg>
 						<LicHeaderContent>
-							<LicTitle pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+							<LicTitle
+								data-testid='standard'
+								pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
 								<span>type</span>
 								Standard License
 							</LicTitle>
-							<LicPrice pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+							<LicPrice
+								data-testid='standardPrice'
+								pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
 								<span>$</span>
 								{standardLicPrice}
 							</LicPrice>
@@ -73,7 +76,9 @@ const ProductSelect = (
 								bullet 1
 							</li>
 						</ul>
-						<LicViewBtn onClick={triggerViewLicense}>
+						<LicViewBtn
+							data-testid='viewLicBtn'
+							onClick={triggerViewLicense}>
 							View license
 						</LicViewBtn>
 					</LicFooterContent>
@@ -82,6 +87,7 @@ const ProductSelect = (
 				{/*extended lic*/}
 				<LicCard pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
 					<LicHeader
+						data-testid='header'
 						pose={selectedLicense === 'extended' ? 'open' : 'closed'}
 						onClick={handleLicClick}
 						data-lic='extended'>
@@ -89,11 +95,15 @@ const ProductSelect = (
 							{renderSvg(svgs.CardTop)}
 						</LicSvg>
 						<LicHeaderContent>
-							<LicTitle pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
+							<LicTitle
+								data-testid='extended'
+								pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
 								<span>type</span>
 								Extended License
 							</LicTitle>
-							<LicPrice pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
+							<LicPrice
+								data-testid='extendedPrice'
+								pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
 								<span>$</span>
 								{extendedLicPrice}
 							</LicPrice>
@@ -104,23 +114,25 @@ const ProductSelect = (
 					</LicHeader>
 					<LicFooterContent
 						pose={selectedLicense === 'extended' ? 'open' : 'closed'}>
-						<ul>
-							<li>
-								<span>{renderSvg(svgs.Checkmark)}</span>
-								bullet 1
-							</li>
-							<li>
-								<span>{renderSvg(svgs.Checkmark)}</span>
-								bullet 1
-							</li>
-							<li>
-								<span>{renderSvg(svgs.Checkmark)}</span>
-								bullet 1
-							</li>
-						</ul>
-						<LicViewBtn onClick={triggerViewLicense}>
-							View license
-						</LicViewBtn>
+						{selectedLicense === 'extended' && <>
+              <ul>
+                <li>
+                  <span>{renderSvg(svgs.Checkmark)}</span>
+                  bullet 1
+                </li>
+                <li>
+                  <span>{renderSvg(svgs.Checkmark)}</span>
+                  bullet 1
+                </li>
+                <li>
+                  <span>{renderSvg(svgs.Checkmark)}</span>
+                  bullet 1
+                </li>
+              </ul>
+              <LicViewBtn onClick={triggerViewLicense}>
+                View license
+              </LicViewBtn>
+            </>}
 					</LicFooterContent>
 				</LicCard>
 				{/*<select*/}
@@ -136,28 +148,56 @@ const ProductSelect = (
 	}
 
 	return (
-		<div onClick={handleLicClick} data-lic='standard'>
-			<div>
-				Standard License
-			</div>
-			<div>
-				{standardLicPrice}
-			</div>
-			<ul>
-				<li>bullet 1</li>
-				<li>bullet 1</li>
-				<li>bullet 1</li>
-			</ul>
-			<div>
-				<button>View license</button>
-			</div>
-		</div>
+		<LicenseCardWrapper data-testid='wrapper'>
+			{/*standard lic*/}
+			<LicCard pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+				<LicHeader
+					pose={selectedLicense === 'standard' ? 'open' : 'closed'}
+					onClick={handleLicClick}
+					data-lic='standard'>
+					<LicSvg>
+						{renderSvg(svgs.CardTop)}
+					</LicSvg>
+					<LicHeaderContent>
+						<LicTitle pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+							<span>type</span>
+							Standard License
+						</LicTitle>
+						<LicPrice pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+							<span>$</span>
+							{standardLicPrice}
+						</LicPrice>
+					</LicHeaderContent>
+					<LicDash pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+						{renderSvg(svgs.DottedLine)}
+					</LicDash>
+				</LicHeader>
+				<LicFooterContent
+					pose={selectedLicense === 'standard' ? 'open' : 'closed'}>
+					{selectedLicense === 'standard' && <>
+            <ul>
+              <li>
+                <span>{renderSvg(svgs.Checkmark)}</span>
+                bullet 1
+              </li>
+              <li>
+                <span>{renderSvg(svgs.Checkmark)}</span>
+                bullet 1
+              </li>
+              <li>
+                <span>{renderSvg(svgs.Checkmark)}</span>
+                bullet 1
+              </li>
+            </ul>
+            <LicViewBtn onClick={triggerViewLicense}>
+              View license
+            </LicViewBtn>
+          </>}
+				</LicFooterContent>
+			</LicCard>
+		</LicenseCardWrapper>
 	)
 
-}
-
-interface ILicenseCard {
-	isSelected: boolean;
 }
 
 const LicenseCardWrapper = styled.div`
@@ -293,6 +333,7 @@ const LicFooterContent = styled(ContentPosed)`
 	background: #fff;
 	padding-left: 30px;
 	ul{
+			min-height: 100px;
 			margin: 0 0 15px;
 			padding: 10px 0 0;
 			li{
