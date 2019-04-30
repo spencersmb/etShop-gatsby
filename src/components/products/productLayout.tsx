@@ -5,14 +5,15 @@ import Layout from '@components/layout'
 import { ICartItem, ICartState } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
+import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { SentinelBlack, SentinelFamily, SentinelMedItl } from '@styles/global/fonts'
 import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
-import { Link } from 'gatsby'
-import React, { Dispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
+import React, { Dispatch as ReactDispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import { connect } from 'react-redux'
+import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { CartPricingConfig } from '@components/cart/cartStatics'
@@ -20,6 +21,10 @@ import { CartPricingConfig } from '@components/cart/cartStatics'
 interface IPropsPrivate {
 	products: IProducts,
 	cart: ICartState
+}
+
+interface IPropsActions {
+	showModalAction: IShowModalAction
 }
 
 interface IPropsPublic {
@@ -46,7 +51,7 @@ interface INewState {
 	payWhatYouWant?: boolean
 }
 
-type useSetStateType = [IPublicState, Dispatch<INewState>]
+type useSetStateType = [IPublicState, ReactDispatch<INewState>]
 
 function useSetState (initialState: any): useSetStateType {
 	const [state, setState] = useReducer((originalState: IPublicState, newState: INewState) => ({ ...originalState, ...newState }),
@@ -57,9 +62,10 @@ function useSetState (initialState: any): useSetStateType {
 		setState
 	]
 }
-
-export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
-	const { product, products, cart } = props
+// TODO: Refactor now that standardItem and extendedItem are always present
+// switch off of has ext license data point instead if needed
+export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsActions) => {
+	const { product, products, cart, showModalAction } = props
 	const [state, setState] = useSetState({
 		selectedProduct: product,
 		selectedLicense: 'standard',
@@ -215,11 +221,12 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate) => {
 
 					<LicenseSelectWrapper>
 						<LicenseSelect
+							showModal={showModalAction}
+							license={standardItem.current.license}
 							standardLicPrice={standardItem.current.price}
 							extendedLicPrice={extendedItem.current ? extendedItem.current.price : ''}
 							onChange={selectChange}
 							selectedLicense={state.selectedLicense}
-							showDropdown={hasExtendedLicense}
 							inCart={state.inCart}
 						/>
 					</LicenseSelectWrapper>
@@ -340,4 +347,9 @@ const mapStateToProps = (state: IState) => ({
 	cart: state.cart,
 	products: state.products
 })
-export default connect<IPropsPrivate, {}, IPropsPublic, IState>(mapStateToProps)(ProductLayout)
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+	return {
+		showModalAction: bindActionCreators(showModal, dispatch)
+	}
+}
+export default connect<IPropsPrivate, IPropsActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(ProductLayout)

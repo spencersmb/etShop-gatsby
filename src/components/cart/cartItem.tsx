@@ -107,13 +107,13 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	return (
 		<div>
 			<div data-testid='productName'>{products[cartIndex].name}</div>
-			<div>
-				<LicenseSelect
-					onChange={handleLicenseChange}
-					selectedLicense={cart.items[cartIndex].extended ? 'extended' : 'standard'}
-					showDropdown={products[cartIndex].license.hasExtendedLicense}
-				/>
-			</div>
+			{/*<div>*/}
+			{/*<LicenseSelect*/}
+			{/*onChange={handleLicenseChange}*/}
+			{/*selectedLicense={cart.items[cartIndex].extended ? 'extended' : 'standard'}*/}
+			{/*showDropdown={products[cartIndex].license.hasExtendedLicense}*/}
+			{/*/>*/}
+			{/*</div>*/}
 			{bulkDiscount &&
       <span data-testid='bulkDiscount'>Bulk discount of {CartPricingConfig.bulkDiscount} applied</span>}
 			<NumberDial

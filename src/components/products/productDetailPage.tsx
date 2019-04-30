@@ -166,14 +166,20 @@ export const productQuery = graphql`
 				name
 			}
 			license{
-				extendedItem{
-					slug
-				}
+				type
 				hasExtendedLicense
 				standardItem{
 					slug
+					bullets{
+						bullet_point
+					}
 				}
-				type
+				extendedItem{
+					slug
+					bullets{
+						bullet_point
+					}
+				}
 			}
 			date_created_gmt
 			date_modified_gmt

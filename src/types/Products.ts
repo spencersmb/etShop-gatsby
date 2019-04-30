@@ -39,7 +39,9 @@ interface Itag {
 	name: string,
 	slug: string
 }
-
+export interface IProductBullet {
+	bullet_point: string
+}
 export interface IProduct {
 	product_id: number,
 	id: string,
@@ -63,11 +65,13 @@ export interface IProduct {
 		type: string,
 		// may not need this if we are testing the extendedItem itself
 		hasExtendedLicense: boolean,
-		standardItem?: {
-			slug: string
+		standardItem: {
+			slug: string,
+			bullets: IProductBullet[]
 		},
-		extendedItem?: {
-			slug: string
+		extendedItem: {
+			slug: string,
+			bullets: IProductBullet[]
 		}
 	},
 	features: {
