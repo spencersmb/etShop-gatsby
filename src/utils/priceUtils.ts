@@ -3,6 +3,10 @@ import { IProduct } from '@et/types/Products'
 import _ from 'lodash'
 import { CartPricingConfig } from '@components/cart/cartStatics'
 
+
+export const displayPercent = (percent: number) => {
+	return percent * 100
+}
 /*
 * * Tested!
 Check and return a discounted price based on qty set in config

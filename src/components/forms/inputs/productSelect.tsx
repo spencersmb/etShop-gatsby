@@ -101,7 +101,7 @@ const ProductSelect = (
 }
 
 const LicenseCardWrapper = styled.div`
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 `
 
 export default ProductSelect

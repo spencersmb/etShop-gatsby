@@ -2,6 +2,7 @@ export const colors = {
 	disabled: '#b5b5b5',
 	green: '#7ACC28',
 	red:{
+		warning: '#FF6363',
 		i500:'#963753',
 		i800: `#541829`
 	},

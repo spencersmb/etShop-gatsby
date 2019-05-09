@@ -1,3 +1,4 @@
+import LicenseQtyCard from '@components/cards/licenseQtyCard'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
 import LicenseSelect from '@components/forms/inputs/productSelect'
@@ -6,6 +7,7 @@ import { ICartItem, ICartState } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { SentinelBlack, SentinelFamily, SentinelMedItl } from '@styles/global/fonts'
@@ -62,6 +64,7 @@ function useSetState (initialState: any): useSetStateType {
 		setState
 	]
 }
+
 // TODO: Refactor now that standardItem and extendedItem are always present
 // switch off of has ext license data point instead if needed
 export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsActions) => {
@@ -92,7 +95,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 			// 2. Set the correct item
 			const selectedProduct = cartItem.extended && extendedItem.current ? extendedItem.current : standardItem.current
-			const bulkDiscount: boolean = cartItem.qty >= CartPricingConfig.minQuantity
+			const bulkDiscountCalc: boolean = cartItem.qty >= CartPricingConfig.minQuantity
 
 			// 3. Set state
 			setState({
@@ -100,7 +103,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				selectedLicense: cartItem.extended ? 'extended' : 'standard',
 				numberOfLicenses: cartItem.qty,
 				inCart: true,
-				bulkDiscount,
+				bulkDiscount: bulkDiscountCalc,
 				payWhatYouWant: selectedProduct.pwyw,
 				price: cartItem.price
 			})
@@ -134,7 +137,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 					// 2. Set the correct item
 					const selectedProduct = cartItem.extended && extendedItem.current ? extendedItem.current : standardItem.current
-					const bulkDiscount: boolean = cartItem.qty >= CartPricingConfig.minQuantity
+					const bulkDiscountCalc: boolean = cartItem.qty >= CartPricingConfig.minQuantity
 
 					// 3. Set state
 					setState({
@@ -142,7 +145,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						selectedLicense: cartItem.extended ? 'extended' : 'standard',
 						numberOfLicenses: cartItem.qty,
 						inCart: true,
-						bulkDiscount,
+						bulkDiscount: bulkDiscountCalc,
 						payWhatYouWant: selectedProduct.pwyw,
 						price: cartItem.price
 					})
@@ -207,7 +210,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	}
 
 	const { name, sub_header, license: { hasExtendedLicense } } = props.product
-
+	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
 	return (
 		<Layout>
 			<ProductWrapper>
@@ -234,15 +237,27 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					{/*<p>Product: <b>{state.selectedProduct.slug}</b></p>*/}
 					{/*<p># of licenses: <b>{state.numberOfLicenses}</b></p>*/}
 					{/*</div>*/}
+					{!payWhatYouWant &&
+          <LicenseQtyWrapper>
+            <LicenseQtyCard
+              bulkDiscount={bulkDiscount}
+              inCart={inCart}
+              numberOfLicenses={numberOfLicenses}
+              onDialChange={onDialChange}/>
+          </LicenseQtyWrapper>
+					}
 
-					<LicenseTotal>
-						{state.bulkDiscount && <span>Bulk discount of {CartPricingConfig.bulkDiscount} applied</span>}
-						{!state.payWhatYouWant && <NumberDialStyled
-              label='Select number of license'
-              qty={state.numberOfLicenses}
+					{state.payWhatYouWant &&
+          <PWYWWrapper>
+            <span>PWYW enabled</span>
+            <NumberDialStyled
+              label='Pay what you want'
+              qty={state.price}
               disableInput={state.inCart}
-              inputOnChange={onDialChange}/>}
-					</LicenseTotal>
+              inputOnChange={onPwywChange}/>
+          </PWYWWrapper>
+					}
+
 
 					<Price>
 						{React.useMemo(() => (
@@ -260,17 +275,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					{/*style={{ color: hasExtendedLicense ? 'green' : 'blue' }}>{JSON.stringify(hasExtendedLicense)}</span>*/}
 					{/*</p>*/}
 
-					<div>
-						{state.payWhatYouWant && <div>
-              <span>PWYW enabled</span>
-              <NumberDialStyled
-                label='Pay what you want'
-                qty={state.price}
-                disableInput={state.inCart}
-                inputOnChange={onPwywChange}/>
-            </div>}
-					</div>
-
 
 				</SliderGrid>
 			</ProductWrapper>
@@ -279,12 +283,19 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	)
 
 }
+const productRowGap = styled.div`
+	margin-bottom: 30px;
+`
 const ProductWrapper = styled.div`
 	padding-top: 60px;
 	background: ${colors.grey.i200};
 `
 const SliderGrid = styled(GridFluid)`
 	grid-template-rows: auto auto auto 1fr;
+	grid-row-gap: 0;
+	@media ${device.tablet}{
+		grid-row-gap: 0;
+	}
 `
 const FlickityWrapper = styled.div`
 	grid-column: 2 / 9;
@@ -293,7 +304,10 @@ const FlickityWrapper = styled.div`
 	margin: 0 15px 0 -30px;
 	grid-row: 1 / span 4;
 `
-
+const LicenseQtyWrapper = styled(productRowGap)`
+	grid-column: 9 / 14;
+	grid-row: 3;
+`
 const NumberDialStyled = styled(NumberDial)`
 	input{
 		color: red;
@@ -305,8 +319,8 @@ const NumberDialStyled = styled(NumberDial)`
 		};
 	}
 `
-const ProductTitle = styled.div`
-		margin: 50px 0 0;
+const ProductTitle = styled(productRowGap)`
+		margin: 40px 0 30px;
 		grid-column: 9 / 14;
 		grid-row: 1;
 		
@@ -329,12 +343,11 @@ const ProductTitle = styled.div`
 			margin:0;
 		}
 `
-const LicenseSelectWrapper = styled.div`
+const LicenseSelectWrapper = styled(productRowGap)`
 	grid-column: 9 / 14;
 	grid-row: 2;
 `
-const LicenseTotal = styled.div`
-	background: #7f882f;
+const PWYWWrapper = styled(productRowGap)`
 	grid-column: 9 / 14;
 	grid-row: 3;
 `

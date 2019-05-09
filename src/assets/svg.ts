@@ -6,6 +6,7 @@ const CardTop = require('./svg-icons/Card-top.svg')
 const Cart = require('./svg-icons/Cart.svg')
 const Checkmark = require('./svg-icons/Checkmark.svg')
 const Close = require('./svg-icons/Close.svg')
+const Computer = require('./svg-icons/Computer.svg')
 const DottedLine = require('./svg-icons/Dotted-line.svg')
 const Email = require('./svg-icons/Email_outline.svg')
 const ETLogo = require('./svg-icons/et-shop-logo.svg')
@@ -25,6 +26,7 @@ export const svgs = {
 	Cart,
 	Checkmark,
 	Close,
+	Computer,
 	CreditCard,
 	DottedLine,
 	Email,

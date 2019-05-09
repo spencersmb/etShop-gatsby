@@ -71,14 +71,12 @@ const shadowHidden = '0px 30px 40px rgba(143,143,143,0), 0px 10px 20px rgba(161,
 const shadow3 = '0px 30px 40px rgba(143, 143, 143, 0.26), 0px 10px 20px rgba(161, 161, 161, 0.37)'
 const LicCardPosed = posed.div({
 	closed: {
-		borderColor: colors.grey.i600,
-		boxShadow: shadowHidden,
-		marginBottom: 0
+		borderColor: 'rgb(161, 130, 233, 0)',
+		boxShadow: shadowHidden
 	},
 	open: {
-		borderColor: colors.purple.i500,
-		boxShadow: shadow3,
-		marginBottom: 20
+		borderColor: 'rgb(161, 130, 233, 1)',
+		boxShadow: shadow3
 	}
 })
 const LicCard = styled(LicCardPosed)`
@@ -199,7 +197,7 @@ const LicFooterContent = styled(ContentPosed)`
 	background: #fff;
 	padding-left: 30px;
 	ul{
-			min-height: 100px;
+			min-height: 30px;
 			margin: 0 0 15px;
 			padding: 10px 0 0;
 			li{
