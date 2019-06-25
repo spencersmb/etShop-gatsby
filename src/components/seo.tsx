@@ -86,17 +86,17 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 								content: '800'
 							}
 						]
-							.concat(
-								(keywords && keywords.length > 0)
-									? {
-										name: `keywords`,
-										content: keywords.join(`, `)
-									}
-									: []
-							)
-							.concat((meta && meta.length > 0)
-								? meta
-								: [])}
+						.concat(
+							(keywords && keywords.length > 0)
+								? {
+									name: `keywords`,
+									content: keywords.join(`, `)
+								}
+								: []
+						)
+						.concat((meta && meta.length > 0)
+							? meta
+							: [])}
 					>
 
 						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}
