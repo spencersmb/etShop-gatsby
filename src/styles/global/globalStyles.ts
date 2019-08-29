@@ -24,6 +24,7 @@ export default createGlobalStyle`
   
   h1{
 		color: ${colors.text};
+		font-family: "Sentinel Black", serif;
   }
   
   a{

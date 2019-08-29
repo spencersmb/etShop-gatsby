@@ -325,7 +325,6 @@ const ProductTitle = styled(productRowGap)`
 		grid-row: 1;
 		
 		h1{
-			${SentinelBlack};
 			font-weight: 900;
 			font-style: normal;
 			color: ${colors.grey.i800};

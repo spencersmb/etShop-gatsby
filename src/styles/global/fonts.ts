@@ -18,12 +18,12 @@ export default css`
     font-weight: 600;
 		src: url(${customFont}) format("woff2")
 	}
-	@font-face {
-		font-family: "Sentinel Black";
-		font-style: normal;
-		font-weight: 900;
-		src: url(${black}) format("woff2")
-	}
+	// @font-face {
+	// 	font-family: "Sentinel Black";
+	// 	font-style: normal;
+	// 	font-weight: 900;
+	// 	src: url(${black}) format("woff2")
+	// }
 	@font-face {
 		font-family: "Sentinel MediumItal";
 		font-style: italic;

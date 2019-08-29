@@ -177,6 +177,7 @@ module.exports = {
           ]
         }, // option to add more headers. `Link` headers are transformed by the below criteria
         allPageHeaders: [
+          // "Link: </static/fonts/Sentinel-Black.woff2>; rel=preload; as=font"
           // `Link: </icons/icon-48x48.png>; rel=preload; as=image`
         ],// option to add headers for all pages. `Link` headers are transformed by the below criteria
         mergeSecurityHeaders: true,// boolean to turn off the default security headers

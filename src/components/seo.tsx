@@ -1,5 +1,6 @@
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { ISeo } from '@et/types/SEO'
+import fonts from '@styles/global/fonts'
 import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
@@ -13,6 +14,16 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 					description || data.site.siteMetadata.description
 				return (
 					<Helmet
+						style={[{
+							'cssText': `
+								@font-face {
+									font-family: "Sentinel Black
+									font-style: normal;
+									font-weight: 900;
+									src: url(/fonts/Sentinel-Black.woff2) format("woff2")
+								}
+        			`
+						}]}
 						htmlAttributes={{
 							lang
 						}}
@@ -86,21 +97,33 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 								content: '800'
 							}
 						]
-						.concat(
-							(keywords && keywords.length > 0)
-								? {
-									name: `keywords`,
-									content: keywords.join(`, `)
-								}
-								: []
-						)
-						.concat((meta && meta.length > 0)
-							? meta
-							: [])}
+							.concat(
+								(keywords && keywords.length > 0)
+									? {
+										name: `keywords`,
+										content: keywords.join(`, `)
+									}
+									: []
+							)
+							.concat((meta && meta.length > 0)
+								? meta
+								: [])}
 					>
 
 						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}
 						{/*<link rel='dns-prefetch' href='//apis.google.com'/>*/}
+						<link rel='preload'
+									as='font'
+									type='font/woff2'
+									href={`/fonts/Sentinel-Black.woff2`}/>
+						<style type='text/css'>{`
+								@font-face {
+									font-family: "Sentinel Black";
+									font-style: normal;
+									font-weight: 900;
+									src: url(/fonts/Sentinel-Black.woff2) format("woff2");
+								}
+						`}</style>
 						{children ? children : null}
 					</Helmet>
 				)
