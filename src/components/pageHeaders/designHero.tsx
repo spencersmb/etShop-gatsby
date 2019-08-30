@@ -12,10 +12,10 @@ function DesignHero () {
 		<HeroContainer>
 			<GridFluid>
 				<HeroText>
-					<h1>
+					<h1 className={'sentinel-semibold'}>
 						Design Resources
 					</h1>
-					<h3>
+					<h3 className={`sentinel-semibold`}>
 						for your creative projects
 					</h3>
 					<p>
@@ -47,7 +47,6 @@ const HeroText = styled.div`
 	
 	h1{
 		//font-family: "Sentinel", "Sentinel A", serif;
-		${SentinelFamily};
 		font-style: normal;
 		font-weight: 600;
 		letter-spacing: -.5px;
@@ -58,7 +57,6 @@ const HeroText = styled.div`
 	}
 	h3{
 		//font-family: "Sentinel", serif;
-		${SentinelFamily};
 		font-style: italic;
 		font-weight: 600;
 		color: ${colors.primary.pink};

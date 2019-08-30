@@ -1,6 +1,6 @@
 import { IProductBullet } from '@et/types/Products'
 import { colors } from '@styles/global/colors'
-import { SentinelFamily, SentinelMedItl } from '@styles/global/fonts'
+import { Sentinel, SentinelFamily, SentinelMedItl } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React, { SyntheticEvent } from 'react'
@@ -31,6 +31,7 @@ function LicenseCard (props: IProps) {
 				</LicSvg>
 				<LicHeaderContent>
 					<LicTitle
+						className={Sentinel.italic}
 						data-testid='title'
 						pose={isSelected ? 'open' : 'closed'}>
 						<span>type</span>
@@ -94,7 +95,6 @@ const LicCardTitleColor = posed.div({
 	}
 })
 const LicTitle = styled(LicCardTitleColor)`
-	${SentinelMedItl};
 	font-weight: 500;
 	font-size: 28px;
 	font-style: italic;

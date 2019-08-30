@@ -11,23 +11,27 @@ const medItal = testEnv ? '' : withPrefix('/fonts/Sentinel-MediumItal.woff2')
 export const SentinelFamily = `font-family: "Sentinel", serif;`
 export const SentinelBlack = `font-family: "Sentinel Black", serif;`
 export const SentinelMedItl = `font-family: "Sentinel MediumItal", "Sentinel", serif;`
+export const Sentinel = {
+	'black': 'sentinel-bold',
+	'italic': 'sentinel-medItalic'
+}
 export default css`
-	@font-face {
-    font-family: "Sentinel";
-    font-style: normal;
-    font-weight: 600;
-		src: url(${customFont}) format("woff2")
-	}
+	// @font-face {
+  //   font-family: "Sentinel";
+  //   font-style: normal;
+  //   font-weight: 600;
+	// 	src: url(${customFont}) format("woff2")
+	// }
 	// @font-face {
 	// 	font-family: "Sentinel Black";
 	// 	font-style: normal;
 	// 	font-weight: 900;
 	// 	src: url(${black}) format("woff2")
 	// }
-	@font-face {
-		font-family: "Sentinel MediumItal";
-		font-style: italic;
-		font-weight: 500;
-		src: url(${medItal}) format("woff2")
-	}
+	// @font-face {
+	// 	font-family: "Sentinel MediumItal";
+	// 	font-style: italic;
+	// 	font-weight: 500;
+	// 	src: url(${medItal}) format("woff2")
+	// }
 `

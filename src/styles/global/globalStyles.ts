@@ -24,7 +24,20 @@ export default createGlobalStyle`
   
   h1{
 		color: ${colors.text};
-		font-family: "Sentinel Black", serif;
+		//font-family: "Sentinel Black", serif;
+  }
+  
+  .sentinel-bold{
+  	font-family: "Sentinel Black", serif;
+  }
+  .sentinel-medItalic{
+  	font-family: "Sentinel MediumItal", serif;
+		font-style: italic;
+  }
+  .sentinel-semibold{
+		font-family: "Sentinel", serif;
+    font-style: normal;
+    font-weight: 600;
   }
   
   a{

@@ -217,8 +217,8 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				<SliderGrid>
 					<FlickityWrapper/>
 					<ProductTitle>
-						<h1>{name}</h1>
-						{sub_header && <p>{sub_header}</p>}
+						<h1 className={`sentinel-bold`}>{name}</h1>
+						{sub_header && <p className={`sentinel-medItalic`}>{sub_header}</p>}
 					</ProductTitle>
 					{/*Convert to readable price helper fn?*/}
 
@@ -333,10 +333,8 @@ const ProductTitle = styled(productRowGap)`
 			line-height: 42px;
 		}
 		p{
-			${SentinelMedItl};
 			font-size: 25px;
 			color: ${colors.secondary.text};
-			font-style: italic;
 			font-weight: 500;
 			letter-spacing: -.8px;
 			margin:0;

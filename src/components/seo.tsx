@@ -14,16 +14,7 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 					description || data.site.siteMetadata.description
 				return (
 					<Helmet
-						style={[{
-							'cssText': `
-								@font-face {
-									font-family: "Sentinel Black
-									font-style: normal;
-									font-weight: 900;
-									src: url(/fonts/Sentinel-Black.woff2) format("woff2")
-								}
-        			`
-						}]}
+
 						htmlAttributes={{
 							lang
 						}}
@@ -122,7 +113,19 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 									font-style: normal;
 									font-weight: 900;
 									src: url(/fonts/Sentinel-Black.woff2) format("woff2");
-								}
+									}
+									@font-face {
+									font-family: "Sentinel MediumItal";
+									font-style: italic;
+									font-weight: 500;
+									src: url(/fonts/Sentinel-MediumItal.woff2) format("woff2")
+									}
+									@font-face {
+									font-family: "Sentinel";
+									font-style: normal;
+									font-weight: 600;
+									src: url(/fonts/Sentinel-Semibold.woff2) format("woff2")
+									}
 						`}</style>
 						{children ? children : null}
 					</Helmet>
