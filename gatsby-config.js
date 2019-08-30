@@ -12,6 +12,8 @@ module.exports = {
     siteName: `Every-Tuesday Shop`
   },
   plugins: [
+    // `gatsby-source-test`,
+    `gatsby-source-etshop`,
     `gatsby-plugin-typescript`,
     {
       resolve: `gatsby-plugin-stripe`,
@@ -92,8 +94,6 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    `gatsby-source-etshop`,
-    // `gatsby-source-test`,
     `gatsby-plugin-playground`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
@@ -165,7 +165,7 @@ module.exports = {
         }
       }
     },
-    // make sure to put last in the array
+    // // make sure to put last in the array
     {
       resolve: `gatsby-plugin-netlify`,
       options: {
