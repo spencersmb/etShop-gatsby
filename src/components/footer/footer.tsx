@@ -2,7 +2,7 @@ import { useSetState } from '@components/account/dashboard'
 import PinkEmailForm from '@components/footer/emailForm'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import { SentinelFamily } from '@styles/global/fonts'
+import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { fakeApiCall } from '@utils/apiUtils'
 import { renderSvg } from '@utils/styleUtils'
@@ -166,8 +166,7 @@ const FooterHeader = styled.div`
 	flex-direction: column;
 	padding: 0 20px;
 	h4{
-		//font-family: Sentinel, serif;
-		${SentinelFamily};
+		${Sentinel.reg};
 		font-weight: 600;
 		font-style: italic;
 		color: ${colors.grey.i800};

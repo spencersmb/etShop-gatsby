@@ -1,5 +1,4 @@
 import { IState } from '@et/types/State'
-import { displayCurrency } from '@utils/priceUtils'
 import { addProductToCart, cartToggle as cartToggleAction, IAddProductAction } from '../../state/actions/cartActions'
 import React from 'react'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -14,6 +13,7 @@ interface IPropsPublic {
 	selectedProduct: IProduct;
 	licenseQty: number | string;
 	price: string
+	total: string
 }
 
 interface IPropsReduxActions {
@@ -26,7 +26,7 @@ interface IPropsPrivate {
 }
 
 export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxActions) {
-	const { addToCart, cart, selectedProduct, handleAddToCartState, licenseQty, price, slug, cartToggle, isInCart } = props
+	const { addToCart, cart, selectedProduct, handleAddToCartState, licenseQty, price, slug, cartToggle, isInCart, total } = props
 	const disabled = (licenseQty === 0) || (typeof licenseQty === 'string')
 
 	async function handleAddToCart () {
@@ -48,7 +48,7 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 	return (
 		<>
 			<button data-testid='addToCart' onClick={handleAddToCart} disabled={disabled}>
-				I want this <span>{displayCurrency(price)}</span>
+				I want this <span>{total}</span>
 			</button>
 			{disabled && <div data-testid='warning'>Must have at least one computer license selected</div>}
 		</>

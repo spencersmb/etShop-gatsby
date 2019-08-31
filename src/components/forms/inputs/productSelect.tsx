@@ -22,11 +22,12 @@ interface IProps {
 	onChange: any,
 	selectedLicense: string,
 	inCart?: boolean
-	showModal: IShowModalAction
+	showModal: IShowModalAction,
+	bulkDiscount: boolean
 }
 
 const ProductSelect = (
-	{ standardLicPrice, extendedLicPrice, onChange, selectedLicense, inCart, license, showModal }: IProps) => {
+	{ standardLicPrice, extendedLicPrice, onChange, selectedLicense, inCart, license, showModal, bulkDiscount }: IProps) => {
 
 	function handleLicClick (e: SyntheticEvent) {
 		e.preventDefault()
@@ -59,6 +60,7 @@ const ProductSelect = (
 			<LicenseCardWrapper data-testid='wrapper'>
 				{/*standard lic*/}
 				<LicenseCard
+					bulkDiscount={bulkDiscount}
 					isSelected={selectedLicense === 'standard'}
 					price={standardLicPrice}
 					type='standard'
@@ -70,6 +72,7 @@ const ProductSelect = (
 
 				{/*extended lic*/}
 				<LicenseCard
+					bulkDiscount={bulkDiscount}
 					isSelected={selectedLicense === 'extended'}
 					price={extendedLicPrice || ''}
 					type='extended'
@@ -87,6 +90,7 @@ const ProductSelect = (
 		<LicenseCardWrapper data-testid='wrapper'>
 			{/*standard lic*/}
 			<LicenseCard
+				bulkDiscount={bulkDiscount}
 				isSelected={selectedLicense === 'standard'}
 				price={standardLicPrice}
 				type='standard'

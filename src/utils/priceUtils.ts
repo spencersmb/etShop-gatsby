@@ -3,7 +3,6 @@ import { IProduct } from '@et/types/Products'
 import _ from 'lodash'
 import { CartPricingConfig } from '@components/cart/cartStatics'
 
-
 export const displayPercent = (percent: number) => {
 	return percent * 100
 }
@@ -107,3 +106,10 @@ export function getPrice (product: IProduct) {
 	return product.on_sale ? product.sale_price : product.price
 }
 
+export function calcTotalQtyPrice (price: string, qty: number | string): string {
+	if (typeof qty === 'string') {
+		return '$0.00'
+	}
+	const productPrice: number = parseFloat(price)
+	return displayCurrency(_.round(productPrice * qty, 2))
+}

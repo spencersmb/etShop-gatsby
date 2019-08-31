@@ -1,13 +1,14 @@
 import React from 'react'
 import {
 	render,
-	cleanup,
+	cleanup
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import ProductSelect from '../productSelect'
 
 afterEach(cleanup)
 const showDropDown = {
+	bulkDiscount: false,
 	standardLicPrice: '15',
 	extendedLicPrice: '40',
 	onChange: jest.fn(),
@@ -31,6 +32,7 @@ const showDropDown = {
 	}
 }
 const noDropDown = {
+	bulkDiscount: false,
 	standardLicPrice: '15',
 	extendedLicPrice: '40',
 	onChange: jest.fn(),

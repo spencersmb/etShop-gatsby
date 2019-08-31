@@ -1,7 +1,7 @@
 import { IProduct } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import { SentinelFamily } from '@styles/global/fonts'
+import { Sentinel } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
@@ -92,15 +92,15 @@ const ListItemTitle = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	h2{
+		${Sentinel.reg};
 		font-size: 23px;
-		${SentinelFamily};
 		font-weight: bold;
 		line-height: 24px;
 		color: ${colors.grey.i800}
 	}
 	p{
+		${Sentinel.reg};
 		font-size: 16px;
-		${SentinelFamily};
 		font-weight: 500;
 		font-style: italic;
 		color: ${colors.secondary.text};

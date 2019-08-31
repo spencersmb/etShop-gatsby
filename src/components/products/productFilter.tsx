@@ -1,5 +1,5 @@
 import { colors } from '@styles/global/colors'
-import { SentinelFamily } from '@styles/global/fonts'
+import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
@@ -176,7 +176,7 @@ const FilterHeader = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	h4{
-		${SentinelFamily};
+		${Sentinel.reg};
 		font-weight: 600;
 		font-style: italic;
 		font-size: 20px;

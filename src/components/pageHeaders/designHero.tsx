@@ -1,7 +1,7 @@
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
-import { SentinelFamily } from '@styles/global/fonts'
+import { Sentinel } from '@styles/global/fonts'
 import { graphql, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 import React from 'react'
@@ -12,10 +12,10 @@ function DesignHero () {
 		<HeroContainer>
 			<GridFluid>
 				<HeroText>
-					<h1 className={'sentinel-semibold'}>
+					<h1>
 						Design Resources
 					</h1>
-					<h3 className={`sentinel-semibold`}>
+					<h3>
 						for your creative projects
 					</h3>
 					<p>
@@ -46,7 +46,7 @@ const HeroText = styled.div`
 	grid-row: 1;
 	
 	h1{
-		//font-family: "Sentinel", "Sentinel A", serif;
+		${Sentinel.reg};
 		font-style: normal;
 		font-weight: 600;
 		letter-spacing: -.5px;
@@ -56,7 +56,7 @@ const HeroText = styled.div`
 		margin-top: 80px;
 	}
 	h3{
-		//font-family: "Sentinel", serif;
+		${Sentinel.reg};
 		font-style: italic;
 		font-weight: 600;
 		color: ${colors.primary.pink};

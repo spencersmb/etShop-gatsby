@@ -1,5 +1,6 @@
 import { AddToCartBtn } from '@components/products/addToCartBtn'
 import { ProductKey, testCartEmpty, testProducts } from '@redux/reduxTestUtils'
+import { calcTotalQtyPrice } from '@utils/priceUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {
@@ -19,7 +20,8 @@ const propsDefault = {
 	price: testProducts[ProductKey.WatercolorStd].price,
 	cart: testCartEmpty,
 	addToCart: jest.fn(),
-	cartToggle: jest.fn()
+	cartToggle: jest.fn(),
+	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 1)
 }
 
 const propsCheckout = {
@@ -31,7 +33,9 @@ const propsCheckout = {
 	price: testProducts[ProductKey.WatercolorStd].price,
 	cart: testCartEmpty,
 	addToCart: jest.fn(),
-	cartToggle: jest.fn()
+	cartToggle: jest.fn(),
+	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 1)
+
 }
 
 describe('AddToCart Button', () => {

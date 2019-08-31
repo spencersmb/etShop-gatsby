@@ -8,6 +8,7 @@ import 'jest-dom/extend-expect'
 
 afterEach(cleanup)
 const propsDefault = {
+	bulkDiscount: false,
 	isSelected: true,
 	price: '15',
 	type: 'standard',
@@ -23,9 +24,8 @@ describe('License Card Tests', () => {
 
 	it('Should render correct title', () => {
 		const modalRender = render(<LicenseCard {...propsDefault}/>)
-		const standardSelect = modalRender.getByTestId('title')
-		expect(standardSelect.children.length).toEqual(1)
-		expect(standardSelect.innerHTML).toEqual('<span>type</span>Standard License')
+		const title = modalRender.getByText('Standard License')
+		expect(title).toBeTruthy()
 	})
 
 	it('Should render correct price', () => {
@@ -33,6 +33,17 @@ describe('License Card Tests', () => {
 		const standardSelect = modalRender.getByTestId('price')
 		expect(standardSelect.children.length).toEqual(1)
 		expect(standardSelect.innerHTML).toEqual('<span>$</span>15')
+	})
+
+	it('Should render correct discount price', () => {
+		const discountProps = {
+			...propsDefault,
+			bulkDiscount: true
+		}
+		const modalRender = render(<LicenseCard {...discountProps}/>)
+		const standardSelect = modalRender.getByTestId('price')
+		expect(standardSelect.children.length).toEqual(1)
+		expect(standardSelect.innerHTML).toEqual('<span>$</span>13.5')
 	})
 
 	it('Should render correct number of bullet items', () => {

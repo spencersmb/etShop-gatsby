@@ -15,6 +15,7 @@ const Facebook = require('./svg-icons/Facebook.svg')
 const FooterCircle = require('./svg-icons/Footer-Circle.svg')
 const Fonts = require('./svg-icons/Fonts.svg')
 const Instagram = require('./svg-icons/Instagram.svg')
+const Info = require('./svg-icons/info.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
 const Twitter = require('./svg-icons/Twitter.svg')
@@ -36,6 +37,7 @@ export const svgs = {
 	FooterCircle,
 	Fonts,
 	Instagram,
+	Info,
 	Pinterest,
 	Templates,
 	Textures,

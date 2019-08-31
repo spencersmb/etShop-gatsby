@@ -2,7 +2,7 @@ import BrushesImg from '@components/images/brushesImage'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
-import { SentinelFamily } from '@styles/global/fonts'
+import { Sentinel } from '@styles/global/fonts'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ProductFilter from '@components/products/productFilter'
@@ -62,7 +62,7 @@ const FilterBackground = styled.div`
 		transform: rotate(-90deg);
 		top: 460px;
 		right: -220px;
-		${SentinelFamily};
+		${Sentinel.reg};
 		z-index: 0;
 	}
 	@media ${device.laptop} {

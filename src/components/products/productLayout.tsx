@@ -10,9 +10,9 @@ import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
-import { SentinelBlack, SentinelFamily, SentinelMedItl } from '@styles/global/fonts'
+import { Sentinel } from '@styles/global/fonts'
 import { checkCartForProduct } from '@utils/cartUtils'
-import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
+import { calcBulkPriceDiscount, calcTotalQtyPrice, displayCurrency } from '@utils/priceUtils'
 import React, { Dispatch as ReactDispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -161,7 +161,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	})
 
 	function selectChange (license: string) {
-		console.log('selected license', license)
 
 		setState({
 			selectedLicense: license
@@ -231,6 +230,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 							onChange={selectChange}
 							selectedLicense={state.selectedLicense}
 							inCart={state.inCart}
+							bulkDiscount={bulkDiscount}
 						/>
 					</LicenseSelectWrapper>
 					{/*<div>*/}
@@ -258,7 +258,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
           </PWYWWrapper>
 					}
 
-
 					<Price>
 						{React.useMemo(() => (
 							<AddToCartBtn
@@ -268,6 +267,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								selectedProduct={state.selectedProduct}
 								licenseQty={state.numberOfLicenses}
 								price={state.price}
+								total={calcTotalQtyPrice(state.price, numberOfLicenses)}
 							/>), [state.inCart, state.price, state.numberOfLicenses])}
 					</Price>
 
@@ -284,29 +284,37 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 }
 const productRowGap = styled.div`
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 `
 const ProductWrapper = styled.div`
 	padding-top: 60px;
 	background: ${colors.grey.i200};
 `
 const SliderGrid = styled(GridFluid)`
-	grid-template-rows: auto auto auto 1fr;
 	grid-row-gap: 0;
 	@media ${device.tablet}{
+		grid-template-rows: auto auto auto 1fr;
 		grid-row-gap: 0;
 	}
 `
 const FlickityWrapper = styled.div`
-	grid-column: 2 / 9;
+	grid-column: 2 / 4;
 	height: 686px; // remember to remove
 	background: #87DEDF;
 	margin: 0 15px 0 -30px;
 	grid-row: 1 / span 4;
+	
+	@media ${device.tablet} {
+	 grid-column: 2 / 9; 
+	}
+		
 `
 const LicenseQtyWrapper = styled(productRowGap)`
 	grid-column: 9 / 14;
 	grid-row: 3;
+		@media ${device.tablet} {
+	 grid-column: 2 / 9; 
+	}
 `
 const NumberDialStyled = styled(NumberDial)`
 	input{
@@ -325,6 +333,7 @@ const ProductTitle = styled(productRowGap)`
 		grid-row: 1;
 		
 		h1{
+			${Sentinel.black};
 			font-weight: 900;
 			font-style: normal;
 			color: ${colors.grey.i800};
@@ -333,6 +342,7 @@ const ProductTitle = styled(productRowGap)`
 			line-height: 42px;
 		}
 		p{
+			${Sentinel.italic};
 			font-size: 25px;
 			color: ${colors.secondary.text};
 			font-weight: 500;
@@ -341,6 +351,7 @@ const ProductTitle = styled(productRowGap)`
 		}
 `
 const LicenseSelectWrapper = styled(productRowGap)`
+	margin-bottom: 0;
 	grid-column: 9 / 14;
 	grid-row: 2;
 `

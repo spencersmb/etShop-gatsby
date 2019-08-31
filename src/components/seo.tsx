@@ -1,6 +1,5 @@
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { ISeo } from '@et/types/SEO'
-import fonts from '@styles/global/fonts'
 import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
