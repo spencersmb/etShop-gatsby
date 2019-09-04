@@ -45,14 +45,15 @@ describe('Cart Item tests', () => {
 
 	it('Should render correct discounted price and show discount content', () => {
 		const discountedProps = props
-		discountedProps.cart.items[ProductKey.WatercolorStd].qty = 12
+		const totalLicenses = 12
+		discountedProps.cart.items[ProductKey.WatercolorStd].qty = totalLicenses
 		discountedProps.cart.items[ProductKey.WatercolorStd].price = '14.4'
 		const modalRender = render(<CartItem {...discountedProps}/>)
 		const input: any = modalRender.getByTestId('numberDial')
 
 		expect(modalRender.getByTestId('bulkDiscount').innerHTML).toEqual('Bulk discount of 0.1 applied')
-		expect(modalRender.getByTestId('productPrice').innerHTML).toBe(displayCurrency(calcBulkDiscount(testProducts[ProductKey.WatercolorStd].price)))
-		expect(input.value).toEqual('12')
+		expect(modalRender.getByTestId('productPrice').innerHTML).toBe(displayCurrency(calcBulkDiscount(testProducts[ProductKey.WatercolorStd].price, totalLicenses)))
+		expect(input.value).toEqual(totalLicenses.toString())
 	})
 
 	it('Should call updateCartItemQty action', () => {

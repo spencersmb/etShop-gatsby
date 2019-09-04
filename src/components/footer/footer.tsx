@@ -165,6 +165,7 @@ const FooterHeader = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 0 20px;
+	margin-top: 35px;
 	h4{
 		${Sentinel.reg};
 		font-weight: 600;

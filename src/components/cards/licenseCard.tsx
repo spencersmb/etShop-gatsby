@@ -1,14 +1,14 @@
 import { IProductBullet } from '@et/types/Products'
+import { device } from '@styles/global/breakpoints'
 import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
-import { calcBulkPriceDiscount } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
+import { getWidth } from '@utils/windowUtils'
 import React, { SyntheticEvent } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
-import { Utils } from 'tslint'
 
 const cardStyles = {
 	standard: {
@@ -20,6 +20,7 @@ const cardStyles = {
 }
 
 interface IProps {
+	inCart: boolean
 	isSelected: boolean
 	price: string
 	type: string
@@ -27,21 +28,29 @@ interface IProps {
 	bullets: IProductBullet[]
 	handleViewLicense: (e: any) => void
 	handleLicenseClick: (e: SyntheticEvent) => void
-	bulkDiscount: boolean
+}
+
+function checkCardHeight (windowWidth: number): number {
+	if (windowWidth >= 992) {
+		return 69
+	} else if (windowWidth >= 767) {
+		return 65
+	} else {return 56}
 }
 
 function LicenseCard (props: IProps) {
-	const { type, isSelected, bullets, handleLicenseClick, handleViewLicense, price, title, bulkDiscount } = props
+	const { type, isSelected, bullets, handleLicenseClick, handleViewLicense, price, title, inCart } = props
+
 	return (
 		<LicCard type={type}
+						 inCart={inCart}
 						 isOpen={isSelected}
 						 pose={isSelected ? 'open' : 'closed'}>
 			<LicHeader
 				data-testid='header'
 				pose={isSelected ? 'open' : 'closed'}
 				onClick={handleLicenseClick}
-				type={type}
-				isOpen={isSelected}
+				height={checkCardHeight(getWidth())}
 				data-lic={type}>
 				<LicSvg type={type} isOpen={isSelected}>
 					<svg viewBox='0 0 525 88' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -66,7 +75,7 @@ function LicenseCard (props: IProps) {
 						pose={isSelected ? 'open' : 'closed'}
 					>
 						<span>$</span>
-						{calcBulkPriceDiscount(bulkDiscount, price)}
+						{price}
 					</LicPrice>
 				</LicHeaderContent>
 				<LicDash pose={isSelected ? 'open' : 'closed'}>
@@ -90,7 +99,9 @@ function LicenseCard (props: IProps) {
 					<LicViewBtn
 						hoverTextColor={cardStyles[type].main}
 						data-testid='viewLicBtn'
-						onClick={handleViewLicense}>
+						onClick={handleViewLicense}
+						outline={false}
+					>
 						View license
 					</LicViewBtn>
 				</LicBulletContainer>
@@ -106,20 +117,17 @@ const shadow3 = '0px 30px 40px rgba(57, 57, 57, 0.1), 0px 10px 20px rgba(36, 36,
 
 const LicCardPosed = posed.div({
 	closed: {
-		boxShadow: shadowHidden
+		boxShadow: shadowHidden,
+		borderRadius: '5px'
 	},
 	open: {
-		boxShadow: shadow3
+		boxShadow: shadow3,
+		transition: {
+			default: { duration: 300, delay: 300 }
+		},
+		borderRadius: '5px'
 	}
 })
-const LicCard = styled(LicCardPosed)`
-	border-radius: 15px;
-	overflow: hidden;
-	position: relative;
-	// transition: ${props => props.isOpen ? ' background-color .3s' : ' background-color .2s .3s'};
-	// background: ${props => props.isOpen ? cardStyles[props.type].main : 'transparent'};
-	z-index: ${props => props.type === 'extended' ? 1 : 2};
-`
 
 const LicTitlePosed = posed.div({
 	closed: {
@@ -139,42 +147,45 @@ const LicTitlePosed = posed.div({
 const LicTitle = styled(LicTitlePosed)`
 	${Sentinel.italic};
 	font-weight: 500;
-	font-size: 28px;
+	font-size: 24px;
+	line-height: 24px;
 	font-style: italic;
 	color: ${colors.secondary.text};
 	position: relative;
-	line-height: 28px;
 	
-	span{
-		position: absolute;
-		top: -25px;	
-		left: 0;
-		color: ${colors.secondary.text};
-		font-family: Fira, sans-serif;
-		font-size: 12px;
-		letter-spacing: 3px;
-		text-transform: uppercase;
+	@media ${device.tablet} {
+		font-size: 28px;
+		line-height: 28px;
 	}
 `
 const LicPrice = styled(LicTitlePosed)`
 	${Sentinel.reg};
 	font-weight: 600;
-	font-size: 44px;
 	color: ${colors.secondary.text};
-	line-height: 44px;
+	font-size: 28px;
+	line-height: 28px;
 	position: relative;
 	
 	span{
 		position: absolute;
-		top: 4px;
-		left: -13px;
-		font-size: 24px;
 		line-height: 24px;
+    left: -10px;
+		font-size: 16px;
+    top: -1px;
+	}
+	
+	@media ${device.tablet} {
+		font-size: 44px;
+		line-height: 44px;
+		span{
+			top: 4px;
+			left: -13px;
+		}
 	}
 `
 const LicHeaderPosed = posed.div({
 	closed: {
-		height: 71
+		height: 'auto'
 	},
 	open: {
 		height: 'auto'
@@ -208,61 +219,60 @@ const LicSvgPosed = posed.div({
 const LicSvg = styled(LicSvgPosed)`
 	display: flex;
 	opacity: 1;
-
+	//width: 100%;
 	svg{
 		height: 100%;
 		max-height: 81px;
-		flex:1;
+		//flex:1;
+		width: 100%;
 	}
-`
-const LicHeader = styled(LicHeaderPosed)`
-	position: relative;
-	cursor: pointer;
-	
-	&:hover {
-	${LicSvg}{
-		svg{
-			path{
-				fill: ${props => cardStyles[props.type].main} !important;
-			}
-		}
-	}
-		${LicTitle}, ${LicPrice}{
-			 color: #fff !important;
-		 }
-  }
 `
 
 const LicHeaderContent = styled.div`
 	position: absolute;
-	top: 9px;
+	top: 8px;
 	left: 0;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: baseline;
-	padding: 0 30px;
+	padding: 0 15px;
+	
+	@media ${device.tablet} {
+		padding: 0 30px;
+		top: 9px;
+	}
+	
 `
 
 const ContentPosed = posed.div({
 	closed: {
-		height: 0,
-		opacity: 0
+		delay: 200,
+		height: '5px',
+		opacity: 1,
+		backgroundColor: '#d2dce5',
+		transition: {
+			default: {
+				ease: 'backInOut'
+			}
+		}
 	},
 	open: {
+		backgroundColor: (props: any) => cardStyles[props.type].main,
 		height: 'auto',
 		opacity: 1,
 		transition: {
-			delay: 200,
-			ease: 'backInOut'
+			// delay: 200,
+			default: {
+				ease: 'backInOut'
+			}
 		}
 	}
 })
 const LicFooterList = styled(ContentPosed)`
 	overflow: hidden;
-	background: ${props => cardStyles[props.type].main};
-
+	position: relative;
 	ul{
 			margin: 0;
 			padding: 0;
@@ -290,10 +300,16 @@ const LicFooterList = styled(ContentPosed)`
 			}
 		}
 `
+
 const LicBulletContainer = styled.div`
-	padding: 5px 30px 20px;
+	padding: 5px 15px 20px;
 	display: flex;
 	flex-direction: row;
+	
+	@media ${device.tablet} {
+		padding: 5px 30px 20px;
+	}
+		
 `
 const LicViewBtn = styled(ButtonSmall)`
 	text-align: center;
@@ -315,29 +331,67 @@ const LicViewBtn = styled(ButtonSmall)`
 
 const LicDashPosed = posed.div({
 	closed: {
-		opacity: 0
+		opacity: 1
 	},
 	open: {
-		opacity: .8
+		opacity: 1
 	}
 })
 const LicDash = styled(LicDashPosed)`
 	position: absolute;
-	bottom: 12px;
+	overflow: hidden;
+	top: 80%;
 	left: 50%;
-	width: 100%;
+	width: 95%;
 	height: 3px;
-	max-width: 465px;
+	max-width: 421px;
 	margin: 0 auto;
 	transform: translateX(-50%);
 	opacity: 0;
 	
 	svg{
 		display: block;
-		width: 100%;
+		width: 475px;
 		path{
 			stroke: #fff;
 		}
 	}
+	
+	@media ${device.tablet} {
+		max-width: 445px;
+		svg{
+		width: 100%;
+		}
+	}
+	@media ${device.laptop} {
+		max-width: 465px;
+	}
 `
+const LicHeader = styled(LicHeaderPosed)`
+	position: relative;
+	cursor: pointer;
+	//display: flex;
+`
+const LicCard = styled(LicCardPosed)`
+	overflow: hidden;
+	position: relative;
+	z-index: ${props => props.type === 'extended' ? 1 : 2};
+	${props => props.inCart ? '' : `&:hover {
+		${LicSvg}{
+				svg{
+					path{
+						fill: ${cardStyles[props.type].main} !important;
+					}
+				}
+			}
+		${LicTitle}, ${LicPrice}{
+			 color: #fff !important;
+		 }
+		${LicFooterList}{
+			background: ${cardStyles[props.type].main} !important;
+		}
+	}`}
+
+`
+
 export default LicenseCard

@@ -185,11 +185,11 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	function onDialChange (total: number | string) {
 
-		if (total >= CartPricingConfig.minQuantity) {
+		if (typeof total === 'number' && total >= CartPricingConfig.minQuantity) {
 			setState({
 				numberOfLicenses: total,
 				bulkDiscount: true,
-				price: calcBulkPriceDiscount(true, state.price)
+				price: calcBulkPriceDiscount(true, state.price, total)
 			})
 		} else {
 			setState({
@@ -219,9 +219,11 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						<h1 className={`sentinel-bold`}>{name}</h1>
 						{sub_header && <p className={`sentinel-medItalic`}>{sub_header}</p>}
 					</ProductTitle>
-					{/*Convert to readable price helper fn?*/}
 
 					<LicenseSelectWrapper>
+						<LabelHeader>
+							Choose License:
+						</LabelHeader>
 						<LicenseSelect
 							showModal={showModalAction}
 							license={standardItem.current.license}
@@ -231,12 +233,10 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 							selectedLicense={state.selectedLicense}
 							inCart={state.inCart}
 							bulkDiscount={bulkDiscount}
+							licenceQty={typeof numberOfLicenses === 'number' ? numberOfLicenses : 0}
 						/>
 					</LicenseSelectWrapper>
-					{/*<div>*/}
-					{/*<p>Product: <b>{state.selectedProduct.slug}</b></p>*/}
-					{/*<p># of licenses: <b>{state.numberOfLicenses}</b></p>*/}
-					{/*</div>*/}
+
 					{!payWhatYouWant &&
           <LicenseQtyWrapper>
             <LicenseQtyCard
@@ -258,7 +258,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
           </PWYWWrapper>
 					}
 
-					<Price>
+					<BuyNowWrapper>
 						{React.useMemo(() => (
 							<AddToCartBtn
 								handleAddToCartState={() => (setState({ inCart: true }))}
@@ -269,7 +269,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								price={state.price}
 								total={calcTotalQtyPrice(state.price, numberOfLicenses)}
 							/>), [state.inCart, state.price, state.numberOfLicenses])}
-					</Price>
+					</BuyNowWrapper>
 
 					{/*<p>has extended license: <span*/}
 					{/*style={{ color: hasExtendedLicense ? 'green' : 'blue' }}>{JSON.stringify(hasExtendedLicense)}</span>*/}
@@ -287,50 +287,37 @@ const productRowGap = styled.div`
 	margin-bottom: 15px;
 `
 const ProductWrapper = styled.div`
-	padding-top: 60px;
+	padding: 60px 0 0;
 	background: ${colors.grey.i200};
 `
 const SliderGrid = styled(GridFluid)`
-	grid-row-gap: 0;
+	grid-row-gap: 0 !important;
 	@media ${device.tablet}{
 		grid-template-rows: auto auto auto 1fr;
-		grid-row-gap: 0;
+		
 	}
 `
 const FlickityWrapper = styled.div`
 	grid-column: 2 / 4;
-	height: 686px; // remember to remove
+	height: 186px; // remember to remove
 	background: #87DEDF;
-	margin: 0 15px 0 -30px;
-	grid-row: 1 / span 4;
+	margin: 0 15px;
 	
 	@media ${device.tablet} {
-	 grid-column: 2 / 9; 
+		height: 686px; // remember to remove
+	 	grid-column: 2 / 14; 
+	}
+	@media ${device.laptop} {
+	 	grid-column: 2 / 9; 
+	 	margin: 0 15px 0 -30px;
+	 	grid-row: 1 /span 4;
 	}
 		
 `
-const LicenseQtyWrapper = styled(productRowGap)`
-	grid-column: 9 / 14;
-	grid-row: 3;
-		@media ${device.tablet} {
-	 grid-column: 2 / 9; 
-	}
-`
-const NumberDialStyled = styled(NumberDial)`
-	input{
-		color: red;
-		-moz-appearance: textfield;
-		&::-webkit-outer-spin-button, 
-		::-webkit-inner-spin-button{
-			-webkit-appearance: none;
-			margin: 0;
-		};
-	}
-`
 const ProductTitle = styled(productRowGap)`
 		margin: 40px 0 30px;
-		grid-column: 9 / 14;
-		grid-row: 1;
+		grid-column: 2 / 4;
+		text-align: center;
 		
 		h1{
 			${Sentinel.black};
@@ -349,20 +336,79 @@ const ProductTitle = styled(productRowGap)`
 			letter-spacing: -.8px;
 			margin:0;
 		}
+		@media ${device.tablet} {
+			grid-column: 2 / 14;
+		}
+		@media ${device.laptop} {
+			grid-column: 9 / 14;
+			grid-row: 1;	
+			text-align: left;
+		}
+`
+const LabelHeader = styled.div`
+	margin: 0 0 10px 20px;
+	color: ${colors.primary.text};
 `
 const LicenseSelectWrapper = styled(productRowGap)`
-	margin-bottom: 0;
-	grid-column: 9 / 14;
-	grid-row: 2;
+	margin: 0 auto;
+	grid-column: 2 / 4;
+	max-width: 484px;
+	width: 100%;
+	//display: flex;
+	//flex-direction: column;
+	@media ${device.tablet} {
+		grid-column: 4 / 12;
+	}
+	@media ${device.laptop} {
+		grid-column: 9 / 14;
+		grid-row: 2;	
+	}
 `
+const LicenseQtyWrapper = styled(productRowGap)`
+	grid-column: 2 / 4;
+	@media ${device.tablet} {
+	 grid-column: 4 / 12;
+	}
+	@media ${device.laptop} {
+	 grid-column: 9 / 14;
+	 	grid-row: 3;
+	}
+`
+const NumberDialStyled = styled(NumberDial)`
+	input{
+		color: red;
+		-moz-appearance: textfield;
+		&::-webkit-outer-spin-button, 
+		::-webkit-inner-spin-button{
+			-webkit-appearance: none;
+			margin: 0;
+		};
+	}
+`
+
 const PWYWWrapper = styled(productRowGap)`
-	grid-column: 9 / 14;
-	grid-row: 3;
+	grid-column: 2 / 4;
+	
+	@media ${device.tablet} {
+		grid-column: 2 / 14;
+	}
+	
+	@media ${device.tablet} {
+		grid-column: 9 / 14;
+		grid-row: 3;	
+	}
 `
-const Price = styled.div`
-	background: #885b21;
-	grid-column: 9 / 14;
-	grid-row: 4;
+const BuyNowWrapper = styled.div`
+	grid-column: 2 / 4;
+	text-align: center;
+	@media ${device.tablet} {
+		grid-column: 2 / 14;
+	}
+	@media ${device.laptop} {
+		grid-column: 9 / 14;
+		grid-row: 4;
+		text-align: right;
+	}
 `
 const mapStateToProps = (state: IState) => ({
 	cart: state.cart,

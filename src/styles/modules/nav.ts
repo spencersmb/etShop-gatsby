@@ -9,15 +9,16 @@ interface INavLinkProps {
 }
 
 export const Nav = styled.nav`
-	padding: 10px 0 0;
 	background: white;
-	margin: 0 15px;
+	margin: 5px 15px;
 	height: 65px;
 	width: 100%;
 	display: grid;
-	grid-template-columns: minmax(50px,1fr) minmax(50px,auto);
+	align-items: center;
+	grid-template-columns: minmax(50px,1fr) minmax(50px,auto) minmax(50px,auto);
 	
 	@media ${device.laptop} {
+		margin: 0 15px;
 		grid-template-columns: repeat(3,minmax(auto,1fr));
 		position: relative;
 		height: 87px;
@@ -27,6 +28,7 @@ export const Hamburger = styled.div`
 	display: block;
 	background: purple;
 	width: 50px;
+	height: 50px;
 	@media ${device.laptop} {
 		display: none;
 	}
@@ -38,7 +40,7 @@ export const Logo = styled.div`
 		width: 100%;
 	}
 	a{
-		display: block;
+		display: flex;
 	}
 `
 export const LogoContainer = styled.div`
@@ -49,16 +51,19 @@ export const LogoContainer = styled.div`
 `
 export const NavLinks = styled.div<INavLinkProps>`
 	grid-column: 1 / -1;
-	background: white;
 	position: absolute;
 	left: 0;
+	top: ${props => props.isOpen ? '75px' : '0px'};
 	height: 100vh;
 	width: 100%;
+	background: #ff6363;
 	transform: ${props => props.isOpen ? `translateY(0)` : `translateY(-100%)`};
 	//transition: .3s cubic-bezier(.17,.67,.14,1.03);
 	
 	@media ${device.laptop} {
 		position: relative;
+		background: white;
+		top: auto;
 		grid-column: 2 / -1;
 		display: grid;
 		grid-template-columns: repeat(2,minmax(auto,1fr));
@@ -150,13 +155,17 @@ export const SignOutBtn = styled(ButtonSmall)`
 	margin: 0 15px 0 0;
 `
 export const CartWrapper = styled(FlexRow)`
+	display: none;
+	position: relative;
 	&:hover{
 	cursor: pointer;
 	}
 	@media ${device.laptop} {
+		display: flex;
 		padding: 0 15px;
 	}
 `
+
 export const CartSvg = styled.div`
 	width: 26px;
 	height: 26px;
@@ -172,12 +181,43 @@ export const CartSvg = styled.div`
 `
 export const CartCount = styled.div`
 	color:${colors.primary.pink};
-	position: relative;
+	position: absolute;
+	transform: translateY(-50%)translateX(-50%);
+	top: 22%;
+	left: 75%;
+
 	span{
-		position: absolute;
-		transform: translateY(-50%)translateX(-50%);
-		top: 22%;
-		left: 50%;
 		font-weight: bold;
+	}
+`
+export const MobileCartWrapper = styled(FlexRow)`
+	width: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	
+	${CartCount}{
+		top: 15%;
+    left: 70%;
+		width: 15px;
+    height: 15px;
+    display: flex;
+    border-radius: 50%;
+		background: ${colors.primary.pink};
+
+    span{
+    	position: absolute;
+    	font-size: 11px;
+			color: #fff;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%)translateY(-50%);
+    }
+    
+	}
+	
+	@media ${device.laptop} {
+		display: none;
 	}
 `

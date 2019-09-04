@@ -105,3 +105,4 @@ export function getCurrentPage (path: string) {
 	}
 	return 1
 }
+

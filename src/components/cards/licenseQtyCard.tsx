@@ -1,9 +1,11 @@
 import { CartPricingConfig } from '@components/cart/cartStatics'
 import NumberDial from '@components/forms/inputs/numberDial'
+import { AddToCartBtn } from '@components/products/addToCartBtn'
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
-import { displayPercent } from '@utils/priceUtils'
+import { chooseDiscountPercentage, displayPercent } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
 import styled from 'styled-components'
@@ -15,37 +17,57 @@ interface IProps {
 	onDialChange: (total: string | number) => void
 }
 
+// TODO: ADD TEST
 function LicenseQtyCard (props: IProps) {
 	const { bulkDiscount, numberOfLicenses, inCart, onDialChange } = props
+	const disabled = (numberOfLicenses === 0) || (typeof numberOfLicenses === 'string')
 	return (
 		<LicenseQtyWrapper>
-			<Discount>
-				{bulkDiscount && <>
-          Save {displayPercent(CartPricingConfig.bulkDiscount)} %
-          <span>Volume Discount</span>
-        </>
-				}
-			</Discount>
-			<RightSide>
-				<Label>Number of Licences</Label>
-				<NumberDialStyled
-					label='LICENSE FOR'
-					qty={numberOfLicenses}
-					disableInput={inCart}
-					inputOnChange={onDialChange}/>
-				<Icon>{renderSvg(svgs.Info)}</Icon>
-			</RightSide>
+			<InputWrapper>
+				<Discount>
+					{bulkDiscount && <>
+            Save {displayPercent(chooseDiscountPercentage(numberOfLicenses))} %
+            <span>Volume Discount</span>
+          </>
+					}
+				</Discount>
+				<RightSide>
+					<Label>Number of Licences</Label>
+					<NumberDialStyled
+						label='LICENSE FOR'
+						qty={numberOfLicenses}
+						disableInput={inCart}
+						inputOnChange={onDialChange}/>
+					<Icon>{renderSvg(svgs.Info)}</Icon>
+				</RightSide>
+			</InputWrapper>
+			{disabled && <Warning data-testid='warning'>Must have at least one computer license.</Warning>}
 		</LicenseQtyWrapper>
 	)
 }
 
+const Warning = styled.div`
+	color: ${colors.red.i500};
+	margin-top: 5px;
+	font-style: italic;
+	text-align: right;
+`
+const InputWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	@media ${device.laptop} {
+		flex-direction: row;
+		max-width: none;
+	}
+`
 const RightSide = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-end;
 `
-const NumberDialStyled = styled(NumberDial)`
+const NumberDialStyled = styled(NumberDial)<{ disableInput: boolean }>`
 	width: 72px;
 	margin: 0 10px;
 
@@ -57,10 +79,10 @@ const NumberDialStyled = styled(NumberDial)`
 		font-size: 24px;
 		line-height: 24px;
 		text-align: center;
-		color: ${colors.primary.text};
+		color: ${props => props.disableInput ? colors.grey.i600 : colors.primary.text};
 		border: 3px solid #D2DCE5;
 		border-radius: 10px;
-		padding: 5px 5px 5px 0;
+		padding: 2.5px 5px 2.5px 0;
 		width: 100%;
 		&:focus{
 			outline: none;
@@ -80,10 +102,17 @@ const NumberDialStyled = styled(NumberDial)`
 const LicenseQtyWrapper = styled.div`
 	width: 100%;
 	position: relative;
-	padding: 15px;
+	padding:  0 0 15px;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
+	max-width: 484px;
+	margin: 0 auto;   
 	justify-content: flex-end;
+	@media ${device.laptop} {
+		padding: 15px 0;
+		max-width: none;
+	}
+		
 `
 const Icon = styled.div`
 	width: 25px;
@@ -97,33 +126,53 @@ const Label = styled.div`
 	color: ${colors.primary.text};
 `
 const Discount = styled.div`
-	position: absolute;
-	left: 0;
-	top: 50%;
-	transform: translateY(-50%);
-	${Sentinel.black};
+	text-align: center;
+	justify-content: center;
+	margin: 0 0 10px;
 	color: ${colors.red.warning};
+	${Sentinel.black};
 	font-weight: 800;
-	font-size: 14px;
+	font-size: 20px;
 	line-height: 14px;
-	margin: 0 0 0 15px;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
 	
 	span{
-		background: ${colors.red.warning};
-		width: 72px;
-		height: 72px;
+		color: ${colors.primary.text};
+		margin: 10px 0 0;
+    font-size: 14px;
 		text-align: center;
-		color: #fff;
 		display: flex;
 		line-height: 14px;
-		justify-content: center;
 		align-items: center;
 		border-radius: 50%;
-		margin: 0 0 0 5px;
 	}
+	
+	@media ${device.laptop} {
+		font-size: 14px;
+		margin: 0 0 0 15px;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		flex-direction: row;
+		
+		span{
+			margin: 0 0 0 5px;
+			width: 72px;
+			height: 72px;
+			justify-content: center;
+			background: ${colors.red.warning};
+			color: #fff;
+		}
+	}
+		
 `
 
 export default LicenseQtyCard
+
+// it('Should render disabled warning', () => {
+// 	const modalRender = render(<AddToCartBtn {...propsDefault}/>)
+// 	expect(modalRender.getByTestId('warning').innerHTML).toEqual('Must have at least one computer license selected')
+// })

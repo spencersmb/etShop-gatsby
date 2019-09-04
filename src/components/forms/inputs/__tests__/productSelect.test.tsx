@@ -29,7 +29,8 @@ const showDropDown = {
 				{ bullet_point: 'bullet item' }
 			]
 		}
-	}
+	},
+	licenceQty: 1
 }
 const noDropDown = {
 	bulkDiscount: false,
@@ -53,7 +54,8 @@ const noDropDown = {
 				{ bullet_point: 'bullet item' }
 			]
 		}
-	}
+	},
+	licenceQty: 1
 }
 describe('Product Select', () => {
 

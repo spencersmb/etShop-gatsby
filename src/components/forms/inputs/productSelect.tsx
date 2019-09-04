@@ -1,6 +1,7 @@
 import LicenseCard from '@components/cards/licenseCard'
 import { IProductBullet } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
+import { calcBulkPriceDiscount } from '@utils/priceUtils'
 import React, { SyntheticEvent } from 'react'
 import styled from 'styled-components'
 
@@ -24,10 +25,11 @@ interface IProps {
 	inCart?: boolean
 	showModal: IShowModalAction,
 	bulkDiscount: boolean
+	licenceQty: number
 }
 
 const ProductSelect = (
-	{ standardLicPrice, extendedLicPrice, onChange, selectedLicense, inCart, license, showModal, bulkDiscount }: IProps) => {
+	{ standardLicPrice, extendedLicPrice, onChange, selectedLicense, inCart, license, showModal, bulkDiscount, licenceQty }: IProps) => {
 
 	function handleLicClick (e: SyntheticEvent) {
 		e.preventDefault()
@@ -58,11 +60,12 @@ const ProductSelect = (
 	if (license.hasExtendedLicense) {
 		return (
 			<LicenseCardWrapper data-testid='wrapper'>
+
 				{/*standard lic*/}
 				<LicenseCard
-					bulkDiscount={bulkDiscount}
+					inCart={inCart || false}
 					isSelected={selectedLicense === 'standard'}
-					price={standardLicPrice}
+					price={calcBulkPriceDiscount(bulkDiscount, standardLicPrice, licenceQty)}
 					type='standard'
 					title='Standard License'
 					bullets={license.standardItem.bullets}
@@ -71,16 +74,17 @@ const ProductSelect = (
 				/>
 
 				{/*extended lic*/}
-				<LicenseCard
-					bulkDiscount={bulkDiscount}
-					isSelected={selectedLicense === 'extended'}
-					price={extendedLicPrice || ''}
-					type='extended'
-					title='Extended License'
-					bullets={license.extendedItem.bullets}
-					handleViewLicense={triggerViewLicense}
-					handleLicenseClick={handleLicClick}
-				/>
+				{extendedLicPrice &&
+        <LicenseCard
+          inCart={inCart || false}
+          isSelected={selectedLicense === 'extended'}
+          price={calcBulkPriceDiscount(bulkDiscount, extendedLicPrice, licenceQty)}
+          type='extended'
+          title='Extended License'
+          bullets={license.extendedItem.bullets}
+          handleViewLicense={triggerViewLicense}
+          handleLicenseClick={handleLicClick}
+        />}
 
 			</LicenseCardWrapper>
 		)
@@ -90,9 +94,9 @@ const ProductSelect = (
 		<LicenseCardWrapper data-testid='wrapper'>
 			{/*standard lic*/}
 			<LicenseCard
-				bulkDiscount={bulkDiscount}
+				inCart={inCart || false}
 				isSelected={selectedLicense === 'standard'}
-				price={standardLicPrice}
+				price={calcBulkPriceDiscount(bulkDiscount, standardLicPrice, licenceQty)}
 				type='standard'
 				title='Standard License'
 				bullets={license.standardItem.bullets}
@@ -106,6 +110,7 @@ const ProductSelect = (
 
 const LicenseCardWrapper = styled.div`
 	margin-bottom: 15px;
+	width: 100%;
 `
 
 export default ProductSelect

@@ -30,7 +30,7 @@ import {
 	SignOutBtn,
 	CartWrapper,
 	CartSvg,
-	CartCount
+	CartCount, MobileCartWrapper
 } from '@styles/modules/nav'
 
 interface IPropsState {
@@ -113,6 +113,15 @@ function Navbar (props: IPropsActions & IPropsState) {
 					</Link>
 				</LogoContainer>
 			</Logo>
+			<MobileCartWrapper onClick={props.cartToggle}>
+				<CartSvg>{renderSvg(svgs.Cart)}</CartSvg>
+				{props.cart.totalItems > 0 && <CartCount data-testid='cart-count'>
+							<span>
+								{props.cart.totalItems}
+							</span>
+        </CartCount>}
+
+			</MobileCartWrapper>
 			<Hamburger
 				data-testid='hamburger'
 				onClick={navToggle}>
@@ -145,12 +154,14 @@ function Navbar (props: IPropsActions & IPropsState) {
 					{!user &&
           <LoginStatus>
             <SignInButton
+              outline={false}
               color='transparent'
               textColor={colors.purple.i500}
               hoverColor='transparent'
               hoverTextColor={colors.purple.i600}
               onClick={openSignInModal('signin')}>Sign In</SignInButton>
             <JoinButton
+              outline={false}
               color={colors.purple.i500}
               hoverColor={colors.purple.i600}
               onClick={openSignInModal('signup')}>Join Now</JoinButton>
@@ -167,6 +178,7 @@ function Navbar (props: IPropsActions & IPropsState) {
               </Link>
             </MyAccount>
             <SignOutBtn
+              outline={false}
               color='transparent'
               textColor={colors.primary.pink}
               hoverColor='transparent'

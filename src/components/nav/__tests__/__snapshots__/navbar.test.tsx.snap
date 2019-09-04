@@ -2,15 +2,15 @@
 
 exports[`Navbar Layout renders correctly 1`] = `
 <nav
-  className="sc-cSHVUG GlAJn"
+  className="sc-kAzzGY eDyPqo"
   data-testid="navbar"
 >
   <div
-    className="sc-chPdSV foqicM"
+    className="sc-kgoBCf XshFq"
     data-testid="nav-logo"
   >
     <div
-      className="sc-kgoBCf Sslkk"
+      className="sc-kGXeez debjTL"
     >
       <a
         href="/"
@@ -20,24 +20,34 @@ exports[`Navbar Layout renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-kAzzGY jgrfly"
+    className="sc-cSHVUG sc-jWBwVP edsDtl"
+    onClick={[MockFunction]}
+  >
+    <div
+      className="sc-eHgmQL dgQcyp"
+    >
+      <test-file-stub />
+    </div>
+  </div>
+  <div
+    className="sc-chPdSV kvPeDg"
     data-testid="hamburger"
     onClick={[Function]}
   >
     Button
   </div>
   <div
-    className="sc-kGXeez gjxpoK"
+    className="sc-kpOJdX htKNSJ"
   >
     <div
-      className="sc-kpOJdX gaqBmP"
+      className="sc-dxgOiQ fwiTqa"
       data-testid="nav-close"
       onClick={[Function]}
     >
       Close
     </div>
     <ul
-      className="sc-dxgOiQ Zpblb"
+      className="sc-ckVGcZ eTBjLu"
       data-testid="nav-center"
     >
       <li>
@@ -65,20 +75,20 @@ exports[`Navbar Layout renders correctly 1`] = `
       </li>
     </ul>
     <div
-      className="sc-ckVGcZ iHzeIt"
+      className="sc-jKJlTe cTeKkm"
     >
       <div
-        className="sc-jzJRlG sc-jKJlTe iQvVzX"
+        className="sc-cSHVUG sc-eNQAEJ kASAKx"
       >
         <div
-          className="sc-VigVT sc-hMqMXs iUIxnH"
+          className="sc-VigVT sc-kEYyzF iQlDtD"
           color="transparent"
           onClick={[Function]}
         >
           Sign In
         </div>
         <div
-          className="sc-VigVT sc-eNQAEJ cwzEHe"
+          className="sc-VigVT sc-hMqMXs hpwWkl"
           color="#A182E9"
           onClick={[Function]}
         >
@@ -86,16 +96,16 @@ exports[`Navbar Layout renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="sc-jzJRlG sc-iAyFgw dGbPKB"
+        className="sc-cSHVUG sc-hSdWYo bzLIHN"
         onClick={[MockFunction]}
       >
         <div
-          className="sc-hSdWYo iScogX"
+          className="sc-eHgmQL dgQcyp"
         >
           <test-file-stub />
         </div>
         <div
-          className="sc-eHgmQL dxnjWZ"
+          className="sc-cvbbAY jrAWlO"
           data-testid="cart-count"
         >
           <span>

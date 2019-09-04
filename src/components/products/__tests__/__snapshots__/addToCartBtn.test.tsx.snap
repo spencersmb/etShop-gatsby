@@ -1,21 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AddToCart Button renders correctly 1`] = `
-Array [
-  <button
-    data-testid="addToCart"
-    disabled={true}
-    onClick={[Function]}
-  >
-    I want this 
-    <span>
-      $16.00
-    </span>
-  </button>,
+<div
+  className="sc-htpNat krpdDI"
+>
   <div
-    data-testid="warning"
+    className="sc-bxivhb awxGE"
   >
-    Must have at least one computer license selected
-  </div>,
-]
+    <div
+      className="sc-ifAKCX gqREGH"
+      data-testid="total"
+    >
+      $0.00
+    </div>
+    <button
+      className="sc-bwzfXH sc-EHOje gXSyXb"
+      color="#18C3C3"
+      data-testid="addToCart"
+      disabled={true}
+      onClick={[Function]}
+    >
+      I want this
+    </button>
+  </div>
+</div>
 `;

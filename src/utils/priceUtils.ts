@@ -3,19 +3,50 @@ import { IProduct } from '@et/types/Products'
 import _ from 'lodash'
 import { CartPricingConfig } from '@components/cart/cartStatics'
 
-export const displayPercent = (percent: number) => {
-	return percent * 100
-}
 /*
 * * Tested!
-Check and return a discounted price based on qty set in config
+Convert a decimal number and display it as a percent number
+* @param {number} percent
 */
-export const calcBulkDiscount = (price: string): string => {
+export const displayPercent = (percent: number) => {
+	return _.round(percent * 100, 2)
+}
+/*
+ * * Tested!
+ Check and return a discounted price based on qty set in config
+ *
+ *
+ * @param {number | string} total
+ * @return {number}
+*/
+export const chooseDiscountPercentage = (total: number | string): number => {
+	if (total > 100) {
+		return CartPricingConfig.discountTier3
+	}
+	if (total > 50) {
+		return CartPricingConfig.discountTier2
+	}
+	if (total > 9) {
+		return CartPricingConfig.discountTier1
+	}
+	return 0
+}
+
+/*
+* * Tested!
+Check and return the discounted price based on qty selected
+*
+*
+* @param {string} price
+* @param {number} total
+* @return {string}
+*/
+export const calcBulkDiscount = (price: string, total: number): string => {
 	// convert to Number
 	const strToNum = parseFloat(price)
 
 	// percent in config
-	const percent = CartPricingConfig.bulkDiscount
+	const percent = chooseDiscountPercentage(total)
 
 	// price * percentage subtracted from total price
 	return (strToNum - (percent * strToNum)).toString()
@@ -27,13 +58,13 @@ export const calcBulkDiscount = (price: string): string => {
  *
  *
  * @param {boolean} bulkDiscount
- * @param {string | number} licenseQty
- * @param {string} price
+ * @param {string | number} price
+ * @param {string} total
  * @return {string} Convert the result to readable USD string with dollar sign
  */
-export function calcBulkPriceDiscount (bulkDiscount: boolean, price: string): string {
+export function calcBulkPriceDiscount (bulkDiscount: boolean, price: string, total: number = 1): string {
 	return bulkDiscount
-		? calcBulkDiscount(price)
+		? calcBulkDiscount(price, total)
 		: price
 }
 
@@ -72,7 +103,7 @@ export const displayCurrency = (price: string | number): string => {
  * For percentage we return the amount off the number passed in, otherwise
  * we just return the coupon amount off.
  *
- * @param {ICouponCode} coupon
+ * @param {ICouponState} coupon
  * @param {number} total
  * @return number
  */
@@ -106,6 +137,17 @@ export function getPrice (product: IProduct) {
 	return product.on_sale ? product.sale_price : product.price
 }
 
+/**
+ * * Tested!
+ * convert price to a formatted number depending on qty passed in.
+ * If Qty is a string it means the input is blank, so the total should
+ * reflect that.
+ *
+ *
+ * @param {string} price
+ * @param {number | string} qty
+ * @return {string} qty
+ */
 export function calcTotalQtyPrice (price: string, qty: number | string): string {
 	if (typeof qty === 'string') {
 		return '$0.00'

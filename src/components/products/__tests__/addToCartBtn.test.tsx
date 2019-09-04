@@ -21,7 +21,7 @@ const propsDefault = {
 	cart: testCartEmpty,
 	addToCart: jest.fn(),
 	cartToggle: jest.fn(),
-	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 1)
+	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 0)
 }
 
 const propsCheckout = {
@@ -49,12 +49,22 @@ describe('AddToCart Button', () => {
 		expect(tree).toMatchSnapshot()
 	})
 
-	it('Should render Add To Cart text', () => {
-		const modalRender = render(<AddToCartBtn {...propsDefault}/>)
-		expect(modalRender.getByTestId('addToCart').innerHTML).toEqual('I want this <span>$16.00</span>')
+	it('Should render correct total', () => {
+		const propsTotal = {
+			...propsDefault,
+			licenseQty: 1,
+			total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 1)
+		}
+		const modalRender = render(<AddToCartBtn {...propsTotal}/>)
+		expect(modalRender.getByTestId('total').innerHTML).toEqual('$16.00')
 	})
 
-	it('Should call not be able call addToCart Action', () => {
+	it('Should render I want this button.', () => {
+		const modalRender = render(<AddToCartBtn {...propsDefault}/>)
+		expect(modalRender.getByTestId('addToCart').innerHTML).toEqual('I want this')
+	})
+
+	it('Should not be able call addToCart Action', () => {
 		// we have licenses set to 0 by default
 		const modalRender = render(<AddToCartBtn {...propsDefault}/>)
 		const btn = modalRender.getByTestId('addToCart')
@@ -71,11 +81,6 @@ describe('AddToCart Button', () => {
 		const btn = modalRender.getByTestId('addToCart')
 		btn.click()
 		expect(propsDefault.addToCart).toHaveBeenCalledTimes(1)
-	})
-
-	it('Should render disabled warning', () => {
-		const modalRender = render(<AddToCartBtn {...propsDefault}/>)
-		expect(modalRender.getByTestId('warning').innerHTML).toEqual('Must have at least one computer license selected')
 	})
 
 	it('Should render checkout button', () => {
