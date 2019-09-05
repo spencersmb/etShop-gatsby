@@ -5,7 +5,7 @@ import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import { getWidth } from '@utils/windowUtils'
+import { getWidth, Width } from '@utils/windowUtils'
 import React, { SyntheticEvent } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -50,7 +50,7 @@ function LicenseCard (props: IProps) {
 				data-testid='header'
 				pose={isSelected ? 'open' : 'closed'}
 				onClick={handleLicenseClick}
-				height={checkCardHeight(getWidth())}
+				height={checkCardHeight(Width)}
 				data-lic={type}>
 				<LicSvg type={type} isOpen={isSelected}>
 					<svg viewBox='0 0 525 88' fill='none' xmlns='http://www.w3.org/2000/svg'>

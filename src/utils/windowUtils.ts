@@ -17,10 +17,10 @@ if (typeof window !== `undefined`) {
 export const Width = thisWidth
 
 // export const checkDevice
-export function getWidth(): number{
-	thisWidth =
-		window.innerWidth ||
-		document.documentElement.clientWidth ||
-		document.body.clientWidth
-	return thisWidth
-}
+// export function getWidth(): number{
+// 	thisWidth =
+// 		window.innerWidth ||
+// 		document.documentElement.clientWidth ||
+// 		document.body.clientWidth
+// 	return thisWidth
+// }
