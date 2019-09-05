@@ -30,6 +30,8 @@ const PrivateRoute = (props: IPropsPublic & RouterProps) => {
 		return null
 	} else if (!user && location.pathname !== `/`) {
 		// If the user is not logged in, redirect to the login page.
+		// console.log('no user found in private route')
+
 		navigate(`/`)
 		return null
 	}

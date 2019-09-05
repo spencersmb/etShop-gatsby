@@ -1,4 +1,5 @@
 import { logout } from '@redux/actions/authActions'
+import { clearPagination } from '@redux/actions/paginationActions'
 import { toastr } from 'react-redux-toastr'
 import { navigate } from 'gatsby'
 
@@ -32,8 +33,9 @@ export const statusCheck = async (response: any, dispatch: any) => {
 			toastr.error('Error:', 'The email and password you entered is incorrect.', toastrOptions.noHover)
 		} else if (newError.code === 'jwt_auth_invalid_token') {
 			toastr.error('User Expired:', 'Please login again.', toastrOptions.noHover)
+			// Navigation is done in the privateRoute component
 			dispatch(logout())
-			navigate(`/page-2`)
+			dispatch(clearPagination())
 		} else {
 			toastr.error('Error:', 'Authentication Error', toastrOptions.noHover)
 		}

@@ -1,6 +1,5 @@
-import { CartPricingConfig } from '@components/cart/cartStatics'
 import NumberDial from '@components/forms/inputs/numberDial'
-import { AddToCartBtn } from '@components/products/addToCartBtn'
+import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -15,22 +14,35 @@ interface IProps {
 	inCart: boolean
 	numberOfLicenses: number | string
 	onDialChange: (total: string | number) => void
+	showModal: IShowModalAction
 }
 
-// TODO: ADD TEST
 function LicenseQtyCard (props: IProps) {
-	const { bulkDiscount, numberOfLicenses, inCart, onDialChange } = props
+	const { bulkDiscount, numberOfLicenses, inCart, onDialChange, showModal } = props
 	const disabled = (numberOfLicenses === 0) || (typeof numberOfLicenses === 'string')
+
+	function triggerViewLicense (e: any) {
+		e.preventDefault()
+		showModal({
+			modal: () => (<div>License</div>),
+			options: {
+				closeModal: true,
+				hasBackground: true,
+				data: {
+					test: 'spencer'
+				}
+			}
+		})
+	}
+
 	return (
 		<LicenseQtyWrapper>
 			<InputWrapper>
-				<Discount>
-					{bulkDiscount && <>
-            Save {displayPercent(chooseDiscountPercentage(numberOfLicenses))} %
-            <span>Volume Discount</span>
-          </>
-					}
-				</Discount>
+				{bulkDiscount && <Discount data-testid='discount'>
+          Save {displayPercent(chooseDiscountPercentage(numberOfLicenses))} %
+          <span>Volume Discount</span>
+        </Discount>
+				}
 				<RightSide>
 					<Label>Number of Licences</Label>
 					<NumberDialStyled
@@ -38,7 +50,7 @@ function LicenseQtyCard (props: IProps) {
 						qty={numberOfLicenses}
 						disableInput={inCart}
 						inputOnChange={onDialChange}/>
-					<Icon>{renderSvg(svgs.Info)}</Icon>
+					<Icon onClick={triggerViewLicense}>{renderSvg(svgs.Info)}</Icon>
 				</RightSide>
 			</InputWrapper>
 			{disabled && <Warning data-testid='warning'>Must have at least one computer license.</Warning>}
@@ -118,8 +130,29 @@ const Icon = styled.div`
 	width: 25px;
 	height: 25px;
 	display: flex;
+	cursor: pointer;
+	&:hover{
+		svg{
+			path{
+				fill: ${colors.primary.pink};
+				&:first-child{
+					stroke:${colors.primary.pink};
+				}
+			}
+		}
+	}
 	svg{
 		width: 100%;
+		path{
+			transition: .3s;
+			fill: ${colors.primary.text};
+			&:nth-last-child(3){
+				fill:white;
+			}
+			&:first-child{
+				stroke:${colors.primary.text};
+			}
+		}
 	}
 `
 const Label = styled.div`
@@ -172,7 +205,4 @@ const Discount = styled.div`
 
 export default LicenseQtyCard
 
-// it('Should render disabled warning', () => {
-// 	const modalRender = render(<AddToCartBtn {...propsDefault}/>)
-// 	expect(modalRender.getByTestId('warning').innerHTML).toEqual('Must have at least one computer license selected')
-// })
+

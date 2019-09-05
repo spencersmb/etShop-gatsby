@@ -66,10 +66,10 @@ export function Dashboard (props: IProps & IReduxActions & IReduxState) {
 	const page = getCurrentPage(props.location.search)
 	const [state, setState] = useSetState({ selectedOrder: null })
 
-	// console.log('dashboard render', state)
+	console.log('dashboard render', state)
 
 	useEffect(() => {
-		// console.log('page to fetch', page)
+		console.log('page to fetch', page)
 		const getMyOrders = async () => {
 			const { orders } = await props.getOrders(page)
 

@@ -5,7 +5,6 @@ import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import { getWidth, Width } from '@utils/windowUtils'
 import React, { SyntheticEvent } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -30,14 +29,6 @@ interface IProps {
 	handleLicenseClick: (e: SyntheticEvent) => void
 }
 
-function checkCardHeight (windowWidth: number): number {
-	if (windowWidth >= 992) {
-		return 69
-	} else if (windowWidth >= 767) {
-		return 65
-	} else {return 56}
-}
-
 function LicenseCard (props: IProps) {
 	const { type, isSelected, bullets, handleLicenseClick, handleViewLicense, price, title, inCart } = props
 
@@ -48,10 +39,9 @@ function LicenseCard (props: IProps) {
 						 pose={isSelected ? 'open' : 'closed'}>
 			<LicHeader
 				data-testid='header'
-				pose={isSelected ? 'open' : 'closed'}
 				onClick={handleLicenseClick}
-				height={checkCardHeight(Width)}
-				data-lic={type}>
+				data-lic={type}
+			>
 				<LicSvg type={type} isOpen={isSelected}>
 					<svg viewBox='0 0 525 88' fill='none' xmlns='http://www.w3.org/2000/svg'>
 						{process.env.NODE_ENV !== 'test' && <PosedPath
@@ -166,6 +156,7 @@ const LicPrice = styled(LicTitlePosed)`
 	line-height: 28px;
 	position: relative;
 	
+	
 	span{
 		position: absolute;
 		line-height: 24px;
@@ -183,14 +174,6 @@ const LicPrice = styled(LicTitlePosed)`
 		}
 	}
 `
-const LicHeaderPosed = posed.div({
-	closed: {
-		height: 'auto'
-	},
-	open: {
-		height: 'auto'
-	}
-})
 const PosedPath = posed.path({
 	closed: {
 		delay: 300,
@@ -241,9 +224,14 @@ const LicHeaderContent = styled.div`
 	
 	@media ${device.tablet} {
 		padding: 0 30px;
-		top: 9px;
+		top: 6px;
+	}	
+	@media ${device.laptop} {
+		top: 3px;
+	}	
+	@media ${device.laptopL} {
+		top: 6px;
 	}
-	
 `
 
 const ContentPosed = posed.div({
@@ -365,22 +353,24 @@ const LicDash = styled(LicDashPosed)`
 	}
 	@media ${device.laptop} {
 		max-width: 465px;
+		svg{
+			width: 600px;
+		}
 	}
 `
-const LicHeader = styled(LicHeaderPosed)`
+const LicHeader = styled.div`
 	position: relative;
 	cursor: pointer;
-	//display: flex;
 `
 const LicCard = styled(LicCardPosed)`
 	overflow: hidden;
 	position: relative;
 	z-index: ${props => props.type === 'extended' ? 1 : 2};
-	${props => props.inCart ? '' : `&:hover {
+	&:hover {
 		${LicSvg}{
 				svg{
 					path{
-						fill: ${cardStyles[props.type].main} !important;
+						fill: ${props => cardStyles[props.type].main} !important;
 					}
 				}
 			}
@@ -388,9 +378,10 @@ const LicCard = styled(LicCardPosed)`
 			 color: #fff !important;
 		 }
 		${LicFooterList}{
-			background: ${cardStyles[props.type].main} !important;
+			background: ${props => cardStyles[props.type].main} !important;
 		}
-	}`}
+	}
+}
 
 `
 

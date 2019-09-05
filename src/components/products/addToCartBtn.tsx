@@ -48,7 +48,7 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 					data-testid='checkout'
 					onClick={cartToggle}
 					color={colors.teal.i500}
-					hoverColor={colors.teal.i800}
+					hoverColor={colors.teal.i500}
 					hoverTextColor={'#fff'}
 					outline={false}
 				>
@@ -64,7 +64,7 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 					disabled={disabled}
 					outline={false}
 					color={colors.teal.i500}
-					hoverColor={colors.teal.i500}
+					hoverColor={colors.teal.i800}
 					hoverTextColor={'#fff'}
 				>
 					I want this

@@ -1,6 +1,6 @@
 import AuthApi from '@api/authApi'
 import { PaginationTypes } from '@et/types/Enums'
-import { IGetAllPaginationsResponse, ILoadPaginationSuccess } from '@et/types/Pagination'
+import { IGetAllPaginationsResponse, ILoadPaginationSuccess, IRawPage } from '@et/types/Pagination'
 import { IState } from '@et/types/State'
 import { IOrderResponse } from '@et/types/WC_Order'
 import { statusCheck } from '@utils/apiUtils'
@@ -10,8 +10,6 @@ export const fetchOrders: any = (page: number) => async (dispatch: Dispatch<Acti
 
 	// 2. check if orders are in state
 	const currentState: IState = getState()
-
-	console.log('currentState.pagination.orders[currentPage]', currentState.pagination.pages[page])
 
 	if (currentState.pagination.pages[page]) {
 		console.log('orders already loaded')

@@ -243,6 +243,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
               bulkDiscount={bulkDiscount}
               inCart={inCart}
               numberOfLicenses={numberOfLicenses}
+              showModal={showModalAction}
               onDialChange={onDialChange}/>
           </LicenseQtyWrapper>
 					}
@@ -346,7 +347,7 @@ const ProductTitle = styled(productRowGap)`
 		}
 `
 const LabelHeader = styled.div`
-	margin: 0 0 10px 20px;
+	margin: 0 0 5px 20px;
 	color: ${colors.primary.text};
 `
 const LicenseSelectWrapper = styled(productRowGap)`

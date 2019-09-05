@@ -33,9 +33,9 @@ const ProductSelect = (
 
 	function handleLicClick (e: SyntheticEvent) {
 		e.preventDefault()
-		if (inCart) {
-			return
-		}
+		// if (inCart) {
+		// 	return
+		// }
 
 		if (e.currentTarget) {
 			onChange(e.currentTarget.getAttribute('data-lic'))
