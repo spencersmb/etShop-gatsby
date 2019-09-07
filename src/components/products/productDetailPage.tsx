@@ -42,19 +42,21 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			{
 				name: `twitter:description`,
 				content: `${wcProduct.seo.desc}`
-			},
-			{
-				name: `twitter:image`,
-				content: `${wcProduct.images.length > 0 ? wcProduct.images[0].thumbnail.url : socialUtils.twitter.defaultImage}`
 			}
+			// {
+			// 	name: `twitter:image`,
+			// 	content: `${wcProduct.images.length > 0
+			// 		? wcProduct.images[0].localFile.childImageSharp.fluid.src
+			// 		: socialUtils.twitter.defaultImage}`
+			// }
 		]
 
 		this.jsonld = {
 			['@context']: 'http://schema.org/',
 			[`@type`]: 'Product',
-			image: [
-				...jsonldImages(wcProduct.images)
-			],
+			// image: [
+			// 	...jsonldImages(wcProduct.images)
+			// ],
 			description: `${wcProduct.seo.desc}`,
 			sku: `${wcProduct.product_id}`,
 			brand: {
@@ -158,8 +160,16 @@ export const productQuery = graphql`
 			sub_header
 			id
 			images{
-				thumbnail{
-					url
+				alt
+				localFile{
+					childImageSharp {
+						thumbnail: fluid(maxWidth: 435) {
+							src
+						}
+						fullWidth: fluid(maxWidth: 702, maxHeight: 468) {
+							src
+						}
+					}
 				}
 			}
 			categories{

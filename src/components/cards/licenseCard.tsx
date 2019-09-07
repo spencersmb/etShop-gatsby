@@ -5,6 +5,7 @@ import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
+import { Width } from '@utils/windowUtils'
 import React, { SyntheticEvent } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -42,7 +43,11 @@ function LicenseCard (props: IProps) {
 				onClick={handleLicenseClick}
 				data-lic={type}
 			>
-				<LicSvg type={type} isOpen={isSelected}>
+				<LicSvg
+					type={type}
+					isOpen={isSelected}
+					width={Width}
+				>
 					<svg viewBox='0 0 525 88' fill='none' xmlns='http://www.w3.org/2000/svg'>
 						{process.env.NODE_ENV !== 'test' && <PosedPath
               colorType={cardStyles[type].main}
@@ -192,11 +197,15 @@ const PosedPath = posed.path({
 const LicSvgPosed = posed.div({
 	closed: {
 		opacity: 1,
-		background: 'rgb(247, 248, 252)'
+		// background: 'rgb(247, 248, 252)'
+		background: (props: any) => props.width >= 1024 ? 'linear-gradient(90deg, rgba(232,232,232,1) 0%, rgba(247,248,252,1) 100%)' : 'rgb(247, 248, 252)'
+		// background: 'linear-gradient(90deg, rgba(232,232,232,1) 0%, rgba(247,248,252,1) 100%)'
 	},
 	open: {
 		opacity: 1,
-		background: 'rgb(218, 218, 218, 1)'
+		// background: 'rgb(218, 218, 218, 1)'
+		background: (props: any) => props.width >= 1024 ? 'linear-gradient(90deg, rgba(218,218,218,1) 0%, rgba(218,218,218,1) 100%)' : 'rgb(218, 218, 218, 1)'
+		// background: 'linear-gradient(90deg, rgba(218,218,218,1) 0%, rgba(218,218,218,1) 100%)'
 	}
 })
 const LicSvg = styled(LicSvgPosed)`

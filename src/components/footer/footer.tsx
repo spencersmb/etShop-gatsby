@@ -79,7 +79,7 @@ const Footer = () => {
 	}
 
 	return (
-		<FooterContainer>
+		<FooterContainer id={'my-div'}>
 			<FooterHeader>
 				<h4>Get notified</h4>
 				<p>when I release new products, send out promos or freebies.</p>

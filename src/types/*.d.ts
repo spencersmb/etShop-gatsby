@@ -7,7 +7,6 @@
 // And to shim assets, use (one file extension per `declare`):
 // declare module "*.png"
 
-
 declare module '*.svg' {
 	const content: any
 	export default content
@@ -16,7 +15,7 @@ declare module 'redux-paginator' {
 	const content: {
 		createPaginator: any
 	}
-	export {createPaginator}
+	export { createPaginator }
 }
 declare module '*.png'
 declare module '*.jpg'
@@ -28,5 +27,8 @@ declare module 'process' {
 	export default browser
 }
 
-
-
+declare module 'flickity-fullscreen' {
+	import Flickity from 'flickity'
+	
+	export default Flickity
+}

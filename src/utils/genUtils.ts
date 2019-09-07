@@ -76,7 +76,7 @@ export const twitterDefaultMeta = (additionalProps: IMeta[] = []): IMeta[] => {
  * @returns Array
  */
 export const jsonldImages = (imageArray: Image[]): string[] => {
-	return imageArray.map(item => item.thumbnail.url)
+	return imageArray.map(item => item.localFile.childImageSharp.fluid.src)
 }
 
 export function reduceChildrenByDataType (type: string, children: ReactChild, dataType: string): string {

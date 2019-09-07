@@ -1,4 +1,5 @@
 import LicenseQtyCard from '@components/cards/licenseQtyCard'
+import FlicktyGallery from '@components/gallery/flickityGallery'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
 import LicenseSelect from '@components/forms/inputs/productSelect'
@@ -11,8 +12,9 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
+import { shadowStyles } from '@styles/global/shadows'
 import { checkCartForProduct } from '@utils/cartUtils'
-import { calcBulkPriceDiscount, calcTotalQtyPrice, displayCurrency } from '@utils/priceUtils'
+import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
 import React, { Dispatch as ReactDispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -69,6 +71,7 @@ function useSetState (initialState: any): useSetStateType {
 // switch off of has ext license data point instead if needed
 export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsActions) => {
 	const { product, products, cart, showModalAction } = props
+
 	const [state, setState] = useSetState({
 		selectedProduct: product,
 		selectedLicense: 'standard',
@@ -208,13 +211,44 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	}
 
-	const { name, sub_header, license: { hasExtendedLicense } } = props.product
+	const { name, sub_header, license: { hasExtendedLicense }, images } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
+
+	const items = [
+		{
+			name: 'Feathers',
+			key: 'feathers'
+		},
+		{
+			name: 'Balloons',
+			key: 'balloons'
+		},
+		{
+			name: 'Soap bubbles',
+			key: 'soap-bubbles'
+		},
+		{
+			name: 'Soap bubbles 2',
+			key: 'soap-bubbles-2'
+		},
+		{
+			name: 'Soap bubbles 3',
+			key: 'soap-bubbles-3'
+		},
+		{
+			name: 'Glenn',
+			key: 'glenn'
+		}
+	]
 	return (
 		<Layout>
 			<ProductWrapper>
 				<SliderGrid>
-					<FlickityWrapper/>
+					<Gallery>
+						<FlickityWrapper>
+							<FlicktyGallery items={images} subSelector={true}/>
+						</FlickityWrapper>
+					</Gallery>
 					<ProductTitle>
 						<h1 className={`sentinel-bold`}>{name}</h1>
 						{sub_header && <p className={`sentinel-medItalic`}>{sub_header}</p>}
@@ -288,8 +322,13 @@ const productRowGap = styled.div`
 	margin-bottom: 15px;
 `
 const ProductWrapper = styled.div`
-	padding: 60px 0 0;
+	padding: 20px 0 0;
 	background: ${colors.grey.i200};
+	
+	@media ${device.tablet} {
+		padding: 60px 0 0;	
+	}
+		
 `
 const SliderGrid = styled(GridFluid)`
 	grid-row-gap: 0 !important;
@@ -298,14 +337,13 @@ const SliderGrid = styled(GridFluid)`
 		
 	}
 `
-const FlickityWrapper = styled.div`
+const Gallery = styled.div`
 	grid-column: 2 / 4;
-	height: 186px; // remember to remove
-	background: #87DEDF;
-	margin: 0 15px;
+	margin: 0 15px 60px;
+	grid-row: 2;
 	
 	@media ${device.tablet} {
-		height: 686px; // remember to remove
+		//height: 686px; // remember to remove
 	 	grid-column: 2 / 14; 
 	}
 	@media ${device.laptop} {
@@ -313,12 +351,24 @@ const FlickityWrapper = styled.div`
 	 	margin: 0 15px 0 -30px;
 	 	grid-row: 1 /span 4;
 	}
+`
+const FlickityWrapper = styled.div`
+	box-shadow: ${shadowStyles.shadow5};
+	max-width: 702px;
+	margin: 0 auto;
+	
+	@media ${device.tablet} {
+			overflow: hidden;
+	}
 		
+	//height: 186px; // remember to remove
+	//background: #87DEDF;
 `
 const ProductTitle = styled(productRowGap)`
-		margin: 40px 0 30px;
+		margin: 40px 0 45px;
 		grid-column: 2 / 4;
 		text-align: center;
+		grid-row: 1;
 		
 		h1{
 			${Sentinel.black};
@@ -341,6 +391,7 @@ const ProductTitle = styled(productRowGap)`
 			grid-column: 2 / 14;
 		}
 		@media ${device.laptop} {
+			margin: 0 0 45px;
 			grid-column: 9 / 14;
 			grid-row: 1;	
 			text-align: left;
@@ -403,7 +454,7 @@ const BuyNowWrapper = styled.div`
 	grid-column: 2 / 4;
 	text-align: center;
 	@media ${device.tablet} {
-		grid-column: 2 / 14;
+		grid-column: 4 / 12;
 	}
 	@media ${device.laptop} {
 		grid-column: 9 / 14;

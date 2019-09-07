@@ -17,7 +17,8 @@ const propsDefault = {
 	bulkDiscount: false,
 	inCart: false,
 	numberOfLicenses: 1,
-	onDialChange: jest.fn()
+	onDialChange: jest.fn(),
+	showModal: jest.fn()
 }
 
 describe('Cart Item tests', () => {

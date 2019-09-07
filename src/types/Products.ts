@@ -29,6 +29,9 @@ export interface Image {
 				width: string
 				height: string
 				src: string
+			},
+			fullWidth:{
+				src: string
 			}
 		}
 	}

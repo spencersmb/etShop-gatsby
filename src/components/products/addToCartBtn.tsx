@@ -87,6 +87,8 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 const CheckoutWrapper = styled.div`
 display: flex;
 flex-direction: column;
+max-width: 484px;
+margin: 0 auto;
 `
 const ButtonsWrapper = styled.div`
 display: flex;
