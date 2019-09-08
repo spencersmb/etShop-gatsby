@@ -46,11 +46,7 @@ const FlickityGalleryContext = (props: IProps) => {
 		}
 
 		setTimeout(initFlickity, 0)
-		setTimeout(() => {
-			if (flkty.current) {
-				flkty.current.resize()
-			}
-		}, 300)
+
 	}, [])
 
 	useLayoutEffect(() => {
@@ -75,6 +71,11 @@ const FlickityGalleryContext = (props: IProps) => {
 			flkty.current.on('settle', onSettle)
 			flkty.current.on('scroll', onChange)
 			// flkty.current.on('staticClick', staticClick)
+			setTimeout(() => {
+				if (flkty.current) {
+					flkty.current.resize()
+				}
+			}, 300)
 		}
 	}
 
