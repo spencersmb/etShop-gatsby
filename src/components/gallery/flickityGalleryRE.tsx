@@ -17,6 +17,7 @@ interface IProps {
 	showModal: IShowModalAction
 	subSelector?: boolean
 }
+
 const itemStyle = {
 	width: '100%',
 	margin: 0
@@ -69,7 +70,7 @@ const FlickityGalleryContext = (props: IProps) => {
 			percentPosition: false
 		}
 
-		if (wrapper.current) {
+		if (wrapper.current && typeof window !== `undefined`) {
 			flkty.current = new Flickity(wrapper.current, options)
 			flkty.current.on('settle', onSettle)
 			flkty.current.on('scroll', onChange)
@@ -170,14 +171,14 @@ const FlickityGalleryContext = (props: IProps) => {
 				)}
 			</div>
 			<div>
-				{state.subSelector &&
-        <ThumbnailGallery
-          onSettle={onSubSettle}
-          slideTo={slideTo}
-          selectedIndex={state.selectedIndex}
-          items={items}
-        />
-				}
+				{/*{state.subSelector &&*/}
+				{/*<ThumbnailGallery*/}
+				{/*  onSettle={onSubSettle}*/}
+				{/*  slideTo={slideTo}*/}
+				{/*  selectedIndex={state.selectedIndex}*/}
+				{/*  items={items}*/}
+				{/*/>*/}
+				{/*}*/}
 			</div>
 		</FlickityWrapper>
 	)
