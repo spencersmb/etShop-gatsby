@@ -258,9 +258,6 @@ const FlickityWrapper = styled(ContainerPose)`
 	@media ${device.tablet} {
 			overflow: hidden;
 	}
-		
-	//height: 186px; // remember to remove
-	//background: #87DEDF;
 `
 export default Selector
 

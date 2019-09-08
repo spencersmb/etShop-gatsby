@@ -38,9 +38,7 @@ class ProductsListLayout extends Component<IProps> {
               	type
               }
               featuredImage{
-              	thumbnail{
-              		alt
-              	}
+								alt
 								localFile{
 									childImageSharp {
 										fluid(maxWidth: 835) {

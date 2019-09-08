@@ -61,9 +61,7 @@ export interface IProduct {
 	id: string,
 	name: string,
 	featuredImage: {
-		thumbnail:{
-			alt: string
-		}
+		alt: string
 		localFile: {
 			name: string
 			id: string

@@ -80,7 +80,6 @@ export class ProductDetailPage extends Component<IProductQuery> {
 	}
 
 	render () {
-		// TODO: add featured image to meta - currently the thumbnail
 		// TODO: get google verification token
 
 		const { data: { wcProduct, site: { siteMetadata } } } = this.props
@@ -161,9 +160,7 @@ export const productQuery = graphql`
 			sub_header
 			id
 			featuredImage{
-				thumbnail{
-					alt
-				}
+				alt
 				localFile{
 					childImageSharp {
 						fluid(maxWidth: 835) {

@@ -1,5 +1,6 @@
 import LicenseQtyCard from '@components/cards/licenseQtyCard'
 import FlicktyGallery from '@components/gallery/flickityGallery'
+import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
 import LicenseSelect from '@components/forms/inputs/productSelect'
@@ -216,32 +217,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	const { name, sub_header, license: { hasExtendedLicense }, images } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
 
-	const items = [
-		{
-			name: 'Feathers',
-			key: 'feathers'
-		},
-		{
-			name: 'Balloons',
-			key: 'balloons'
-		},
-		{
-			name: 'Soap bubbles',
-			key: 'soap-bubbles'
-		},
-		{
-			name: 'Soap bubbles 2',
-			key: 'soap-bubbles-2'
-		},
-		{
-			name: 'Soap bubbles 3',
-			key: 'soap-bubbles-3'
-		},
-		{
-			name: 'Glenn',
-			key: 'glenn'
-		}
-	]
 	return (
 		<Layout>
 			<ProductWrapper>
@@ -255,11 +230,12 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								</Link>
 							</ButtonWrapper>
 						</BackBtn>
-						<FlicktyGallery
-							showModal={showModalAction}
-							items={images}
-							subSelector={true}
-						/>
+						{/*<FlicktyGallery*/}
+						{/*	showModal={showModalAction}*/}
+						{/*	items={images}*/}
+						{/*	subSelector={true}*/}
+						{/*/>*/}
+						<FlickityGalleryContext items={images} showModal={showModalAction} subSelector={true}/>
 					</Gallery>
 					<ProductTitle>
 						<BackBtnMobile>

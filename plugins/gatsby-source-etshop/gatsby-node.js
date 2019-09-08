@@ -61,7 +61,7 @@ exports.sourceNodes = async (
 
     try {
       fileNode = await createRemoteFileNode({
-        url: product.featuredImage.thumbnail.url,
+        url: product.featuredImage.url,
         ...args
       })
 

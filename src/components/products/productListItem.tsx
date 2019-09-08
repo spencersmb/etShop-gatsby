@@ -18,7 +18,7 @@ function ProductListItem (props: IProduct) {
 				<ListItemInner>
 					<ListItemTop className='ListItemTop'>
 						<Img
-							alt={featuredImage.thumbnail.alt}
+							alt={featuredImage.alt}
 							fluid={featuredImage.localFile.childImageSharp.fluid}
 						/>
 						<ListItemTitle>

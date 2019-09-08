@@ -767,13 +767,9 @@ type wcProductEdge {
 }
 
 type wcProductFeaturedImage {
-    localFile: File
-    thumbnail: wcProductFeaturedImageThumbnail
-}
-
-type wcProductFeaturedImageThumbnail {
     alt: String
     height: Int
+    localFile: File
     url: String
     width: Int
 }
@@ -1853,6 +1849,8 @@ enum wcProductFieldsEnum {
     details___file_size
     details___file_types
     details___programs
+    featuredImage___alt
+    featuredImage___height
     featuredImage___localFile___absolutePath
     featuredImage___localFile___accessTime
     featuredImage___localFile___atime
@@ -1904,10 +1902,8 @@ enum wcProductFieldsEnum {
     featuredImage___localFile___sourceInstanceName
     featuredImage___localFile___uid
     featuredImage___localFile___url
-    featuredImage___thumbnail___alt
-    featuredImage___thumbnail___height
-    featuredImage___thumbnail___url
-    featuredImage___thumbnail___width
+    featuredImage___url
+    featuredImage___width
     features___items
     features___items___description
     features___items___icon
@@ -2507,13 +2503,9 @@ input wcProductDetailsFilterInput {
 }
 
 input wcProductFeaturedImageFilterInput {
-    localFile: FileFilterInput
-    thumbnail: wcProductFeaturedImageThumbnailFilterInput
-}
-
-input wcProductFeaturedImageThumbnailFilterInput {
     alt: StringQueryOperatorInput
     height: IntQueryOperatorInput
+    localFile: FileFilterInput
     url: StringQueryOperatorInput
     width: IntQueryOperatorInput
 }
