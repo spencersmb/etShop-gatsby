@@ -45,7 +45,7 @@ const FlickityGalleryContext = (props: IProps) => {
 			})
 		}
 
-		setTimeout(initFlickity, 0)
+		// setTimeout(initFlickity, 0)
 
 	}, [])
 
