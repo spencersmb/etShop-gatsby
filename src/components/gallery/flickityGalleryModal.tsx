@@ -124,7 +124,9 @@ export default class GalleryModal extends Component<IProps> {
 					overSized: true
 				})
 			} else if (this.state.overSized) {
-				window.scrollTo({ top: 0, behavior: 'smooth' })
+				if (window) {
+					window.scrollTo({ top: 0, behavior: 'smooth' })
+				}
 				this.setState({
 					overSized: false
 				})
