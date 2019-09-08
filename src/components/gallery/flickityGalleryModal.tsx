@@ -27,7 +27,8 @@ const itemStyle = {
 export default class GalleryModal extends Component<IProps> {
 
 	state = {
-		selectedIndex: this.props.options.data.selectedIndex
+		selectedIndex: this.props.options.data.selectedIndex,
+		overSized: false
 	}
 
 	flkty: Flickity | null = null
@@ -43,6 +44,7 @@ export default class GalleryModal extends Component<IProps> {
 		setTimeout(() => {
 			if (this.flkty) {
 				this.flkty.resize()
+				this.checkOverSizedImage()
 			}
 		}, 300)
 	}
@@ -75,7 +77,6 @@ export default class GalleryModal extends Component<IProps> {
 			this.flkty.on('settle', this.onSettle)
 			this.flkty.on('scroll', this.onChange)
 		}
-
 	}
 
 	onChange = () => {
@@ -90,7 +91,9 @@ export default class GalleryModal extends Component<IProps> {
 			this.setState({
 				selectedIndex
 			})
+			this.checkOverSizedImage()
 		}
+
 	}
 
 	onSettle = () => {
@@ -105,6 +108,27 @@ export default class GalleryModal extends Component<IProps> {
 			this.setState({
 				selectedIndex
 			})
+			this.checkOverSizedImage()
+		}
+
+	}
+
+	checkOverSizedImage = () => {
+		const selectedImage = document.getElementsByClassName('item-fullscreen is-selected')
+		const image = selectedImage[0].firstElementChild
+		if (image) {
+			const boundingClient = image.getBoundingClientRect()
+			if (boundingClient.height > 800 && !this.state.overSized) {
+
+				this.setState({
+					overSized: true
+				})
+			} else if (this.state.overSized) {
+				window.scrollTo({ top: 0, behavior: 'smooth' })
+				this.setState({
+					overSized: false
+				})
+			}
 		}
 	}
 
@@ -131,11 +155,15 @@ export default class GalleryModal extends Component<IProps> {
 
 	render () {
 		console.log('this.props in Gallery Modal', this.props)
-
+		const overSizedStyles = {
+			height: '100%',
+			overflow: 'scroll'
+		}
 		return (
 			<Main>
 				<Container>
-					<div ref={c => this.wrapper = c} className={'carousel-modal'}>
+					<div ref={c => this.wrapper = c} className={'carousel-modal'}
+							 style={this.state.overSized ? overSizedStyles : {}}>
 						{this.props.options.data.items.map((item: Image, index: number) =>
 							<div key={index} style={itemStyle} className='item-fullscreen'>
 								<img src={item.localFile.childImageSharp.fullWidth.src}
@@ -186,10 +214,14 @@ svg{
 }
 `
 const Container = styled.div`
-	//margin: 50px 0 0;
-	height: 100%;
-	overflow-y: scroll;
+	//height: 100%;
+	//overflow-y: scroll;
 	width: 100%;
+ height: 100%;
+ position: relative;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
 `
 const ModalPose = posed.div({
 	exit: {
@@ -223,9 +255,22 @@ const Main = styled(ModalPose)`
 	transform: translateX(-50%) translateY(-50%);
 	display: flex;
 	flex-direction: column;
-	overflow-x: hidden;
+	//overflow-x: hidden;
 	z-index: 7;
 	justify-content: center;
 	align-items: center;
-	//padding: 50px;
+	// padding: 190px 20px 0;
+	//
+	// @media ${device.tablet} {
+	// 	padding: 275px 20px 0;
+	// }
+	//
+	// @media ${device.laptop} {
+	// 	padding: 60px 20px 0;
+	// }
+	//
+	// @media ${device.laptopL} {
+	// 	padding: 80px 20px 0;
+	// }
+		
 `

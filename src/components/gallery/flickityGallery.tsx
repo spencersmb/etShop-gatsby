@@ -100,12 +100,14 @@ class Selector extends Component<IProps> {
 	}
 
 	onChange = () => {
+
 		if (!this.flkty) {
 			return
 		}
 		const selectedIndex = this.flkty.selectedIndex
 
 		if (this.state.selectedIndex !== selectedIndex) {
+			console.log('change')
 
 			this.setState({
 				selectedIndex
