@@ -235,7 +235,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						{/*	items={images}*/}
 						{/*	subSelector={true}*/}
 						{/*/>*/}
-						{window && <FlickityGalleryContext items={images} showModal={showModalAction} subSelector={true}/>}
+						{/*{<FlickityGalleryContext items={images} showModal={showModalAction} subSelector={true}/>}*/}
 					</Gallery>
 					<ProductTitle>
 						<BackBtnMobile>
