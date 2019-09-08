@@ -5,6 +5,7 @@ const CardSmall = require('./svg-icons/Card-small.svg')
 const CardTop = require('./svg-icons/Card-top.svg')
 const Cart = require('./svg-icons/Cart.svg')
 const Checkmark = require('./svg-icons/Checkmark.svg')
+const ChevronLeft = require('./svg-icons/chevron-left.svg')
 const Close = require('./svg-icons/Close.svg')
 const Computer = require('./svg-icons/Computer.svg')
 const DottedLine = require('./svg-icons/Dotted-line.svg')
@@ -16,6 +17,7 @@ const FooterCircle = require('./svg-icons/Footer-Circle.svg')
 const Fonts = require('./svg-icons/Fonts.svg')
 const Instagram = require('./svg-icons/Instagram.svg')
 const Info = require('./svg-icons/info.svg')
+const MagnifyGlass = require('./svg-icons/magnify-glass.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
 const Twitter = require('./svg-icons/Twitter.svg')
@@ -26,6 +28,7 @@ export const svgs = {
 	CardTop,
 	Cart,
 	Checkmark,
+	ChevronLeft,
 	Close,
 	Computer,
 	CreditCard,
@@ -38,6 +41,7 @@ export const svgs = {
 	Fonts,
 	Instagram,
 	Info,
+	MagnifyGlass,
 	Pinterest,
 	Templates,
 	Textures,

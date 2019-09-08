@@ -30,7 +30,16 @@ export interface Image {
 				height: string
 				src: string
 			},
-			fullWidth:{
+			fullWidth: {
+				src: string
+			},
+			thumbnail_mobile: {
+				src: string
+			},
+			thumbnail: {
+				src: string
+			},
+			thumbnail_2x: {
 				src: string
 			}
 		}
@@ -42,13 +51,50 @@ interface Itag {
 	name: string,
 	slug: string
 }
+
 export interface IProductBullet {
 	bullet_point: string
 }
+
 export interface IProduct {
 	product_id: number,
 	id: string,
 	name: string,
+	featuredImage: {
+		thumbnail:{
+			alt: string
+		}
+		localFile: {
+			name: string
+			id: string
+			childImageSharp: {
+				fluid: {
+					src: string
+					aspectRatio: number
+					base64: string
+					sizes: string
+					srcSet: string
+				},
+				fixed: {
+					width: string
+					height: string
+					src: string
+				},
+				fullWidth: {
+					src: string
+				},
+				thumbnail_mobile: {
+					src: string
+				},
+				thumbnail: {
+					src: string
+				},
+				thumbnail_2x: {
+					src: string
+				}
+			}
+		}
+	}
 	sub_header: string,
 	slug: string,
 	type: string,

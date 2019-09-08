@@ -5,22 +5,22 @@ import { Sentinel } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import { Link} from 'gatsby'
+import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
 
 function ProductListItem (props: IProduct) {
-	const {id, slug, images,name,sub_header,price} = props
+	const { id, slug, images, name, sub_header, price, featuredImage } = props
 	return (
 		<ListItem key={id}>
 			<Link to={`/products/${slug}`}>
 				<ListItemInner>
 					<ListItemTop className='ListItemTop'>
-						{images.length > 0 && <Img
-              alt={images[0].alt}
-              fluid={images[0].localFile.childImageSharp.fluid}
-            />}
+						<Img
+							alt={featuredImage.thumbnail.alt}
+							fluid={featuredImage.localFile.childImageSharp.fluid}
+						/>
 						<ListItemTitle>
 							<h2>
 								{name}
@@ -40,6 +40,7 @@ function ProductListItem (props: IProduct) {
 		</ListItem>
 	)
 }
+
 const ListItem = styled.div`
 	grid-column: 2 / 4;
 	border-radius: 15px 15px 0 0;

@@ -1,9 +1,9 @@
-import { useSetState } from '@components/account/dashboard'
-import { IFlickitytems } from '@components/gallery/flickityGallery'
 import { Image } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import Flickity from 'flickity'
-import React, { Component, useEffect, useRef } from 'react'
+import React, { Component } from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
 
 interface IProps {
@@ -15,7 +15,6 @@ interface IProps {
 
 const itemStyle = {
 	width: `100%`,
-	// height: `137px`,
 	background: '#8C8'
 }
 
@@ -84,25 +83,55 @@ export default class SubSelector extends Component<IProps> {
 		const { items } = this.props
 
 		return (
-			<GallerySubNav ref={c => this.wrapper = c}>
-				{items.map((item: Image, index: number) =>
-					<div key={index} style={itemStyle} className='carousel-cell-nav'>
-						<img src={item.localFile.childImageSharp.fullWidth.src} alt=''/>
-					</div>
-				)}
-
+			<GallerySubNav initialPose='exit' pose='enter'>
+				<div ref={c => this.wrapper = c}>
+					{items.map((item: Image, index: number) =>
+						<div key={index} style={itemStyle} className='carousel-cell-nav'>
+							<img src={item.localFile.childImageSharp.thumbnail_mobile.src} alt={item.alt}/>
+						</div>
+					)}
+				</div>
 			</GallerySubNav>
 		)
 	}
 }
+const Overlay = styled.span<{ isSelected: boolean }>`
+	background: ${colors.primary.text};
+	transition: opacity .3s;
+	opacity: ${props => props.isSelected ? 0 : .8};
+	position: absolute;
+	top: 0; 
+	left: 0;
+	width: 100%;
+	height: 100%;
+	
+	&:hover{
+		opacity: 0;
+	}
+`
+const ContainerPose = posed.div({
+	exit: {
+		opacity: 0,
+		transition: {
+			default: { duration: 150, ease: 'easeOut' }
+		}
+	},
+	enter: {
+		opacity: 1,
+		delay: 300,
+		transition: {
+			default: { duration: 300, ease: 'easeOut' }
+		}
+	}
+})
 
-const GallerySubNav = styled.div`
+const GallerySubNav = styled(ContainerPose)`
 	display: none;
 	
 	@media ${device.tablet} {
 		display: block;	
+		max-height: 136px;
 	}
-		
 `
 // const ThumbnailGallery = (props: IProps) => {
 // 	const { items, selectedIndex } = props

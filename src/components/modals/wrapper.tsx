@@ -163,7 +163,7 @@ const ModalPose = posed.div({
 	}
 })
 const Shade = styled.div`
-		background: red;
+		background: #333f4fcc;
 		height: 100%;
 		left: 0;
 		position: absolute;

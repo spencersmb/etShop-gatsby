@@ -42,21 +42,21 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			{
 				name: `twitter:description`,
 				content: `${wcProduct.seo.desc}`
+			},
+			{
+				name: `twitter:image`,
+				content: `${wcProduct.images.length > 0
+					? wcProduct.featuredImage.localFile.childImageSharp.fluid.src
+					: socialUtils.twitter.defaultImage}`
 			}
-			// {
-			// 	name: `twitter:image`,
-			// 	content: `${wcProduct.images.length > 0
-			// 		? wcProduct.images[0].localFile.childImageSharp.fluid.src
-			// 		: socialUtils.twitter.defaultImage}`
-			// }
 		]
 
 		this.jsonld = {
 			['@context']: 'http://schema.org/',
 			[`@type`]: 'Product',
-			// image: [
-			// 	...jsonldImages(wcProduct.images)
-			// ],
+			image: [
+				...jsonldImages(wcProduct.images)
+			],
 			description: `${wcProduct.seo.desc}`,
 			sku: `${wcProduct.product_id}`,
 			brand: {
@@ -84,6 +84,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		// TODO: get google verification token
 
 		const { data: { wcProduct, site: { siteMetadata } } } = this.props
+		console.log('wcProduct', wcProduct)
 
 		return (
 			<>
@@ -159,14 +160,36 @@ export const productQuery = graphql`
 			name
 			sub_header
 			id
+			featuredImage{
+				thumbnail{
+					alt
+				}
+				localFile{
+					childImageSharp {
+						fluid(maxWidth: 835) {
+							...GatsbyImageSharpFluid
+						}
+					}
+				}
+			}
 			images{
 				alt
 				localFile{
 					childImageSharp {
-						thumbnail: fluid(maxWidth: 435) {
+						#						fluid(maxWidth: 1404, maxHeight: 936) {
+						fluid(maxWidth: 702, maxHeight: 470) {
+							...GatsbyImageSharpFluid
+						}
+						thumbnail_mobile: fluid(maxWidth: 305, maxHeight: 203) {
 							src
 						}
-						fullWidth: fluid(maxWidth: 702, maxHeight: 468) {
+						thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
+							src
+						}
+						thumbnail_2x: fluid(maxWidth: 1404, maxHeight: 936) {
+							src
+						}
+						fullWidth: fluid(maxWidth: 1820) {
 							src
 						}
 					}

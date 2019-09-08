@@ -39,9 +39,6 @@ export const Logo = styled.div`
 	svg{
 		width: 100%;
 	}
-	a{
-		display: flex;
-	}
 `
 export const LogoContainer = styled.div`
 		max-width: 140px;

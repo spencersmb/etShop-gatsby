@@ -37,10 +37,13 @@ class ProductsListLayout extends Component<IProps> {
               license{
               	type
               }
-              images{
+              featuredImage{
+              	thumbnail{
+              		alt
+              	}
 								localFile{
 									childImageSharp {
-										fluid(maxWidth: 435) {
+										fluid(maxWidth: 835) {
 											...GatsbyImageSharpFluid
 										}
 									}

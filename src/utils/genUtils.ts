@@ -76,18 +76,13 @@ export const twitterDefaultMeta = (additionalProps: IMeta[] = []): IMeta[] => {
  * @returns Array
  */
 export const jsonldImages = (imageArray: Image[]): string[] => {
-	return imageArray.map(item => item.localFile.childImageSharp.fluid.src)
+	return imageArray.map(item => item.localFile.childImageSharp.thumbnail.src)
 }
 
 export function reduceChildrenByDataType (type: string, children: ReactChild, dataType: string): string {
 	const items: any[] = React.Children.toArray(children)
 	return items.reduce((prev: any, curr: any) => {
-		switch (type) {
-			case curr.props[dataType]:
-				return curr.props[dataType]
-			default:
-				return prev.props[dataType]
-		}
+		if (type === curr.props[dataType]) { return curr.props[dataType] } else { return prev.props[dataType] }
 	})
 }
 

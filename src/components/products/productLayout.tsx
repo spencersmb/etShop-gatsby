@@ -12,9 +12,11 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
-import { shadowStyles } from '@styles/global/shadows'
+import { svgs } from '@svg'
 import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
+import { renderSvg } from '@utils/styleUtils'
+import { Link } from 'gatsby'
 import React, { Dispatch as ReactDispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -245,13 +247,31 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 			<ProductWrapper>
 				<SliderGrid>
 					<Gallery>
-						<FlickityWrapper>
-							<FlicktyGallery items={images} subSelector={true}/>
-						</FlickityWrapper>
+						<BackBtn>
+							<ButtonWrapper>
+								<Link to='/'>
+									<span>{renderSvg(svgs.ChevronLeft)}</span>
+									<span>Back to products</span>
+								</Link>
+							</ButtonWrapper>
+						</BackBtn>
+						<FlicktyGallery
+							showModal={showModalAction}
+							items={images}
+							subSelector={true}
+						/>
 					</Gallery>
 					<ProductTitle>
+						<BackBtnMobile>
+							<ButtonWrapper>
+								<Link to='/'>
+									<span>{renderSvg(svgs.ChevronLeft)}</span>
+									<span>Back to products</span>
+								</Link>
+							</ButtonWrapper>
+						</BackBtnMobile>
 						<h1 className={`sentinel-bold`}>{name}</h1>
-						{sub_header && <p className={`sentinel-medItalic`}>{sub_header}</p>}
+						{sub_header && <p>{sub_header}</p>}
 					</ProductTitle>
 
 					<LicenseSelectWrapper>
@@ -325,8 +345,8 @@ const ProductWrapper = styled.div`
 	padding: 20px 0 0;
 	background: ${colors.grey.i200};
 	
-	@media ${device.tablet} {
-		padding: 60px 0 0;	
+	@media ${device.laptop} {
+		padding: 100px 0 0;	
 	}
 		
 `
@@ -337,33 +357,88 @@ const SliderGrid = styled(GridFluid)`
 		
 	}
 `
+const ButtonWrapper = styled.div`
+	font-size: 14px;
+	line-height: 14px;
+	a{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: ${colors.primary.text};
+		&:hover{
+			color: ${colors.primary.pink};
+			path{
+				fill: ${colors.primary.pink};
+			}
+		}
+	}
+	span{
+		width: 14px;
+		margin-right: 10px;
+		&:last-child{
+			flex: 1;
+		}
+		
+	}
+	svg{
+		width: 100%;
+		path{
+			transition: .3s;
+			fill: ${colors.primary.text};
+		}
+	}
+`
+const BackBtnMobile = styled.div`
+	text-align: center;
+	max-width: 150px;
+	margin: 0 auto 15px;
+	
+	@media ${device.laptop} {
+		display: none;   
+	}
+`
+const BackBtn = styled.div`
+	position: absolute;
+	background: #fff;
+
+	height: 100px;
+	width: 100%;
+	padding: 20px 0 0 30px;
+	text-transform: uppercase;
+	font-weight: 500;
+	display: none;
+	
+	@media ${device.laptop} {
+		top: -55px;
+		left: 0;
+		width: 270px;
+		display: block;   
+	}
+	
+	@media ${device.laptopL} {
+		left: -30px;
+		width: 470px;
+	}
+		
+`
 const Gallery = styled.div`
 	grid-column: 2 / 4;
 	margin: 0 15px 60px;
 	grid-row: 2;
+	position: relative;
 	
 	@media ${device.tablet} {
 		//height: 686px; // remember to remove
 	 	grid-column: 2 / 14; 
 	}
 	@media ${device.laptop} {
+		width: 100%;
 	 	grid-column: 2 / 9; 
 	 	margin: 0 15px 0 -30px;
 	 	grid-row: 1 /span 4;
 	}
 `
-const FlickityWrapper = styled.div`
-	box-shadow: ${shadowStyles.shadow5};
-	max-width: 702px;
-	margin: 0 auto;
-	
-	@media ${device.tablet} {
-			overflow: hidden;
-	}
-		
-	//height: 186px; // remember to remove
-	//background: #87DEDF;
-`
+
 const ProductTitle = styled(productRowGap)`
 		margin: 40px 0 45px;
 		grid-column: 2 / 4;
@@ -391,7 +466,7 @@ const ProductTitle = styled(productRowGap)`
 			grid-column: 2 / 14;
 		}
 		@media ${device.laptop} {
-			margin: 0 0 45px;
+			margin: 20px 0 45px;
 			grid-column: 9 / 14;
 			grid-row: 1;	
 			text-align: left;

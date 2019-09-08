@@ -1,41 +1,44 @@
-import { useSetState } from '@components/account/dashboard'
+import GalleryModal from '@components/gallery/flickityGalleryModal'
 import ThumbnailGallery from '@components/gallery/thumbnailGallery'
 import { Image } from '@et/types/Products'
+import { IShowModalAction } from '@redux/actions/modalActions'
+import { device } from '@styles/global/breakpoints'
+import Img from 'gatsby-image'
+import { shadowStyles } from '@styles/global/shadows'
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import Flickity from 'flickity-fullscreen'
-import React, { Component, Ref, useEffect, useRef, useState } from 'react'
+import React, { Component } from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
-
-export interface IFlickitytems {
-	name: string
-	key: string
-}
 
 interface IProps {
 	items: Image[]
+	showModal: IShowModalAction
 	subSelector?: boolean
 }
 
 const itemStyle = {
 	width: '100%',
-	// height: '160px',
-	background: '#8C8',
 	margin: 0
 }
 
 class Selector extends Component<IProps> {
 	state = {
 		selectedIndex: 0,
-		subSelector: false
+		subSelector: false,
+		loaded: false
 	}
 
 	flkty: Flickity | null = null
 	scrollAt = 1
 	wrapper: Element | null = null
-	prevScroll = false
 	dragStarted = false
 
 	componentDidMount () {
+
 		const { subSelector, items } = this.props
+		console.log('items', items)
 		this.scrollAt = 1 / (items.length)
 		if (subSelector) {
 			this.setState({
@@ -57,7 +60,7 @@ class Selector extends Component<IProps> {
 		}
 	};
 
-	initFlickity = () => {
+	initFlickity = (loader: any) => {
 		const options = {
 			cellSelector: '.item',
 			cellAlign: 'left',
@@ -68,7 +71,6 @@ class Selector extends Component<IProps> {
 			setGallerySize: true,
 			prevNextButtons: false,
 			percentPosition: false
-			// fullscreen: true
 		}
 
 		if (this.wrapper) {
@@ -77,8 +79,24 @@ class Selector extends Component<IProps> {
 			this.flkty.on('dragEnd', this.dragEnd)
 			this.flkty.on('settle', this.onSettle)
 			this.flkty.on('scroll', this.onChange)
+			this.flkty.on('staticClick', this.staticClick)
 		}
 
+	}
+
+	staticClick = () => {
+		this.props.showModal({
+			modal: GalleryModal,
+			options: {
+				closeModal: true,
+				hasBackground: true,
+				data: {
+					selectedIndex: this.state.selectedIndex,
+					onSettle: this.onSubSettle,
+					items: this.props.items
+				}
+			}
+		})
 	}
 
 	onChange = () => {
@@ -86,15 +104,12 @@ class Selector extends Component<IProps> {
 			return
 		}
 		const selectedIndex = this.flkty.selectedIndex
-		console.log('selectedIndex', selectedIndex)
-		console.log('this.state.selectedIndex', this.state.selectedIndex)
 
 		if (this.state.selectedIndex !== selectedIndex) {
 
 			this.setState({
 				selectedIndex
 			})
-			console.log('change too', this.state)
 		}
 	}
 
@@ -109,67 +124,7 @@ class Selector extends Component<IProps> {
 			this.setState({
 				selectedIndex
 			})
-			console.log('Settle change too', this.state)
 		}
-	}
-
-	onScroll = (scroll: any, sub = false) => {
-
-		const currentState = this.state.selectedIndex
-		if (!this.dragStarted) {
-			return
-		}
-
-		const initialDragStart = this.state.selectedIndex
-
-		let direction = ''
-
-		if (this.prevScroll) {
-			direction = (scroll < this.prevScroll) ? 'right' : 'left'
-		}
-
-		console.log('direction', direction)
-		console.log('this.state.selectedIndex', this.state.selectedIndex)
-
-		const boundaries = {
-			left: this.scrollAt * (this.state.selectedIndex),
-			right: (this.scrollAt * (this.state.selectedIndex + 1)) - (this.scrollAt / 2)
-		}
-
-		// When you move the slider to the left
-		if (scroll > boundaries.right && direction === 'left') {
-			console.log('left')
-			const next = this.state.selectedIndex += 1
-
-			if ((next - initialDragStart) > 1) {
-				console.log('moved twice')
-
-			}
-			this.setState({
-				selectedIndex: next
-			})
-			//
-			// if (sub) {
-			//
-			// 	this.slideTo(next, false)
-			// }
-		}
-
-		// When you move the slider to the right
-		if (scroll < boundaries.left && direction === 'right' && this.state.selectedIndex !== 0) {
-
-			const prev = this.state.selectedIndex -= 1
-			this.setState({
-				selectedIndex: prev
-			})
-			console.log('right')
-			//
-			// if (sub) {
-			// 	this.slideTo(prev, false)
-			// }
-		}
-
-		this.prevScroll = scroll
 	}
 
 	slideTo = (index: number, updateState = true) => {
@@ -204,16 +159,41 @@ class Selector extends Component<IProps> {
 
 	render () {
 		const { items } = this.props
-
 		return (
-			<>
+			<FlickityWrapper initialPose='exit' pose='enter'>
 				<div ref={c => this.wrapper = c} className={`carousel`}>
 					{items.map((item: Image, index: number) =>
 						<div key={index} style={itemStyle} className='item carousel-cell'>
-							<img src={item.localFile.childImageSharp.fullWidth.src} alt=''/>
+							<FullScreenIcon>
+								{renderSvg(svgs.MagnifyGlass)}
+							</FullScreenIcon>
+							{/*<picture>*/}
+							{/*	<source*/}
+							{/*		srcSet={`*/}
+							{/*		${item.localFile.childImageSharp.thumbnail.src} 1x,*/}
+							{/*		${item.localFile.childImageSharp.thumbnail_2x.src} 2x*/}
+							{/*		`}*/}
+							{/*		media='(min-width: 992px)'/>*/}
+							{/*	<source*/}
+							{/*		srcSet={`*/}
+							{/*		${item.localFile.childImageSharp.thumbnail.src} 1x*/}
+							{/*		`}*/}
+							{/*		media='(min-width: 768px)'/>*/}
+							{/*	<source*/}
+							{/*		srcSet={`*/}
+							{/*		${item.localFile.childImageSharp.thumbnail.src} 2x*/}
+							{/*		`}*/}
+							{/*		media='(min-width: 375px)'/>*/}
+							{/*	<img src={item.localFile.childImageSharp.thumbnail_mobile.src}*/}
+							{/*			 alt={item.alt}/>*/}
+							{/*</picture>*/}
+							<Img
+								critical={true}
+								fadeIn={false}
+								fluid={item.localFile.childImageSharp.fluid}
+								alt={item.alt}/>
 						</div>
 					)}
-
 				</div>
 				<div>
 					{this.state.subSelector &&
@@ -225,191 +205,60 @@ class Selector extends Component<IProps> {
           />
 					}
 				</div>
-			</>
+			</FlickityWrapper>
 		)
 	}
 }
 
-const GalleryContainer = styled.div`
-	max-width: 700px;
-	margin: 0 auto;
-	overflow: hidden;
+const FullScreenIcon = styled.span`
+	background: #333f4fa3;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%)translateX(-50%);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 5;
+	svg{
+		width: 100%;
+		max-width: 56px;
+		padding: 10px;
+		path{
+			fill: #fff;
+		}
+	}
 `
-const FlicktyGallery = (props: IProps) => {
 
-	const { subSelector, items } = props
-	const [state, setState] = useSetState({
-		selectedIndex: 0,
-		subSelector: false
-	})
-	const { selectedIndex } = state
-	const [subSelectorState, setSubSelectorState] = useState(false)
-	const flktyNav = useRef<Flickity | null>(null)
-	const wrapper = useRef<HTMLDivElement>(null)
-	const indexRef = useRef<number>(0)
-	let dragStarted = false
-
-	useEffect(() => {
-		if (subSelector) {
-			setSubSelectorState(true)
+const ContainerPose = posed.div({
+	exit: {
+		opacity: 0,
+		transition: {
+			default: { duration: 150, ease: 'easeOut' }
 		}
-
-		setTimeout(initFlickity, 0)
-		setTimeout(() => {
-			if (flktyNav.current) {
-				flktyNav.current.resize()
-			}
-		}, 300)
-
-		return function cleanUp () {
-			console.log('cleanup flickity')
-			if (flktyNav.current) {
-				flktyNav.current.destroy()
-			}
-
-		}
-	}, [])
-
-	useEffect(() => {
-		console.log('effect')
-		console.log('state', state)
-
-	})
-
-	function initFlickity () {
-		const options = {
-			cellSelector: '.item',
-			cellAlign: 'left',
-			contain: false,
-			initialIndex: 0,
-			accessibility: false,
-			pageDots: false,
-			setGallerySize: true,
-			prevNextButtons: true,
-			percentPosition: false,
-			fullscreen: true
-		}
-
-		if (wrapper.current) {
-			console.log('new Flickity')
-
-			flktyNav.current = new Flickity(wrapper.current, options)
-			flktyNav.current.on('dragStart', dragStart)
-			flktyNav.current.on('dragEnd', dragEnd)
-			flktyNav.current.on('scroll', onChange)
-			flktyNav.current.on('settle', onSettle)
-		}
-
-	}
-
-	function onChange () {
-		if (!flktyNav.current) {
-			return
-		}
-		const currentIndex = flktyNav.current.selectedIndex
-		console.log('selected', currentIndex)
-		console.log('indexRef', indexRef.current)
-
-		if (indexRef.current !== currentIndex) {
-			console.log('change')
-			//
-			setState({
-				selectedIndex: currentIndex
-			})
-			// indexRef.current = currentIndex
-		}
-
-		// if (currentIndex === 0) {
-		// 	setState({
-		// 		selectedIndex: currentIndex
-		// 	})
-		// }
-	}
-
-	function scrollTo (index: number, updateState = true) {
-		if (!flktyNav.current) {
-			return
-		}
-
-		flktyNav.current.selectCell(index)
-
-		if (updateState) {
-			setState({ selectedIndex: index })
-		}
-		console.log('scrollTo', index)
-
-	}
-
-	function dragStart (e: any) {
-		dragStarted = true
-
-	}
-
-	function dragEnd (e: any) {
-		dragStarted = false
-	}
-
-	async function onSettle () {
-		if (!flktyNav.current) {
-			return
-		}
-		const currentIndex = flktyNav.current.selectedIndex
-
-		console.log('settleIndex', selectedIndex)
-
-		if (selectedIndex !== currentIndex) {
-			setState({ selectedIndex: currentIndex })
-		}
-		// if (currentIndex === 0) {
-		// 	setState({ selectedIndex: currentIndex })
-		// }
-
-	}
-
-	function onSubSettle (index: number) {
-		if (flktyNav.current && flktyNav.current.selectedIndex !== index) {
-			scrollTo(index, false)
+	},
+	enter: {
+		opacity: 1,
+		delay: 0,
+		transition: {
+			default: { duration: 300, ease: 'easeOut' }
 		}
 	}
-
-	console.log('Gallery state', state)
-	return (
-		<>
-			<div ref={wrapper} className={`carousel`}>
-				{/*{items.map(item =>*/}
-				{/*	<div key={item.id} style={itemStyle} className='item carousel-cell'>*/}
-				{/*		<img src={item.localFile.childImageSharp.fullWidth.src} alt=''/>*/}
-				{/*	</div>*/}
-				{/*)}*/}
-				<div key={items[0].id} style={itemStyle} className='item carousel-cell'>
-					<img src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-				</div>
-				<div key={items[0].id} style={itemStyle} className='item carousel-cell'>
-					<img src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-				</div>
-				<div key={items[0].id} style={itemStyle} className='item carousel-cell'>
-					<img src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-				</div>
-				<div key={items[0].id} style={itemStyle} className='item carousel-cell'>
-					<img src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-				</div>
-				<div key={items[0].id} style={itemStyle} className='item carousel-cell'>
-					<img src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-				</div>
-
-			</div>
-			<div>
-				{subSelectorState &&
-        <ThumbnailGallery
-          onSettle={onSubSettle}
-          slideTo={scrollTo}
-          selectedIndex={selectedIndex}
-          items={items}
-        />
-				}
-			</div>
-		</>
-	)
-}
-
+})
+const FlickityWrapper = styled(ContainerPose)`
+	box-shadow: ${shadowStyles.shadow5};
+	max-width: 687px;
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	
+	@media ${device.tablet} {
+			overflow: hidden;
+	}
+		
+	//height: 186px; // remember to remove
+	//background: #87DEDF;
+`
 export default Selector
+

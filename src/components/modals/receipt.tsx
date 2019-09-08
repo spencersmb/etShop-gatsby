@@ -1,4 +1,4 @@
-import { IModal } from '@et/types/Modal'
+import { IModal, Merge } from '@et/types/Modal'
 import { IOrderDownload } from '@et/types/WC_Order'
 import { displayCurrency } from '@utils/priceUtils'
 import React from 'react'
@@ -6,8 +6,7 @@ import posed from 'react-pose'
 import styled from 'styled-components'
 
 // https://stackoverflow.com/questions/41285211/overriding-interface-property-type-defined-in-typescript-d-ts-file
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
+
 type IReceiptProps = Merge<IModal, {
 	options: {
 		data: {
