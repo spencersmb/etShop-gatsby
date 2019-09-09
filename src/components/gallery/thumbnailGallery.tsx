@@ -1,10 +1,13 @@
 import { Image } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
-import { colors } from '@styles/global/colors'
-import Flickity from 'flickity'
 import React, { Component } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
+
+const Flickity =
+	typeof window !== 'undefined'
+		? require('flickity')
+		: () => null
 
 interface IProps {
 	slideTo: (index: number, updateState?: boolean) => void
@@ -30,7 +33,10 @@ export default class SubSelector extends Component<IProps> {
 	componentDidMount () {
 		const { items } = this.props
 		this.scrollAt = 1 / (items.length)
-		setTimeout(this.initFlickity, 300)
+
+		if (Flickity) {
+			setTimeout(this.initFlickity, 300)
+		}
 	}
 
 	initFlickity = () => {
@@ -47,10 +53,12 @@ export default class SubSelector extends Component<IProps> {
 
 		if (this.wrapper) {
 			this.flkty = new Flickity(this.wrapper, options)
-			this.flkty.on('dragStart', this.dragStart)
-			this.flkty.on('dragEnd', this.dragEnd)
-			this.flkty.on('staticClick', this.staticClick)
-			this.flkty.on('settle', this.props.onSettle)
+			if (this.flkty) {
+				this.flkty.on('dragStart', this.dragStart)
+				this.flkty.on('dragEnd', this.dragEnd)
+				this.flkty.on('staticClick', this.staticClick)
+				this.flkty.on('settle', this.props.onSettle)
+			}
 		}
 
 	}
@@ -95,20 +103,6 @@ export default class SubSelector extends Component<IProps> {
 		)
 	}
 }
-const Overlay = styled.span<{ isSelected: boolean }>`
-	background: ${colors.primary.text};
-	transition: opacity .3s;
-	opacity: ${props => props.isSelected ? 0 : .8};
-	position: absolute;
-	top: 0; 
-	left: 0;
-	width: 100%;
-	height: 100%;
-	
-	&:hover{
-		opacity: 0;
-	}
-`
 const ContainerPose = posed.div({
 	exit: {
 		opacity: 0,

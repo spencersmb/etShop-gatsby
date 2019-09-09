@@ -4,10 +4,14 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import Flickity from 'flickity'
 import React, { Component } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
+
+const Flickity =
+	typeof window !== 'undefined'
+		? require('flickity')
+		: () => null
 
 type IProps = Merge<IModal, {
 	options: {
@@ -41,12 +45,7 @@ export default class GalleryModal extends Component<IProps> {
 		this.scrollAt = 1 / (this.props.options.data.items.length)
 
 		setTimeout(this.initFlickity, 0)
-		setTimeout(() => {
-			if (this.flkty) {
-				this.flkty.resize()
-				this.checkOverSizedImage()
-			}
-		}, 300)
+
 	}
 
 	componentWillUnmount () {
@@ -72,10 +71,18 @@ export default class GalleryModal extends Component<IProps> {
 
 		if (this.wrapper) {
 			this.flkty = new Flickity(this.wrapper, options)
-			this.flkty.on('dragStart', this.dragStart)
-			this.flkty.on('dragEnd', this.dragEnd)
-			this.flkty.on('settle', this.onSettle)
-			this.flkty.on('scroll', this.onChange)
+			if (this.flkty) {
+				this.flkty.on('dragStart', this.dragStart)
+				this.flkty.on('dragEnd', this.dragEnd)
+				this.flkty.on('settle', this.onSettle)
+				this.flkty.on('scroll', this.onChange)
+				setTimeout(() => {
+					if (this.flkty) {
+						this.flkty.resize()
+						this.checkOverSizedImage()
+					}
+				}, 300)
+			}
 		}
 	}
 
@@ -131,19 +138,6 @@ export default class GalleryModal extends Component<IProps> {
 					overSized: false
 				})
 			}
-		}
-	}
-
-	slideTo = (index: number, updateState = true) => {
-		if (!this.flkty) {
-			return
-		}
-		this.flkty.selectCell(index)
-
-		if (updateState) {
-			this.setState({
-				selectedIndex: index
-			})
 		}
 	}
 

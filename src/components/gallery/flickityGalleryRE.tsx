@@ -2,6 +2,7 @@ import { useSetState } from '@components/account/dashboard'
 import ThumbnailGallery from '@components/gallery/thumbnailGallery'
 import { device } from '@styles/global/breakpoints'
 import { shadowStyles } from '@styles/global/shadows'
+import flickity from '@styles/modules/flickity'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import Img from 'gatsby-image'
@@ -11,7 +12,6 @@ import { IShowModalAction } from '@redux/actions/modalActions'
 import posed from 'react-pose'
 import styled from 'styled-components'
 // import Flickity from 'flickity'
-
 const Flickity =
 	typeof window !== 'undefined'
 		? require('flickity')
@@ -49,8 +49,9 @@ const FlickityGalleryContext = (props: IProps) => {
 				subSelector: true
 			})
 		}
-
-		setTimeout(initFlickity, 0)
+		if(Flickity){
+			setTimeout(initFlickity, 0)
+		}
 
 	}, [])
 
@@ -71,9 +72,12 @@ const FlickityGalleryContext = (props: IProps) => {
 			percentPosition: false
 		}
 
-		if (wrapper.current && Flickity) {
+		if (wrapper.current) {
 			flkty.current = new Flickity(wrapper.current, options)
+
+			// @ts-ignore
 			flkty.current.on('settle', onSettle)
+			// @ts-ignore
 			flkty.current.on('scroll', onChange)
 			// flkty.current.on('staticClick', staticClick)
 			setTimeout(() => {
@@ -177,14 +181,14 @@ const FlickityGalleryContext = (props: IProps) => {
 				)}
 			</div>
 			<div>
-				{/*{state.subSelector &&*/}
-				{/*<ThumbnailGallery*/}
-				{/*  onSettle={onSubSettle}*/}
-				{/*  slideTo={slideTo}*/}
-				{/*  selectedIndex={state.selectedIndex}*/}
-				{/*  items={items}*/}
-				{/*/>*/}
-				{/*}*/}
+				{state.subSelector &&
+				<ThumbnailGallery
+				  onSettle={onSubSettle}
+				  slideTo={slideTo}
+				  selectedIndex={state.selectedIndex}
+				  items={items}
+				/>
+				}
 			</div>
 		</FlickityWrapper>
 	)
