@@ -4,13 +4,18 @@ import { device } from '@styles/global/breakpoints'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import Flickity from 'flickity'
 import Img from 'gatsby-image'
 import React, { Ref, useEffect, useLayoutEffect, useRef } from 'react'
 import { Image } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import posed from 'react-pose'
 import styled from 'styled-components'
+// import Flickity from 'flickity'
+
+const Flickity =
+	typeof window !== 'undefined'
+		? require('flickity')
+		: () => null
 
 interface IProps {
 	items: Image[]
@@ -45,7 +50,7 @@ const FlickityGalleryContext = (props: IProps) => {
 			})
 		}
 
-		// setTimeout(initFlickity, 0)
+		setTimeout(initFlickity, 0)
 
 	}, [])
 
@@ -66,7 +71,7 @@ const FlickityGalleryContext = (props: IProps) => {
 			percentPosition: false
 		}
 
-		if (wrapper.current && typeof window !== `undefined`) {
+		if (wrapper.current && Flickity) {
 			flkty.current = new Flickity(wrapper.current, options)
 			flkty.current.on('settle', onSettle)
 			flkty.current.on('scroll', onChange)
