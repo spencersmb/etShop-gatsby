@@ -8,7 +8,8 @@ export const colors = {
 	},
 	primary: {
 		text: `#333F4F`,
-		pink: `#F95A86`
+		pink: `#F95A86`,
+		headline: `#35546D`
 	},
 	secondary:{
 		text: `#6A7E90`

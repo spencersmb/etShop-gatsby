@@ -15,6 +15,7 @@ const Filter = require('./svg-icons/Filter.svg')
 const Facebook = require('./svg-icons/Facebook.svg')
 const FooterCircle = require('./svg-icons/Footer-Circle.svg')
 const Fonts = require('./svg-icons/Fonts.svg')
+const FontPreview = require('./svg-icons/fontPreview.svg')
 const Instagram = require('./svg-icons/Instagram.svg')
 const Info = require('./svg-icons/info.svg')
 const MagnifyGlass = require('./svg-icons/magnify-glass.svg')
@@ -37,6 +38,7 @@ export const svgs = {
 	ETLogo,
 	Facebook,
 	Filter,
+	FontPreview,
 	FooterCircle,
 	Fonts,
 	Instagram,

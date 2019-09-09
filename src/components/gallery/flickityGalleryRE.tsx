@@ -1,12 +1,12 @@
 import { useSetState } from '@components/account/dashboard'
+import GalleryModal from '@components/gallery/flickityGalleryModal'
 import ThumbnailGallery from '@components/gallery/thumbnailGallery'
 import { device } from '@styles/global/breakpoints'
 import { shadowStyles } from '@styles/global/shadows'
-import flickity from '@styles/modules/flickity'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import Img from 'gatsby-image'
-import React, { Ref, useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { Image } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import posed from 'react-pose'
@@ -38,18 +38,16 @@ const FlickityGalleryContext = (props: IProps) => {
 	const flkty = useRef<Flickity | null>(null)
 	const scrollAt = useRef(1)
 	const wrapper = useRef<HTMLDivElement>(null)
-	const dragStarted = useRef(false)
 	const prevSelectedIndex = useRef(0)
 
 	useEffect(() => {
-		console.log('items', items)
 		scrollAt.current = 1 / (items.length)
 		if (subSelector) {
 			setState({
 				subSelector: true
 			})
 		}
-		if(Flickity){
+		if (Flickity) {
 			setTimeout(initFlickity, 0)
 		}
 
@@ -79,13 +77,30 @@ const FlickityGalleryContext = (props: IProps) => {
 			flkty.current.on('settle', onSettle)
 			// @ts-ignore
 			flkty.current.on('scroll', onChange)
-			// flkty.current.on('staticClick', staticClick)
+			// @ts-ignore
+			flkty.current.on('staticClick', staticClick)
+
 			setTimeout(() => {
 				if (flkty.current) {
 					flkty.current.resize()
 				}
 			}, 300)
 		}
+	}
+
+	function staticClick () {
+		props.showModal({
+			modal: GalleryModal,
+			options: {
+				closeModal: true,
+				hasBackground: true,
+				data: {
+					selectedIndex: prevSelectedIndex.current,
+					onSettle: onSubSettle,
+					items: props.items
+				}
+			}
+		})
 	}
 
 	function onChange () {
@@ -95,9 +110,6 @@ const FlickityGalleryContext = (props: IProps) => {
 		const selectedIndex = flkty.current.selectedIndex
 
 		if (prevSelectedIndex.current !== selectedIndex) {
-			console.log('change')
-			console.log('selectedIndex', selectedIndex)
-			console.log('prevSelectedIndex.current', prevSelectedIndex.current)
 
 			setState({
 				selectedIndex
@@ -110,9 +122,6 @@ const FlickityGalleryContext = (props: IProps) => {
 			return
 		}
 		const selectedIndex = flkty.current.selectedIndex
-		console.log('onSettle Change')
-		console.log('prevSelectedIndex.current', prevSelectedIndex.current)
-		console.log('selectedIndex', selectedIndex)
 
 		if (prevSelectedIndex.current !== selectedIndex) {
 
@@ -182,12 +191,12 @@ const FlickityGalleryContext = (props: IProps) => {
 			</div>
 			<div>
 				{state.subSelector &&
-				<ThumbnailGallery
-				  onSettle={onSubSettle}
-				  slideTo={slideTo}
-				  selectedIndex={state.selectedIndex}
-				  items={items}
-				/>
+        <ThumbnailGallery
+          onSettle={onSubSettle}
+          slideTo={slideTo}
+          selectedIndex={state.selectedIndex}
+          items={items}
+        />
 				}
 			</div>
 		</FlickityWrapper>
@@ -213,7 +222,6 @@ const FullScreenIcon = styled.span`
 		}
 	}
 `
-
 const ContainerPose = posed.div({
 	exit: {
 		opacity: 0,

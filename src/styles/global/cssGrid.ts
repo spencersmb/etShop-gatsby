@@ -16,7 +16,6 @@ const mobileGrid = `
 			minmax(0, 1fr)
 		;
 		grid-gap: ${gutterMobile}px;
-		padding: 0;
 `
 export const GridFluid = styled.div`
 	padding: 0 20px;

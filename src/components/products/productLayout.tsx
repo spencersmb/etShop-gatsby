@@ -5,6 +5,8 @@ import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
 import LicenseSelect from '@components/forms/inputs/productSelect'
 import Layout from '@components/layout'
+import ProductDescription from '@components/products/modules/productDesc'
+import SideBar from '@components/products/modules/productDetailsSidebar'
 import { ICartItem, ICartState } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
@@ -214,7 +216,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	}
 
-	const { name, sub_header, license: { hasExtendedLicense }, images } = props.product
+	const { name, sub_header, license: { hasExtendedLicense }, images, intro_title, intro_description } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
 
 	return (
@@ -230,12 +232,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								</Link>
 							</ButtonWrapper>
 						</BackBtn>
-						{/*<FlicktyGallery*/}
-						{/*	showModal={showModalAction}*/}
-						{/*	items={images}*/}
-						{/*	subSelector={true}*/}
-						{/*/>*/}
-						{<FlickityGalleryContext items={images} showModal={showModalAction} subSelector={true}/>}
+						<FlickityGalleryContext items={images} showModal={showModalAction} subSelector={true}/>
 					</Gallery>
 					<ProductTitle>
 						<BackBtnMobile>
@@ -308,6 +305,13 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 
 				</SliderGrid>
+				<DescriptionWrapper id={'desc'}>
+					<ProductDescription
+						intro_title={intro_title}
+						intro_description={intro_description}
+					/>
+					<SideBar/>
+				</DescriptionWrapper>
 			</ProductWrapper>
 
 		</Layout>
@@ -326,11 +330,14 @@ const ProductWrapper = styled.div`
 	}
 		
 `
+const DescriptionWrapper = styled(GridFluid)`
+	grid-row-gap: 0 !important;
+	padding: 80px 0;
+`
 const SliderGrid = styled(GridFluid)`
 	grid-row-gap: 0 !important;
 	@media ${device.tablet}{
 		grid-template-rows: auto auto auto 1fr;
-		
 	}
 `
 const ButtonWrapper = styled.div`

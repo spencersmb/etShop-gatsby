@@ -159,6 +159,16 @@ export const productQuery = graphql`
 			name
 			sub_header
 			id
+			intro_title
+			intro_description
+			font_preview
+			details{
+				file_types
+				dpi
+				file_size
+				programs
+				__typename
+			}
 			featuredImage{
 				alt
 				localFile{
@@ -227,7 +237,6 @@ export const productQuery = graphql`
 				name
 				slug
 			}
-
 			type
 		}
 	}

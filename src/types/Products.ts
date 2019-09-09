@@ -96,6 +96,8 @@ export interface IProduct {
 	sub_header: string,
 	slug: string,
 	type: string,
+	intro_title: string,
+	intro_description: string,
 	description: string,
 	short_description: string,
 	price: string,

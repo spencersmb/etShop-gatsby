@@ -1,6 +1,5 @@
 import { IModal, Merge } from '@et/types/Modal'
 import { Image } from '@et/types/Products'
-import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
@@ -150,7 +149,6 @@ export default class GalleryModal extends Component<IProps> {
 	}
 
 	render () {
-		console.log('this.props in Gallery Modal', this.props)
 		const overSizedStyles = {
 			height: '100%',
 			overflow: 'scroll'
@@ -210,8 +208,6 @@ svg{
 }
 `
 const Container = styled.div`
-	//height: 100%;
-	//overflow-y: scroll;
 	width: 100%;
  height: 100%;
  position: relative;
@@ -251,22 +247,7 @@ const Main = styled(ModalPose)`
 	transform: translateX(-50%) translateY(-50%);
 	display: flex;
 	flex-direction: column;
-	//overflow-x: hidden;
 	z-index: 7;
 	justify-content: center;
 	align-items: center;
-	// padding: 190px 20px 0;
-	//
-	// @media ${device.tablet} {
-	// 	padding: 275px 20px 0;
-	// }
-	//
-	// @media ${device.laptop} {
-	// 	padding: 60px 20px 0;
-	// }
-	//
-	// @media ${device.laptopL} {
-	// 	padding: 80px 20px 0;
-	// }
-		
 `

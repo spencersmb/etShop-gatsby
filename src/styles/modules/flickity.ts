@@ -102,6 +102,7 @@ export default css`
 	.item-fullscreen{
 		max-width: 728px;
 		opacity: 0;
+		transition: opacity .3s;
 
 		&.is-selected{
 			opacity: 1;
