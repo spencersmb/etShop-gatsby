@@ -1,7 +1,7 @@
 import { device } from '@styles/global/breakpoints'
 import { ButtonReg } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
-import { Sentinel } from '@styles/global/fonts'
+import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
@@ -41,6 +41,11 @@ const TryButton = styled(ButtonReg)`
 	margin: 0;
 	text-align: center;
 		
+	@media ${device.tablet} {
+		background: #fff;
+		color: ${colors.teal.i500};
+	}
+		
 `
 const ButtonText = styled.div`
 	display: flex;
@@ -66,6 +71,15 @@ const Icon = styled.div`
 			fill: ${colors.teal.i500};
 		}
 	}
+	
+	@media ${device.tablet} {
+		svg{
+			path{
+				fill: #fff;
+			}
+		} 
+	}
+		
 `
 const Header = styled.div`
 	display: flex;
@@ -84,11 +98,23 @@ const FontPreviewBtnWrapper = styled.aside`
 	background: ${colors.grey.i400};
 	
 	@media ${device.tablet} {
-		border-radius: 50px;
-		padding: 25px 37px;
-
-		border:3px solid ${colors.purple.i500};
+		grid-column: 9 /14; 
+		box-shadow: ${shadowStyles.shadow5};
+		background: ${colors.teal.i500};
+		position: relative;
+		z-index: 2;
+		max-width: 365px;
+		width: 100%;
+		margin: 0 auto;
+		// border-radius: 50px;
+		// padding: 25px 37px;
+		// border:3px solid ${colors.purple.i500};
 	    
+	}
+	
+	@media ${device.laptop} {
+		margin: 0 0 0 auto;
+		justify-content: flex-end;
 	}
 		
 `

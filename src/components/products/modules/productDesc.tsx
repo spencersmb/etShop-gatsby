@@ -1,4 +1,5 @@
 import FontPreviewBtn from '@components/products/modules/fontPreviewBtn'
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import React, { useEffect } from 'react'
@@ -7,12 +8,18 @@ import styled from 'styled-components'
 interface IProps {
 	intro_title: string
 	intro_description: string
+	fontPreview: boolean
 }
 
-const ProductDescription = (props: IProps) => {
-	const { intro_description, intro_title } = props
+const ProductDescription = ({ intro_title = '', intro_description = '', fontPreview }: IProps) => {
 
-	function createDesc () { return { __html: intro_description.toString() } }
+	function createDesc () {
+		const sanitize = intro_description ? intro_description : ''
+
+		return {
+			__html: sanitize.toString()
+		}
+	}
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -28,7 +35,7 @@ const ProductDescription = (props: IProps) => {
 			<SubTitle>Description</SubTitle>
 			<Title>{intro_title}</Title>
 			<Desc dangerouslySetInnerHTML={createDesc()}/>
-			<FontPreviewBtn/>
+			{fontPreview && <FontPreviewBtn/>}
 		</>
 	)
 }
@@ -39,24 +46,63 @@ const SubTitle = styled.span`
 	font-weight: 500;
 	color: ${colors.primary.text};
 	text-transform: uppercase;
-	text-align: center;
+	text-align: left;
+	margin-bottom: 20px;
+	
+	@media ${device.tablet} {
+		grid-column: 2/6;
+	}
+	@media ${device.laptopL} {
+		grid-column: 3/6;
+		margin:0;
+	}
+		
 `
 const Title = styled.h3`
 	color: ${colors.primary.headline};
 	${Sentinel.italic};
-	font-size: 38px;
+	font-size: 54px;
 	line-height: 52px;
 	font-weight: 500;
-	text-align: center;
+	margin-bottom: 25px;
+	text-align: left;
 	grid-column: 2 / 4;
+	
+	@media ${device.tablet} {
+		grid-column: 2 / 8;
+	}
+	
+	@media ${device.laptopL} {
+		margin: 50px 0 50px -30px;
+	}
 `
 const Desc = styled.div`
 	grid-column: 2 / 4;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 	p{
 		color: ${colors.primary.headline};
 		&:first-child{
 			font-size: 21px;
+			strong{
+				font-weight: 400;
+			}
 		}
+	}
+	li{
+		color: ${colors.primary.headline};
+		margin-bottom: 5px;
+	}
+	
+	@media ${device.tablet} {
+		grid-column: 2 /9;
+		grid-row: 3 / span 4;
+	}
+	
+	@media ${device.laptopL} {
+		grid-column: 3/10;
+		padding-right: 15px;
 	}
 
 `

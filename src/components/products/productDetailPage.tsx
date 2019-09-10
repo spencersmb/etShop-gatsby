@@ -167,7 +167,6 @@ export const productQuery = graphql`
 				dpi
 				file_size
 				programs
-				__typename
 			}
 			featuredImage{
 				alt

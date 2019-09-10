@@ -248,4 +248,4 @@ const FlickityWrapper = styled(ContainerPose)`
 			overflow: hidden;
 	}
 `
-export default FlickityGalleryContext
+export default React.memo(FlickityGalleryContext)

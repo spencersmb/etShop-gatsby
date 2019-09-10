@@ -4,6 +4,7 @@ import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
+import { displayCurrency } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { Width } from '@utils/windowUtils'
 import React, { SyntheticEvent } from 'react'
@@ -70,7 +71,7 @@ function LicenseCard (props: IProps) {
 						pose={isSelected ? 'open' : 'closed'}
 					>
 						<span>$</span>
-						{price}
+						{displayCurrency(price).substring(1)}
 					</LicPrice>
 				</LicHeaderContent>
 				<LicDash pose={isSelected ? 'open' : 'closed'}>
@@ -148,7 +149,7 @@ const LicTitle = styled(LicTitlePosed)`
 	color: ${colors.secondary.text};
 	position: relative;
 	
-	@media ${device.tablet} {
+	@media ${device.laptopL} {
 		font-size: 28px;
 		line-height: 28px;
 	}
@@ -161,7 +162,6 @@ const LicPrice = styled(LicTitlePosed)`
 	line-height: 28px;
 	position: relative;
 	
-	
 	span{
 		position: absolute;
 		line-height: 24px;
@@ -171,11 +171,20 @@ const LicPrice = styled(LicTitlePosed)`
 	}
 	
 	@media ${device.tablet} {
-		font-size: 44px;
-		line-height: 44px;
+		font-size: 36px;
+		line-height: 36px;
 		span{
 			top: 4px;
 			left: -13px;
+		}
+	}
+	
+	@media ${device.laptopL} {
+		font-size: 44px;
+		line-height: 44px;
+		span{
+			top: 0;
+			left: -11px;
 		}
 	}
 `
@@ -233,13 +242,13 @@ const LicHeaderContent = styled.div`
 	
 	@media ${device.tablet} {
 		padding: 0 30px;
-		top: 6px;
+		top: 9px;
 	}	
 	@media ${device.laptop} {
-		top: 3px;
+		top: 6px;
 	}	
 	@media ${device.laptopL} {
-		top: 6px;
+		top: 9px;
 	}
 `
 
@@ -301,7 +310,7 @@ const LicFooterList = styled(ContentPosed)`
 const LicBulletContainer = styled.div`
 	padding: 5px 15px 20px;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	
 	@media ${device.tablet} {
 		padding: 5px 30px 20px;
@@ -310,17 +319,16 @@ const LicBulletContainer = styled.div`
 `
 const LicViewBtn = styled(ButtonSmall)`
 	text-align: center;
-	align-self: flex-end;
-	padding: 4px 0;
+	align-self: flex-start;
+	padding: 4px 15px;
 	border: 2px solid #fff;
 	background: transparent;
 	font-size: 13px;
 	text-transform: uppercase;
 	font-weight: 600;
-	max-width: 110px;
-	margin: 0 auto;
+	max-width: 130px;
+	margin: 15px 0 0;
 	cursor: pointer;
-	flex: 1;
 	&:hover{
 		background: #fff;
 	}

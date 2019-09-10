@@ -9,16 +9,22 @@ const ChevronLeft = require('./svg-icons/chevron-left.svg')
 const Close = require('./svg-icons/Close.svg')
 const Computer = require('./svg-icons/Computer.svg')
 const DottedLine = require('./svg-icons/Dotted-line.svg')
+const Download = require('./svg-icons/download.svg')
 const Email = require('./svg-icons/Email_outline.svg')
+const Eye = require('./svg-icons/eye.svg')
 const ETLogo = require('./svg-icons/et-shop-logo.svg')
 const Filter = require('./svg-icons/Filter.svg')
 const Facebook = require('./svg-icons/Facebook.svg')
 const FooterCircle = require('./svg-icons/Footer-Circle.svg')
 const Fonts = require('./svg-icons/Fonts.svg')
 const FontPreview = require('./svg-icons/fontPreview.svg')
+const Illustrator = require('./svg-icons/illustrator.svg')
+const Indesign = require('./svg-icons/indesign.svg')
 const Instagram = require('./svg-icons/Instagram.svg')
 const Info = require('./svg-icons/info.svg')
 const MagnifyGlass = require('./svg-icons/magnify-glass.svg')
+const Photoshop = require('./svg-icons/photoshop.svg')
+const Programs = require('./svg-icons/programs.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
 const Twitter = require('./svg-icons/Twitter.svg')
@@ -34,16 +40,22 @@ export const svgs = {
 	Computer,
 	CreditCard,
 	DottedLine,
+	Download,
 	Email,
+	Eye,
 	ETLogo,
 	Facebook,
 	Filter,
 	FontPreview,
 	FooterCircle,
 	Fonts,
+	Illustrator,
+	Indesign,
 	Instagram,
 	Info,
 	MagnifyGlass,
+	Photoshop,
+	Programs,
 	Pinterest,
 	Templates,
 	Textures,

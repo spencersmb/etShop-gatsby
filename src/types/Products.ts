@@ -56,10 +56,18 @@ export interface IProductBullet {
 	bullet_point: string
 }
 
+export interface IProductDetails {
+	file_types: string[],
+	file_size: string,
+	dpi: string,
+	programs: string[]
+}
+
 export interface IProduct {
 	product_id: number,
 	id: string,
 	name: string,
+	details: IProductDetails
 	featuredImage: {
 		alt: string
 		localFile: {
@@ -93,6 +101,7 @@ export interface IProduct {
 			}
 		}
 	}
+	font_preview: boolean,
 	sub_header: string,
 	slug: string,
 	type: string,

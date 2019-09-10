@@ -216,7 +216,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	}
 
-	const { name, sub_header, license: { hasExtendedLicense }, images, intro_title, intro_description } = props.product
+	const { name, sub_header, license: { hasExtendedLicense }, images, intro_title, intro_description, details, font_preview } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
 
 	return (
@@ -305,12 +305,18 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 
 				</SliderGrid>
-				<DescriptionWrapper id={'desc'}>
+				<DescriptionWrapper>
 					<ProductDescription
-						intro_title={intro_title}
-						intro_description={intro_description}
+						fontPreview={standardItem.current.font_preview}
+						intro_title={standardItem.current.intro_title}
+						intro_description={standardItem.current.intro_description}
 					/>
-					<SideBar/>
+					<SideBar
+						onChange={selectChange}
+						isExtLicenseSelected={state.selectedLicense === 'extended'}
+						details={standardItem.current.details}
+						fontPreview={standardItem.current.font_preview}
+					/>
 				</DescriptionWrapper>
 			</ProductWrapper>
 
@@ -333,9 +339,17 @@ const ProductWrapper = styled.div`
 const DescriptionWrapper = styled(GridFluid)`
 	grid-row-gap: 0 !important;
 	padding: 80px 0;
+	
+	@media ${device.laptop} {
+		padding: 120px 0;
+	    
+	}
+		
 `
 const SliderGrid = styled(GridFluid)`
 	grid-row-gap: 0 !important;
+	padding: 0;
+
 	@media ${device.tablet}{
 		grid-template-rows: auto auto auto 1fr;
 	}
@@ -423,7 +437,7 @@ const Gallery = styled.div`
 `
 
 const ProductTitle = styled(productRowGap)`
-		margin: 40px 0 45px;
+		margin: 40px 0 35px;
 		grid-column: 2 / 4;
 		text-align: center;
 		grid-row: 1;
@@ -449,7 +463,7 @@ const ProductTitle = styled(productRowGap)`
 			grid-column: 2 / 14;
 		}
 		@media ${device.laptop} {
-			margin: 20px 0 45px;
+			margin: 20px 0 25px;
 			grid-column: 9 / 14;
 			grid-row: 1;	
 			text-align: left;
