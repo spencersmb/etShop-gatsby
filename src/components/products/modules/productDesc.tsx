@@ -1,4 +1,3 @@
-import FontPreviewBtn from '@components/products/modules/fontPreviewBtn'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -8,10 +7,9 @@ import styled from 'styled-components'
 interface IProps {
 	intro_title: string
 	intro_description: string
-	fontPreview: boolean
 }
 
-const ProductDescription = ({ intro_title = '', intro_description = '', fontPreview }: IProps) => {
+const ProductDescription = ({ intro_title = '', intro_description = '' }: IProps) => {
 
 	function createDesc () {
 		const sanitize = intro_description ? intro_description : ''
@@ -34,8 +32,12 @@ const ProductDescription = ({ intro_title = '', intro_description = '', fontPrev
 		<>
 			<SubTitle>Description</SubTitle>
 			<Title>{intro_title}</Title>
+			<h1 style={{
+				fontFamily: 'skinny',
+				fontWeight: 'inherit'
+			}}>Skinny Jeans</h1>
+
 			<Desc dangerouslySetInnerHTML={createDesc()}/>
-			{fontPreview && <FontPreviewBtn/>}
 		</>
 	)
 }
@@ -60,10 +62,11 @@ const SubTitle = styled.span`
 `
 const Title = styled.h3`
 	color: ${colors.primary.headline};
-	${Sentinel.italic};
+	${Sentinel.semiboldItalic};
 	font-size: 54px;
 	line-height: 52px;
 	font-weight: 500;
+	font-style: italic;
 	margin-bottom: 25px;
 	text-align: left;
 	grid-column: 2 / 4;
@@ -73,6 +76,8 @@ const Title = styled.h3`
 	}
 	
 	@media ${device.laptopL} {
+		font-size: 57px;
+		line-height: 54px;
 		margin: 50px 0 50px -30px;
 	}
 `
@@ -101,6 +106,12 @@ const Desc = styled.div`
 	}
 	
 	@media ${device.laptopL} {
+		p{
+				&:first-child{
+					font-size: 24px;
+					line-height: 32px;
+				}
+		}
 		grid-column: 3/10;
 		padding-right: 15px;
 	}

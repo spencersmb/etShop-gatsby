@@ -90,7 +90,7 @@ const SideBar = ({
 									 onChange,
 									 isExtLicenseSelected
 								 }: IProps) => {
-	console.log('render', details)
+	console.log('render sidebar', details)
 	if (!details) {
 		return null
 	}
@@ -294,4 +294,5 @@ const SideBarInner = styled.div`
 		margin: 0;
 	}
 `
-export default React.memo(SideBar)
+
+export default SideBar

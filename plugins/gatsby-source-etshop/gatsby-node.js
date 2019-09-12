@@ -37,7 +37,34 @@ exports.sourceNodes = async (
         image.localFile___NODE = fileNode.id
         return image
       }
+
     }))
+
+    if (product.font_preview.enabled) {
+      product.font_preview.styles = await Promise.all(product.font_preview.styles.map(async (style, styleIndex) => {
+        style.font_files = await Promise.all(style.font_files.map(async (font, index) => {
+          let fileNode
+
+          try {
+            fileNode = await createRemoteFileNode({
+              url: font.file,
+              ...args
+            })
+
+          } catch (e) {
+            console.log("e", e)
+
+          }
+          if (fileNode) {
+            font.localFile___NODE = fileNode.id
+          }
+          return font
+        }))
+        return style
+      }))
+    }
+
+    product.featuredImage = await processFeatureV2(product.featuredImage, args)
 
     const nodeId = createNodeId(`wc-product-${product.id}`)
     const nodeContent = JSON.stringify(product)
@@ -53,6 +80,24 @@ exports.sourceNodes = async (
         contentDigest: createContentDigest(product)
       }
     })
+  }
+  const processFeatureV2 = async (feature, args) => {
+    let fileNode
+
+    try {
+      fileNode = await createRemoteFileNode({
+        url: feature.url,
+        ...args
+      })
+
+    } catch (e) {
+      console.log("e", e)
+
+    }
+    if (fileNode) {
+      feature.localFile___NODE = fileNode.id
+      return feature
+    }
   }
   const processFeature = async (product, args) => {
 
@@ -98,10 +143,11 @@ exports.sourceNodes = async (
 
   await asyncForEach(results.data, async (product) => {
     const productNode = await processProduct(product, { store, cache, createNode, createNodeId }, "fullSize")
-    const featureNode = await processFeature(product, { store, cache, createNode, createNodeId })
+
+    // const featureNode = await processFeature(product, { store, cache, createNode, createNodeId })
 
     createNode(productNode)
-    createNode(featureNode)
+    // createNode(featureNode)
   })
 
   // await asyncForEach(results.data, async (product) => {

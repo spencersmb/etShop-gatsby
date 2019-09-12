@@ -218,6 +218,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	const { name, sub_header, license: { hasExtendedLicense }, images, intro_title, intro_description, details, font_preview } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
+	console.log('state.selectedLicense === extended', state.selectedLicense === 'extended')
 
 	return (
 		<Layout>
@@ -307,16 +308,15 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				</SliderGrid>
 				<DescriptionWrapper>
 					<ProductDescription
-						fontPreview={standardItem.current.font_preview}
 						intro_title={standardItem.current.intro_title}
 						intro_description={standardItem.current.intro_description}
 					/>
-					<SideBar
+					{React.useMemo(() => (<SideBar
 						onChange={selectChange}
 						isExtLicenseSelected={state.selectedLicense === 'extended'}
 						details={standardItem.current.details}
-						fontPreview={standardItem.current.font_preview}
-					/>
+						fontPreview={standardItem.current.font_preview.enabled}
+					/>), [state.selectedLicense])}
 				</DescriptionWrapper>
 			</ProductWrapper>
 

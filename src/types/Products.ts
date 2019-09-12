@@ -63,6 +63,23 @@ export interface IProductDetails {
 	programs: string[]
 }
 
+export interface IFontPreviewFile {
+	type: string
+	localFile:{
+		absolutePath: string
+		publicURL: string
+		relativePath: string
+	}
+}
+export interface IFontPreviewStyles {
+	font_family: string,
+	font_files: IFontPreviewFile[]
+}
+export interface IFontPreview {
+	enabled: boolean,
+	styles: IFontPreviewStyles[]
+}
+
 export interface IProduct {
 	product_id: number,
 	id: string,
@@ -101,7 +118,7 @@ export interface IProduct {
 			}
 		}
 	}
-	font_preview: boolean,
+	font_preview: IFontPreview,
 	sub_header: string,
 	slug: string,
 	type: string,

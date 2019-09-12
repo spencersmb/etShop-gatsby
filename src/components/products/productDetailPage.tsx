@@ -1,7 +1,7 @@
 import ProductLayout from '@components/products/productLayout'
 import SEO from '@components/seo'
 import { IGatsbyConfig } from '@et/types/Gatsby'
-import { IProduct } from '@et/types/Products'
+import { IFontPreviewFile, IFontPreviewStyles, IProduct } from '@et/types/Products'
 import { IMeta, IOGType } from '@et/types/SEO'
 import { jsonldImages, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
 import { graphql } from 'gatsby'
@@ -11,6 +11,12 @@ type Response = IGatsbyConfig & { wcProduct: IProduct }
 
 interface IProductQuery {
 	data: Response
+}
+
+interface IFont {
+	name: string,
+	url: string,
+	type: string
 }
 
 // WRAP IN GRAPHQL to pass data to twitter from sitemetadata
@@ -79,6 +85,29 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		}
 	}
 
+	checkProductFontStyles (product: IProduct) {
+
+		let cssString = ''
+
+		product.font_preview.styles.map((style: IFontPreviewStyles) => {
+			const urls = style.font_files.reduce((a, b, idx) => {
+				const css = `url(${b.localFile.publicURL}) format("${b.type}")`
+				return idx === 0 ? css : a + ', ' + css
+
+			}, '')
+
+			cssString = cssString + `
+				@font-face {
+					font-family: "${style.font_family}";
+					font-style: normal;
+					font-weight: inherit;
+					src: ${urls};
+				}`
+		})
+
+		return cssString
+	}
+
 	render () {
 		// TODO: get google verification token
 
@@ -132,8 +161,14 @@ export class ProductDetailPage extends Component<IProductQuery> {
 						...twitterDefaultMeta(this.twitterAddons)
 					]}
 				>
-
 					<link rel='canonical' href={`${process.env.GATSBY_DB}/products/${wcProduct.slug}`}/>
+
+					{wcProduct.font_preview.enabled && wcProduct.font_preview.styles &&
+          <style>
+						{this.checkProductFontStyles(wcProduct)}
+          </style>
+					}
+
 					<script type='application/ld+json'>{JSON.stringify(this.jsonld)}</script>
 				</SEO>
 				<ProductLayout product={wcProduct}/>
@@ -161,7 +196,20 @@ export const productQuery = graphql`
 			id
 			intro_title
 			intro_description
-			font_preview
+			font_preview{
+				enabled
+				styles{
+					font_family
+					font_files{
+						type
+						localFile{
+							relativePath
+							absolutePath
+							publicURL
+						}
+					}
+				}
+			}
 			details{
 				file_types
 				dpi

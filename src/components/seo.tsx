@@ -120,6 +120,13 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 									src: url(/fonts/Sentinel-MediumItal.woff2) format("woff2")
 									}
 									@font-face {
+									font-family: "Sentinel-SemiboldItalic";
+									font-style: italic;
+									font-weight: 500;
+									src: url(/fonts/Sentinel-SemiboldItal.woff) format("woff"),
+									src: url(/fonts/Sentinel-SemiboldItal.woff2) format("woff2")
+									}
+									@font-face {
 									font-family: "Sentinel";
 									font-style: normal;
 									font-weight: 600;

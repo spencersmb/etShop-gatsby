@@ -114,6 +114,7 @@ const FontPreviewBtnWrapper = styled.aside`
 	
 	@media ${device.laptop} {
 		margin: 0 0 0 auto;
+		grid-row:4;
 		justify-content: flex-end;
 	}
 		
