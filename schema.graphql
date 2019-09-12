@@ -792,6 +792,7 @@ type wcProductFont_preview {
 type wcProductFont_previewStyles {
     font_family: String
     font_files: [wcProductFont_previewStylesFont_files]
+    type: String
 }
 
 type wcProductFont_previewStylesFont_files {
@@ -1930,6 +1931,7 @@ enum wcProductFieldsEnum {
     font_preview___styles___font_files
     font_preview___styles___font_files___file
     font_preview___styles___font_files___type
+    font_preview___styles___type
     id
     images
     images___alt
@@ -2587,6 +2589,7 @@ input wcProductFont_previewFilterInput {
 input wcProductFont_previewStylesFilterInput {
     font_family: StringQueryOperatorInput
     font_files: wcProductFont_previewStylesFont_filesFilterListInput
+    type: StringQueryOperatorInput
 }
 
 input wcProductFont_previewStylesFilterListInput {

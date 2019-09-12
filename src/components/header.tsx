@@ -1,3 +1,4 @@
+import { device } from '@styles/global/breakpoints'
 import { FlexGridContained } from '@styles/global/cssGrid'
 import React from 'react'
 import styled from 'styled-components'
@@ -24,4 +25,10 @@ const HeaderWrapper = styled.header`
   left: 0;
   width: 100%;
 	z-index: 3;
+	
+	@media ${device.laptop} {
+		position: relative;
+	    
+	}
+		
 `

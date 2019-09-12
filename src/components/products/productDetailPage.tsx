@@ -200,6 +200,7 @@ export const productQuery = graphql`
 				enabled
 				styles{
 					font_family
+					type
 					font_files{
 						type
 						localFile{

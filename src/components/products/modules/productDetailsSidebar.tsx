@@ -102,7 +102,7 @@ const SideBar = ({
 	}
 
 	return (
-		<SideBarWrapper id={'desc'}>
+		<SideBarWrapper>
 			<SideBarInner>
 				<Icon>{renderSvg(svgs.MagnifyGlass)}</Icon>
 

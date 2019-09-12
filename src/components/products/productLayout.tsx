@@ -1,4 +1,5 @@
 import LicenseQtyCard from '@components/cards/licenseQtyCard'
+import FontPreviewer from '@components/fontPreviewer/fontPreview'
 import FlicktyGallery from '@components/gallery/flickityGallery'
 import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
 import AddToCartBtn from '@components/products/addToCartBtn'
@@ -218,7 +219,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	const { name, sub_header, license: { hasExtendedLicense }, images, intro_title, intro_description, details, font_preview } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
-	console.log('state.selectedLicense === extended', state.selectedLicense === 'extended')
 
 	return (
 		<Layout>
@@ -306,6 +306,8 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 
 				</SliderGrid>
+				{standardItem.current.font_preview.enabled &&
+        <FontPreviewer styles={standardItem.current.font_preview.styles}/>}
 				<DescriptionWrapper>
 					<ProductDescription
 						intro_title={standardItem.current.intro_title}
