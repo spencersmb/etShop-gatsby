@@ -163,6 +163,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 				>
 					<link rel='canonical' href={`${process.env.GATSBY_DB}/products/${wcProduct.slug}`}/>
 
+					{/*Load fonts for the font previewer*/}
 					{wcProduct.font_preview.enabled && wcProduct.font_preview.styles &&
           <style>
 						{this.checkProductFontStyles(wcProduct)}

@@ -21,9 +21,18 @@ import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { Link } from 'gatsby'
-import React, { Dispatch as ReactDispatch, useEffect, useLayoutEffect, useReducer, useRef } from 'react'
+import React, {
+	Dispatch,
+	Dispatch as ReactDispatch,
+	Reducer, ReducerAction,
+	ReducerState,
+	useEffect,
+	useLayoutEffect,
+	useReducer,
+	useRef
+} from 'react'
 import { connect } from 'react-redux'
-import { Action, bindActionCreators, Dispatch } from 'redux'
+import { Action, bindActionCreators, Dispatch as ReduxDispatch } from 'redux'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { CartPricingConfig } from '@components/cart/cartStatics'
@@ -61,12 +70,9 @@ interface INewState {
 	payWhatYouWant?: boolean
 }
 
-type useSetStateType = [IPublicState, ReactDispatch<INewState>]
-
-function useSetState (initialState: any): useSetStateType {
-	const [state, setState] = useReducer((originalState: IPublicState, newState: INewState) => ({ ...originalState, ...newState }),
+function useSetState<T2, T3> (initialState: any): [T2 & T3, Dispatch<T3>] {
+	const [state, setState] = useReducer((originalState: T2, newState: T3) => ({ ...originalState, ...newState }),
 		initialState)
-
 	return [
 		state,
 		setState
@@ -78,7 +84,7 @@ function useSetState (initialState: any): useSetStateType {
 export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsActions) => {
 	const { product, products, cart, showModalAction } = props
 
-	const [state, setState] = useSetState({
+	const [state, setState] = useSetState<IPublicState, INewState>({
 		selectedProduct: product,
 		selectedLicense: 'standard',
 		numberOfLicenses: 1,
@@ -540,7 +546,7 @@ const mapStateToProps = (state: IState) => ({
 	cart: state.cart,
 	products: state.products
 })
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+const mapDispatchToProps = (dispatch: ReduxDispatch<Action>) => {
 	return {
 		showModalAction: bindActionCreators(showModal, dispatch)
 	}

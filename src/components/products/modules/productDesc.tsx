@@ -32,11 +32,6 @@ const ProductDescription = ({ intro_title = '', intro_description = '' }: IProps
 		<>
 			<SubTitle>Description</SubTitle>
 			<Title>{intro_title}</Title>
-			<h1 style={{
-				fontFamily: 'skinny',
-				fontWeight: 'inherit'
-			}}>Skinny Jeans</h1>
-
 			<Desc dangerouslySetInnerHTML={createDesc()}/>
 		</>
 	)
