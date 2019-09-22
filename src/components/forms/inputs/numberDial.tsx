@@ -50,7 +50,6 @@ function NumberDial ({ qty = 0, inputOnChange, disableInput, className, label = 
 				value={qty}
 				onKeyPress={(e) => {
 					if (e.key === '.' || e.key === '-') {
-						e.preventDefault()
 						return
 					}
 				}}

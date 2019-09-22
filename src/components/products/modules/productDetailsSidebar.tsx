@@ -90,7 +90,6 @@ const SideBar = ({
 									 onChange,
 									 isExtLicenseSelected
 								 }: IProps) => {
-	console.log('render sidebar', details)
 	if (!details) {
 		return null
 	}
@@ -268,11 +267,12 @@ const SideBarWrapper = styled.aside`
 	position: relative;
 	
 	@media ${device.tablet} {
-		grid-column: 9 / 14;
-    grid-row: 1 / span 3;
+		grid-column: 2 / 14;
 	}
 	
 	@media ${device.laptop} {
+		grid-column: 9 / 14;
+    grid-row: 1 / span 3;
 		display: flex;
 		justify-content: flex-end;
 	}

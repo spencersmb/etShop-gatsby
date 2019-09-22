@@ -3,6 +3,7 @@ import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
+import { InputOutline, InputWrapper } from '@styles/global/inputs'
 import { svgs } from '@svg'
 import { chooseDiscountPercentage, displayPercent } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
@@ -37,22 +38,22 @@ function LicenseQtyCard (props: IProps) {
 
 	return (
 		<LicenseQtyWrapper>
-			<InputWrapper>
+			<Container>
 				{bulkDiscount && <Discount data-testid='discount'>
           Save {displayPercent(chooseDiscountPercentage(numberOfLicenses))} %
           <span>Volume Discount</span>
         </Discount>
 				}
-				<RightSide>
-					<Label>Number of Licences</Label>
-					<NumberDialStyled
+				<InputWrapper disableInput={inCart}>
+					<div className={`label`}>Number of Licences</div>
+					<NumberDial
+						className={`numberDial__outline`}
 						label='LICENSE FOR'
 						qty={numberOfLicenses}
-						disableInput={inCart}
 						inputOnChange={onDialChange}/>
 					<Icon onClick={triggerViewLicense}>{renderSvg(svgs.Info)}</Icon>
-				</RightSide>
-			</InputWrapper>
+				</InputWrapper>
+			</Container>
 			{disabled && <Warning data-testid='warning'>Must have at least one computer license.</Warning>}
 		</LicenseQtyWrapper>
 	)
@@ -64,7 +65,7 @@ const Warning = styled.div`
 	font-style: italic;
 	text-align: right;
 `
-const InputWrapper = styled.div`
+const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
@@ -79,34 +80,10 @@ const RightSide = styled.div`
 	align-items: center;
 	justify-content: flex-end;
 `
-const NumberDialStyled = styled(NumberDial)<{ disableInput: boolean }>`
+const NumberDialStyled = styled(NumberDial)`
 	width: 72px;
 	margin: 0 10px;
 
-	input{
-		${Sentinel.reg};
-		font-style: italic;
-		background: transparent;
-		font-weight: 600;
-		font-size: 24px;
-		line-height: 24px;
-		text-align: center;
-		color: ${props => props.disableInput ? colors.grey.i600 : colors.primary.text};
-		border: 3px solid #D2DCE5;
-		border-radius: 10px;
-		padding: 2.5px 5px 2.5px 0;
-		width: 100%;
-		&:focus{
-			outline: none;
-		}
-		-moz-appearance: textfield;
-		&::-webkit-outer-spin-button, 
-		::-webkit-inner-spin-button{
-			-webkit-appearance: none;
-			margin: 0;
-		};
-		
-	}
 	label{
 		display: none;
 	}

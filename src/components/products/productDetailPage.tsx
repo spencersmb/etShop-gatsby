@@ -270,11 +270,17 @@ export const productQuery = graphql`
 					}
 				}
 			}
+			features{
+				description
+				icon
+				title
+			}
 			date_created_gmt
 			date_modified_gmt
 			price
 			product_id
 			regular_price
+			related_products
 			pwyw
 			sale_price
 			seo{

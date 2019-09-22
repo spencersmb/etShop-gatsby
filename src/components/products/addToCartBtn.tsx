@@ -72,7 +72,7 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 			</>
 		)
 	}
-
+	
 	return (
 		<CheckoutWrapper>
 			<ButtonsWrapper>

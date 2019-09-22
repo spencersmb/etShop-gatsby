@@ -4,7 +4,8 @@ import { IPaginateState } from '@et/types/Pagination'
 import { IState } from '@et/types/State'
 import { IReceipt } from '@et/types/WC_Order'
 import { addItemAfterOrder, fetchOrders } from '@redux/actions/paginationActions'
-import React, { Dispatch as ReactDispatch, useEffect, useReducer } from 'react'
+import { useSetState } from '@utils/stateUtils'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
 
@@ -26,25 +27,7 @@ interface IReduxActions {
 	getOrders: (page: number) => Promise<any>
 }
 
-interface IPublicState {
-	selectedOrder: IReceipt | null
-}
 
-interface INewState {
-	selectedOrder?: IReceipt | null
-}
-
-type useSetStateType = [IPublicState, ReactDispatch<INewState>]
-
-export function useSetState (initialState: any): any {
-	const [state, setState] = useReducer((originalState: any, newState: any) => ({ ...originalState, ...newState }),
-		initialState)
-
-	return [
-		state,
-		setState
-	]
-}
 
 function getCurrentPage (path: string) {
 	const split = path

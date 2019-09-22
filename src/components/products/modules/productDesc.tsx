@@ -1,6 +1,7 @@
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
+import { shadowStyles } from '@styles/global/shadows'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -44,14 +45,21 @@ const SubTitle = styled.span`
 	color: ${colors.primary.text};
 	text-transform: uppercase;
 	text-align: left;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
+	vertical-align: center;
+	display: flex;
+	align-items: center;	
 	
 	@media ${device.tablet} {
-		grid-column: 2/6;
+		grid-column: 3/6;
+	}
+	@media ${device.laptop} {
+		grid-column: 2 / 6;
+		width: 100%;
 	}
 	@media ${device.laptopL} {
 		grid-column: 3/6;
-		margin:0;
+		margin:0 0 0 -30px;
 	}
 		
 `
@@ -67,13 +75,17 @@ const Title = styled.h3`
 	grid-column: 2 / 4;
 	
 	@media ${device.tablet} {
+		grid-column: 2 / 12;
+	}
+	
+	@media ${device.laptop} {
 		grid-column: 2 / 8;
 	}
 	
 	@media ${device.laptopL} {
 		font-size: 57px;
 		line-height: 54px;
-		margin: 50px 0 50px -30px;
+		margin: 50px 0 50px 0;
 	}
 `
 const Desc = styled.div`
@@ -96,9 +108,14 @@ const Desc = styled.div`
 	}
 	
 	@media ${device.tablet} {
+				grid-column: 3 /13;
+	}
+	
+	@media ${device.laptop} {
 		grid-column: 2 /9;
 		grid-row: 3 / span 4;
 	}
+		
 	
 	@media ${device.laptopL} {
 		p{
@@ -109,7 +126,8 @@ const Desc = styled.div`
 		}
 		grid-column: 3/10;
 		padding-right: 15px;
+		margin-left: -30px;
 	}
 
 `
-export default ProductDescription
+export default React.memo(ProductDescription)

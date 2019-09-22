@@ -17,10 +17,21 @@ if (typeof window !== `undefined`) {
 export const Width = thisWidth
 
 // export const checkDevice
-// export function getWidth(): number{
-// 	thisWidth =
-// 		window.innerWidth ||
-// 		document.documentElement.clientWidth ||
-// 		document.body.clientWidth
-// 	return thisWidth
-// }
+export function getWidth (): number {
+	if (typeof window !== `undefined`) {
+		thisWidth =
+			window.innerWidth ||
+			document.documentElement.clientWidth ||
+			document.body.clientWidth
+		return thisWidth
+	}
+	return 0
+}
+
+export function getWindowPosition () {
+	if (typeof window !== `undefined`) {
+		console.log('window.top', window.top.pageYOffset)
+		return window.top.pageYOffset
+	}
+	return 0
+}

@@ -19,3 +19,12 @@ export function useSetFilterState (initialState: IPublicState): useSetStateType 
 		setState
 	]
 }
+
+export function useSetState<OriginalState, NewState> (initialState: any): [OriginalState & NewState, ReactDispatch<NewState>] {
+	const [state, setState] = useReducer((originalState: OriginalState, newState: NewState) => ({ ...originalState, ...newState }),
+		initialState)
+	return [
+		state,
+		setState
+	]
+}

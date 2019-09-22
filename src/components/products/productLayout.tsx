@@ -1,13 +1,15 @@
 import LicenseQtyCard from '@components/cards/licenseQtyCard'
 import FontPreviewer from '@components/fontPreviewer/fontPreview'
-import FlicktyGallery from '@components/gallery/flickityGallery'
 import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
 import LicenseSelect from '@components/forms/inputs/productSelect'
 import Layout from '@components/layout'
+import CheckoutNavBar from '@components/products/modules/checkoutNavBar'
+import FeaturesList from '@components/products/modules/features/FeaturesList'
 import ProductDescription from '@components/products/modules/productDesc'
 import SideBar from '@components/products/modules/productDetailsSidebar'
+import RelatedProducts from '@components/products/modules/relatedProducts'
 import { ICartItem, ICartState } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
@@ -16,21 +18,20 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
+import { InputOutline, InputWrapper } from '@styles/global/inputs'
 import { svgs } from '@svg'
 import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
+import { useSetState } from '@utils/stateUtils'
 import { renderSvg } from '@utils/styleUtils'
+import { getWindowPosition } from '@utils/windowUtils'
 import { Link } from 'gatsby'
 import React, {
-	Dispatch,
-	Dispatch as ReactDispatch,
-	Reducer, ReducerAction,
-	ReducerState,
 	useEffect,
 	useLayoutEffect,
-	useReducer,
 	useRef
 } from 'react'
+import { useInView } from 'react-intersection-observer'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch as ReduxDispatch } from 'redux'
 import styled from 'styled-components'
@@ -70,20 +71,10 @@ interface INewState {
 	payWhatYouWant?: boolean
 }
 
-function useSetState<T2, T3> (initialState: any): [T2 & T3, Dispatch<T3>] {
-	const [state, setState] = useReducer((originalState: T2, newState: T3) => ({ ...originalState, ...newState }),
-		initialState)
-	return [
-		state,
-		setState
-	]
-}
-
 // TODO: Refactor now that standardItem and extendedItem are always present
 // switch off of has ext license data point instead if needed
 export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsActions) => {
 	const { product, products, cart, showModalAction } = props
-
 	const [state, setState] = useSetState<IPublicState, INewState>({
 		selectedProduct: product,
 		selectedLicense: 'standard',
@@ -100,6 +91,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	// check for product in cart on load
 	// then dispatch to state the item found
 	useLayoutEffect(() => {
+
 		// Check if item is in cart on load
 		const productFound: boolean = checkCartForProduct(cart, product.slug).length > 0
 
@@ -177,12 +169,9 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	function selectChange (license: string) {
 
-		setState({
-			selectedLicense: license
-		})
-
 		if (license === 'standard') {
 			setState({
+				selectedLicense: license,
 				selectedProduct: standardItem.current,
 				price: standardItem.current.on_sale
 					? standardItem.current.sale_price
@@ -190,6 +179,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 			})
 		} else if (license === 'extended' && extendedItem.current) {
 			setState({
+				selectedLicense: license,
 				selectedProduct: extendedItem.current,
 				price: extendedItem.current.on_sale
 					? extendedItem.current.sale_price
@@ -217,14 +207,27 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	}
 
 	function onPwywChange (total: number | string) {
-		setState({
-			price: total.toString()
-		})
+		if (typeof total === 'number') {
+			setState({
+				price: total.toString()
+			})
+		} else {
+			setState({
+				price: '0'
+			})
+		}
 
 	}
 
 	const { name, sub_header, license: { hasExtendedLicense }, images, intro_title, intro_description, details, font_preview } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
+
+	const [ref, inView, entry] = useInView({
+		/* Optional options */
+		threshold: 0
+	})
+	// console.log('state', state)
+	console.log('inView', inView)
 
 	return (
 		<Layout>
@@ -254,21 +257,25 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						{sub_header && <p>{sub_header}</p>}
 					</ProductTitle>
 
-					<LicenseSelectWrapper>
+					{/*License Selection*/}
+					<LicenseSelectWrapper ref={ref}>
 						<LabelHeader>
 							Choose License:
 						</LabelHeader>
-						<LicenseSelect
-							showModal={showModalAction}
-							license={standardItem.current.license}
-							standardLicPrice={standardItem.current.price}
-							extendedLicPrice={extendedItem.current ? extendedItem.current.price : ''}
-							onChange={selectChange}
-							selectedLicense={state.selectedLicense}
-							inCart={state.inCart}
-							bulkDiscount={bulkDiscount}
-							licenceQty={typeof numberOfLicenses === 'number' ? numberOfLicenses : 0}
-						/>
+						{React.useMemo(() => (
+							<LicenseSelect
+								showModal={showModalAction}
+								license={standardItem.current.license}
+								standardLicPrice={standardItem.current.price}
+								extendedLicPrice={extendedItem.current ? extendedItem.current.price : ''}
+								onChange={selectChange}
+								selectedLicense={state.selectedLicense}
+								inCart={state.inCart}
+								bulkDiscount={bulkDiscount}
+								licenceQty={typeof numberOfLicenses === 'number' ? numberOfLicenses : 0}
+							/>
+						), [state.bulkDiscount && state.price || state.selectedLicense])}
+
 					</LicenseSelectWrapper>
 
 					{!payWhatYouWant &&
@@ -284,12 +291,14 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 					{state.payWhatYouWant &&
           <PWYWWrapper>
-            <span>PWYW enabled</span>
-            <NumberDialStyled
-              label='Pay what you want'
-              qty={state.price}
-              disableInput={state.inCart}
-              inputOnChange={onPwywChange}/>
+            <InputWrapper disableInput={state.inCart}>
+              <div className={`label`}>Pay What You Want</div>
+              <NumberDial
+                className={`numberDial__outline`}
+                label='Pay what you want'
+                qty={state.price}
+                inputOnChange={onPwywChange}/>
+            </InputWrapper>
           </PWYWWrapper>
 					}
 
@@ -326,8 +335,13 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						fontPreview={standardItem.current.font_preview.enabled}
 					/>), [state.selectedLicense])}
 				</DescriptionWrapper>
-			</ProductWrapper>
 
+				{standardItem.current.features && <FeaturesList features={standardItem.current.features}/>}
+
+				{standardItem.current.related_products &&
+        <RelatedProducts products={standardItem.current.related_products}/>}
+			</ProductWrapper>
+			{React.useMemo(() => (<CheckoutNavBar inView={inView}/>), [inView])}
 		</Layout>
 	)
 
@@ -506,18 +520,6 @@ const LicenseQtyWrapper = styled(productRowGap)`
 	 	grid-row: 3;
 	}
 `
-const NumberDialStyled = styled(NumberDial)`
-	input{
-		color: red;
-		-moz-appearance: textfield;
-		&::-webkit-outer-spin-button, 
-		::-webkit-inner-spin-button{
-			-webkit-appearance: none;
-			margin: 0;
-		};
-	}
-`
-
 const PWYWWrapper = styled(productRowGap)`
 	grid-column: 2 / 4;
 	

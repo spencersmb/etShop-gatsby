@@ -5,7 +5,7 @@ export const PageContainer = styled.div`
 	padding-top: 65px;
 	
 	@media ${device.laptop} {
-		padding-top: 87px;
+		padding-top: 0; // was 87 for stickt
 	}
 		
 `

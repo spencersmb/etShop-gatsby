@@ -74,50 +74,56 @@ export interface IFontPreviewFile {
 export interface IFontPreviewStyles {
 	font_family: string,
 	font_files: IFontPreviewFile[]
+	type: string
 }
 export interface IFontPreview {
 	enabled: boolean,
 	styles: IFontPreviewStyles[]
 }
-
+export interface IFeatureItem {
+	description: string
+	icon: string
+	title: string
+}
+export interface IProductFeaturedImage {
+	alt: string
+	localFile: {
+		name: string
+		id: string
+		childImageSharp: {
+			fluid: {
+				src: string
+				aspectRatio: number
+				base64: string
+				sizes: string
+				srcSet: string
+			},
+			fixed: {
+				width: string
+				height: string
+				src: string
+			},
+			fullWidth: {
+				src: string
+			},
+			thumbnail_mobile: {
+				src: string
+			},
+			thumbnail: {
+				src: string
+			},
+			thumbnail_2x: {
+				src: string
+			}
+		}
+	}
+}
 export interface IProduct {
 	product_id: number,
 	id: string,
 	name: string,
 	details: IProductDetails
-	featuredImage: {
-		alt: string
-		localFile: {
-			name: string
-			id: string
-			childImageSharp: {
-				fluid: {
-					src: string
-					aspectRatio: number
-					base64: string
-					sizes: string
-					srcSet: string
-				},
-				fixed: {
-					width: string
-					height: string
-					src: string
-				},
-				fullWidth: {
-					src: string
-				},
-				thumbnail_mobile: {
-					src: string
-				},
-				thumbnail: {
-					src: string
-				},
-				thumbnail_2x: {
-					src: string
-				}
-			}
-		}
-	}
+	featuredImage: IProductFeaturedImage
 	font_preview: IFontPreview,
 	sub_header: string,
 	slug: string,
@@ -149,14 +155,8 @@ export interface IProduct {
 			bullets: IProductBullet[]
 		}
 	},
-	features: {
-		description: string,
-		items: boolean | {
-			icon: string,
-			title: string,
-			description: string
-		}
-	},
+	features: IFeatureItem[]
+	related_products: string[] | null
 	pwyw: boolean,
 	seo: {
 		title: string,

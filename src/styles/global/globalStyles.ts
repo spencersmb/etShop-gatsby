@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 import cssReset from './cssReset'
 import cssFlickity from '../modules/flickity'
+import rangeSlider from '../modules/rangeSlider'
 import { colors } from './colors'
 import toastr from '@styles/modules/toastr'
 
@@ -39,4 +40,6 @@ export default createGlobalStyle`
   }
   
   ${toastr}
+  ${rangeSlider}
+  
 `

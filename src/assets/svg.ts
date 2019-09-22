@@ -8,6 +8,8 @@ const Checkmark = require('./svg-icons/Checkmark.svg')
 const ChevronLeft = require('./svg-icons/chevron-left.svg')
 const Close = require('./svg-icons/Close.svg')
 const Computer = require('./svg-icons/Computer.svg')
+const Controls = require('./svg-icons/controls.svg')
+const Divider1 = require('./svg-icons/divider-1.svg')
 const DottedLine = require('./svg-icons/Dotted-line.svg')
 const Download = require('./svg-icons/download.svg')
 const Email = require('./svg-icons/Email_outline.svg')
@@ -38,7 +40,9 @@ export const svgs = {
 	ChevronLeft,
 	Close,
 	Computer,
+	Controls,
 	CreditCard,
+	Divider1,
 	DottedLine,
 	Download,
 	Email,

@@ -1,4 +1,4 @@
-import { IProduct } from '@et/types/Products'
+import { IProduct, IProductFeaturedImage } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -9,9 +9,16 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
-
-function ProductListItem (props: IProduct) {
-	const { id, slug, images, name, sub_header, price, featuredImage } = props
+interface IProps {
+	id: string
+	slug: string
+	name: string
+	sub_header: string
+	price: string
+	featuredImage: IProductFeaturedImage
+}
+function ProductListItem (props: IProps) {
+	const { id, slug, name, sub_header, price, featuredImage } = props
 	return (
 		<ListItem key={id}>
 			<Link to={`/products/${slug}`}>
