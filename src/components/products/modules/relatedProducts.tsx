@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const RelatedProducts = (props: IProps) => {
-	
+
 	const { products } = props
 	return (
 		<Wrapper>
@@ -84,6 +84,7 @@ const Container = styled.div`
 	
 	@media ${device.laptop} {
 		grid-column: 2 / 14;
+		justify-content: center;
 		& > div {
 				flex: 0 1 21%;
 			}

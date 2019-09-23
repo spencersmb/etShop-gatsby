@@ -13,7 +13,6 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 					description || data.site.siteMetadata.description
 				return (
 					<Helmet
-
 						htmlAttributes={{
 							lang
 						}}

@@ -69,7 +69,85 @@ export const standardItemAddToCart = {
 		slug: 'watercolor-texture-kit-vol-1'
 	}
 }
-
+const images = [
+	{
+		id: 123414,
+		alt: 'alt',
+		fullSize: {
+			url: 'fullsize-url'
+		},
+		thumbnail: {
+			url: 'image-url'
+		},
+		localFile: {
+			id: '12',
+			name: 'localfile',
+			childImageSharp: {
+				fixed: {
+					src: 'src',
+					height: 'height',
+					width: 'width'
+				},
+				fluid: {
+					src: 'src',
+					aspectRatio: 12345,
+					base64: 'base64',
+					sizes: 'sizes',
+					srcSet: 'srcSet'
+				},
+				thumbnail_2x: {
+					src: ''
+				},
+				thumbnail_mobile: {
+					src: ''
+				},
+				thumbnail: {
+					src: ''
+				},
+				fullWidth: {
+					src: ''
+				}
+			}
+		}
+	}
+]
+const featuredImage = {
+	alt: 'alt',
+	localFile: {
+		id: '231',
+		name: 'localFile',
+		childImageSharp: {
+			fixed: {
+				src: 'src',
+				height: 'height',
+				width: 'width'
+			},
+			fluid: {
+				src: 'src',
+				aspectRatio: 12345,
+				base64: 'base64',
+				sizes: 'sizes',
+				srcSet: 'srcSet'
+			},
+			thumbnail_2x: {
+				src: ''
+			},
+			thumbnail_mobile: {
+				src: ''
+			},
+			thumbnail: {
+				src: ''
+			},
+			fullWidth: {
+				src: ''
+			}
+		}
+	}
+}
+const fontPreview = {
+	styles: [],
+	enabled: false
+}
 export const singleProduct: IProduct = {
 	type: 'simple',
 	date_created_gmt: '2018-09-25T20:35:51',
@@ -82,18 +160,19 @@ export const singleProduct: IProduct = {
 	regular_price: '16',
 	sale_price: '',
 	slug: 'watercolor-texture-kit-vol-1',
-	sub_header:'sub header',
+	sub_header: 'sub header',
 	description: 'description',
 	short_description: 'short desc',
 	on_sale: false,
-	features: {
-		description: 'feature desc',
-		items: {
+	features: [
+		{
 			description: 'item desc',
 			icon: 'icon',
 			title: 'singleItemQuery title'
 		}
-	},
+	],
+	featuredImage: { ...featuredImage },
+	font_preview: { ...fontPreview },
 	categories: [
 		{ id: 1, slug: 'fonts', name: 'Fonts' },
 		{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
@@ -108,12 +187,12 @@ export const singleProduct: IProduct = {
 			thumbnail: {
 				url: 'image-url'
 			},
-			localFile:{
+			localFile: {
 				id: '12',
 				name: 'localfile',
-				childImageSharp:{
-					fixed:{
-						src:'src',
+				childImageSharp: {
+					fixed: {
+						src: 'src',
 						height: 'height',
 						width: 'width'
 					},
@@ -123,6 +202,18 @@ export const singleProduct: IProduct = {
 						base64: 'base64',
 						sizes: 'sizes',
 						srcSet: 'srcSet'
+					},
+					thumbnail_2x: {
+						src: ''
+					},
+					thumbnail_mobile: {
+						src: ''
+					},
+					thumbnail: {
+						src: ''
+					},
+					fullWidth: {
+						src: ''
 					}
 				}
 			}
@@ -165,52 +256,24 @@ export const testProducts: IProducts = {
 		regular_price: '16',
 		sale_price: '',
 		slug: 'watercolor-texture-kit-vol-1',
-		sub_header:'sub header',
+		sub_header: 'sub header',
 		description: 'description',
 		short_description: 'short desc',
 		on_sale: false,
-		features: {
-			description: 'feature desc',
-			items: {
+		features: [
+			{
 				description: 'item desc',
 				icon: 'icon',
 				title: 'singleItemQuery title'
 			}
-		},
+		],
 		categories: [
 			{ id: 1, slug: 'fonts', name: 'Fonts' },
 			{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 		],
-		images: [
-			{
-				id: 123414,
-				alt: 'alt',
-				fullSize: {
-					url: 'fullsize-url'
-				},
-				thumbnail: {
-					url: 'image-url'
-				},
-				localFile:{
-					id: '12',
-					name: 'localfile',
-					childImageSharp:{
-						fixed:{
-							src:'src',
-							height: 'height',
-							width: 'width'
-						},
-						fluid: {
-							src: 'src',
-							aspectRatio: 12345,
-							base64: 'base64',
-							sizes: 'sizes',
-							srcSet: 'srcSet'
-						}
-					}
-				}
-			}
-		],
+		featuredImage: { ...featuredImage },
+		images: { ...images },
+		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: true,
 			type: 'standard',
@@ -239,52 +302,22 @@ export const testProducts: IProducts = {
 		regular_price: '20',
 		sale_price: '',
 		slug: 'watercolor-texture-kit-vol-1-ext',
-		sub_header:'sub header',
+		sub_header: 'sub header',
 		description: 'description',
 		short_description: 'short desc',
 		on_sale: false,
-		features: {
-			description: 'feature desc',
-			items: {
-				description: 'item desc',
-				icon: 'icon',
-				title: 'singleItemQuery title'
-			}
-		},
+		features: [{
+			description: 'item desc',
+			icon: 'icon',
+			title: 'singleItemQuery title'
+		}],
 		categories: [
 			{ id: 1, slug: 'fonts', name: 'Fonts' },
 			{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 		],
-		images: [
-			{
-				id: 123414,
-				alt: 'alt',
-				fullSize: {
-					url: 'fullsize-url'
-				},
-				thumbnail: {
-					url: 'image-url'
-				},
-				localFile:{
-					id: '12',
-					name: 'localfile',
-					childImageSharp:{
-						fixed:{
-							src:'src',
-							height: 'height',
-							width: 'width'
-						},
-						fluid: {
-							src: 'src',
-							aspectRatio: 12345,
-							base64: 'base64',
-							sizes: 'sizes',
-							srcSet: 'srcSet'
-						}
-					}
-				}
-			}
-		],
+		featuredImage: { ...featuredImage },
+		images: { ...images },
+		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: true,
 			type: 'extended',
@@ -299,7 +332,7 @@ export const testProducts: IProducts = {
 		tags: [
 			{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 			{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
-		],
+		]
 
 	},
 	[ProductKey.Honeymoon]: {
@@ -314,51 +347,21 @@ export const testProducts: IProducts = {
 		regular_price: '0',
 		sale_price: '',
 		slug: 'honeymoon',
-		sub_header:'sub header',
+		sub_header: 'sub header',
 		description: 'description',
 		short_description: 'short desc',
 		on_sale: false,
-		features: {
-			description: 'feature desc',
-			items: {
-				description: 'item desc',
-				icon: 'icon',
-				title: 'singleItemQuery title'
-			}
-		},
+		features: [{
+			description: 'item desc',
+			icon: 'icon',
+			title: 'singleItemQuery title'
+		}],
 		categories: [
 			{ id: 1, slug: 'fonts', name: 'Fonts' }
 		],
-		images: [
-			{
-				id: 123414,
-				alt: 'alt',
-				fullSize: {
-					url: 'fullsize-url'
-				},
-				thumbnail: {
-					url: 'image-url'
-				},
-				localFile:{
-					id: '12',
-					name: 'localfile',
-					childImageSharp:{
-						fixed:{
-							src:'src',
-							height: 'height',
-							width: 'width'
-						},
-						fluid: {
-							src: 'src',
-							aspectRatio: 12345,
-							base64: 'base64',
-							sizes: 'sizes',
-							srcSet: 'srcSet'
-						}
-					}
-				}
-			}
-		],
+		featuredImage: { ...featuredImage },
+		images: { ...images },
+		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: false,
 			type: 'standard'
@@ -367,7 +370,7 @@ export const testProducts: IProducts = {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Honeymoon seo title'
 		},
-		tags: [],
+		tags: []
 
 	},
 	[ProductKey.Skinnyjeans]: {
@@ -382,51 +385,21 @@ export const testProducts: IProducts = {
 		regular_price: '13',
 		sale_price: '9.99',
 		slug: 'skinny-jeans',
-		sub_header:'sub header',
+		sub_header: 'sub header',
 		description: 'description',
 		short_description: 'short desc',
 		on_sale: true,
-		features: {
-			description: 'feature desc',
-			items: {
-				description: 'item desc',
-				icon: 'icon',
-				title: 'singleItemQuery title'
-			}
-		},
+		features: [{
+			description: 'item desc',
+			icon: 'icon',
+			title: 'singleItemQuery title'
+		}],
 		categories: [
 			{ id: 1, slug: 'fonts', name: 'Fonts' }
 		],
-		images: [
-			{
-				id: 123414,
-				alt: 'alt',
-				fullSize: {
-					url: 'fullsize-url'
-				},
-				thumbnail: {
-					url: 'image-url'
-				},
-				localFile:{
-					id: '12',
-					name: 'localfile',
-					childImageSharp:{
-						fixed:{
-							src:'src',
-							height: 'height',
-							width: 'width'
-						},
-						fluid: {
-							src: 'src',
-							aspectRatio: 12345,
-							base64: 'base64',
-							sizes: 'sizes',
-							srcSet: 'srcSet'
-						}
-					}
-				}
-			}
-		],
+		featuredImage: { ...featuredImage },
+		images: { ...images },
+		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: false,
 			type: 'standard'
@@ -435,7 +408,7 @@ export const testProducts: IProducts = {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Skinny Jeans seo title'
 		},
-		tags: [],
+		tags: []
 	}
 }
 

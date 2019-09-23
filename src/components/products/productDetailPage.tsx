@@ -51,7 +51,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			},
 			{
 				name: `twitter:image`,
-				content: `${wcProduct.images.length > 0
+				content: `${wcProduct.featuredImage
 					? wcProduct.featuredImage.localFile.childImageSharp.fluid.src
 					: socialUtils.twitter.defaultImage}`
 			}

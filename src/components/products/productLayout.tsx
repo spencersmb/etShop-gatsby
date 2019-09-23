@@ -336,7 +336,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					/>), [state.selectedLicense])}
 				</DescriptionWrapper>
 
-				{standardItem.current.features && <FeaturesList features={standardItem.current.features}/>}
+				{standardItem.current.features.length > 1 && <FeaturesList features={standardItem.current.features}/>}
 
 				{standardItem.current.related_products &&
         <RelatedProducts products={standardItem.current.related_products}/>}
@@ -372,10 +372,10 @@ const ProductWrapper = styled.div`
 `
 const DescriptionWrapper = styled(GridFluid)`
 	grid-row-gap: 0 !important;
-	padding: 80px 0;
+	padding: 80px 0 0;
 	
 	@media ${device.laptop} {
-		padding: 120px 0;
+		padding: 120px 0 0;
 	    
 	}
 		

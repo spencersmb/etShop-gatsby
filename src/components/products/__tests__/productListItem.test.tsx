@@ -1,5 +1,4 @@
 import ProductListItem from '@components/products/productListItem'
-import CheckoutTab from '@components/tabs/checkoutTab'
 import { IProduct } from '@et/types/Products'
 import { ProductKey, testProducts } from '@redux/reduxTestUtils'
 import React from 'react'

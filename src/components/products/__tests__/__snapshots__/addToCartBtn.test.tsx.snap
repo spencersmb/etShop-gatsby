@@ -2,19 +2,19 @@
 
 exports[`AddToCart Button renders correctly 1`] = `
 <div
-  className="sc-htpNat krpdDI"
+  className="checkoutWrapper sc-htpNat bzJJkr"
 >
   <div
-    className="sc-bxivhb awxGE"
+    className="buttonWrapper sc-bxivhb awxGE"
   >
     <div
-      className="sc-ifAKCX gqREGH"
+      className="addToCart__total sc-ifAKCX dccGlY"
       data-testid="total"
     >
       $0.00
     </div>
     <button
-      className="sc-bwzfXH sc-EHOje gXSyXb"
+      className="sc-bwzfXH sc-EHOje iaPnNw"
       color="#18C3C3"
       data-testid="addToCart"
       disabled={true}

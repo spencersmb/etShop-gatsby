@@ -72,11 +72,11 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 			</>
 		)
 	}
-	
+
 	return (
-		<CheckoutWrapper>
-			<ButtonsWrapper>
-				<Total data-testid='total'>{total}</Total>
+		<CheckoutWrapper className={'checkoutWrapper'}>
+			<ButtonsWrapper className={'buttonWrapper'}>
+				<Total className={'addToCart__total'} data-testid='total'>{total}</Total>
 				{getButton()}
 			</ButtonsWrapper>
 		</CheckoutWrapper>

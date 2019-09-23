@@ -107,6 +107,36 @@ describe('General Utils', () => {
 				},
 				thumbnail: {
 					url: 'image-url'
+				},
+				localFile: {
+					id: '12',
+					name: 'localfile',
+					childImageSharp: {
+						fixed: {
+							src: 'src',
+							height: 'height',
+							width: 'width'
+						},
+						fluid: {
+							src: 'src',
+							aspectRatio: 12345,
+							base64: 'base64',
+							sizes: 'sizes',
+							srcSet: 'srcSet'
+						},
+						thumbnail_2x: {
+							src: ''
+						},
+						thumbnail_mobile: {
+							src: ''
+						},
+						thumbnail: {
+							src: 'image-url'
+						},
+						fullWidth: {
+							src: 'image-url'
+						}
+					}
 				}
 			}
 		]

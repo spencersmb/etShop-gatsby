@@ -6,7 +6,7 @@ exports[`Navbar Layout renders correctly 1`] = `
   data-testid="navbar"
 >
   <div
-    className="sc-kgoBCf XshFq"
+    className="sc-kgoBCf fkElcL"
     data-testid="nav-logo"
   >
     <div
@@ -21,7 +21,7 @@ exports[`Navbar Layout renders correctly 1`] = `
   </div>
   <div
     className="sc-cSHVUG sc-jWBwVP edsDtl"
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     <div
       className="sc-eHgmQL dgQcyp"
@@ -97,7 +97,7 @@ exports[`Navbar Layout renders correctly 1`] = `
       </div>
       <div
         className="sc-cSHVUG sc-hSdWYo bzLIHN"
-        onClick={[MockFunction]}
+        onClick={[Function]}
       >
         <div
           className="sc-eHgmQL dgQcyp"

@@ -35,7 +35,7 @@ export default class SubSelector extends Component<IProps> {
 		this.scrollAt = 1 / (items.length)
 
 		if (Flickity) {
-			setTimeout(this.initFlickity, 300)
+			setTimeout(this.initFlickity, 350)
 		}
 	}
 

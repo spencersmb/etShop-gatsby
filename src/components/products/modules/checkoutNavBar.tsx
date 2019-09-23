@@ -29,6 +29,7 @@ const CheckoutNavBar = (props: IProps) => {
 			zIndex: 3
 		}}>
 			<Container>
+				<div>{title}</div>
 				<div>
 					NavBar visible: {(getWindowPosition() > 300 && !inView).toString()}
 				</div>
@@ -48,5 +49,13 @@ const CheckoutNavBar = (props: IProps) => {
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
+	
+	.checkoutWrapper{
+		max-width: none;
+	}
+	
+	button{
+		background: red;
+	}
 `
 export default CheckoutNavBar
