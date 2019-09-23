@@ -9,7 +9,7 @@ exports[`Product List Layout renders correctly 1`] = `
     className="sc-bdVaJa emmDvk"
   >
     <a
-      href="/products/watercolor-texture-kit-vol-1"
+      href="/products/honeymoon"
     >
       <div
         className="sc-bwzfXH djTlgz"
@@ -29,7 +29,7 @@ exports[`Product List Layout renders correctly 1`] = `
             <div
               style={
                 Object {
-                  "paddingBottom": "0.08103727714748785%",
+                  "paddingBottom": "0.008100445524503848%",
                   "width": "100%",
                 }
               }
@@ -53,10 +53,10 @@ exports[`Product List Layout renders correctly 1`] = `
             />
             <picture>
               <img
-                alt=""
+                alt="alt"
                 onLoad={[Function]}
-                sizes="(max-width: 1000px) 100vw, 1000px"
-                src="/static/a5ca9e682952d79588dee87feeec37a5/1a92f/seamless-watercolor-patterns-preview.jpg"
+                sizes="sizes"
+                src="src"
                 srcSet="srcSet"
                 style={
                   Object {
@@ -76,7 +76,7 @@ exports[`Product List Layout renders correctly 1`] = `
             <noscript
               dangerouslySetInnerHTML={
                 Object {
-                  "__html": "<picture><img sizes=\\"(max-width: 1000px) 100vw, 1000px\\" srcset=\\"srcSet\\" src=\\"/static/a5ca9e682952d79588dee87feeec37a5/1a92f/seamless-watercolor-patterns-preview.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
+                  "__html": "<picture><img sizes=\\"sizes\\" srcset=\\"srcSet\\" src=\\"src\\" alt=\\"alt\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
                 }
               }
             />
@@ -85,8 +85,11 @@ exports[`Product List Layout renders correctly 1`] = `
             className="sc-htpNat kicMsp"
           >
             <h2>
-              Watercolor texture kit Vol. 1
+              Honeymoon
             </h2>
+            <p>
+              sub header
+            </p>
           </div>
         </div>
         <div
@@ -95,6 +98,7 @@ exports[`Product List Layout renders correctly 1`] = `
           <span />
           <p>
             $
+            0
           </p>
           <test-file-stub />
         </div>
@@ -105,7 +109,7 @@ exports[`Product List Layout renders correctly 1`] = `
     className="sc-bdVaJa emmDvk"
   >
     <a
-      href="/products/honeymoon"
+      href="/products/watercolor-texture-kit-vol-1"
     >
       <div
         className="sc-bwzfXH djTlgz"
@@ -114,11 +118,78 @@ exports[`Product List Layout renders correctly 1`] = `
           className="ListItemTop sc-bxivhb cXSKfV"
         >
           <div
+            className=" gatsby-image-wrapper"
+            style={
+              Object {
+                "overflow": "hidden",
+                "position": "relative",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "paddingBottom": "0.008100445524503848%",
+                  "width": "100%",
+                }
+              }
+            />
+            <img
+              alt=""
+              src="base64"
+              style={
+                Object {
+                  "height": "100%",
+                  "left": 0,
+                  "objectFit": "cover",
+                  "objectPosition": "center",
+                  "opacity": 1,
+                  "position": "absolute",
+                  "top": 0,
+                  "transitionDelay": "0.5s",
+                  "width": "100%",
+                }
+              }
+            />
+            <picture>
+              <img
+                alt="alt"
+                onLoad={[Function]}
+                sizes="sizes"
+                src="src"
+                srcSet="srcSet"
+                style={
+                  Object {
+                    "height": "100%",
+                    "left": 0,
+                    "objectFit": "cover",
+                    "objectPosition": "center",
+                    "opacity": 0,
+                    "position": "absolute",
+                    "top": 0,
+                    "transition": "opacity 0.5s",
+                    "width": "100%",
+                  }
+                }
+              />
+            </picture>
+            <noscript
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<picture><img sizes=\\"sizes\\" srcset=\\"srcSet\\" src=\\"src\\" alt=\\"alt\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
+                }
+              }
+            />
+          </div>
+          <div
             className="sc-htpNat kicMsp"
           >
             <h2>
-              Honeymoon
+              Watercolor texture kit Vol. 1
             </h2>
+            <p>
+              sub header
+            </p>
           </div>
         </div>
         <div
@@ -127,6 +198,7 @@ exports[`Product List Layout renders correctly 1`] = `
           <span />
           <p>
             $
+            16
           </p>
           <test-file-stub />
         </div>

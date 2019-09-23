@@ -2,10 +2,11 @@
 
 exports[`Footer Tests renders correctly 1`] = `
 <footer
-  className="sc-iwsKbI iIYczS"
+  className="sc-dnqmqq dbLqwg"
+  id="my-div"
 >
   <div
-    className="sc-gZMcBi enDkuY"
+    className="sc-iwsKbI bFwimF"
   >
     <h4>
       Get notified
@@ -15,15 +16,15 @@ exports[`Footer Tests renders correctly 1`] = `
     </p>
   </div>
   <form
-    className="sc-EHOje gxOBQB"
+    className="sc-ifAKCX cQEnyl"
     data-testid="emailBox"
     onSubmit={[Function]}
   >
     <div
-      className="sc-bZQynM hQazJB"
+      className="sc-EHOje knnPKq"
     >
       <div
-        className="sc-gzVnrw kmLGqm"
+        className="sc-bZQynM NwqNj"
       >
         <test-file-stub />
       </div>
@@ -36,10 +37,10 @@ exports[`Footer Tests renders correctly 1`] = `
       />
     </div>
     <div
-      className="sc-htoDjs bhZFqV"
+      className="sc-gzVnrw ftOABS"
     >
       <div
-        className="sc-ifAKCX kIktAd"
+        className="sc-bxivhb cJSPeO"
         data-testid="submitBtn"
       >
         <button
@@ -56,30 +57,30 @@ exports[`Footer Tests renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="sc-dnqmqq jgwIwO"
+      className="sc-htoDjs krmHYt"
     >
       <test-file-stub />
     </div>
   </form>
   <nav
-    className="sc-VigVT fEPntw"
+    className="sc-gqjmRU efJMeq"
   >
     <div
-      className="sc-gqjmRU evmKLe"
+      className="sc-gZMcBi cYBMpN"
     >
       <test-file-stub />
     </div>
     <div
-      className="sc-jTzLTM kIerjd"
+      className="sc-VigVT khKUMS"
     >
       <div
-        className="sc-fjdhpX cyLcxw"
+        className="sc-jTzLTM fHyIYk"
         data-testid="footer-logo"
       >
         <test-file-stub />
       </div>
       <ul
-        className="sc-jzJRlG fOqSXj"
+        className="sc-fjdhpX knEJYX"
         data-testid="footer-links"
       >
         <li>
@@ -114,7 +115,7 @@ exports[`Footer Tests renders correctly 1`] = `
         </li>
       </ul>
       <ul
-        className="sc-cSHVUG bctMro"
+        className="sc-jzJRlG fBhNdJ"
         data-testid="social-links"
       >
         <li>

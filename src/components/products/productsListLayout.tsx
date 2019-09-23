@@ -62,6 +62,7 @@ class ProductsListLayout extends Component<IProps> {
 									return node
 								}
 								return node.categories.filter((cat: ICat) => {
+
 									return cat.slug === this.props.filter
 								}).length > 0
 							})

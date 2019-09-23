@@ -1,3 +1,4 @@
+import { ProductKey, testProducts } from '@redux/reduxTestUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {
@@ -16,115 +17,17 @@ beforeEach(() => {
 				edges: [
 					{
 						node: {
-							id: '367dd45d-e237-591c-9da7-c29d657da816',
-							name: 'Honeymoon',
-							slug: 'honeymoon',
-							date_created_gmt: '2018-10-10T14:47:44',
-							license: {
-								hasExtendedLicense: true,
-								type: 'extended',
-								extendedItem: {
-									slug: 'watercolor-texture-kit-vol'
-								}
-							},
-							categories: [
-								{
-									id: 2,
-									name: 'Fonts',
-									slug: 'fonts'
-								}
-							],
-							images: [
-								{
-									localFile: {
-										childImageSharp: {
-											id: 13,
-											name: 'image',
-											fluid: {
-												aspectRatio: 1234,
-												src: 'src',
-												srcSet: 'srcSet',
-												size: 'size',
-												base64: 'base64'
-											}
-										}
-									}
-								}
-							]
+							...testProducts[ProductKey.Honeymoon]
 						}
 					},
 					{
 						node: {
-
-							id: '202eca74-fc90-56e7-8269-b59f18a19194',
-							name: 'Watercolor texture kit Vol. 1',
-							slug: 'watercolor-texture-kit-vol-1',
-							date_created_gmt: '2018-09-25T20:35:51',
-							images: [
-								{
-									id: 13,
-									fullSize: {
-										url: 'http://shopeverytuesday.local/wp-content/uploads/2018/06/seamless-watercolor-patterns-preview.jpg'
-									},
-									localFile: {
-										size: 88519,
-										name: 'seamless-watercolor-patterns-preview',
-										id: 'c8aeed2f-ab4f-5478-adad-c12d6e4e57f3',
-										childImageSharp: {
-											fluid: {
-												sizes: '(max-width: 1000px) 100vw, 1000px',
-												src: '/static/a5ca9e682952d79588dee87feeec37a5/1a92f/seamless-watercolor-patterns-preview.jpg',
-												aspectRatio: 1234,
-												srcSet: 'srcSet',
-												size: 'size',
-												base64: 'base64'
-											},
-											fixed: {
-												width: 300,
-												height: 153,
-												src: '/static/a5ca9e682952d79588dee87feeec37a5/ec435/seamless-watercolor-patterns-preview.jpg'
-											}
-										}
-									}
-								}
-							],
-							license: {
-								hasExtendedLicense: true,
-								type: 'standard',
-								extendedItem: {
-									slug: 'watercolor-texture-kit-vol-1-ext'
-								}
-							},
-							categories: [
-								{
-									id: 2,
-									name: 'Textures',
-									slug: 'textures'
-								}
-							]
+							...testProducts[ProductKey.WatercolorStd]
 						}
 					},
 					{
 						node: {
-							id: '367dd45d-e237-591c-9da7-c29d657da816',
-							name: 'Honeymoon',
-							slug: 'honeymoon',
-							date_created_gmt: '2018-10-10T14:47:44',
-							images: [],
-							license: {
-								hasExtendedLicense: true,
-								type: 'standard',
-								extendedItem: {
-									slug: 'watercolor-texture-kit-vol'
-								}
-							},
-							categories: [
-								{
-									id: 2,
-									name: 'Fonts',
-									slug: 'fonts'
-								}
-							]
+							...testProducts[ProductKey.WatercolorExt]
 						}
 					}
 				]

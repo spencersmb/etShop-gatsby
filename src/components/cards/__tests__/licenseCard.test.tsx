@@ -32,7 +32,7 @@ describe('License Card Tests', () => {
 		const modalRender = render(<LicenseCard {...propsDefault}/>)
 		const standardSelect = modalRender.getByTestId('price')
 		expect(standardSelect.children.length).toEqual(1)
-		expect(standardSelect.innerHTML).toEqual('<span>$</span>15')
+		expect(standardSelect.innerHTML).toEqual('<span>$</span>15.00')
 	})
 
 	it('Should render correct number of bullet items', () => {

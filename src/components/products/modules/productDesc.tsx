@@ -32,8 +32,8 @@ const ProductDescription = ({ intro_title = '', intro_description = '' }: IProps
 	return (
 		<>
 			<SubTitle>Description</SubTitle>
-			<Title>{intro_title}</Title>
-			<Desc dangerouslySetInnerHTML={createDesc()}/>
+			<Title data-testid={'title'}>{intro_title}</Title>
+			<Desc data-testid={'desc'} dangerouslySetInnerHTML={createDesc()}/>
 		</>
 	)
 }

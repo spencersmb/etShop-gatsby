@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product Description renders correctly 1`] = `
+Array [
+  <span
+    className="sc-bdVaJa jsByhr"
+  >
+    Description
+  </span>,
+  <h3
+    className="sc-bwzfXH BrjjV"
+    data-testid="title"
+  >
+    product intro title
+  </h3>,
+  <div
+    className="sc-htpNat jjLUkO"
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "intro desc",
+      }
+    }
+    data-testid="desc"
+  />,
+]
+`;

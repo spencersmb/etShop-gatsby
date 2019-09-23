@@ -2,7 +2,7 @@
 import { ICartState } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IPaginateOrder, IPaginateState } from '@et/types/Pagination'
-import { IProduct, IProducts } from '@et/types/Products'
+import { IProduct, IProductBullet, IProducts } from '@et/types/Products'
 import { IUser } from '@et/types/User'
 import { IGuestFormData, IOrderDownload, IOrderDownloadItem, IReceipt, IRefund } from '@et/types/WC_Order'
 import React from 'react'
@@ -177,53 +177,18 @@ export const singleProduct: IProduct = {
 		{ id: 1, slug: 'fonts', name: 'Fonts' },
 		{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 	],
-	images: [
-		{
-			id: 123414,
-			alt: 'alt',
-			fullSize: {
-				url: 'fullsize-url'
-			},
-			thumbnail: {
-				url: 'image-url'
-			},
-			localFile: {
-				id: '12',
-				name: 'localfile',
-				childImageSharp: {
-					fixed: {
-						src: 'src',
-						height: 'height',
-						width: 'width'
-					},
-					fluid: {
-						src: 'src',
-						aspectRatio: 12345,
-						base64: 'base64',
-						sizes: 'sizes',
-						srcSet: 'srcSet'
-					},
-					thumbnail_2x: {
-						src: ''
-					},
-					thumbnail_mobile: {
-						src: ''
-					},
-					thumbnail: {
-						src: ''
-					},
-					fullWidth: {
-						src: ''
-					}
-				}
-			}
-		}
-	],
+	images: [...images],
 	license: {
+		// may not need this if we are testing the extendedItem itself
 		hasExtendedLicense: true,
 		type: 'standard',
+		standardItem: {
+			slug: 'watercolor-texture-kit-vol-1',
+			bullets: []
+		},
 		extendedItem: {
-			slug: 'watercolor-texture-kit-vol-1-ext'
+			slug: 'watercolor-texture-kit-vol-1-ext',
+			bullets: []
 		}
 	},
 	seo: {
@@ -233,7 +198,17 @@ export const singleProduct: IProduct = {
 	tags: [
 		{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 		{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
-	]
+	],
+	related_products: [],
+	details: {
+		programs: [],
+		file_size: '1.2gb',
+		file_types: ['otf'],
+		dpi: '600'
+	},
+	intro_description: 'intro desc',
+	intro_title: 'intro-title',
+	licenseDiscountPrice: ''
 }
 
 export enum ProductKey {
@@ -268,17 +243,21 @@ export const testProducts: IProducts = {
 			}
 		],
 		categories: [
-			{ id: 1, slug: 'fonts', name: 'Fonts' },
 			{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 		],
 		featuredImage: { ...featuredImage },
-		images: { ...images },
+		images: [...images],
 		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: true,
 			type: 'standard',
+			standardItem: {
+				slug: 'watercolor-texture-kit-vol-1',
+				bullets: []
+			},
 			extendedItem: {
-				slug: 'watercolor-texture-kit-vol-1-ext'
+				slug: 'watercolor-texture-kit-vol-1-ext',
+				bullets: []
 			}
 		},
 		seo: {
@@ -288,13 +267,23 @@ export const testProducts: IProducts = {
 		tags: [
 			{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 			{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
-		]
+		],
+		details: {
+			programs: [],
+			file_size: '1.2gb',
+			file_types: ['otf'],
+			dpi: '600'
+		},
+		intro_description: 'intro desc',
+		intro_title: 'intro-title',
+		licenseDiscountPrice: '',
+		related_products: []
 	},
 	[ProductKey.WatercolorExt]: {
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
-		id: '202eca74-fc90-56e7-8269-b59f18a19194',
+		id: '202eca74-fc90-56e7-8269-b59f18a19194-ext',
 		name: 'Watercolor texture kit Vol. 1',
 		price: '20',
 		product_id: 40,
@@ -312,17 +301,21 @@ export const testProducts: IProducts = {
 			title: 'singleItemQuery title'
 		}],
 		categories: [
-			{ id: 1, slug: 'fonts', name: 'Fonts' },
 			{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 		],
 		featuredImage: { ...featuredImage },
-		images: { ...images },
+		images: [...images],
 		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: true,
 			type: 'extended',
 			standardItem: {
-				slug: 'watercolor-texture-kit-vol-1'
+				slug: 'watercolor-texture-kit-vol-1',
+				bullets: []
+			},
+			extendedItem: {
+				slug: 'watercolor-texture-kit-vol-1-ext',
+				bullets: []
 			}
 		},
 		seo: {
@@ -332,14 +325,24 @@ export const testProducts: IProducts = {
 		tags: [
 			{ id: 1, name: 'Texture Kit', slug: 'texture-kit' },
 			{ id: 2, name: 'Waterbrush', slug: 'waterbrush' }
-		]
+		],
+		details: {
+			programs: [],
+			file_size: '1.2gb',
+			file_types: ['otf'],
+			dpi: '600'
+		},
+		intro_description: 'intro desc',
+		intro_title: 'intro-title',
+		licenseDiscountPrice: '',
+		related_products: []
 
 	},
 	[ProductKey.Honeymoon]: {
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
-		id: '202eca74-fc90-56e7-8269-b59f18a19194',
+		id: '202eca74-fc90-56e7-8269-b59f18a19194-honeymoon',
 		name: 'Honeymoon',
 		price: '0',
 		product_id: 352,
@@ -360,17 +363,35 @@ export const testProducts: IProducts = {
 			{ id: 1, slug: 'fonts', name: 'Fonts' }
 		],
 		featuredImage: { ...featuredImage },
-		images: { ...images },
+		images: [...images],
 		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: false,
-			type: 'standard'
+			type: 'standard',
+			standardItem: {
+				slug: 'honeymoon',
+				bullets: []
+			},
+			extendedItem: {
+				slug: '',
+				bullets: []
+			}
 		},
 		seo: {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Honeymoon seo title'
 		},
-		tags: []
+		tags: [],
+		details: {
+			programs: [],
+			file_size: '1.2gb',
+			file_types: ['otf'],
+			dpi: '600'
+		},
+		intro_description: 'intro desc',
+		intro_title: 'intro-title',
+		licenseDiscountPrice: '',
+		related_products: []
 
 	},
 	[ProductKey.Skinnyjeans]: {
@@ -398,17 +419,35 @@ export const testProducts: IProducts = {
 			{ id: 1, slug: 'fonts', name: 'Fonts' }
 		],
 		featuredImage: { ...featuredImage },
-		images: { ...images },
+		images: [...images],
 		font_preview: { ...fontPreview },
 		license: {
 			hasExtendedLicense: false,
-			type: 'standard'
+			type: 'standard',
+			standardItem: {
+				slug: 'skinny-jeans',
+				bullets: []
+			},
+			extendedItem: {
+				slug: '',
+				bullets: []
+			}
 		},
 		seo: {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Skinny Jeans seo title'
 		},
-		tags: []
+		tags: [],
+		details: {
+			programs: [],
+			file_size: '1.2gb',
+			file_types: ['otf'],
+			dpi: '600'
+		},
+		intro_description: 'intro desc',
+		intro_title: 'intro-title',
+		licenseDiscountPrice: '',
+		related_products: []
 	}
 }
 
