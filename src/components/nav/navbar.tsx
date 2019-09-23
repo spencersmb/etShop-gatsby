@@ -8,7 +8,7 @@ import { clearPagination } from '@redux/actions/paginationActions'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, navigate } from 'gatsby'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -48,6 +48,8 @@ interface IPropsActions {
 function Navbar (props: IPropsActions & IPropsState) {
 	const { user, logout, clearPaginationAction } = props
 	const [isOpen, setIsOpen] = useState(false)
+	const target = useRef<HTMLElement | null>(null)
+	const bodyScrollPos = useRef(0)
 
 	function openSignInModal (name: string) {
 		return () => [
@@ -103,6 +105,30 @@ function Navbar (props: IPropsActions & IPropsState) {
 		setIsOpen(!isOpen)
 	}
 
+	function cartToggleEvent () {
+
+		if (!isOpen && target.current) {
+			bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+			target.current.style.width = `100%`
+			target.current.style.top = `-${bodyScrollPos.current}px`
+			target.current.style.bottom = `0`
+			target.current.style.padding = `0 15px 0 0`
+			target.current.style.position = 'fixed'
+		} else if (isOpen && target.current) {
+			target.current.style.removeProperty('position')
+			target.current.style.removeProperty('top')
+			target.current.style.removeProperty('bottom')
+			target.current.style.removeProperty('padding')
+			document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
+		}
+		props.cartToggle()
+
+	}
+
+	useEffect(() => {
+		target.current = document.querySelector('#___gatsby')
+	})
+
 	return (
 		<Nav data-testid='navbar'>
 			<Logo data-testid='nav-logo'>
@@ -113,14 +139,13 @@ function Navbar (props: IPropsActions & IPropsState) {
 					</Link>
 				</LogoContainer>
 			</Logo>
-			<MobileCartWrapper onClick={props.cartToggle}>
+			<MobileCartWrapper onClick={cartToggleEvent}>
 				<CartSvg>{renderSvg(svgs.Cart)}</CartSvg>
 				{props.cart.totalItems > 0 && <CartCount data-testid='cart-count'>
 							<span>
 								{props.cart.totalItems}
 							</span>
         </CartCount>}
-
 			</MobileCartWrapper>
 			<Hamburger
 				data-testid='hamburger'
@@ -186,7 +211,7 @@ function Navbar (props: IPropsActions & IPropsState) {
               onClick={signOut}>Sign Out</SignOutBtn>
           </LoginStatus>
 					}
-					<CartWrapper onClick={props.cartToggle}>
+					<CartWrapper onClick={cartToggleEvent}>
 						<CartSvg>{renderSvg(svgs.Cart)}</CartSvg>
 						<CartCount data-testid='cart-count'>
 							<span>

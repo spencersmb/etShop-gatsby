@@ -141,7 +141,7 @@ exports.sourceNodes = async (
   const jsonResults = JSON.stringify(utils.transformNormalizedData(results.data))
   fs.writeFileSync("src/state/products.json", jsonResults)
 
-  await asyncForEach(results.data, async (product) => {
+  await asyncForEach(results.data, async (product, index) => {
     const productNode = await processProduct(product, { store, cache, createNode, createNodeId }, "fullSize")
 
     // const featureNode = await processFeature(product, { store, cache, createNode, createNodeId })

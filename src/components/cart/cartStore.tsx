@@ -52,19 +52,23 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 			<PoseGroup>
 				{cartIsOpen &&
         <CartPose key='cart' onPoseComplete={(type: OnPoseComplete) => {
+
 					const overlayOpen = document.querySelector('#overlay')
 					if (type === 'enter' && !overlayOpen && target.current) {
-						bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-						target.current.style.width = `100%`
-						target.current.style.top = `-${bodyScrollPos.current}px`
-						target.current.style.bottom = `0`
-						target.current.style.position = 'fixed'
+						// MOVED TO NAV so happen faster
+						// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+						// target.current.style.width = `100%`
+						// target.current.style.top = `-${bodyScrollPos.current}px`
+						// target.current.style.bottom = `0`
+						// target.current.style.position = 'fixed'
 					}
 
 					if (type === 'exit' && !overlayOpen && target.current) {
 						target.current.style.removeProperty('position')
 						target.current.style.removeProperty('top')
 						target.current.style.removeProperty('bottom')
+						target.current.style.removeProperty('padding')
+
 						document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
 					}
 
@@ -102,9 +106,17 @@ const CartStyled = styled.div`
 // animations
 const CartPose = posed(PoseHoc)({
 	enter: {
-		opacity: 1
+		opacity: 1,
+		transition: {
+			default: {
+				ease: 'easeOut'
+			}
+		}
 	},
 	exit: {
-		opacity: 0
+		opacity: 0,
+		transition: {
+			default: {}
+		}
 	}
 })

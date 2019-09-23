@@ -341,7 +341,19 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				{standardItem.current.related_products &&
         <RelatedProducts products={standardItem.current.related_products}/>}
 			</ProductWrapper>
-			{React.useMemo(() => (<CheckoutNavBar inView={inView}/>), [inView])}
+			{React.useMemo(() => (
+				<CheckoutNavBar
+					handleAddToCartState={() => (setState({ inCart: true }))}
+					inView={inView}
+					numberOfLicenses={numberOfLicenses}
+					selectedProduct={state.selectedProduct}
+					slug={product.slug}
+					inCart={inCart}
+					selectedLicense={state.selectedLicense}
+					title={standardItem.current.name}
+					price={state.price}
+					total={calcTotalQtyPrice(state.price, numberOfLicenses)}
+				/>), [inView, state.price, numberOfLicenses, inCart])}
 		</Layout>
 	)
 

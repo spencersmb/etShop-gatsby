@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import { ICartState } from '@et/types/Cart'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { Actions } from '@et/types/Actions'
-import React, { RefObject, useMemo, Suspense } from 'react'
+import React, { RefObject, useMemo, Suspense, useRef, useEffect } from 'react'
 
 const PaypalCheckout = React.lazy(() => import('@components/paypal/paypalCheckout'))
 
@@ -34,7 +34,8 @@ interface IReduxActions {
 }
 
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
-
+	const target = useRef<HTMLElement | null>(null)
+	const bodyScrollPos = useRef(0)
 	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
 	// to flip to the free checkout form
 	const checkout = useMemo(() => <CheckoutTabs
@@ -56,12 +57,20 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)
 	])
 
+	useEffect(() => {
+		target.current = document.querySelector('#___gatsby')
+	})
+
+	function closeCart () {
+		props.cartToggle()
+	}
+
 	return (
 		<CartWrapper
 			data-testid='cart-wrapper'
 			ref={props.poseRef}
 			id='cartWrapper'>
-			<button data-testid='close-btn' className='jestCloseCart' onClick={props.cartToggle}>Close</button>
+			<button data-testid='close-btn' className='jestCloseCart' onClick={closeCart}>Close</button>
 
 			<div>
 				<button
