@@ -112,14 +112,14 @@ const SideBar = ({
 
 				{/*File Types*/}
 				{updateFileTypes.length > 0 &&
-        <Section>
+        <Section data-testid={'fileTypeSection'}>
           <SectionTitle>FILE TYPES</SectionTitle>
-          <FileTypes>
+          <FileTypes data-testid={'fileTypes'}>
 						{updateFileTypes.map(type => (<Pill key={type}>{type}</Pill>))}
           </FileTypes>
 
 					{/*Check for extend lic if product is a font*/}
-					{fontPreview && !isExtLicenseSelected && <ExtLicMsg onClick={changeLicense}>
+					{fontPreview && !isExtLicenseSelected && <ExtLicMsg onClick={changeLicense} data-testid={'upgrade'}>
             <p>Web Font? Upgrade to</p>
             <span>Extended License</span>
           </ExtLicMsg>}
@@ -129,21 +129,21 @@ const SideBar = ({
 				<Section>
 					<SectionIcon>{renderSvg(svgs.Eye)}</SectionIcon>
 					<SectionTitle>RESOLUTION</SectionTitle>
-					<SectionText>{dpi}<span>dpi</span></SectionText>
+					<SectionText data-testid={'dpi'}>{dpi}<span>dpi</span></SectionText>
 				</Section>
 
 				{/*FileSize*/}
 				<Section>
 					<SectionIcon>{renderSvg(svgs.Download)}</SectionIcon>
 					<SectionTitle>File Size</SectionTitle>
-					<SectionText dangerouslySetInnerHTML={{ __html: createFileSizeResponse(file_size) }}/>
+					<SectionText data-testid={'fileSize'} dangerouslySetInnerHTML={{ __html: createFileSizeResponse(file_size) }}/>
 				</Section>
 
 				{/*Programs*/}
 				<Section>
 					<SectionIcon>{renderSvg(svgs.Programs)}</SectionIcon>
 					<SectionTitle>WORKS WITH</SectionTitle>
-					<ProgramList>
+					<ProgramList data-testid={'programs'}>
 						{programs.map(logo => (<li key={logo}>{getProgramLogo(logo)}</li>))}
 					</ProgramList>
 				</Section>

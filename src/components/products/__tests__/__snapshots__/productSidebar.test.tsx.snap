@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product Description renders correctly 1`] = `
+<aside
+  className="sc-iwsKbI lmREvF"
+>
+  <div
+    className="sc-gZMcBi jMrtRl"
+  >
+    <div
+      className="sc-dnqmqq eGyIVY"
+    >
+      <test-file-stub />
+    </div>
+    <div
+      className="sc-ifAKCX bWMCgh"
+    >
+      <h3
+        className="sc-htoDjs bmpqec"
+      >
+        DETAILS
+      </h3>
+    </div>
+    <div
+      className="sc-ifAKCX bWMCgh"
+      data-testid="fileTypeSection"
+    >
+      <h6
+        className="sc-EHOje eKkQUB"
+      >
+        FILE TYPES
+      </h6>
+      <div
+        className="sc-bxivhb gfmzLj"
+        data-testid="fileTypes"
+      >
+        <div
+          className="sc-htpNat iqonUU"
+        >
+          jpg
+        </div>
+      </div>
+    </div>
+    <div
+      className="sc-ifAKCX bWMCgh"
+    >
+      <div
+        className="sc-bZQynM kpHbwf"
+      >
+        <test-file-stub />
+      </div>
+      <h6
+        className="sc-EHOje eKkQUB"
+      >
+        RESOLUTION
+      </h6>
+      <div
+        className="sc-gzVnrw ipIUEJ"
+        data-testid="dpi"
+      >
+        600
+        <span>
+          dpi
+        </span>
+      </div>
+    </div>
+    <div
+      className="sc-ifAKCX bWMCgh"
+    >
+      <div
+        className="sc-bZQynM kpHbwf"
+      >
+        <test-file-stub />
+      </div>
+      <h6
+        className="sc-EHOje eKkQUB"
+      >
+        File Size
+      </h6>
+      <div
+        className="sc-gzVnrw ipIUEJ"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "1.2<span>Gigs</span>",
+          }
+        }
+        data-testid="fileSize"
+      />
+    </div>
+    <div
+      className="sc-ifAKCX bWMCgh"
+    >
+      <div
+        className="sc-bZQynM kpHbwf"
+      >
+        <test-file-stub />
+      </div>
+      <h6
+        className="sc-EHOje eKkQUB"
+      >
+        WORKS WITH
+      </h6>
+      <ul
+        className="sc-bdVaJa cglExA"
+        data-testid="programs"
+      >
+        <li>
+          <test-file-stub />
+        </li>
+        <li>
+          <img
+            alt="Procreate"
+            src="/logos/procreateLogo.png"
+          />
+        </li>
+        <li>
+          <test-file-stub />
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>
+`;

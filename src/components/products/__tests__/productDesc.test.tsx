@@ -1,7 +1,4 @@
-import { AddToCartBtn } from '@components/products/addToCartBtn'
 import ProductDescription from '@components/products/modules/productDesc'
-import { ProductKey, testProducts } from '@redux/reduxTestUtils'
-import { calcTotalQtyPrice } from '@utils/priceUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {
