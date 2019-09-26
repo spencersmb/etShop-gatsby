@@ -1,3 +1,5 @@
+import { graphql } from 'gatsby'
+
 export interface IGatsbyConfig {
 	site: {
 		siteMetadata: {
@@ -14,3 +16,13 @@ export interface IGatsbyConfig {
 		},
 	}
 }
+
+export const gatsbyImageSharpFluid = graphql`
+	fragment GatsbyImageSharpFluid on ImageSharpFluid {
+		base64
+		aspectRatio
+		src
+		srcSet
+		sizes
+	}
+`

@@ -3,6 +3,7 @@
 exports[`Product ListItem Tests renders correctly 1`] = `
 <div
   className="sc-bdVaJa emmDvk"
+  data-testid="listItem"
 >
   <a
     href="/products/watercolor-texture-kit-vol-1"

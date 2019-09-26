@@ -1,7 +1,4 @@
 import LicenseQtyCard from '@components/cards/licenseQtyCard'
-import { CartItem } from '@components/cart/cartItem'
-import { ProductKey, testCartWithItem, testProducts } from '@redux/reduxTestUtils'
-import { calcBulkDiscount, displayCurrency, getPrice } from '@utils/priceUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {

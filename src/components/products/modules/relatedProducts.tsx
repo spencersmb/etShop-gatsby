@@ -8,7 +8,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 interface IProps {
-	products: string[]
+	products: string[] // array of slugs
+	testData?: any
 }
 
 const RelatedProducts = (props: IProps) => {
@@ -28,8 +29,9 @@ const RelatedProducts = (props: IProps) => {
 			</TitleContainer>
 
 			{/*Products*/}
-			<Container>
-				{products.map((productSlug: string) => <RelatedProduct key={productSlug} slug={productSlug}/>)}
+			<Container data-testid={`productsList`}>
+				{products.map((productSlug: string) => <RelatedProduct data={props.testData} key={productSlug}
+																															 slug={productSlug}/>)}
 			</Container>
 		</Wrapper>
 	)

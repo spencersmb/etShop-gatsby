@@ -51,8 +51,6 @@ const FontPreviewer = (props: IProps) => {
 	const { customText, fontSizeSlider, isOpen } = state
 
 	function handleSliderChange (value: number) {
-		console.log('value', value)
-
 		setState({ fontSizeSlider: value })
 	}
 
@@ -83,7 +81,7 @@ const FontPreviewer = (props: IProps) => {
 
 					{/*Slider*/}
 					<SliderControls>
-						<SliderContainer>
+						<SliderContainer data-testid={'slider'}>
 							<Slider
 								min={12}
 								max={50}
@@ -95,16 +93,18 @@ const FontPreviewer = (props: IProps) => {
 								// onChangeComplete={this.handleChangeComplete}
 							/>
 						</SliderContainer>
-						<span>{state.fontSizeSlider}px</span>
-						<FeaturesToggle onClick={toggleFeaturesBox}>
+						<span data-testid={'fontSize'}>{state.fontSizeSlider}px</span>
+						<FeaturesToggle onClick={toggleFeaturesBox} data-testid={'featuresToggle'}>
 							{renderSvg(svgs.Controls)}
 						</FeaturesToggle>
 					</SliderControls>
 
 					{/*Font Features*/}
 					<CheckBoxsContainer
+						data-testid={'checkboxContainer'}
 						pose={isOpen ? 'open' : 'closed'}
 						showShadow={getWidth() >= 1024}
+						className={isOpen ? 'open' : 'closed'}
 					>
 						<CheckBoxInner>
 							<h6>Font Features</h6>
@@ -112,6 +112,7 @@ const FontPreviewer = (props: IProps) => {
 								<input
 									type='checkbox'
 									name='calt'
+									aria-label='calt'
 									onChange={toggleFeatures('calt')}
 									checked={state.calt}/>
 								<label onClick={toggleFeatures('calt')} htmlFor='calt'>Contextual Alternates</label>
@@ -120,6 +121,7 @@ const FontPreviewer = (props: IProps) => {
 								<input
 									type='checkbox'
 									name='liga'
+									aria-label='liga'
 									onChange={toggleFeatures('liga')}
 									checked={state.liga}/>
 								<label onClick={toggleFeatures('liga')} htmlFor='liga'>Ligatures</label>
@@ -128,6 +130,7 @@ const FontPreviewer = (props: IProps) => {
 								<input
 									type='checkbox'
 									name='dlig'
+									aria-label='dlig'
 									onChange={toggleFeatures('dlig')}
 									checked={state.dlig}/>
 								<label onClick={toggleFeatures('dlig')} htmlFor='dlig'>Discretionary Ligatures</label>
@@ -136,6 +139,7 @@ const FontPreviewer = (props: IProps) => {
 								<input
 									type='checkbox'
 									name='salt'
+									aria-label='salt'
 									onChange={toggleFeatures('salt')}
 									checked={state.salt}/>
 								<label onClick={toggleFeatures('salt')} htmlFor='salt'>Stylistic Alternates</label>
@@ -152,9 +156,10 @@ const FontPreviewer = (props: IProps) => {
 				</PreviewInput>
 
 				{/*Font Style Previews*/}
-				<Fonts>
-					{props.styles.map((item) =>
+				<Fonts data-testid={'fontsList'}>
+					{props.styles.map((item, index) =>
 						(<Font
+							data-testid={`font-${index}`}
 							key={item.font_family}
 							state={state}
 							style={{

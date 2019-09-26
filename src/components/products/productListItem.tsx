@@ -20,7 +20,7 @@ interface IProps {
 function ProductListItem (props: IProps) {
 	const { id, slug, name, sub_header, price, featuredImage } = props
 	return (
-		<ListItem key={id}>
+		<ListItem key={id} data-testid={'listItem'}>
 			<Link to={`/products/${slug}`}>
 				<ListItemInner>
 					<ListItemTop className='ListItemTop'>
