@@ -80,10 +80,19 @@ const data = {
 	}
 }
 describe('Related Products', () => {
-	it('renders correctly', () => {
+	it('Related Products renders correctly', () => {
 		const tree = renderer
 			.create(
 				<RelatedProducts products={defaultProps} testData={data}/>
+			)
+			.toJSON()
+		expect(tree).toMatchSnapshot()
+	})
+
+	it('Related Product renders correctly', () => {
+		const tree = renderer
+			.create(
+				<RelatedProduct slug={defaultProps[0]} data={data}/>
 			)
 			.toJSON()
 		expect(tree).toMatchSnapshot()

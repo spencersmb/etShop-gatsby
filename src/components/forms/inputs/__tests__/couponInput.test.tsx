@@ -19,13 +19,16 @@ const propsDefault = {
 	loadCoupon: jest.fn(),
 	invalidCoupon: jest.fn(),
 	submitCoupon: jest.fn(),
-	coupon: initialState.cart.coupon
+	updatePrice: jest.fn(),
+	coupon: initialState.cart.coupon,
+	total: 12
 }
 const propsValid = {
 	checkCoupon: jest.fn(),
 	loadCoupon: jest.fn(),
 	invalidCoupon: jest.fn(),
 	submitCoupon: jest.fn(),
+	updatePrice: jest.fn(),
 	coupon: {
 		code: 'test-valid',
 		discount: '33.00',
@@ -34,13 +37,15 @@ const propsValid = {
 		submitted: true,
 		type: 'fixed-cart',
 		valid: true
-	}
+	},
+	total: 12
 }
 const propsInvalid = {
 	checkCoupon: jest.fn(),
 	loadCoupon: jest.fn(),
 	invalidCoupon: jest.fn(),
 	submitCoupon: jest.fn(),
+	updatePrice: jest.fn(),
 	coupon: {
 		code: '',
 		discount: '',
@@ -49,7 +54,8 @@ const propsInvalid = {
 		submitted: true,
 		type: '',
 		valid: false
-	}
+	},
+	total: 12
 }
 const propsLoading = {
 	checkCoupon: jest.fn(),

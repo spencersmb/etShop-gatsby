@@ -226,8 +226,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		/* Optional options */
 		threshold: 0
 	})
-	// console.log('state', state)
-	console.log('inView', inView)
 
 	return (
 		<Layout>
@@ -289,7 +287,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
           </LicenseQtyWrapper>
 					}
 
-					{state.payWhatYouWant &&
+					{payWhatYouWant &&
           <PWYWWrapper>
             <InputWrapper disableInput={state.inCart}>
               <div className={`label`}>Pay What You Want</div>
@@ -343,7 +341,11 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 			</ProductWrapper>
 			{React.useMemo(() => (
 				<CheckoutNavBar
+					handleDialChange={onDialChange}
 					handleAddToCartState={() => (setState({ inCart: true }))}
+					handleLicenseChange={selectChange}
+					payWhatYouWant={payWhatYouWant}
+					onPwywChange={onPwywChange}
 					inView={inView}
 					numberOfLicenses={numberOfLicenses}
 					selectedProduct={state.selectedProduct}
@@ -353,7 +355,8 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					title={standardItem.current.name}
 					price={state.price}
 					total={calcTotalQtyPrice(state.price, numberOfLicenses)}
-				/>), [inView, state.price, numberOfLicenses, inCart])}
+				/>
+			), [inView, state.price, numberOfLicenses, inCart, payWhatYouWant])}
 		</Layout>
 	)
 
