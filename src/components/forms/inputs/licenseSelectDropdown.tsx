@@ -16,14 +16,14 @@ const LicenseSelectDropdown = (props: IProps) => {
 	if (hasExtendedLicesnse) {
 		return (
 			<select onChange={handleChange} value={selected} data-testid={'license_select'}>
-				<option value='standard'>Standard</option>
-				<option value='extended'>Extended</option>
+				<option value='standard'>Standard License</option>
+				<option value='extended'>Extended License</option>
 			</select>
 		)
 	} else {
 		return (
 			<select>
-				<option value='standard'>Standard</option>
+				<option value='standard'>Standard License</option>
 			</select>
 		)
 	}

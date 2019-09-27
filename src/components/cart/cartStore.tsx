@@ -56,11 +56,11 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 					const overlayOpen = document.querySelector('#overlay')
 					if (type === 'enter' && !overlayOpen && target.current) {
 						// MOVED TO NAV so happen faster
-						// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-						// target.current.style.width = `100%`
-						// target.current.style.top = `-${bodyScrollPos.current}px`
-						// target.current.style.bottom = `0`
-						// target.current.style.position = 'fixed'
+						bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+						target.current.style.width = `100%`
+						target.current.style.top = `-${bodyScrollPos.current}px`
+						target.current.style.bottom = `0`
+						target.current.style.position = 'fixed'
 					}
 
 					if (type === 'exit' && !overlayOpen && target.current) {

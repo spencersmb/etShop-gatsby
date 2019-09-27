@@ -2,12 +2,16 @@ import LicenseSelectDropdown from '@components/forms/inputs/licenseSelectDropdow
 import NumberDial from '@components/forms/inputs/numberDial'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import { IProduct } from '@et/types/Products'
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import { InputWrapper } from '@styles/global/inputs'
+import { Sentinel } from '@styles/global/fonts'
+import { InputWrapper, resetInput } from '@styles/global/inputs'
+import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import { getWindowPosition } from '@utils/windowUtils'
-import React from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
 
 interface IProps {
@@ -29,6 +33,16 @@ interface IProps {
 
 const CheckoutNavBar = (props: IProps) => {
 	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant } = props
+	const windowPosRef = useRef(inView)
+	const [windowPos, setWindowPos] = useState(0)
+	useEffect(() => {
+		windowPosRef.current = inView
+		setWindowPos(window.pageYOffset)
+		// console.log('getWindowPosition()', getWindowPosition())
+		// console.log('window.scrollY', windowPosRef.current)
+		// console.log('show nav', windowPosRef.current > 300 && !inView)
+
+	}, [inView])
 
 	function showInput () {
 		if (payWhatYouWant) {
@@ -58,69 +72,200 @@ const CheckoutNavBar = (props: IProps) => {
 	}
 
 	return (
-		<CheckoutNavContainer>
+		<CheckoutNavContainer
+			pose={windowPos > 300 && !inView ? 'show' : 'hide'}
+			showNav={windowPos > 300 && !inView}>
 			<Container>
-
-				<div>
-					<div data-testid={`title`}>
+				<Section0/>
+				<Section1>
+					<Title data-testid={`title`}>
 						{title}
-					</div>
-					<div>
-						<LicenseSelectWrapper>
-							<LicenseSelectDropdown
-								hasExtendedLicesnse={selectedProduct.license.hasExtendedLicense}
-								change={handleLicenseChange}
-								selected={selectedLicense}/>
-						</LicenseSelectWrapper>
-					</div>
+					</Title>
+					<SelectBtn selectedLic={selectedLicense}>
+						<LicenseSelectDropdown
+							hasExtendedLicesnse={selectedProduct.license.hasExtendedLicense}
+							change={handleLicenseChange}
+							selected={selectedLicense}/>
+						<span>
+							{renderSvg(svgs.ChevronLeft)}
+						</span>
+					</SelectBtn>
 
-				</div>
+				</Section1>
 
-				<div>
+				<Section2>
 					{showInput()}
-				</div>
+				</Section2>
 
 				{/*<div>*/}
 				{/*	NavBar visible: {(getWindowPosition() > 300 && !inView).toString()}*/}
 				{/*</div>*/}
-				<AddToCartBtn
-					handleAddToCartState={handleAddToCartState}
-					isInCart={inCart}
-					slug={slug}
-					selectedProduct={selectedProduct}
-					licenseQty={numberOfLicenses}
-					price={price}
-					total={total}
-				/>
+				<Section3>
+					<AddToCartBtn
+						handleAddToCartState={handleAddToCartState}
+						isInCart={inCart}
+						slug={slug}
+						selectedProduct={selectedProduct}
+						licenseQty={numberOfLicenses}
+						price={price}
+						total={total}
+					/>
+				</Section3>
 			</Container>
 		</CheckoutNavContainer>
 	)
 }
-const LicenseSelectWrapper = styled.div`
+const SelectBtn = styled.div<{ selectedLic: string }>`
+	position: relative;
 	select{
+		${resetInput};
+		${Sentinel.semiboldItalic};
+		font-size: 16px;
+		color: ${props => props.selectedLic === 'standard' ? colors.teal.i500 : '#FF6363'};
+		padding-right: 25px;
+		position: relative;
+		z-index: 1;
+		
 		&:focus{
 			outline: none;
 		}
 	}
+	span{
+		width: 15px;
+		margin-left: 10px;
+		position: absolute;
+		right: 0;
+		top: 59%;
+		transform: translateY(-50%);
+		z-index: 0;
+		svg{
+			width:100%;
+			transform: rotate(-90deg);
+		}
+		path{
+			fill: ${props => props.selectedLic === 'standard' ? colors.teal.i500 : '#FF6363'};
+		}
+	}
+`
+const Title = styled.div`
+			${Sentinel.black};
+			font-weight: 900;
+			font-style: normal;
+			color: ${colors.grey.i800};
+			font-size: 21px;
+			margin-bottom: 0;
+			line-height: 28px;
+`
+const Section0 = styled.div`
+	background: rebeccapurple;
+	display: flex;
+	flex: 0;
+	flex-direction: column;
+	align-items: flex-start;
+	height: 100%;
+	
+	@media ${device.laptopL} {
+		width: 100%;
+		max-width: 200px;
+		flex: 1;
+	}
+		
+`
+const Section1 = styled.div`
+	padding: 0 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	border-right: 1px solid #DADADA;
+	height: 100%;
+	justify-content: center;
+	background: #fff;
+
+	@media ${device.laptop} {
+		padding: 0 30px;
+		flex: 1;
+	}
+`
+const Section2 = styled.div`
+	background: #fff;
+	flex: 1;
+	align-items: flex-start;
+	display: flex;
+	justify-content: center;
+	
+	& > div{
+		flex-direction: column;
+	}
+	
+	.label{
+		margin-bottom: 5px;
+	}
+	
+	@media ${device.laptop} {
+		padding: 0 30px;
+		flex: 0;
+		min-width: 220px;
+	}
+		
+`
+const Section3 = styled.div`
+padding: 20px;
+min-width: 260px;
+background: ${colors.teal.i500};
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
 `
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
-	
+	align-items: center;
+	height: 100%;
+	background: #fff;
+	box-shadow: 0px -10px 60px rgba(0,0,0,0.13);
+	max-width: 1200px;
+	margin: 0 auto;
+
 	.checkoutWrapper{
 		max-width: none;
 	}
 	
 	button{
-		background: red;
+		background: #fff;
+		color: ${colors.primary.headline};
+	}
+	
+	.addToCart__total{
+		color: #fff;
 	}
 `
-const CheckoutNavContainer = styled.aside`
+const ContainerPose = posed.aside({
+	show: {
+		y: 0,
+		transition: {
+			default: {
+				duration: 200
+			}
+		}
+	},
+	hide: {
+		y: 100,
+		transition: {
+			default: {
+				ease: 'easeOut'
+			}
+		}
+	}
+})
+const CheckoutNavContainer = styled(ContainerPose)`
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	height: 75px;
-	background: #fff;
+	height: 90px;
 	z-index: 3;
+	transition: .3s transform;
+	transform: translateY(100%);
+	// transform:  ${props => props.showNav ? 'translateY(0)' : 'translateY(100%)'};
 `
 export default CheckoutNavBar

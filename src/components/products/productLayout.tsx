@@ -224,11 +224,12 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	const [ref, inView, entry] = useInView({
 		/* Optional options */
+
+
 		threshold: 0
 	})
-
 	return (
-		<Layout>
+		<Layout productPage={true}>
 			<ProductWrapper>
 				<SliderGrid>
 					<Gallery>
@@ -376,6 +377,8 @@ const ProductWrapper = styled.div`
 const DescriptionWrapper = styled(GridFluid)`
 	grid-row-gap: 0 !important;
 	padding: 80px 0 0;
+	position: relative;
+	z-index: 2;
 	
 	@media ${device.laptop} {
 		padding: 120px 0 0;

@@ -10,9 +10,10 @@ import { PageContainer } from '@styles/global/pages'
 
 interface IlayoutProps {
 	children: ReactNode,
+	productPage?: boolean
 }
 
-const Layout = ({ children }: IlayoutProps) => {
+const Layout = ({ children, productPage = false }: IlayoutProps) => {
 	useEffect(() => {
 
 	}, [])
@@ -36,7 +37,7 @@ const Layout = ({ children }: IlayoutProps) => {
 						<Header siteTitle={data.site.siteMetadata.title}/>
 						<PageContainer>
 							<main>{children}</main>
-							<Footer/>
+							<Footer productPage={productPage}/>
 							<ReduxToastr
 								key='toastr'
 								timeOut={3000}

@@ -30,7 +30,6 @@ export function getWidth (): number {
 
 export function getWindowPosition () {
 	if (typeof window !== `undefined`) {
-		console.log('window.top', window.top.pageYOffset)
 		return window.top.pageYOffset
 	}
 	return 0

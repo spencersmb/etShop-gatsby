@@ -1,7 +1,6 @@
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
-import { shadowStyles } from '@styles/global/shadows'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 

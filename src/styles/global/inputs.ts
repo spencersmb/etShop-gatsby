@@ -80,3 +80,13 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 		};
 	}
 `
+
+export const resetInput = `
+		background-color: transparent;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    color: inherit;
+    line-height: inherit;
+    appearance: none;
+`

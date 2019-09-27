@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const FeaturesList = (props: IProps) => {
-	
+
 	const { features } = props
 	return (
 		<Container>
@@ -88,6 +88,7 @@ grid-row-gap: 0 !important;
 padding: 15px 0 80px;
 overflow: hidden;
 position: relative;
+z-index: 1;
 
 	@media ${device.laptop} {
 		padding: 150px 0 100px;

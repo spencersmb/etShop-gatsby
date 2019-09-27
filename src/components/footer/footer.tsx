@@ -11,7 +11,7 @@ import React from 'react'
 import styled from 'styled-components'
 import fetched from 'isomorphic-unfetch'
 
-const Footer = () => {
+const Footer = ({ productPage }: { productPage: boolean }) => {
 
 	const [state, setState] = useSetState({
 		email: '',
@@ -91,7 +91,7 @@ const Footer = () => {
 				submitting={state.submitting}
 				error={state.error}
 				handleTextInput={handleTextInput}/>
-			<FooterNav>
+			<FooterNav productPage={productPage}>
 				<SvgCircle>
 					{renderSvg(svgs.FooterCircle)}
 				</SvgCircle>
@@ -197,15 +197,19 @@ const SvgCircle = styled.div`
 `
 
 // footer nav
-const FooterNav = styled.nav`
+const FooterNav = styled.nav<{ productPage: boolean }>`
 	padding: 45px 0;
 	width: 100%;
 	background: white;
 	position: relative;
 	z-index: 0;
 	
+	@media ${device.tablet}{
+		padding: 45px 0 ${props => props.productPage ? '130px' : '45px'};
+	}
+	
 	@media ${device.laptop}{
-		padding: 45px 0 65px;
+		padding: 45px 0 ${props => props.productPage ? '145px' : '65px'};
 	}
 `
 
