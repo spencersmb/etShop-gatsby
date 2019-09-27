@@ -24,7 +24,7 @@ import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
 import { useSetState } from '@utils/stateUtils'
 import { renderSvg } from '@utils/styleUtils'
-import { getWindowPosition } from '@utils/windowUtils'
+import { getWindowPosition, Width } from '@utils/windowUtils'
 import { Link } from 'gatsby'
 import React, {
 	useEffect,
@@ -340,8 +340,9 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				{standardItem.current.related_products &&
         <RelatedProducts products={standardItem.current.related_products}/>}
 			</ProductWrapper>
-			{React.useMemo(() => (
+			{Width > 767 && React.useMemo(() => (
 				<CheckoutNavBar
+					featuredImage={product.featuredImage}
 					handleDialChange={onDialChange}
 					handleAddToCartState={() => (setState({ inCart: true }))}
 					handleLicenseChange={selectChange}

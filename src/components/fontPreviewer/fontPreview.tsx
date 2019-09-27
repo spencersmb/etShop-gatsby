@@ -177,6 +177,7 @@ const FontPreviewer = (props: IProps) => {
 const FeaturesToggle = styled.div`
 	width: 75px;
 	display: flex;
+	align-items: center;
 	svg{
 		width: 100%;
 	}

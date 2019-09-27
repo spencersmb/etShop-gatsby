@@ -1,7 +1,7 @@
 import LicenseSelectDropdown from '@components/forms/inputs/licenseSelectDropdown'
 import NumberDial from '@components/forms/inputs/numberDial'
 import AddToCartBtn from '@components/products/addToCartBtn'
-import { IProduct } from '@et/types/Products'
+import { IProduct, IProductFeaturedImage } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -10,6 +10,7 @@ import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import { getWindowPosition } from '@utils/windowUtils'
+import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -29,15 +30,17 @@ interface IProps {
 	price: string
 	payWhatYouWant: boolean
 	onPwywChange: (total: number | string) => void
+	featuredImage: IProductFeaturedImage
 }
 
 const CheckoutNavBar = (props: IProps) => {
-	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant } = props
+	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant, featuredImage } = props
 	const windowPosRef = useRef(inView)
 	const [windowPos, setWindowPos] = useState(0)
+
 	useEffect(() => {
-		windowPosRef.current = inView
-		setWindowPos(window.pageYOffset)
+		// windowPosRef.current = inView
+		// setWindowPos(window.pageYOffset)
 		// console.log('getWindowPosition()', getWindowPosition())
 		// console.log('window.scrollY', windowPosRef.current)
 		// console.log('show nav', windowPosRef.current > 300 && !inView)
@@ -71,12 +74,19 @@ const CheckoutNavBar = (props: IProps) => {
 
 	}
 
+	console.log('render')
+
 	return (
 		<CheckoutNavContainer
-			pose={windowPos > 300 && !inView ? 'show' : 'hide'}
-			showNav={windowPos > 300 && !inView}>
+			// pose={windowPos > 300 && !inView ? 'show' : 'hide'}
+			showNav={getWindowPosition() > 300 && !inView}>
 			<Container>
-				<Section0/>
+				<Section0>
+					<Img
+						alt={featuredImage.alt}
+						fluid={featuredImage.localFile.childImageSharp.fluid}
+					/>
+				</Section0>
 				<Section1>
 					<Title data-testid={`title`}>
 						{title}
@@ -148,13 +158,13 @@ const SelectBtn = styled.div<{ selectedLic: string }>`
 	}
 `
 const Title = styled.div`
-			${Sentinel.black};
-			font-weight: 900;
-			font-style: normal;
-			color: ${colors.grey.i800};
-			font-size: 21px;
-			margin-bottom: 0;
-			line-height: 28px;
+	${Sentinel.black};
+	font-weight: 900;
+	font-style: normal;
+	color: ${colors.grey.i800};
+	font-size: 21px;
+	margin-bottom: 0;
+	line-height: 28px;
 `
 const Section0 = styled.div`
 	background: rebeccapurple;
@@ -163,6 +173,10 @@ const Section0 = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	height: 100%;
+	
+	.gatsby-image-wrapper{
+		width: 100%;
+	}
 	
 	@media ${device.laptopL} {
 		width: 100%;
@@ -209,13 +223,13 @@ const Section2 = styled.div`
 		
 `
 const Section3 = styled.div`
-padding: 20px;
-min-width: 260px;
-background: ${colors.teal.i500};
-height: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center;
+	padding: 20px;
+	min-width: 260px;
+	background: ${colors.teal.i500};
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 `
 const Container = styled.div`
 	display: flex;
@@ -223,7 +237,6 @@ const Container = styled.div`
 	align-items: center;
 	height: 100%;
 	background: #fff;
-	box-shadow: 0px -10px 60px rgba(0,0,0,0.13);
 	max-width: 1200px;
 	margin: 0 auto;
 
@@ -240,32 +253,21 @@ const Container = styled.div`
 		color: #fff;
 	}
 `
-const ContainerPose = posed.aside({
-	show: {
-		y: 0,
-		transition: {
-			default: {
-				duration: 200
-			}
-		}
-	},
-	hide: {
-		y: 100,
-		transition: {
-			default: {
-				ease: 'easeOut'
-			}
-		}
-	}
-})
-const CheckoutNavContainer = styled(ContainerPose)`
+
+const CheckoutNavContainer = styled.div<{ showNav: boolean }>`
 	position: fixed;
 	bottom: 0;
 	width: 100%;
 	height: 90px;
 	z-index: 3;
 	transition: .3s transform;
-	transform: translateY(100%);
-	// transform:  ${props => props.showNav ? 'translateY(0)' : 'translateY(100%)'};
+	background: #fff;
+	box-shadow: 0px -10px 60px rgba(0,0,0,0.13);
+	transform:  ${props => props.showNav ? 'translateY(0)' : 'translateY(100px)'};
+	display: none;
+	@media ${device.tablet} {
+		display: block;
+	}
+		
 `
 export default CheckoutNavBar
