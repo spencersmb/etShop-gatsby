@@ -1,5 +1,5 @@
 import { Image } from '@et/types/Products'
-import { IMeta } from '@et/types/SEO'
+import { IMeta, IOGType } from '@et/types/SEO'
 import React, { ReactChild } from 'react'
 import _ from 'lodash'
 
@@ -8,6 +8,18 @@ export const socialUtils = {
 		author: '@Teelac',
 		url: 'https://twitter.com/teelacunningham',
 		defaultImage: 'https://twitter.com/teelacunningham'
+	},
+	facebook:{
+		url: `http://facebook.com/everytues`
+	},
+	youtube:{
+		url: `http://youtube.com/everytues`
+	},
+	instagram:{
+		url: `http://instagram.com/everytuesday`
+	},
+	pinterest:{
+		url: `https://www.pinterest.com/teelac/`
 	}
 }
 
@@ -24,7 +36,35 @@ export const socialUtils = {
 export const matchString = (str: string, regexPattern: string): boolean => {
 	return !!str.match(regexPattern)
 }
-
+/**
+ * * Tested
+ * Facebook Card default
+ * - Add-on and override default props
+ *
+ * @param {IMeta} additionalProps
+ * @returns Array
+ */
+export const facebookDefaultMeta = (additionalProps: IOGType[] = []): IOGType[] => {
+	const facebook: any = [
+		{
+			property: `og:title`,
+			content: `${process.env.GATSBY_TITLE}`,
+		},
+		{
+			property: `og:description`,
+			content: `${process.env.GATSBY_DESCRIPTION}`,
+		},
+		{
+			property: 'og:site_name',
+			content: `Every-Tuesday Shop`,
+		},
+		{
+			property: `og:url`,
+			content: `${process.env.GATSBY_DB}`,
+		},
+	]
+	return _.unionBy(additionalProps, facebook, 'property')
+}
 /**
  * * Tested
  * Twitter Card default

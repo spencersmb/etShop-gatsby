@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 function DesignHero () {
 	return (
-		<HeroContainer>
+		<HeroContainer id={'header'}>
 			<GridFluid>
 				<HeroText>
 					<h1>

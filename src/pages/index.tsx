@@ -5,7 +5,9 @@ import ProductsListLayout from '@components/products/productsListLayout'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
+import { facebookDefaultMeta, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
 import { useSetFilterState } from '@utils/stateUtils'
+import { graphql } from 'gatsby'
 import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
@@ -14,49 +16,97 @@ import Image from '../components/image'
 import SEO from '../components/seo'
 import { StickyContainer, Sticky } from 'react-sticky'
 
-const jsonld = {
-	['@context']: 'https://schema.org',
-	['@type']: 'WebSite',
-	['@id']: 'https://every-tuesday.com/#website',
-	url: 'https://every-tuesday.com/',
-	name: 'Every-Tuesday',
-	potentialAction: {
-		['@type']: 'SearchAction',
-		target: 'https://every-tuesday.com/?s={search_term_string}',
-		['query-input']: 'required name=search_term_string'
-	}
-}
+const IndexPage = ({ data }: any) => {
+	const { site, featureImage } = data
 
-const IndexPage = () => {
-	// const [state, setFilterState] = useSetFilterState({
-	// 	selectedFilter: ''
-	// })
-
-	function handleFilterClick (filter: string) {
-		// if (filter === state.selectedFilter) {
-		// 	return
-		// } else if (filter === '') {
-		// 	setFilterState({
-		// 		selectedFilter: ''
-		// 	})
-		// } else {
-		// 	setFilterState({
-		// 		selectedFilter: filter
-		// 	})
-		// }
+	const jsonld = {
+		['@context']: 'http://schema.org',
+		['@type']: 'Organization',
+		['name']: 'Every Tuesday',
+		['logo']: '[logo image url]',
+		['url']: 'shop.every-tuesday.com',
+		'sameAs': [
+			`${socialUtils.twitter.url}`,
+			`${socialUtils.facebook.url}`,
+			`${socialUtils.youtube.url}`,
+			`${socialUtils.instagram.url}`,
+			`${socialUtils.pinterest.url}`
+		]
 	}
+	const twitterAddons = [
+		{
+			name: `twitter:card`,
+			content: `summary_large_image`
+		},
+		{
+			name: `twitter:title`,
+			content: `${site.siteMetadata.title}`
+		},
+		{
+			name: `twitter:description`,
+			content: `${site.siteMetadata.description}`
+		},
+		{
+			name: `twitter:image`,
+			content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+		}
+	]
+	const facebookAddons = [
+		{
+			property: `og:title`,
+			content: site.siteMetadata.title
+		},
+		{
+			property: `og:description`,
+			content: site.siteMetadata.description
+		},
+		{
+			property: 'og:site_name',
+			content: site.siteMetadata.title
+		},
+		{
+			property: `og:url`,
+			content: `${site.siteMetadata.siteUrl}`
+		},
+		{
+			property: 'og:image',
+			content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+		},
+		{
+			property: 'og:image:secure_url',
+			content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+		},
+		{
+			property: 'og:image:alt',
+			content: `${site.siteMetadata.title}`
+		},
+		{
+			property: 'og:image:type',
+			content: ' image/jpeg'
+		},
+		{
+			property: 'og:image:width',
+			content: '1024'
+		},
+		{
+			property: 'og:image:height',
+			content: '648'
+		}
+	]
 
 	return (
 		<Layout>
 			<SEO
-				title='home'
-				description={`description for home`}
+				title='Home'
+				description={`${site.siteMetadata.description}`}
 				keywords={[`gatsby`, `application`, `react`]}
 				meta={[
 					{
 						property: `og:type`,
 						content: `website`
-					}
+					},
+					...facebookDefaultMeta(facebookAddons),
+					...twitterDefaultMeta(twitterAddons)
 				]}
 			>
 				<link rel='canonical' href={process.env.GATSBY_DB}/>
@@ -79,3 +129,23 @@ const PageContainer = styled.div`
 `
 
 export default IndexPage
+
+export const query = graphql`
+	query HomePageQuery {
+		site {
+			siteMetadata {
+				title
+				siteUrl
+				description
+				authorUrl
+			}
+		}
+		featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
+			childImageSharp {
+				fluid(maxWidth: 1024) {
+					...GatsbyImageSharpFluid
+				}
+			}
+		}
+	}
+`

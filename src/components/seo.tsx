@@ -4,13 +4,12 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
-function SEO ({ description, lang = `en`, meta = [], keywords = [], title, children }: ISeo) {
+function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) {
 	return (
 		<StaticQuery
 			query={detailsQuery}
 			render={(data: IGatsbyConfig) => {
-				const metaDescription =
-					description || data.site.siteMetadata.description
+
 				return (
 					<Helmet
 						htmlAttributes={{
@@ -36,67 +35,20 @@ function SEO ({ description, lang = `en`, meta = [], keywords = [], title, child
 								content: '#008f68'
 							},
 							{
-								name: `description`,
-								content: metaDescription
-							},
-							// FACEBOOK
-							{
-								property: `og:title`,
-								content: title
-							},
-							{
-								property: `og:description`,
-								content: metaDescription
-							},
-							{
-								property: `og:url`,
-								content: `${data.site.siteMetadata.siteUrl}`
-							},
-							{
-								property: 'og:site_name',
-								content: `${data.site.siteMetadata.siteName}`
-							},
-							{
 								property: 'og:locale',
 								content: 'en_US'
-							},
-							// default image
-							{
-								property: 'og:image',
-								content: 'https://example.com/image.jpg'
-							},
-							{
-								property: 'og:image:secure_url',
-								content: 'https://example.com/image.jpg'
-							},
-							{
-								property: 'og:image:alt',
-								content: 'Image alt default'
-							},
-							{
-								property: 'og:image:type',
-								content: ' image/jpeg'
-							},
-							{
-								property: 'og:image:width',
-								content: '900'
-							},
-							{
-								property: 'og:image:height',
-								content: '800'
 							}
+
 						]
 							.concat(
-								(keywords && keywords.length > 0)
+								keywords.length > 0
 									? {
 										name: `keywords`,
 										content: keywords.join(`, `)
 									}
 									: []
 							)
-							.concat((meta && meta.length > 0)
-								? meta
-								: [])}
+							.concat(meta)}
 					>
 
 						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}

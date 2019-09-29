@@ -3,7 +3,7 @@ import SEO from '@components/seo'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IFontPreviewFile, IFontPreviewStyles, IProduct } from '@et/types/Products'
 import { IMeta, IOGType } from '@et/types/SEO'
-import { jsonldImages, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
+import { facebookDefaultMeta, jsonldImages, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
 import { graphql } from 'gatsby'
 import React, { Component } from 'react'
 
@@ -13,15 +13,10 @@ interface IProductQuery {
 	data: Response
 }
 
-interface IFont {
-	name: string,
-	url: string,
-	type: string
-}
-
 // WRAP IN GRAPHQL to pass data to twitter from sitemetadata
 export class ProductDetailPage extends Component<IProductQuery> {
 	ogArticles: IOGType[] = []
+	facebookAddons: IOGType[] = []
 	twitterAddons: IMeta[] = []
 	jsonld: any
 	price: string
@@ -33,6 +28,84 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			property: 'article:tag',
 			content: `${article}`
 		}))
+		this.facebookAddons = [
+			{
+				property: `og:title`,
+				content: wcProduct.seo.title
+			},
+			{
+				property: `og:description`,
+				content: wcProduct.seo.desc
+			},
+			{
+				property: 'og:site_name',
+				content: `Every-Tuesday Digital Product: ${wcProduct.seo.title}`
+			},
+			{
+				property: `og:url`,
+				content: `${siteMetadata.siteUrl}/products/${wcProduct.slug}`
+			},
+			{
+				property: 'og:image',
+				content: `${siteMetadata.siteUrl}${wcProduct.featuredImage.localFile.childImageSharp.thumbnail.src}`
+			},
+			{
+				property: 'og:image:secure_url',
+				content: `${siteMetadata.siteUrl}${wcProduct.featuredImage.localFile.childImageSharp.thumbnail.src}`
+			},
+			{
+				property: 'og:image:alt',
+				content: `${wcProduct.featuredImage.alt}`
+			},
+			{
+				property: 'og:image:type',
+				content: ' image/jpeg'
+			},
+			{
+				property: 'og:image:width',
+				content: '702'
+			},
+			{
+				property: 'og:image:height',
+				content: '468'
+			},
+			{
+				property: `og:type`,
+				content: `article`
+			},
+			{
+				property: `og:price:amount`,
+				content: wcProduct.price
+			},
+			{
+				property: `og:price:currency`,
+				content: `USD`
+			},
+			{
+				property: `og:price:availability`,
+				content: `instock`
+			},
+			{
+				property: `og:updated_time`,
+				content: `${wcProduct.date_modified_gmt}`
+			},
+			{
+				property: `article:publisher`,
+				content: `${siteMetadata.siteUrl}`
+			},
+			{
+				property: `article:publishedTime`,
+				content: `${wcProduct.date_created_gmt}`
+			},
+			{
+				property: `article:modifiedTime`,
+				content: `${wcProduct.date_modified_gmt}`
+			},
+			{
+				property: `article:authors`,
+				content: `${siteMetadata.authorUrl}`
+			}
+		]
 
 		this.price = wcProduct.on_sale ? wcProduct.sale_price : wcProduct.price
 
@@ -43,7 +116,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			},
 			{
 				name: `twitter:title`,
-				content: `${wcProduct.name}`
+				content: `${wcProduct.seo.title}`
 			},
 			{
 				name: `twitter:description`,
@@ -51,7 +124,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			},
 			{
 				name: `twitter:image`,
-				content: `${wcProduct.featuredImage
+				content: `${siteMetadata.siteUrl}${wcProduct.featuredImage
 					? wcProduct.featuredImage.localFile.childImageSharp.fluid.src
 					: socialUtils.twitter.defaultImage}`
 			}
@@ -60,6 +133,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		this.jsonld = {
 			['@context']: 'http://schema.org/',
 			[`@type`]: 'Product',
+			name: wcProduct.name,
 			image: [
 				...jsonldImages(wcProduct.images)
 			],
@@ -71,17 +145,17 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			},
 			offers: {
 				['@type']: 'Offer',
+				price: `${this.price}`,
 				priceCurrency: 'USD',
 				priceValidUntil: '2300-02-18T23:26:37+0000',
 				itemCondition: 'https://schema.org/NewCondition',
 				availability: 'http://schema.org/InStock',
 				seller: {
 					['@type']: 'Organization',
-					name: 'Every-Tuesday'
+					name: 'Every Tuesday, LLC'
 				},
-				price: `${this.price}`
 			},
-			name: wcProduct.name
+
 		}
 	}
 
@@ -111,52 +185,18 @@ export class ProductDetailPage extends Component<IProductQuery> {
 	render () {
 		// TODO: get google verification token
 
-		const { data: { wcProduct, site: { siteMetadata } } } = this.props
+		const { data: { wcProduct } } = this.props
 		console.log('wcProduct', wcProduct)
 
 		return (
 			<>
 				<SEO
-					title='page title for product 1'
-					description={`description for product1`}
+					title={wcProduct.seo.title}
+					description={wcProduct.seo.desc}
 					meta={[
-						{
-							property: `og:type`,
-							content: `article`
-						},
-						{
-							property: `og:price:amount`,
-							content: this.price
-						},
-						{
-							property: `og:price:currency`,
-							content: `USD`
-						},
-						{
-							property: `og:price:availability`,
-							content: `instock`
-						},
-						{
-							property: `og:updated_time`,
-							content: `${wcProduct.date_modified_gmt}`
-						},
-						{
-							property: `article:publisher`,
-							content: `${siteMetadata.siteUrl}`
-						},
-						{
-							property: `article:publishedTime`,
-							content: `${wcProduct.date_created_gmt}`
-						},
-						{
-							property: `article:modifiedTime`,
-							content: `${wcProduct.date_modified_gmt}`
-						},
-						{
-							property: `article:authors`,
-							content: `${siteMetadata.authorUrl}`
-						},
+						// facebook
 						...this.ogArticles,
+						...facebookDefaultMeta(this.facebookAddons),
 						// Twitter
 						...twitterDefaultMeta(this.twitterAddons)
 					]}
@@ -185,6 +225,9 @@ export const productQuery = graphql`
 		site {
 			siteMetadata {
 				title
+				siteUrl
+				description
+				authorUrl
 			}
 		}
 		wcProduct(
@@ -224,6 +267,9 @@ export const productQuery = graphql`
 					childImageSharp {
 						fluid(maxWidth: 835) {
 							...GatsbyImageSharpFluid
+						}
+						thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
+							src
 						}
 					}
 				}

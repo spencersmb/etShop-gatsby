@@ -1,6 +1,7 @@
 import ProductListItem from '@components/products/productListItem'
 import { IProduct } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { col, gutter } from '@styles/global/cssGrid'
 import { graphql, StaticQuery } from 'gatsby'
 import React, { Component } from 'react'
@@ -82,29 +83,28 @@ const ListContainer = styled.div`
 	grid-column: 1 / -1;
 	position: relative;
 	z-index: 1;
-	grid-row: 1;
-	padding: 50px 20px 0;
-	min-height: 600px;
+	grid-row: 2;
+	padding: 30px 20px 0;
+	min-height: 370px;
+	border-top: 1px solid ${colors.grey.i600};
+	
 
 	
 	@media ${device.tablet} {
 		grid-column: 1 / -1;
-		grid-template-columns: repeat(12, minmax(30px, ${col}));
+		grid-template-columns:
+					repeat(12, minmax(30px, ${col}));
 		display: grid;
-		padding:85px 5% 0;
+		padding:30px 5% 0;
 		grid-gap: ${gutter}px;
 	}
 
 	@media ${device.laptop} {
-		grid-column: 5 / -1;
+		grid-column: 2 / 14;
 		display: grid;
-		//grid-template-columns: repeat(9, minmax(30px, ${col}));
-		grid-template-columns: repeat(9,minmax(30px,1fr));
-		grid-template-rows: auto minmax(10px, 431px);
 		grid-gap: ${gutter}px;
-		padding:85px 30px 0 0;
+		padding:50px 0 0;
 		align-items: stretch;
-		max-width: 1600px;
 	}
 	
 	@media ${device.laptop}{
