@@ -2,90 +2,94 @@
 
 exports[`product Filter renders correctly 1`] = `
 <div
-  className="sc-bdVaJa cBCgwi"
+  className="sc-bdVaJa gjJKSz"
 >
   <div
-    className="sc-bwzfXH drPIGs"
+    className="sc-bwzfXH cRmAIp"
   >
     <div
-      className="sc-bZQynM ilOIF"
+      className="sc-htpNat ezCnHF"
     >
-      <h4>
-        Filter
-      </h4>
-      <span>
-        <test-file-stub />
-      </span>
-    </div>
-    <ul>
-      <li
-        className="sc-htpNat jCPLFI"
-        data-filtertype="fonts"
+      <div
+        className="sc-gzVnrw ijTmdr"
+      >
+        <span>
+          <test-file-stub />
+        </span>
+        <h4>
+          Filter
+        </h4>
+      </div>
+      <ul>
+        <li
+          className="sc-bxivhb iGBIdr"
+          data-filtertype="fonts"
+          data-testid="filterItems"
+          onClick={[Function]}
+        >
+          <div
+            className="sc-ifAKCX hSMeWm"
+          >
+            <span
+              className="sc-EHOje hsbIlr"
+            >
+              <test-file-stub />
+            </span>
+            Fonts
+          </div>
+          <span
+            className="slider sc-bZQynM hmpjWr"
+          />
+        </li>
+        <li
+          className="sc-bxivhb iGBIdr"
+          data-filtertype="textures"
+          data-testid="filterItems"
+          onClick={[Function]}
+        >
+          <div
+            className="sc-ifAKCX hSMeWm"
+          >
+            <span
+              className="sc-EHOje hsbIlr"
+            >
+              <test-file-stub />
+            </span>
+            Textures
+          </div>
+          <span
+            className="slider sc-bZQynM hmpjWr"
+          />
+        </li>
+        <li
+          className="sc-bxivhb iGBIdr"
+          data-filtertype="templates"
+          data-testid="filterItems"
+          onClick={[Function]}
+        >
+          <div
+            className="sc-ifAKCX hSMeWm"
+          >
+            <span
+              className="sc-EHOje hsbIlr"
+            >
+              <test-file-stub />
+            </span>
+            Templates
+          </div>
+          <span
+            className="slider sc-bZQynM hmpjWr"
+          />
+        </li>
+      </ul>
+      <div
+        className="sc-htoDjs bwflZR"
+        data-filtertype=""
         data-testid="filterItems"
         onClick={[Function]}
       >
-        <div
-          className="sc-bxivhb fMBBWZ"
-        >
-          <span
-            className="sc-ifAKCX dSdAbX"
-          >
-            <test-file-stub />
-          </span>
-          Fonts
-        </div>
-        <span
-          className="slider sc-EHOje eSOWhS"
-        />
-      </li>
-      <li
-        className="sc-htpNat jCPLFI"
-        data-filtertype="textures"
-        data-testid="filterItems"
-        onClick={[Function]}
-      >
-        <div
-          className="sc-bxivhb fMBBWZ"
-        >
-          <span
-            className="sc-ifAKCX dSdAbX"
-          >
-            <test-file-stub />
-          </span>
-          Textures
-        </div>
-        <span
-          className="slider sc-EHOje eSOWhS"
-        />
-      </li>
-      <li
-        className="sc-htpNat jCPLFI"
-        data-filtertype="templates"
-        data-testid="filterItems"
-        onClick={[Function]}
-      >
-        <div
-          className="sc-bxivhb fMBBWZ"
-        >
-          <span
-            className="sc-ifAKCX dSdAbX"
-          >
-            <test-file-stub />
-          </span>
-          Templates
-        </div>
-        <span
-          className="slider sc-EHOje eSOWhS"
-        />
-      </li>
-    </ul>
-    <div
-      className="sc-gzVnrw gTtRpw"
-      data-filtertype=""
-      data-testid="filterItems"
-      onClick={[Function]}
-    >
-      View all
+        View all
+      </div>
     </div>
   </div>
 </div>

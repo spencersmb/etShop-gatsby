@@ -32,7 +32,8 @@ const propsDefault = {
 	selectedLicense: 'standard',
 	title: testProducts[ProductKey.WatercolorStd].name,
 	price: testProducts[ProductKey.WatercolorStd].price,
-	total: '$12.00'
+	total: '$12.00',
+	featuredImage: testProducts[ProductKey.WatercolorStd].featuredImage
 }
 const redux = {
 	cart: {

@@ -2,7 +2,7 @@
 
 exports[`Product List Layout renders correctly 1`] = `
 <div
-  className="sc-htoDjs dUAVdz"
+  className="sc-htoDjs frEqfh"
   data-testid="productList"
 >
   <div

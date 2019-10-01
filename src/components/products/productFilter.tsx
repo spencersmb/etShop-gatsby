@@ -70,6 +70,7 @@ function ProductFilter (props: IProps) {
 	}
 
 	const checkNav = (headerHeight: number) => () => {
+
 		const fromTop = window.scrollY
 		const windowDevice = getWindowSize()
 		const size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
