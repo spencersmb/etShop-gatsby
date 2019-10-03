@@ -9,6 +9,7 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
+
 interface IProps {
 	id: string
 	slug: string
@@ -17,6 +18,7 @@ interface IProps {
 	price: string
 	featuredImage: IProductFeaturedImage
 }
+
 function ProductListItem (props: IProps) {
 	const { id, slug, name, sub_header, price, featuredImage } = props
 	return (
@@ -62,7 +64,7 @@ const ListItem = styled.div`
 		margin-bottom: 0;
 	}
 	
-	@media ${device.laptop}{
+	@media ${device.laptopL}{
 		grid-column: span 3;
 			&:hover{
 				box-shadow: ${shadowStyles.shadow4};

@@ -1,8 +1,5 @@
-import BrushesImg from '@components/images/brushesImage'
 import { device } from '@styles/global/breakpoints'
-import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
-import { Sentinel } from '@styles/global/fonts'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ProductFilter from '@components/products/productFilter'

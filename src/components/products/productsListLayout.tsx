@@ -19,6 +19,12 @@ interface ICat {
 
 class ProductsListLayout extends Component<IProps> {
 
+	filter: any
+
+	constructor (props: IProps) {
+		super(props)
+	}
+
   render () {
     return (
 			<StaticQuery
@@ -54,26 +60,34 @@ class ProductsListLayout extends Component<IProps> {
       },
       
     `}
-				render={data => (
-					<ListContainer data-testid='productList'>
-						{data.allWcProduct.edges
-							.filter(({ node }: { node: IProduct }) => node.license.type === 'standard')
-							.filter(({ node }: { node: IProduct }) => {
-								if (this.props.filter === '' || !this.props.filter) {
-									return node
-								}
-								return node.categories.filter((cat: ICat) => {
+				render={data => {
+					const filter = data.allWcProduct.edges
+						.filter(({ node }: { node: IProduct }) => node.license.type === 'standard')
+						.filter(({ node }: { node: IProduct }) => {
 
-									return cat.slug === this.props.filter
-								}).length > 0
-							})
-							.map(({ node }: { node: IProduct }) => {
-								return (
-									<ProductListItem key={node.id} {...node}/>
-								)
-							})}
-					</ListContainer>
-				)}
+							// check for view all selected
+							if (this.props.filter === '' || !this.props.filter) {
+								return node
+							}
+
+							// filter over categories as long as the length is greater than 0
+							return node.categories.filter((cat: ICat) => {
+
+								return cat.slug === this.props.filter
+							}).length > 0
+						})
+					return (
+						<ListContainer data-testid='productList'>
+							{
+								filter.length > 0 ? filter.map(({ node }: { node: IProduct }) => {
+									return (
+										<ProductListItem key={node.id} {...node}/>
+									)
+								}) : <div>No Products Found</div>
+							}
+						</ListContainer>
+					)
+				}}
 			/>
     )
   }
@@ -86,9 +100,6 @@ const ListContainer = styled.div`
 	grid-row: 2;
 	padding: 30px 20px 0;
 	min-height: 370px;
-	border-top: 1px solid ${colors.grey.i600};
-	
-
 	
 	@media ${device.tablet} {
 		grid-column: 1 / -1;

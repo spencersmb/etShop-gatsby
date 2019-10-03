@@ -1,20 +1,13 @@
 import DesignHero from '@components/pageHeaders/designHero'
-import ProductFilter from '@components/products/productFilter'
 import ProductsDisplay from '@components/products/productsDisplay'
-import ProductsListLayout from '@components/products/productsListLayout'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import { GridFluid } from '@styles/global/cssGrid'
 import { facebookDefaultMeta, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
-import { useSetFilterState } from '@utils/stateUtils'
 import { graphql } from 'gatsby'
 import React from 'react'
-import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import Layout from '../components/layout'
-import Image from '../components/image'
 import SEO from '../components/seo'
-import { StickyContainer, Sticky } from 'react-sticky'
 
 const IndexPage = ({ data }: any) => {
 	const { site, featureImage } = data

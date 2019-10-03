@@ -52,7 +52,6 @@ export const SignInForm = (props: any) => {
 				</div>
 				<button type='submit' disabled={invalid || submitting}>Submit</button>
 			</form>
-
 			<button type='button' onClick={props.changeForm} data-form='signup'>Sign Up</button>
 		</FormWrapper>
 	)

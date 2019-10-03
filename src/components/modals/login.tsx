@@ -1,5 +1,6 @@
 import { IModal } from '@et/types/Modal'
 import { createUser as createUserAction, login as loginAction } from '@redux/actions/authActions'
+import { device } from '@styles/global/breakpoints'
 import { toastrOptions } from '@utils/apiUtils'
 import posed, { PoseGroup } from 'react-pose'
 import { connect } from 'react-redux'
@@ -20,7 +21,7 @@ import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
  * The link passes in the name of the component to match against.
  *
  * Then the element animates in. Pose component also has a firstRender variable on it if this is the
- * first time the component has displayed so we bypass the intro animation and the component just displays normally.
+ * first time the component has displayed so we bypass the intro animation and the component just displays immediately.
  *
  * ShouldComponentUpdate is used to cut down on extra renders using Pose in the Parent Modal 'Core' component when it updates state
  *
@@ -91,13 +92,12 @@ export const LoginModal = (props: MixedFormProps) => {
 		>
 			<LoginModalWrapper>
 				<LoginModalContent>
-					<div style={{ background: '#7ACC28' }} className='content'>
+					<LeftContent style={{ background: '#7ACC28' }} className='content'>
 						TEst left content
-					</div>
+					</LeftContent>
 					<ContentContainer modalHeight={name}>
 
 						<PoseGroup>
-
 							{/*SignIn Form*/}
 							{name === 'signin' &&
               <SignInPose key='signIn' firstRender={firstRender.current}>
@@ -146,26 +146,27 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 	}
 }
 
-const actions: any = {
-	loginAction,
-	createUserAction
-}
-
 export default connect<null, IpropsReduxActions, IModal, MixedFormProps>(null, mapDispatchToProps)(LoginModal)
 const depth = 6
 const ModalStyled = styled.div`
-		border-radius: 15px;
-		box-shadow: 0 20px 45px -6px rgba(0,0,0,.2);
 		position: fixed;
 		// Double the top position so I can animate the Y transform for smoother animation. Does a reverse animation essentially
 		// top: ${(props: any) => props.top * 2}px;
 		top: 50%;
 		left: 50%;
+		width: 100%;
+		height: 100%;
 		transform: translateY(-50%) translateX(-50%);
 		background: #fff;
 		z-index: ${depth + 1};
 		opacity: 0;
 		overflow: hidden;
+		
+		@media ${device.tablet} {
+			border-radius: 15px;
+			box-shadow: 0 20px 45px -6px rgba(0,0,0,.2);
+		}
+			
 `
 const ModalPose = posed(ModalStyled)({
 	exit: {
@@ -174,6 +175,8 @@ const ModalPose = posed(ModalStyled)({
 			default: { duration: 150 },
 			y: { ease: 'easeOut' }
 		},
+		// width: 0,
+		// height: 0,
 		x: `-50%`,
 		y: `-60%`
 	},
@@ -187,6 +190,8 @@ const ModalPose = posed(ModalStyled)({
 		},
 		x: `-50%`,
 		y: `-50%`
+		// width: `100%`,
+		// height: `100%`
 	}
 })
 const LoginModalWrapper = styled.div`
@@ -194,6 +199,8 @@ const LoginModalWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	background: #fff;
+	width: 100%;
+	height: 100%;
 `
 const LoginModalContent = styled.div`
 	position: relative;
@@ -201,12 +208,16 @@ const LoginModalContent = styled.div`
 	flex-direction: row;
 	flex: 1;
 `
+const LeftContent = styled.div`
+	display: none;
+`
 const ContentContainer = styled.div<any>`
 	position: relative;
-	width: 320px;
+	//width: 320px;
+	width: 100%;
 	transition: height .2s;
 	//transition-delay: .3s;
-	height: ${(props) => props.modalHeight === 'signup' ? `500px` : `280px`};
+	//height: ${(props) => props.modalHeight === 'signup' ? `500px` : `280px`};
 	display: flex;
 	flex-direction: column;
 	align-items: center;

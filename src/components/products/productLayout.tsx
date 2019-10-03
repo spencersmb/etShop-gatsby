@@ -18,13 +18,13 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
-import { InputOutline, InputWrapper } from '@styles/global/inputs'
+import { InputWrapper } from '@styles/global/inputs'
 import { svgs } from '@svg'
 import { checkCartForProduct } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
 import { useSetState } from '@utils/stateUtils'
 import { renderSvg } from '@utils/styleUtils'
-import { getWindowPosition, Width } from '@utils/windowUtils'
+import { Width } from '@utils/windowUtils'
 import { Link } from 'gatsby'
 import React, {
 	useEffect,
@@ -71,7 +71,7 @@ interface INewState {
 	payWhatYouWant?: boolean
 }
 
-// TODO: Refactor now that standardItem and extendedItem are always present
+// TODO: Dont show related if none are present,
 // switch off of has ext license data point instead if needed
 export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsActions) => {
 	const { product, products, cart, showModalAction } = props
@@ -337,7 +337,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 				{standardItem.current.features.length > 1 && <FeaturesList features={standardItem.current.features}/>}
 
-				{standardItem.current.related_products &&
+				{standardItem.current.related_products && standardItem.current.related_products.length > 0 &&
         <RelatedProducts products={standardItem.current.related_products}/>}
 			</ProductWrapper>
 			{Width > 767 && React.useMemo(() => (

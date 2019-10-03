@@ -4,6 +4,7 @@ import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useRef, useState } from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
 
 interface IProps {
@@ -35,78 +36,100 @@ const filterItems: IFilterItem[] = [
 	}
 ]
 
-function ProductFilter (props: IProps) {
-	const { handleClick } = props
+function getWindowSize () {
+	const width = window.innerWidth
+
+	if (width < 767) {
+		return 'mobile'
+	} else if (width < 1024) {
+		return 'tablet'
+	} else {
+		return 'desktop'
+	}
+}
+
+function getNavSize (windowSize: string) {
+
+	if (windowSize === 'desktop') {
+		return 87
+	} else {
+		return 75 - 65
+	}
+}
+
+const useScrollEvent = () => {
 	const [fixed, setFixed] = useState(false)
 	const prevFixed = useRef(fixed)
-	const filterContainerRef = useRef(null)
-
-	function elementClick (e: any) {
-		e.preventDefault()
-		if (prevFixed.current && filterContainerRef.current) {
-			// @ts-ignore
-			filterContainerRef.current.scrollIntoView()
-		}
-		handleClick(e.currentTarget.getAttribute('data-filtertype'))
-	}
-
-	function getWindowSize () {
-		const width = window.innerWidth
-		if (width < 767) {
-			return 'mobile'
-		} else if (width <= 1024) {
-			return 'tablet'
-		} else {
-			return 'desktop'
-		}
-	}
-
-	function getNavSize (windowSize: string) {
-		if (windowSize === 'desktop') {
-			return 87
-		} else {
-			return 75 - 65
-		}
-	}
-
-	const checkNav = (headerHeight: number) => () => {
-
-		const fromTop = window.scrollY
-		const windowDevice = getWindowSize()
-		const size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
-
-		if (fromTop >= size && !prevFixed.current) {
-			// console.log('sticky')
-			setFixed(true)
-
-		} else if (fromTop < size && prevFixed.current) {
-			// link.classList.remove("current");
-			setFixed(false)
-			// console.log('unStick')
-		}
-	}
-
-	useEffect(() => {
-
-		const header = document.getElementById('header')
-		const headerHeight = header ? header.getBoundingClientRect().height : 0
-
-		window.addEventListener('scroll', checkNav(headerHeight))
-
-		return () => {
-			window.removeEventListener('scroll', checkNav(headerHeight))
-		}
-	}, [])
-
 	useEffect(() => {
 		prevFixed.current = fixed
 	}, [fixed])
 
+	useEffect(() => {
+		const header = document.getElementById('header')
+		const headerHeight = header ? header.getBoundingClientRect().height : 0
+		const watchNav = () => {
+			const fromTop = window.scrollY
+			const windowDevice = getWindowSize()
+			const size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+
+			if (fromTop >= size && !prevFixed.current) {
+				// console.log('sticky')
+				setFixed(true)
+
+			} else if (fromTop < size && prevFixed.current) {
+				// link.classList.remove("current");
+				setFixed(false)
+				// console.log('unStick')
+			}
+		}
+
+		window.addEventListener('scroll', watchNav)
+
+		return () => {
+			window.removeEventListener('scroll', watchNav)
+		}
+	}, [])
+
+	return [fixed]
+}
+
+
+// TODO: NOTE HOW THIS WORKS FIRST THING AM
+function ProductFilter (props: IProps) {
+	const { handleClick } = props
+	const [isOpen, setIsOpen] = useState(false)
+	const [fixed] = useScrollEvent()
+	const filterContainerRef = useRef(null)
+	const header = document.getElementById('header')
+
+	function elementClick (e: any) {
+		e.preventDefault()
+		if (fixed && filterContainerRef.current) {
+			const y = header ? header.getBoundingClientRect().height : 0
+			const deviceWidth = getWindowSize()
+			// nav height used because its added onto a 2nd sticky nav when in mobile else use 0 because there isnt anything else above
+			const filterNavHeight = deviceWidth === 'desktop' ? 0 : 74
+			const navHeight = deviceWidth === 'desktop' ? 87 : 75
+			// console.log('y', y)
+			// console.log('window.scrollY', window.scrollY)
+
+			window.scrollTo(0, (y + navHeight) - filterNavHeight)
+		}
+		if (isOpen) {
+			setIsOpen(false)
+		}
+		handleClick(e.currentTarget.getAttribute('data-filtertype'))
+	}
+
+	function handleToggle () {
+		setIsOpen(!isOpen)
+	}
+
 	return (
-		<FilterContainer ref={filterContainerRef}>
+		<FilterContainer ref={filterContainerRef} id={'filterContainer'}>
 			<Filter fixed={fixed}>
 				<FilterInner>
-					<FilterHeader>
+					<FilterHeader onClick={handleToggle}>
 					<span>
 						{renderSvg(svgs.Filter)}
 					</span>
@@ -114,7 +137,7 @@ function ProductFilter (props: IProps) {
 							Filter
 						</h4>
 					</FilterHeader>
-					<ul>
+					<FilterList pose={isOpen ? 'open' : 'closed'}>
 						{filterItems.map((item: IFilterItem) => (
 							<FilterListItem
 								key={item.slug}
@@ -132,13 +155,28 @@ function ProductFilter (props: IProps) {
 								<Slider className='slider' selectedFilter={props.filter === item.slug}/>
 							</FilterListItem>
 						))}
-					</ul>
+						<FilterListItem
+							key={'view-all'}
+							selectedFilter={props.filter === ''}
+							data-testid='filterItems'
+							onClick={elementClick}
+							data-filtertype={''}
+						>
+							<FilterContent>
+								View all
+							</FilterContent>
+							<Slider className='slider' selectedFilter={props.filter === ''}/>
+						</FilterListItem>
+					</FilterList>
 					<FilterViewAll
 						data-testid='filterItems'
 						onClick={elementClick}
 						selectedFilter={props.filter === ''}
 						data-filtertype=''>
-						View all
+						<FilterContent>
+							View all
+						</FilterContent>
+						<Slider className='slider' selectedFilter={props.filter === ''}/>
 					</FilterViewAll>
 				</FilterInner>
 			</Filter>
@@ -146,42 +184,68 @@ function ProductFilter (props: IProps) {
 	)
 }
 
+const ListPosed = posed.ul({
+	closed: {
+		height: '0px',
+		transition: {
+			default: {
+				ease: 'easeOut'
+			}
+		}
+	},
+	open: {
+		height: 'auto',
+		transition: {
+			default: {
+				ease: 'backInOut'
+			}
+		}
+	}
+})
+const FilterList = styled(ListPosed)`
+	background-color: ${colors.grey.i400};
+	margin:0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: hidden;
+	@media ${device.laptop} {
+		flex-direction: row;
+		height: auto !important;
+	}
+`
 const FilterContainer = styled.div`
 	grid-column:1 / -1;
 	grid-row: 1;
 	z-index: 2;
 	position:relative;
 	height: 74px;
+	//overflow: hidden;
 `
 const Filter = styled.div<{ fixed: boolean }>`
 	position: ${props => props.fixed ? 'fixed' : ''};
 	width: 100%;
 	top: 75px;
-	background: ${colors.grey.i200};
-	padding: 5px 0;
+	background: ${colors.grey.i400};
 	z-index: 2;
 	
 	@media ${device.laptop} {
 		top: 0;
 	}
-		
-	
 `
 const FilterInner = styled.div`
 	max-width: 1200px;
 	margin: 0 auto;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	width: 100%;
-	ul{
-		margin:0;
-		padding: 0;
-		flex: 1px;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-	}
 
+	@media ${device.laptop} {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+		
 `
 
 interface IFilterListItem {
@@ -206,21 +270,29 @@ const FilterListItem = styled.li<IFilterListItem>`
 		padding-top: 0;
 	}
 	
-	&:hover{
-		color: ${colors.teal.i500};
-		border-color: ${colors.teal.i500};
-		
-		svg{
-			path{
-				fill: ${colors.teal.i500};
+	
+	
+	@media ${device.laptop} {
+		&:hover{
+			color: ${colors.teal.i500};
+			border-color: ${colors.teal.i500};
+			
+			svg{
+				path{
+					fill: ${colors.teal.i500};
+				}
 			}
-		}
-		
-		.slider{
-			background: ${colors.teal.i500};
-			width: 100%;
+			
+			.slider{
+				background: ${colors.teal.i500};
+				width: 100%;
+			}
+		}			
+		&:last-child{
+			display: none;
 		}
 	}
+		
 `
 const FilterContent = styled.div`
 	display: flex;
@@ -254,6 +326,7 @@ const FilterHeader = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	margin: 13px 0 10px;
 	h4{
 		${Sentinel.reg};
 		font-weight: 600;
@@ -266,16 +339,35 @@ const FilterHeader = styled.div`
 	span{
 		width: 22px;
 		margin-right: 15px;
+		display: flex;
+	}
+	svg{
+		width: 100%;
 	}
 	path{
 		fill: ${colors.primary.headline};
 	}
+	
+	@media ${device.laptop} {
+		margin: 0;    
+	}
+		
 `
-const FilterViewAll = styled.div<IFilterListItem>`
-	padding: 20px;
-	text-transform: uppercase;
-	font-weight: 500;
-	color: ${props => props.selectedFilter ? colors.teal.i500 : colors.primary.headline};
-	cursor: pointer;
+const FilterViewAll = styled(FilterListItem)<IFilterListItem>`
+	// padding: 20px;
+	// text-transform: uppercase;
+	// font-weight: 500;
+	// color: ${props => props.selectedFilter ? colors.teal.i500 : colors.primary.headline};
+	// cursor: pointer;
+	display: none;
+	
+	
+	@media ${device.laptop} {
+		display: flex;
+		&:last-child{
+		display: flex;
+		}	    
+	}
+		
 `
 export default ProductFilter
