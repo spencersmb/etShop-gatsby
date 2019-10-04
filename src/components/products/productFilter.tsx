@@ -93,19 +93,34 @@ const useScrollEvent = () => {
 	return [fixed]
 }
 
-
-// TODO: NOTE HOW THIS WORKS FIRST THING AM
+/*
+ * Filter Feature - HOW IT WORKS
+ * This sticky nav uses a custom useEffect hook to add a window listener on the scroll event to and returns a boolean on if the
+ * Nav should be sticky or not based on the headers height. Should be updated to just detect where the nav is on the page. Works for now though.
+ *
+ * The Element Clicked function checks if the nav is sticky to determine where to scroll back up to after someone clicks a filter.
+ * Essentially we want the user to be rescrolled to the top of the newly filtered content so that nothing is cut off when a filter is clicked.
+ *
+ * Inside it we check the device width to account for the mobile sticky nav height if on tablet or phone.
+ * Additionally if the nav is open we close it to show the content after a filter is clicked.
+ *
+ *
+ */
 function ProductFilter (props: IProps) {
 	const { handleClick } = props
 	const [isOpen, setIsOpen] = useState(false)
 	const [fixed] = useScrollEvent()
 	const filterContainerRef = useRef(null)
-	const header = document.getElementById('header')
+	const headerRef = useRef(null)
+
+	useEffect(() => {
+		headerRef.current = document.getElementById('header')
+	}, [])
 
 	function elementClick (e: any) {
 		e.preventDefault()
 		if (fixed && filterContainerRef.current) {
-			const y = header ? header.getBoundingClientRect().height : 0
+			const y = headerRef.current ? headerRef.current.getBoundingClientRect().height : 0
 			const deviceWidth = getWindowSize()
 			// nav height used because its added onto a 2nd sticky nav when in mobile else use 0 because there isnt anything else above
 			const filterNavHeight = deviceWidth === 'desktop' ? 0 : 74

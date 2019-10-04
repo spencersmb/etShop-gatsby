@@ -25,10 +25,18 @@ export const Nav = styled.nav`
 	}
 `
 export const Hamburger = styled.div`
-	display: block;
-	background: purple;
+	display: flex;
 	width: 50px;
 	height: 50px;
+	align-items: center;
+	justify-content: center;
+	svg{
+		width: 100%;
+		max-width: 35px;
+	}
+	.hamburger-close{
+		max-width: none;
+	}
 	@media ${device.laptop} {
 		display: none;
 	}
@@ -164,8 +172,9 @@ export const CartWrapper = styled(FlexRow)`
 `
 
 export const CartSvg = styled.div`
-	width: 26px;
-	height: 26px;
+	width: 36px;
+	height: 36px;
+	margin-right: 5px;
 
 	svg{
 		fill: ${colors.primary.text};
@@ -195,8 +204,8 @@ export const MobileCartWrapper = styled(FlexRow)`
 	position: relative;
 	
 	${CartCount}{
-		top: 15%;
-    left: 70%;
+		top: 29%;
+    left: 72%;
 		width: 15px;
     height: 15px;
     display: flex;
@@ -207,7 +216,7 @@ export const MobileCartWrapper = styled(FlexRow)`
     	position: absolute;
     	font-size: 11px;
 			color: #fff;
-			top: 50%;
+			top: 51%;
 			left: 50%;
 			transform: translateX(-50%)translateY(-50%);
     }

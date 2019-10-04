@@ -1,5 +1,8 @@
 import { CheckoutApi } from '@api/checkoutApi'
 import { ICouponApiResponse } from '@et/types/Cart'
+import { InputError, SvgValidation } from '@styles/modules/SignInUpModals'
+import { svgs } from '@svg'
+import { useSetState } from '@utils/stateUtils'
 import React, { useEffect, useRef, useState } from 'react'
 import { from, fromEvent, Observable } from 'rxjs'
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators'
@@ -56,7 +59,11 @@ interface IProps {
 }
 
 export const RxEmailField = (props: IProps) => {
-	const [loading, setLoading] = useState(false)
+	const [state, setState] = useSetState({
+		loading: false,
+		response: false
+	})
+	const { loading, response } = state
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const {
 		key,
@@ -117,7 +124,10 @@ export const RxEmailField = (props: IProps) => {
 				distinctUntilChanged(),
 				switchMap((target: string) => {
 					console.log('target', target)
-					setLoading(true)
+					setState({
+						loading: true,
+						response: false
+					})
 					// setEmailTaken(false)
 					// submitCoupon()
 					return from(CheckoutApi.checkEmail(target))
@@ -125,7 +135,10 @@ export const RxEmailField = (props: IProps) => {
 			)
 			inputSubscribe = inputPipe.subscribe((x: { code: number, data: { emailTaken: boolean } }) => {
 				console.log('x', x)
-				setLoading(false)
+				setState({
+					loading: false,
+					response: false
+				})
 				switch (x.code) {
 					case 200:
 						if (x.data.emailTaken) {
@@ -133,9 +146,15 @@ export const RxEmailField = (props: IProps) => {
 						} else {
 							setEmailTaken(false)
 						}
+						setState({
+							response: true
+						})
 						break
 					default:
 						setEmailTaken(false)
+						setState({
+							response: true
+						})
 				}
 			})
 		}
@@ -147,28 +166,69 @@ export const RxEmailField = (props: IProps) => {
 		}
 	}, [])
 
+	const showIcon = () => {
+		if (!pristine || touched) {
+
+			if (invalid || !invalid && emailTaken) {
+				return (
+					<SvgValidation isValid={false}>
+						{renderSvg(svgs.Close)}
+					</SvgValidation>
+				)
+			}
+
+			if (!invalid && !emailTaken && response) {
+				return (
+					<SvgValidation isValid={true}>
+						{renderSvg(svgs.Checkmark)}
+					</SvgValidation>
+				)
+			}
+		}
+		// return !pristine || touched
+		// 	? (invalid || !invalid && emailTaken)
+		// 		? <SvgValidation isValid={false}>
+		// 			{renderSvg(svgs.Close)}
+		// 		</SvgValidation>
+		// 		: <SvgValidation isValid={true}>
+		// 			{renderSvg(svgs.Checkmark)}
+		// 		</SvgValidation>
+		// 	: null
+	}
+
+	const isFocused = active ? 'hasFocus' : 'noFocus'
+	const isValid = !invalid ? 'valid' : 'invalid'
+	const isEmpty = input.value === '' ? 'empty' : 'has-value'
+
 	return (
-		<div key={key} style={{ position: 'relative' }}>
-			<input
-				ref={inputRef}
-				{...input}
-				aria-label={label}
-				placeholder={placeholder}
-				type={type}
-				disabled={disabled}
-				readOnly={disabled}
-			/>
-			<div>{JSON.stringify(loading)}</div>
-			<Label className={'renderLabel'} active={showLabel()}>{label}</Label>
-			{svg && <Svg className={'renderInputSvg'} color={renderSvgColor}>
-				{renderSvg(svg)}
-      </Svg>}
+		<>
+			<div key={key} className={
+				`formGroup ${isFocused} ${isValid} ${isEmpty}`
+			}>
+				<label
+					htmlFor={input.name}
+					className={'renderLabel'}
+				>{label}</label>
+				<input
+					id={input.name}
+					ref={inputRef}
+					{...input}
+					aria-label={label}
+					placeholder={placeholder}
+					type={type}
+					disabled={disabled}
+					readOnly={disabled}
+				/>
+				<div style={{ position: 'absolute', right: 0, top: 0 }}>{JSON.stringify(loading)}</div>
 
-			{!invalid && emailTaken && <div>Sorry, email is already in use.</div>}
-			{touched && messageTest(error)}
-			{messageTest(warning)}
-
-		</div>
+				{!loading && showIcon()}
+				{/*{messageTest(warning)}*/}
+			</div>
+			{!invalid && emailTaken && <InputError>
+        <span>Sorry, email is already in use</span>
+      </InputError>}
+			{touched && <InputError>{messageTest(error)}</InputError>}
+		</>
 	)
 }
 

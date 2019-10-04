@@ -20,6 +20,8 @@ const Facebook = require('./svg-icons/Facebook.svg')
 const FooterCircle = require('./svg-icons/Footer-Circle.svg')
 const Fonts = require('./svg-icons/Fonts.svg')
 const FontPreview = require('./svg-icons/fontPreview.svg')
+const Hamburger = require('./svg-icons/hamburger.svg')
+const HamburgerClose = require('./svg-icons/hamburger-close.svg')
 const Illustrator = require('./svg-icons/illustrator.svg')
 const Indesign = require('./svg-icons/indesign.svg')
 const Instagram = require('./svg-icons/Instagram.svg')
@@ -30,6 +32,7 @@ const Programs = require('./svg-icons/programs.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
 const Twitter = require('./svg-icons/Twitter.svg')
+const User = require('./svg-icons/user.svg')
 const Youtube = require('./svg-icons/Youtube.svg')
 
 export const svgs = {
@@ -53,6 +56,8 @@ export const svgs = {
 	FontPreview,
 	FooterCircle,
 	Fonts,
+	Hamburger,
+	HamburgerClose,
 	Illustrator,
 	Indesign,
 	Instagram,
@@ -64,5 +69,6 @@ export const svgs = {
 	Templates,
 	Textures,
 	Twitter,
+	User,
 	Youtube
 }

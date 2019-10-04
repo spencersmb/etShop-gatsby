@@ -149,7 +149,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 			<Hamburger
 				data-testid='hamburger'
 				onClick={navToggle}>
-				Button
+				{isOpen ? renderSvg(svgs.HamburgerClose) : renderSvg(svgs.Hamburger)}
 			</Hamburger>
 
 			<NavLinks isOpen={isOpen}>

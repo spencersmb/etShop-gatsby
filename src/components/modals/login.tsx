@@ -1,7 +1,10 @@
 import { IModal } from '@et/types/Modal'
 import { createUser as createUserAction, login as loginAction } from '@redux/actions/authActions'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
+import { svgs } from '@svg'
 import { toastrOptions } from '@utils/apiUtils'
+import { renderSvg } from '@utils/styleUtils'
 import posed, { PoseGroup } from 'react-pose'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
@@ -131,7 +134,7 @@ export const LoginModal = (props: MixedFormProps) => {
 					</ContentContainer>
 				</LoginModalContent>
 
-				<button className='jestCartToggle' onClick={closeModal}>Close</button>
+				<CloseBtn className='jestCartToggle' onClick={closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
 			</LoginModalWrapper>
 		</ModalPose>
 	)
@@ -223,7 +226,19 @@ const ContentContainer = styled.div<any>`
 	align-items: center;
 	justify-content: center;
 `
-
+const CloseBtn = styled.div`
+	width: 25px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: flex;
+	svg{
+		width: 100%
+	}
+	path{
+		fill: ${colors.grey.i800};
+	}
+`
 // animations
 //   ...(flag1 && { optionalKey1: 5 }),
 // How it works

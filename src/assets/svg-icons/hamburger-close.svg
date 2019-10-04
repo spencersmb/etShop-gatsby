@@ -1,0 +1,6 @@
+<svg class='hamburger-close' viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6.03003" y="18.5436" width="18" height="1.71429" rx="0.857143" transform="rotate(-45 6.03003 18.5436)"
+          fill="#000"/>
+    <rect x="7.24243" y="5.81566" width="18" height="1.71429" rx="0.857143" transform="rotate(45 7.24243 5.81566)"
+          fill="#000"/>
+</svg>

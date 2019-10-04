@@ -1,6 +1,12 @@
-import { SvgValidation } from '@styles/modules/SignInUpModals'
+import { CheckoutApi } from '@api/checkoutApi'
+import { ICouponApiResponse } from '@et/types/Cart'
+import { InputError, SvgValidation } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
-import React from 'react'
+import { useSetState } from '@utils/stateUtils'
+import React, { useEffect, useRef, useState } from 'react'
+import { from, fromEvent, Observable } from 'rxjs'
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators'
+import { Subscription } from 'rxjs/src/internal/Subscription'
 // import {colors} from '@et/styles/base/colors'
 import styled from 'styled-components'
 import { renderSvg } from '@utils/styleUtils'
@@ -47,17 +53,20 @@ interface IProps {
 	disabled?: boolean,
 	svg?: string,
 	price?: string,
-	autoComplete?: boolean
+	autoComplete?: boolean,
+	setEmailTaken: (state: boolean) => void
+	emailTaken: boolean
 }
 
-//
-// const upperCaseFirstLetter = (element: string) => {
-// 	return element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()
-// }
-// const removeDotFromName = (name: string) => {
-// 	// return name.split('.')[0]
-// }
-export const RenderField = (props: IProps) => {
+export const RxEmailField = (props: IProps) => {
+	const [state, setState] = useSetState({
+		loading: false,
+		response: false
+	})
+	console.log('props async', props)
+
+	const { loading, response } = state
+	const inputRef = useRef<HTMLInputElement | null>(null)
 	const {
 		key,
 		input,
@@ -65,14 +74,14 @@ export const RenderField = (props: IProps) => {
 		type,
 		disabled,
 		placeholder,
-
-		// autoComplete,
 		svg,
-		meta: { pristine, touched, invalid, active, dirty, error, warning }
+		setEmailTaken,
+		emailTaken,
+		meta: { asyncValidating, pristine, touched, invalid, active, dirty, error, warning }
 	} = props
 
 	const renderSvgColor: string = !pristine || touched
-		? invalid
+		? invalid || emailTaken
 			? 'red'
 			: 'green'
 		: 'grey' // silver
@@ -91,10 +100,18 @@ export const RenderField = (props: IProps) => {
 		return false
 	}
 
+	const messageTest = (errorObj: {} | string) => {
+		if (typeof errorObj === 'string') {
+			return (
+				<span>{error}</span>
+			)
+		}
+	}
+
 	const showIcon = () => {
 
 		return !pristine || touched
-			? invalid
+			? (invalid)
 				? <SvgValidation isValid={false}>
 					{renderSvg(svgs.Close)}
 				</SvgValidation>
@@ -108,14 +125,6 @@ export const RenderField = (props: IProps) => {
 	const isValid = !invalid ? 'valid' : 'invalid'
 	const isEmpty = input.value === '' ? 'empty' : 'has-value'
 
-	const messageTest = (errorObj: {} | string) => {
-		if (typeof errorObj === 'string') {
-			return (
-				<span>{error}</span>
-			)
-		}
-	}
-
 	return (
 		<>
 			<div key={key} className={
@@ -127,6 +136,7 @@ export const RenderField = (props: IProps) => {
 				>{label}</label>
 				<input
 					id={input.name}
+					ref={inputRef}
 					{...input}
 					aria-label={label}
 					placeholder={placeholder}
@@ -134,20 +144,27 @@ export const RenderField = (props: IProps) => {
 					disabled={disabled}
 					readOnly={disabled}
 				/>
-				{showIcon()}
-				{/*{svg && <Svg className={'renderInputSvg'} color={renderSvgColor}>*/}
-				{/*	{renderSvg(svg)}*/}
-				{/*</Svg>}*/}
-				{/*{invalid && (!pristine || touched) && messageTest(error)}*/}
-				{/*<span style={{ display: 'block' }}>warning</span>*/}
-				{/*{messageTest(warning)}*/}
+				<div style={{ position: 'absolute', right: 0, top: 0 }}>{JSON.stringify(asyncValidating)}</div>
 
+				{!loading && showIcon()}
+				{/*{messageTest(warning)}*/}
 			</div>
+			{!invalid && emailTaken && <InputError>
+        <span>Sorry, email is already in use</span>
+      </InputError>}
+			{touched && <InputError>{messageTest(error)}</InputError>}
 		</>
 	)
 }
 
-export default RenderField
+export default RxEmailField
+
+export const Svg = styled.div`
+	path, rect{
+		fill: ${(props: any) => props.color};
+	}
+	width: 25px;
+`
 
 interface ILabelProps {
 	active: boolean;
@@ -160,3 +177,7 @@ interface ILabelProps {
 // 	color: ${(props) => props.active ? 'red' : 'blue'};
 // `
 // had to export this to test
+export const Label = styled.label`
+	display: block;
+	color: ${(props: ILabelProps) => props.active ? 'green' : 'blue'};
+`

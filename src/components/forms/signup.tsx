@@ -1,6 +1,11 @@
+import asyncValidate from '@components/forms/asyncEmailValidate'
+// import RxEmailField from '@components/forms/inputs/asyncEmail'
 import RxEmailField from '@components/forms/inputs/rxjsEmail_input'
+import validate from '@components/forms/validate'
 import ReduxValidation from '@components/forms/validations'
+import { FormHeader1, FormWrapper, FormInput, Form1 } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import styled from 'styled-components'
 import React, { RefObject, useState } from 'react'
 import { reduxForm } from 'redux-form'
@@ -25,10 +30,16 @@ export const SignUpForm = (props: any) => {
 	const { required, email } = ReduxValidation
 
 	return (
-		<FormWrapper data-testid='signUp-form' ref={poseRef} firstRender={firstRender}>
-			<form onSubmit={handleSubmit(handleUserSubmit)}>
-				<h3>Sign up</h3>
-				<div>
+		<FormWrapper data-testid='signUp-form' ref={poseRef}>
+			<FormHeader1>
+				<div className='FormHeader1__icon'>
+					{renderSvg(svgs.User)}
+				</div>
+				<h3>Create Account</h3>
+				<p>or <span onClick={props.changeForm} data-form='signin'>sign in</span></p>
+			</FormHeader1>
+			<Form1 onSubmit={handleSubmit(handleUserSubmit)}>
+				<FormInput>
 					<ReduxFieldExt
 						name='firstName'
 						type='text'
@@ -38,8 +49,8 @@ export const SignUpForm = (props: any) => {
 						label='First Name:'
 						svg={svgs.CreditCard}
 					/>
-				</div>
-				<div>
+				</FormInput>
+				<FormInput>
 					<ReduxFieldExt
 						name='lastName'
 						type='text'
@@ -49,8 +60,8 @@ export const SignUpForm = (props: any) => {
 						label='Last Name:'
 						svg={svgs.CreditCard}
 					/>
-				</div>
-				<div>
+				</FormInput>
+				<FormInput>
 					<ReduxFieldExt
 						name='email'
 						type='email'
@@ -62,8 +73,8 @@ export const SignUpForm = (props: any) => {
 						setEmailTaken={setEmailTaken}
 						emailTaken={emailTaken}
 					/>
-				</div>
-				<div>
+				</FormInput>
+				<FormInput>
 					<ReduxFieldExt
 						name='password'
 						type='password'
@@ -75,11 +86,10 @@ export const SignUpForm = (props: any) => {
 						warn={tooOld}
 						svg={svgs.CreditCard}
 					/>
-				</div>
+				</FormInput>
 				<button type='submit' disabled={invalid || submitting || emailTaken}>Submit</button>
-			</form>
+			</Form1>
 
-			<button type='button' onClick={props.changeForm} data-form='signin'>Sign In</button>
 		</FormWrapper>
 	)
 }
@@ -88,12 +98,11 @@ export const RegisterSignupForm = reduxForm<{}, IPropsPublic>({
 	destroyOnUnmount: true, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
 	form: 'SignUpForm'
+	// validate,
+	// asyncValidate,
+	// asyncBlurFields: ['email']
 })(SignUpForm)
 
 export default RegisterSignupForm
 
-export const FormWrapper = styled.div`
-	position: absolute;
-	//opacity: ${(props: { firstRender: boolean }) => props.firstRender ? `1!important` : 0};
-	//transform: translateY(0);
-`
+
