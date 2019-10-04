@@ -1,6 +1,6 @@
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const FormWrapper = styled.div`
 	position: absolute;
@@ -163,6 +163,47 @@ export const InputError = styled.div`
 	}
 `
 
+const rotate = keyframes`
+   100% {
+    transform: rotate(360deg);
+  }
+`
+const dash = keyframes`
+ 	0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+`
+export const SpinnerContainer = styled.div<{ show: boolean }>`
+	opacity: ${props => props.show ? 1 : 0};
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	width: 25px;
+	height: 25px;
+	z-index: 2;
+	
+	.spinner{
+		animation: ${rotate} 2s linear infinite;
+		width: 100%;
+	
+		& .path {
+		stroke: #8976FF !important;
+		stroke-linecap: round;
+		animation: ${dash} 1.5s ease-in-out infinite;
+		}
+	}
+`
+
 export const SvgValidation = styled.div<{ isValid: boolean }>`
 	width: 15px;
 	position: absolute;
@@ -175,4 +216,8 @@ export const SvgValidation = styled.div<{ isValid: boolean }>`
 	path{
 		fill: ${props => props.isValid ? 'green' : 'red'};
 	}
+`
+
+export const SubmitButton = styled.button`
+
 `

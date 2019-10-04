@@ -1,4 +1,4 @@
-import { SvgValidation } from '@styles/modules/SignInUpModals'
+import { InputError, SvgValidation } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
 import React from 'react'
 // import {colors} from '@et/styles/base/colors'
@@ -135,14 +135,12 @@ export const RenderField = (props: IProps) => {
 					readOnly={disabled}
 				/>
 				{showIcon()}
-				{/*{svg && <Svg className={'renderInputSvg'} color={renderSvgColor}>*/}
-				{/*	{renderSvg(svg)}*/}
-				{/*</Svg>}*/}
-				{/*{invalid && (!pristine || touched) && messageTest(error)}*/}
-				{/*<span style={{ display: 'block' }}>warning</span>*/}
 				{/*{messageTest(warning)}*/}
 
 			</div>
+
+			{touched && <InputError>{messageTest(error)}</InputError>}
+
 		</>
 	)
 }

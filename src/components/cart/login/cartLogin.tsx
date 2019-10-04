@@ -22,7 +22,7 @@ export function CartLogin (props: IReduxState & IReduxActions) {
 			props.showModal({
 				modal: Login,
 				options: {
-					closeOutsideModal: true,
+					closeModal: true,
 					hasBackground: true,
 					name
 				}

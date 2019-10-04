@@ -1,13 +1,12 @@
 import { CheckoutApi } from '@api/checkoutApi'
 import { ICouponApiResponse } from '@et/types/Cart'
-import { InputError, SvgValidation } from '@styles/modules/SignInUpModals'
+import { InputError, SpinnerContainer, SvgValidation } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
 import { useSetState } from '@utils/stateUtils'
 import React, { useEffect, useRef, useState } from 'react'
 import { from, fromEvent, Observable } from 'rxjs'
-import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators'
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators'
 import { Subscription } from 'rxjs/src/internal/Subscription'
-// import {colors} from '@et/styles/base/colors'
 import styled from 'styled-components'
 import { renderSvg } from '@utils/styleUtils'
 
@@ -56,6 +55,8 @@ interface IProps {
 	autoComplete?: boolean,
 	setEmailTaken: (state: boolean) => void
 	emailTaken: boolean
+	loading: value
+	setLoading: (state: boolean) => void
 }
 
 export const RxEmailField = (props: IProps) => {
@@ -63,7 +64,8 @@ export const RxEmailField = (props: IProps) => {
 		loading: false,
 		response: false
 	})
-	const { loading, response } = state
+	const prevState = useRef(state)
+	const { response } = state
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const {
 		key,
@@ -78,25 +80,11 @@ export const RxEmailField = (props: IProps) => {
 		meta: { pristine, touched, invalid, active, dirty, error, warning }
 	} = props
 
-	const renderSvgColor: string = !pristine || touched
-		? invalid || emailTaken
-			? 'red'
-			: 'green'
-		: 'grey' // silver
-
 	// console.log('error', error)
 	// console.log('pristine', pristine)
 	// console.log('invalid', invalid)
 	// console.log('touched', touched)
-
-	const showLabel = (): boolean => {
-		if (active) {
-			return true
-		} else if ((dirty && !pristine) || input.value) {
-			return true
-		}
-		return false
-	}
+	console.log('props', props)
 
 	const messageTest = (errorObj: {} | string) => {
 		if (typeof errorObj === 'string') {
@@ -106,39 +94,55 @@ export const RxEmailField = (props: IProps) => {
 		}
 	}
 
+	// useEffect(() => {
+	// 	prevState.current = state
+	// })
+
 	useEffect(() => {
 		// Only send to server if valid email address using filter
+
 		let inputSubscribe: Subscription
 		if (inputRef.current) {
 			const inputObsv: Observable<any> = fromEvent(inputRef.current, 'input')
 			const inputPipe: any = inputObsv.pipe(
-				map((e: any) => e.target.value),
+				map((e: any) => {
+					console.log('e target', e.srcElement.value)
+					console.log('e target', e)
+
+					return e.target.value
+				}),
 				filter((e: string) => {
+					console.log('filter', e)
+
+					// if (prevState.current.response) {
+					// 	prevState.current.response = false
+					// }
+
 					const validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e)
+					console.log('validEmail', validEmail)
+
 					if (e === '' || !validEmail && !emailTaken) {
-						setEmailTaken(false)
+						// setEmailTaken(false)
 					}
+
 					return e !== '' && validEmail
 				}),
-				debounceTime(1000),
+
+				debounceTime(300),
 				distinctUntilChanged(),
 				switchMap((target: string) => {
 					console.log('target', target)
-					setState({
-						loading: true,
-						response: false
-					})
+					// setState({
+					// 	loading: true
+					// })
+					// setLoading(true)
 					// setEmailTaken(false)
 					// submitCoupon()
 					return from(CheckoutApi.checkEmail(target))
 				})
 			)
 			inputSubscribe = inputPipe.subscribe((x: { code: number, data: { emailTaken: boolean } }) => {
-				console.log('x', x)
-				setState({
-					loading: false,
-					response: false
-				})
+				// console.log('x', x)
 				switch (x.code) {
 					case 200:
 						if (x.data.emailTaken) {
@@ -146,21 +150,27 @@ export const RxEmailField = (props: IProps) => {
 						} else {
 							setEmailTaken(false)
 						}
-						setState({
-							response: true
-						})
+						// setState({
+						// 	response: true,
+						// 	loading: false
+						// })
+						setLoading(false)
 						break
 					default:
 						setEmailTaken(false)
-						setState({
-							response: true
-						})
+						// setState({
+						// 	response: true,
+						// 	loading: false
+						// })
+						setLoading(false)
 				}
 			})
 		}
 
 		return () => {
 			if (inputSubscribe) {
+				console.log('unsubscribe rx')
+
 				inputSubscribe.unsubscribe()
 			}
 		}
@@ -177,7 +187,7 @@ export const RxEmailField = (props: IProps) => {
 				)
 			}
 
-			if (!invalid && !emailTaken && response) {
+			if (!invalid && !emailTaken && response && !isLoading) {
 				return (
 					<SvgValidation isValid={true}>
 						{renderSvg(svgs.Checkmark)}
@@ -185,20 +195,12 @@ export const RxEmailField = (props: IProps) => {
 				)
 			}
 		}
-		// return !pristine || touched
-		// 	? (invalid || !invalid && emailTaken)
-		// 		? <SvgValidation isValid={false}>
-		// 			{renderSvg(svgs.Close)}
-		// 		</SvgValidation>
-		// 		: <SvgValidation isValid={true}>
-		// 			{renderSvg(svgs.Checkmark)}
-		// 		</SvgValidation>
-		// 	: null
 	}
 
 	const isFocused = active ? 'hasFocus' : 'noFocus'
 	const isValid = !invalid ? 'valid' : 'invalid'
 	const isEmpty = input.value === '' ? 'empty' : 'has-value'
+	console.log('loading', isLoading)
 
 	return (
 		<>
@@ -219,9 +221,13 @@ export const RxEmailField = (props: IProps) => {
 					disabled={disabled}
 					readOnly={disabled}
 				/>
-				<div style={{ position: 'absolute', right: 0, top: 0 }}>{JSON.stringify(loading)}</div>
+				<SpinnerContainer show={isLoading}>
+					<svg className='spinner' viewBox='0 0 50 50'>
+						<circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
+					</svg>
+				</SpinnerContainer>
 
-				{!loading && showIcon()}
+				{!isLoading && showIcon()}
 				{/*{messageTest(warning)}*/}
 			</div>
 			{!invalid && emailTaken && <InputError>
@@ -234,25 +240,9 @@ export const RxEmailField = (props: IProps) => {
 
 export default RxEmailField
 
-export const Svg = styled.div`
-	path, rect{
-		fill: ${(props: any) => props.color};
-	}
-	width: 25px;
-`
-
-interface ILabelProps {
-	active: boolean;
-	spencer?: string;
-}
-
 // Optional Styled-Components
 // const Label = styled<ILabelProps, 'label'>('label')`
 // 	display: block;
 // 	color: ${(props) => props.active ? 'red' : 'blue'};
 // `
 // had to export this to test
-export const Label = styled.label`
-	display: block;
-	color: ${(props: ILabelProps) => props.active ? 'green' : 'blue'};
-`

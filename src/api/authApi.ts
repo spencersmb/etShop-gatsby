@@ -1,4 +1,5 @@
 import { IUserCreate, IUserSubmit } from '@et/types/User'
+import { fakeApiCall } from '@utils/apiUtils'
 import { createHeaders } from '@utils/orderUtils'
 import fetched from 'isomorphic-unfetch'
 
@@ -37,6 +38,7 @@ class AuthApi {
 
 		// log formData for debugging
 		// logFormData(formData)
+		return fakeApiCall('reject')
 
 		return fetched(
 			url,

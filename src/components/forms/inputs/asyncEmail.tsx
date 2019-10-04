@@ -1,13 +1,6 @@
-import { CheckoutApi } from '@api/checkoutApi'
-import { ICouponApiResponse } from '@et/types/Cart'
-import { InputError, SvgValidation } from '@styles/modules/SignInUpModals'
+import { InputError, SpinnerContainer, SvgValidation } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
-import { useSetState } from '@utils/stateUtils'
-import React, { useEffect, useRef, useState } from 'react'
-import { from, fromEvent, Observable } from 'rxjs'
-import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators'
-import { Subscription } from 'rxjs/src/internal/Subscription'
-// import {colors} from '@et/styles/base/colors'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { renderSvg } from '@utils/styleUtils'
 
@@ -59,13 +52,8 @@ interface IProps {
 }
 
 export const RxEmailField = (props: IProps) => {
-	const [state, setState] = useSetState({
-		loading: false,
-		response: false
-	})
 	console.log('props async', props)
 
-	const { loading, response } = state
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const {
 		key,
@@ -74,31 +62,13 @@ export const RxEmailField = (props: IProps) => {
 		type,
 		disabled,
 		placeholder,
-		svg,
-		setEmailTaken,
-		emailTaken,
 		meta: { asyncValidating, pristine, touched, invalid, active, dirty, error, warning }
 	} = props
-
-	const renderSvgColor: string = !pristine || touched
-		? invalid || emailTaken
-			? 'red'
-			: 'green'
-		: 'grey' // silver
 
 	// console.log('error', error)
 	// console.log('pristine', pristine)
 	// console.log('invalid', invalid)
 	// console.log('touched', touched)
-
-	const showLabel = (): boolean => {
-		if (active) {
-			return true
-		} else if ((dirty && !pristine) || input.value) {
-			return true
-		}
-		return false
-	}
 
 	const messageTest = (errorObj: {} | string) => {
 		if (typeof errorObj === 'string') {
@@ -144,40 +114,22 @@ export const RxEmailField = (props: IProps) => {
 					disabled={disabled}
 					readOnly={disabled}
 				/>
-				<div style={{ position: 'absolute', right: 0, top: 0 }}>{JSON.stringify(asyncValidating)}</div>
+				<SpinnerContainer show={asyncValidating}>
+					<svg className='spinner' viewBox='0 0 50 50'>
+						<circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
+					</svg>
+				</SpinnerContainer>
 
-				{!loading && showIcon()}
+				{(!asyncValidating && !active) || (error) ? showIcon() : null}
 				{/*{messageTest(warning)}*/}
 			</div>
-			{!invalid && emailTaken && <InputError>
-        <span>Sorry, email is already in use</span>
-      </InputError>}
-			{touched && <InputError>{messageTest(error)}</InputError>}
+			{/*{!invalid && emailTaken && <InputError>*/}
+			{/*  <span>Sorry, email is already in use</span>*/}
+			{/*</InputError>}*/}
+			{touched && error && <InputError>{messageTest(error)}</InputError>}
 		</>
 	)
 }
 
 export default RxEmailField
 
-export const Svg = styled.div`
-	path, rect{
-		fill: ${(props: any) => props.color};
-	}
-	width: 25px;
-`
-
-interface ILabelProps {
-	active: boolean;
-	spencer?: string;
-}
-
-// Optional Styled-Components
-// const Label = styled<ILabelProps, 'label'>('label')`
-// 	display: block;
-// 	color: ${(props) => props.active ? 'red' : 'blue'};
-// `
-// had to export this to test
-export const Label = styled.label`
-	display: block;
-	color: ${(props: ILabelProps) => props.active ? 'green' : 'blue'};
-`

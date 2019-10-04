@@ -109,13 +109,13 @@ export const fakeApiCall = (type?: string): Promise<any> => {
 		if (type === 'reject') {
 			setTimeout(() => {
 				return reject({
-					data: 'done'
+					data: 'fake reject api call'
 				})
 			}, 3000)
 		} else {
 			setTimeout(() => {
 				return resolve({
-					data: 'done'
+					data: 'fake success api call'
 				})
 			}, 3000)
 		}

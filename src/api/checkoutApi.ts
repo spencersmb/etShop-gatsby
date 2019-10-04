@@ -25,7 +25,7 @@ export class CheckoutApi {
 		).then(res => res.json())
 	}
 
-	static checkEmail (email: string): Promise<Response> {
+	static checkEmail (email: string): Promise<{data:{emailTaken: boolean}}> {
 		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/checkEmail?email=${email}`
 
 		return fetched(

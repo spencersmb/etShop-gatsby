@@ -1,7 +1,7 @@
-import asyncValidate from '@components/forms/asyncEmailValidate'
-// import RxEmailField from '@components/forms/inputs/asyncEmail'
-import RxEmailField from '@components/forms/inputs/rxjsEmail_input'
+import RxEmailField from '@components/forms/inputs/asyncEmail'
+import asyncEmailValidate from '@components/forms/userEmailValidation'
 import validate from '@components/forms/validate'
+// import RxEmailField from '@components/forms/inputs/rxjsEmail_input'
 import ReduxValidation from '@components/forms/validations'
 import { FormHeader1, FormWrapper, FormInput, Form1 } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
@@ -27,6 +27,8 @@ const tooOld = (value: any) =>
 export const SignUpForm = (props: any) => {
 	const [emailTaken, setEmailTaken] = useState(false)
 	const { handleSubmit, poseRef, firstRender, submitting, invalid, handleUserSubmit } = props
+	console.log('props signup form', props)
+
 	const { required, email } = ReduxValidation
 
 	return (
@@ -67,11 +69,9 @@ export const SignUpForm = (props: any) => {
 						type='email'
 						component={RxEmailField}
 						placeholder=''
-						validate={[required, email]}
+						// validate={[required, email]}
 						label='Email:'
 						svg={svgs.CreditCard}
-						setEmailTaken={setEmailTaken}
-						emailTaken={emailTaken}
 					/>
 				</FormInput>
 				<FormInput>
@@ -87,7 +87,12 @@ export const SignUpForm = (props: any) => {
 						svg={svgs.CreditCard}
 					/>
 				</FormInput>
-				<button type='submit' disabled={invalid || submitting || emailTaken}>Submit</button>
+				<button
+					type='submit'
+					disabled={invalid || submitting || emailTaken}>
+					Submit
+				</button>
+
 			</Form1>
 
 		</FormWrapper>
@@ -97,10 +102,10 @@ export const SignUpForm = (props: any) => {
 export const RegisterSignupForm = reduxForm<{}, IPropsPublic>({
 	destroyOnUnmount: true, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-	form: 'SignUpForm'
-	// validate,
-	// asyncValidate,
-	// asyncBlurFields: ['email']
+	form: 'SignUpForm',
+	validate,
+	asyncValidate: asyncEmailValidate,
+	asyncBlurFields: ['email']
 })(SignUpForm)
 
 export default RegisterSignupForm
