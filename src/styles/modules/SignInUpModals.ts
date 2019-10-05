@@ -5,7 +5,8 @@ import styled, { keyframes } from 'styled-components'
 export const FormWrapper = styled.div`
 	position: absolute;
 	width: 100%;
-	padding: 20px;
+	padding: 50px 20px 20px;
+	height: 100%;
 `
 export const Form1 = styled.form`
 	display: flex;
@@ -13,6 +14,8 @@ export const Form1 = styled.form`
 `
 export const FormHeader1 = styled.div`
 	text-align: center;
+	margin-bottom: 35px;
+	padding: 0 15px;
 	
 	h3{
 		${Sentinel.black};
@@ -22,15 +25,19 @@ export const FormHeader1 = styled.div`
 		margin: 10px 0 0;
 	}
 	
-	p{
+	.signup__subhead{
+		font-size: 18px;
+		color: ${colors.grey.i800};
+		line-height: 24px;
 		margin: 10px 0 0;
-		color: ${colors.grey.i600};
-		font-weight: 500;
 	}
 	
-	span{
+	.form__switchAccounts{
+		margin: 10px 0 0;
+		font-weight: 500;
 		color: ${colors.primary.pink};
 		font-style: italic;
+		font-size: 14px;
 	}
 	
 	.FormHeader1__icon{
@@ -47,11 +54,16 @@ export const FormHeader1 = styled.div`
 			
 	}
 `
-
+export const FormGroup = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+`
 export const FormInput = styled.div`
-		position: relative;
-    margin-top: 16px;
-    margin-bottom: 26px;
+	position: relative;
+	margin-top: 16px;
+	margin-bottom: 26px;
+
 	.formGroup{
 		position: relative;
     
@@ -65,7 +77,7 @@ export const FormInput = styled.div`
     
     &:before{
 			height: 2px;
-			background: #E91E63;
+			background: ${colors.teal.i500};
 			z-index: 1;
 			width: 0;
 			transition: width 0.3s;
@@ -90,7 +102,7 @@ export const FormInput = styled.div`
 			}
 			.renderLabel{
 				transform: translateY(-220%) scale(0.82);
-				color: #E91E63;
+				color: ${colors.teal.i500};
 			}
 		}
 		
@@ -151,8 +163,7 @@ export const FormInput = styled.div`
 
 export const InputError = styled.div`
 	font-size: 0.875rem;
-	font-weight: normal;
-	color: #E91E63;
+	color:red;
 	display: flex;
 	flex-direction: column;
 	//position: absolute;

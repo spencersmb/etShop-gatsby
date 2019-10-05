@@ -33,6 +33,25 @@ export interface IUserCreate {
   password: string
 }
 
+export interface IFacebookUserCreate {
+  accessToken: string
+  data_access_expiration_time: number
+  email: string
+  expiresIn: number
+  id: number
+  name: string
+  picture:{
+    data:{
+      height: number
+      is_silhouette: boolean
+      url: string
+      width: number
+    }
+  }
+  signedRequest: string
+  userID: string
+}
+
 export type IUserState = IUser | null
 
 export interface IUser {

@@ -109,6 +109,7 @@ export const fakeApiCall = (type?: string): Promise<any> => {
 		if (type === 'reject') {
 			setTimeout(() => {
 				return reject({
+					message: 'fake reject api call',
 					data: 'fake reject api call'
 				})
 			}, 3000)

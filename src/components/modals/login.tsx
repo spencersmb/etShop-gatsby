@@ -47,6 +47,7 @@ export const LoginModal = (props: MixedFormProps) => {
 	const { options, closeModal } = props
 
 	const [name, setName] = useState(options.name)
+	const [error, setError] = useState(null)
 	const firstRender = useRef(true)
 
 	useEffect(() => {
@@ -77,7 +78,9 @@ export const LoginModal = (props: MixedFormProps) => {
 
 	const userSignUp = async (formProps: any) => {
 		console.log('formProps', formProps)
-
+		if (error) {
+			setError(null)
+		}
 		try {
 			const response: { firstName: string } = await props.createUser(formProps)
 			toastr.removeByType('error')
@@ -86,6 +89,24 @@ export const LoginModal = (props: MixedFormProps) => {
 			navigate(`/account/`)
 		} catch (e) {
 			console.error('user signup fail:', e)
+			setError(e)
+		}
+	}
+
+	const facebookSignUp = async (formProps: any) => {
+		console.log('formProps facebook', formProps)
+		if (error) {
+			setError(null)
+		}
+		try {
+			// const response: { firstName: string } = await props.createUser(formProps)
+			// toastr.removeByType('error')
+			// toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+			// closeModal()
+			// navigate(`/account/`)
+		} catch (e) {
+			// console.error('user signup fail:', e)
+			// setError(e)
 		}
 	}
 
@@ -126,6 +147,8 @@ export const LoginModal = (props: MixedFormProps) => {
 										closeModal={closeModal}
 										firstRender={firstRender.current}
 										poseRef={ref}
+										signupError={error}
+										handleFacebookSubmit={facebookSignUp}
 									/>
 								)}
               </SignInPose>
@@ -225,7 +248,12 @@ const ContentContainer = styled.div<any>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	
+	
+	@media ${device.laptop} {
+		justify-content: center;	
+	}
+		
 `
 const CloseBtn = styled.div`
 	width: 25px;

@@ -1,4 +1,4 @@
-import { IUserCreate, IUserSubmit } from '@et/types/User'
+import { IFacebookUserCreate, IUserCreate, IUserSubmit } from '@et/types/User'
 import { fakeApiCall } from '@utils/apiUtils'
 import { createHeaders } from '@utils/orderUtils'
 import fetched from 'isomorphic-unfetch'
@@ -39,6 +39,30 @@ class AuthApi {
 		// log formData for debugging
 		// logFormData(formData)
 		return fakeApiCall('reject')
+
+		return fetched(
+			url,
+			{
+				body: formData,
+				method: 'POST',
+				mode: 'cors'
+			}
+		)
+	}
+
+	static createFacebookUser (user: IFacebookUserCreate): Promise<Response> {
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/createUserFacebook`
+
+		const formData = new FormData()
+		formData.append('email', user.email)
+		formData.append('firstName', user.name)
+		formData.append('accessToken', user.accessToken)
+		formData.append('expires', user.expiresIn.toString())
+		formData.append('nonce', process.env.GATSBY_WPNONCE || '')
+
+		// log formData for debugging
+		// logFormData(formData)
+		// return fakeApiCall('reject')
 
 		return fetched(
 			url,

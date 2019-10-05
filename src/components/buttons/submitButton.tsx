@@ -2,40 +2,52 @@ import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
 
 interface IProps {
 	submitting: boolean
 	completed: boolean
-	error: boolean | null
+	error: { message: string } | null
+	buttonText?: string
+	backgroundColor?: string
+	textColor?: string
+	spinnerColor?: string
+	invalid: boolean
 }
 
 const SubmitButton = (props: IProps) => {
 
-	function handleClick () {
-
-	}
-
-	const { submitting, completed, error } = props
+	const { submitting, completed, error, backgroundColor = '#fff', textColor = '#000', spinnerColor = colors.teal.i500, invalid, buttonText = 'submit' } = props
 
 	return (
 		<ButtonWrapper
 			data-testid='submitBtn'
 			completed={completed}
 			submitting={submitting}
-			error={error}
-			show={completed || !!error}
+			spinnerColor={spinnerColor}
+			show={completed && !error}
+			invalid={invalid}
 		>
-			<button onClick={handleClick} disabled={submitting} data-testid='button'>
-				<div className='buttonText'>Submit</div>
-				{completed && <Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}
-				{error && <Error data-testid='error' show={error}>{renderSvg(svgs.Close)}</Error>}
+			<SubmitBtn
+				type='submit'
+				pose={submitting ? 'submitting' : 'notSubmitting'}
+				textColor={textColor}
+				backgroundColor={backgroundColor}
+				submitting={submitting}
+				disabled={submitting}
+				data-testid='button'>
+				<div className='buttonText'>{buttonText}</div>
+				{completed && !error && !submitting &&
+        <Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}
+				{/*{error && <Error data-testid='error' show={error}>{renderSvg(svgs.Close)}</Error>}*/}
 				{submitting && <div data-testid='spinner' className='submit__spinner'>
           <svg className='spinner' viewBox='0 0 50 50'>
             <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
           </svg>
         </div>}
-			</button>
+			</SubmitBtn>
+			{error && <Error><span>{error.message}</span></Error>}
 		</ButtonWrapper>
 	)
 }
@@ -43,8 +55,9 @@ const SubmitButton = (props: IProps) => {
 interface IButtonProps {
 	submitting: boolean
 	completed: boolean
-	error: boolean | null
+	spinnerColor: string
 	show: boolean
+	invalid: boolean
 }
 
 interface ISVGProps {
@@ -77,27 +90,52 @@ const Completed = styled(ButtonSvg)`
 		fill: ${colors.teal.i500};
 	}
 `
-const Error = styled(ButtonSvg)`
-	background: ${colors.red.i500};
-	
-	svg{
-		fill: ${colors.red.i800};
+const ErrorPosed = posed.div({
+	noError: {
+		height: 0,
+		transition: {
+			height: { duration: 0 }
+		}
+	},
+	error: {
+		height: 'auto',
+		transition: {
+			height: { duration: 200, delay: 300 }
+		}
 	}
-`
-const ButtonWrapper = styled.div<IButtonProps>`
-	width: 160px;
-	max-width: 160px;
+})
+const Error = styled(ErrorPosed)`
+		font-size: 0.875rem;
+	font-weight: normal;
+	color: #E91E63;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	button{
+	//position: absolute;
+	//left: 0;
+	//bottom: -25px;
+	span{
+		padding-top: 5px;
+	}
+`
+const PosedButton = posed.button({
+	submitting: {
+		width: '48px',
+		background: '#fff',
+		transition: {
+			background: { duration: 200, delay: 200 }
+		}
+	},
+	notSubmitting: {
+		width: '100%',
+		background: (props: any) => props.backgroundColor
+	}
+})
+const SubmitBtn = styled(PosedButton)`
 		position: relative;
-		background: white;
-		border-radius: ${props => props.submitting ? '50%' : '25px'};
+		border-radius: 25px;
 		border: none;
 		font-family: "Fira Sans", sans-serif;
-		color: ${colors.primary.pink};
+		color: ${props => props.textColor};
 		font-size: 17px;
 		font-weight: 500;
 		text-transform: uppercase;
@@ -105,16 +143,22 @@ const ButtonWrapper = styled.div<IButtonProps>`
 		justify-content: center;
 		align-items: center;
 		height: 100%;
-		width: ${props => props.submitting ? '50px' : '100%'};
 		cursor: pointer;
-		padding: ${props => props.submitting ? '25px' : '25px 80px'};
-		transition: .3s;
+		padding: ${props => props.submitting ? '24px 0px' : '25px 80px'};
 		overflow: hidden;
 		
 		&:focus{
 			outline: none;
 		}
-	}
+`
+const ButtonWrapper = styled.div<IButtonProps>`
+	//width: 160px;
+	//max-width: 160px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 26px;
 	
 	.buttonText{
 		position: absolute;
@@ -140,7 +184,7 @@ const ButtonWrapper = styled.div<IButtonProps>`
 		height: 50px;
   
   & .path {
-    stroke: ${colors.teal.i500};
+    stroke: ${props => props.spinnerColor};
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
   }
