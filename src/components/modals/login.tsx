@@ -1,10 +1,12 @@
-import { IModal } from '@et/types/Modal'
+import { IModal, INavState } from '@et/types/Modal'
+import { IState } from '@et/types/State'
 import { IFacebookUserCreate } from '@et/types/User'
 import {
 	createUserFacebook as createUserFacebookAction,
 	createUser as createUserAction,
 	login as loginAction
 } from '@redux/actions/authActions'
+import { INavAction, toggleNav as toggleNavAction } from '@redux/actions/navActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
@@ -40,6 +42,11 @@ interface IpropsReduxActions {
 	loginAction: (formData: IFormProps) => any,
 	createUser: (data: any) => any
 	createUserFacebook: (data: IFacebookUserCreate) => any
+	navToggle: INavAction
+}
+
+interface IPropsReduxState {
+	nav: INavState
 }
 
 interface IFormProps {
@@ -47,10 +54,10 @@ interface IFormProps {
 	password: string
 }
 
-type MixedFormProps = IModal & IpropsReduxActions
+type MixedFormProps = IModal & IpropsReduxActions & IPropsReduxState
 
 export const LoginModal = (props: MixedFormProps) => {
-	const { options, closeModal } = props
+	const { options, closeModal, nav, navToggle } = props
 
 	const [name, setName] = useState(options.name)
 	const [submitting, setSubmitting] = useState(false)
@@ -91,10 +98,13 @@ export const LoginModal = (props: MixedFormProps) => {
 		}
 		try {
 			const response: { firstName: string } = await props.createUser(formProps)
-			toastr.removeByType('error')
-			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+			if (nav.isOpen) {
+				navToggle()
+			}
 			closeModal()
 			navigate(`/account/`)
+			toastr.removeByType('error')
+			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 		} catch (e) {
 			console.error('user signup fail:', e)
 			setReduxError(e)
@@ -105,10 +115,16 @@ export const LoginModal = (props: MixedFormProps) => {
 		try {
 			const response: { firstName: string } = await props.createUserFacebook(formProps)
 			setSubmitting(false)
-			toastr.removeByType('error')
-			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+			console.log('nav.isOpen', nav.isOpen)
+
+			if (nav.isOpen) {
+				navToggle()
+			}
 			closeModal()
 			navigate(`/account/`)
+			toastr.removeByType('error')
+			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+
 		} catch (e) {
 			console.error('user facebook signup fail:', e)
 			setFacebookError(e)
@@ -176,16 +192,21 @@ export const LoginModal = (props: MixedFormProps) => {
 }
 
 // export default LoginModal
-
+const mapStateToProps = (state: IState): { nav: INavState } => {
+	return {
+		nav: state.nav
+	}
+}
 const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 	return {
 		loginAction: bindActionCreators(loginAction, dispatch),
 		createUserFacebook: bindActionCreators(createUserFacebookAction, dispatch),
+		navToggle: bindActionCreators(toggleNavAction, dispatch),
 		createUser: bindActionCreators(createUserAction, dispatch)
 	}
 }
 
-export default connect<null, IpropsReduxActions, IModal, MixedFormProps>(null, mapDispatchToProps)(LoginModal)
+export default connect<IPropsReduxState, IpropsReduxActions, IModal, IState>(mapStateToProps, mapDispatchToProps)(LoginModal)
 const depth = 6
 const ModalStyled = styled.div`
 		position: fixed;

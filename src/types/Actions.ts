@@ -6,7 +6,7 @@ import {
   AuthActionTypes,
   CartActionTypes,
   CouponActionTypes,
-  ModalActionTypes, PaginationTypes,
+  ModalActionTypes, NavActionTypes, PaginationTypes,
   ProductsActionTypes,
   WindowActionTypes
 } from './Enums'
@@ -145,6 +145,10 @@ export interface IClearPagination {
   type: PaginationTypes.CLEAR_ALL_PAGES
 }
 
+export interface INavToggle {
+  type: NavActionTypes.TOGGLE_NAV
+}
+
 export type WindowActions =
   | IChangeBreakPoint
 
@@ -185,6 +189,9 @@ type PaginationActions =
   | IUpdatePaginationAfterOrder
   | IClearPagination
 
+type NavActions =
+  | INavToggle
+
 export type Actions =
   | AuthActions
   | ProductActions
@@ -193,3 +200,4 @@ export type Actions =
   | CartActions
   | CouponActions
   | PaginationActions
+  | NavActions

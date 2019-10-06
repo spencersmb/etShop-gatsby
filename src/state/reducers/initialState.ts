@@ -2,22 +2,6 @@ import { IState } from '@et/types/State'
 
 const initialState: IState = {
 	breakpoint: 0,
-	form: {},
-	modal: {
-		component: null,
-		show: false,
-		options: {
-			closeOutsideModal: false,
-			content: '',
-			hasBackground: false
-		}
-	},
-	products: {},
-	toastr: {
-		confirm: null,
-		toastrs: []
-	},
-	user: null,
 	cart: {
 		coupon: {
 			code: '',
@@ -36,11 +20,31 @@ const initialState: IState = {
 		totalPrice: 0,
 		originalPrice: 0
 	},
+	form: {},
+	modal: {
+		component: null,
+		show: false,
+		options: {
+			closeOutsideModal: false,
+			content: '',
+			hasBackground: false
+		}
+	},
+	nav:{
+		isOpen: false
+	},
 	pagination: {
 		loading: false,
 		pages: {},
 		totalOrders: '0',
 		totalPages: 0
-	}
+	},
+	products: {},
+	toastr: {
+		confirm: null,
+		toastrs: []
+	},
+	user: null,
+
 }
 export default initialState

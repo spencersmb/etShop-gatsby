@@ -1,9 +1,12 @@
 import Receipt from '@components/modals/receipt'
+import { INavToggle } from '@et/types/Actions'
 import { ICartState } from '@et/types/Cart'
+import { INavState } from '@et/types/Modal'
 import { IState } from '@et/types/State'
 import { IUser } from '@et/types/User'
 import { ILogoutAction, logout as logoutAction } from '@redux/actions/authActions'
 import { cartToggle } from '@redux/actions/cartActions'
+import { INavAction, toggleNav as toggleNavAction } from '@redux/actions/navActions'
 import { clearPagination } from '@redux/actions/paginationActions'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
@@ -35,7 +38,8 @@ import {
 
 interface IPropsState {
 	user: IUser | null,
-	cart: ICartState
+	cart: ICartState,
+	nav: INavState
 }
 
 interface IPropsActions {
@@ -43,11 +47,12 @@ interface IPropsActions {
 	logout: ILogoutAction,
 	clearPaginationAction: () => void,
 	cartToggle: () => void
+	toggleNav: INavAction
 }
 
 function Navbar (props: IPropsActions & IPropsState) {
-	const { user, logout, clearPaginationAction } = props
-	const [isOpen, setIsOpen] = useState(false)
+	const { user, logout, toggleNav, nav } = props
+	// const [isOpen, setIsOpen] = useState(false)
 	const target = useRef<HTMLElement | null>(null)
 	const bodyScrollPos = useRef(0)
 
@@ -101,18 +106,19 @@ function Navbar (props: IPropsActions & IPropsState) {
 	}
 
 	function navToggle () {
-		setIsOpen(!isOpen)
+		toggleNav()
+		// setIsOpen(!isOpen)
 	}
 
 	function cartToggleEvent () {
-		if (!isOpen && target.current) {
+		if (!nav.isOpen && target.current) {
 			// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
 			// target.current.style.width = `100%`
 			// target.current.style.top = `-${bodyScrollPos.current}px`
 			// target.current.style.bottom = `0`
 			// target.current.style.padding = `0 15px 0 0`
 			// target.current.style.position = 'fixed'
-		} else if (isOpen && target.current) {
+		} else if (nav.isOpen && target.current) {
 			// target.current.style.removeProperty('position')
 			// target.current.style.removeProperty('top')
 			// target.current.style.removeProperty('bottom')
@@ -148,10 +154,10 @@ function Navbar (props: IPropsActions & IPropsState) {
 			<Hamburger
 				data-testid='hamburger'
 				onClick={navToggle}>
-				{isOpen ? renderSvg(svgs.HamburgerClose) : renderSvg(svgs.Hamburger)}
+				{nav.isOpen ? renderSvg(svgs.HamburgerClose) : renderSvg(svgs.Hamburger)}
 			</Hamburger>
 
-			<NavLinks isOpen={isOpen}>
+			<NavLinks isOpen={nav.isOpen}>
 				<CloseButton
 					data-testid='nav-close'
 					onClick={navToggle}>Close</CloseButton>
@@ -223,10 +229,11 @@ function Navbar (props: IPropsActions & IPropsState) {
 	)
 }
 
-const mapStateToProps = (state: IState): { user: IUser | null, cart: ICartState } => {
+const mapStateToProps = (state: IState): { user: IUser | null, cart: ICartState, nav: INavState } => {
 	return {
 		cart: state.cart,
-		user: state.user
+		user: state.user,
+		nav: state.nav
 	}
 }
 
@@ -235,7 +242,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 		showModal: bindActionCreators(showModal, dispatch),
 		logout: bindActionCreators(logoutAction, dispatch),
 		cartToggle: bindActionCreators(cartToggle, dispatch),
-		clearPaginationAction: bindActionCreators(clearPagination, dispatch)
+		clearPaginationAction: bindActionCreators(clearPagination, dispatch),
+		toggleNav: bindActionCreators(toggleNavAction, dispatch)
 	}
 }
 // export default Navbars

@@ -1,6 +1,7 @@
 import { IState } from '@et/types/State'
 import { userReducer } from '@redux/reducers/authReducer'
 import { cartReducer } from '@redux/reducers/cartReducer'
+import { navReducer } from '@redux/reducers/navReducer'
 import { paginationReducer } from '@redux/reducers/paginationReducer'
 import { breakPointReducer } from '@redux/reducers/breakpointReducer'
 import { modalReducer } from '@redux/reducers/modalReducer'
@@ -18,13 +19,14 @@ const initStore = (initialState: IState = initState) => {
 
 	const reducers = combineReducers<IState>({
 		breakpoint: breakPointReducer,
+		cart: cartReducer,
 		form: formReducer,
 		modal: modalReducer,
+		nav: navReducer,
+		pagination: paginationReducer,
 		products: productReducer,
 		toastr: toastrReducer,
-		user: userReducer,
-		cart: cartReducer,
-		pagination: paginationReducer
+		user: userReducer
 	})
 
 	if (typeof window !== 'undefined' && env === 'development') {

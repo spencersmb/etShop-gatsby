@@ -53,3 +53,7 @@ export enum PaginationTypes {
   CLEAR_ALL_PAGES = '@@paginate/CLEAR_ALL_PAGES'
 }
 
+export enum NavActionTypes {
+  TOGGLE_NAV = '@@nav/TOGGLE'
+}
+

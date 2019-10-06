@@ -3,7 +3,7 @@ import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Ref, useEffect, useRef, useState } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
 
@@ -111,7 +111,7 @@ function ProductFilter (props: IProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const [fixed] = useScrollEvent()
 	const filterContainerRef = useRef(null)
-	const headerRef = useRef(null)
+	const headerRef: any = useRef<HTMLElement>(null)
 
 	useEffect(() => {
 		headerRef.current = document.getElementById('header')
@@ -355,6 +355,7 @@ const FilterHeader = styled.div`
 		width: 22px;
 		margin-right: 15px;
 		display: flex;
+		align-items: center;
 	}
 	svg{
 		width: 100%;

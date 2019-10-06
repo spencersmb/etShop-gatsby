@@ -1,3 +1,4 @@
+import { bool } from 'prop-types'
 import { ComponentType } from 'react'
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
@@ -26,3 +27,7 @@ export interface IShowModalProps {
 }
 
 export type OnPoseComplete = string | string[]
+
+export interface INavState {
+  isOpen: boolean
+}
