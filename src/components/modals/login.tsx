@@ -1,5 +1,10 @@
 import { IModal } from '@et/types/Modal'
-import { createUser as createUserAction, login as loginAction } from '@redux/actions/authActions'
+import { IFacebookUserCreate } from '@et/types/User'
+import {
+	createUserFacebook as createUserFacebookAction,
+	createUser as createUserAction,
+	login as loginAction
+} from '@redux/actions/authActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
@@ -34,6 +39,7 @@ import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 interface IpropsReduxActions {
 	loginAction: (formData: IFormProps) => any,
 	createUser: (data: any) => any
+	createUserFacebook: (data: IFacebookUserCreate) => any
 }
 
 interface IFormProps {
@@ -47,7 +53,9 @@ export const LoginModal = (props: MixedFormProps) => {
 	const { options, closeModal } = props
 
 	const [name, setName] = useState(options.name)
-	const [error, setError] = useState(null)
+	const [submitting, setSubmitting] = useState(false)
+	const [reduxError, setReduxError] = useState(null)
+	const [facebookError, setFacebookError] = useState(null)
 	const firstRender = useRef(true)
 
 	useEffect(() => {
@@ -78,8 +86,8 @@ export const LoginModal = (props: MixedFormProps) => {
 
 	const userSignUp = async (formProps: any) => {
 		console.log('formProps', formProps)
-		if (error) {
-			setError(null)
+		if (reduxError) {
+			setReduxError(null)
 		}
 		try {
 			const response: { firstName: string } = await props.createUser(formProps)
@@ -89,24 +97,22 @@ export const LoginModal = (props: MixedFormProps) => {
 			navigate(`/account/`)
 		} catch (e) {
 			console.error('user signup fail:', e)
-			setError(e)
+			setReduxError(e)
 		}
 	}
 
 	const facebookSignUp = async (formProps: any) => {
-		console.log('formProps facebook', formProps)
-		if (error) {
-			setError(null)
-		}
 		try {
-			// const response: { firstName: string } = await props.createUser(formProps)
-			// toastr.removeByType('error')
-			// toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
-			// closeModal()
-			// navigate(`/account/`)
+			const response: { firstName: string } = await props.createUserFacebook(formProps)
+			setSubmitting(false)
+			toastr.removeByType('error')
+			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+			closeModal()
+			navigate(`/account/`)
 		} catch (e) {
-			// console.error('user signup fail:', e)
-			// setError(e)
+			console.error('user facebook signup fail:', e)
+			setFacebookError(e)
+			setSubmitting(false)
 		}
 	}
 
@@ -132,6 +138,7 @@ export const LoginModal = (props: MixedFormProps) => {
 										changeForm={changeForm}
 										closeModal={closeModal}
 										firstRender={firstRender.current}
+										manualSubmitting={submitting}
 										poseRef={ref}
 									/>
 								)}
@@ -147,7 +154,11 @@ export const LoginModal = (props: MixedFormProps) => {
 										closeModal={closeModal}
 										firstRender={firstRender.current}
 										poseRef={ref}
-										signupError={error}
+										signupError={reduxError}
+										setFacebookError={setFacebookError}
+										facebookError={facebookError}
+										setManualSubmit={setSubmitting}
+										manualSubmitting={submitting}
 										handleFacebookSubmit={facebookSignUp}
 									/>
 								)}
@@ -169,6 +180,7 @@ export const LoginModal = (props: MixedFormProps) => {
 const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 	return {
 		loginAction: bindActionCreators(loginAction, dispatch),
+		createUserFacebook: bindActionCreators(createUserFacebookAction, dispatch),
 		createUser: bindActionCreators(createUserAction, dispatch)
 	}
 }
@@ -248,6 +260,8 @@ const ContentContainer = styled.div<any>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	overflow-y: scroll;
 	
 	
 	@media ${device.laptop} {

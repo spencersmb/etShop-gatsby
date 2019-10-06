@@ -27,18 +27,17 @@ class AuthApi {
 	}
 
 	static createUser (user: IUserCreate): Promise<Response> {
-		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/createUser`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/login/createUser`
 
 		const formData = new FormData()
 		formData.append('email', user.email)
 		formData.append('password', user.password)
 		formData.append('firstName', user.firstName)
-		formData.append('lastName', user.lastName)
 		formData.append('nonce', process.env.GATSBY_WPNONCE || '')
 
 		// log formData for debugging
 		// logFormData(formData)
-		return fakeApiCall('reject')
+		// return fakeApiCall('reject')
 
 		return fetched(
 			url,
@@ -51,18 +50,20 @@ class AuthApi {
 	}
 
 	static createFacebookUser (user: IFacebookUserCreate): Promise<Response> {
-		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/createUserFacebook`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/login/facebookLogin`
 
 		const formData = new FormData()
 		formData.append('email', user.email)
-		formData.append('firstName', user.name)
+		formData.append('firstName', user.first_name)
+		formData.append('name', user.name)
+		formData.append('lastName', user.last_name)
+		formData.append('facebook_user_ID', user.userID)
 		formData.append('accessToken', user.accessToken)
 		formData.append('expires', user.expiresIn.toString())
 		formData.append('nonce', process.env.GATSBY_WPNONCE || '')
 
 		// log formData for debugging
 		// logFormData(formData)
-		// return fakeApiCall('reject')
 
 		return fetched(
 			url,

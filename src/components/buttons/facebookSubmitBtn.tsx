@@ -7,40 +7,27 @@ import styled from 'styled-components'
 
 interface IProps {
 	submitting: boolean
-	completed: boolean
 	error: { message: string } | null
-	buttonText?: string
-	backgroundColor?: string
-	textColor?: string
-	spinnerColor?: string
-	invalid: boolean
+	children: any
+	handleClick: () => void
 }
 
-const SubmitButton = (props: IProps) => {
+const FacebookSubmitBtn = (props: IProps) => {
 
-	const { submitting, completed, error, backgroundColor = '#fff', textColor = '#000', spinnerColor = colors.teal.i500, invalid, buttonText = 'submit' } = props
+	const { submitting, error, handleClick } = props
 
 	return (
 		<ButtonWrapper
 			data-testid='submitBtn'
-			completed={completed}
 			submitting={submitting}
-			spinnerColor={spinnerColor}
-			show={completed && !error}
-			invalid={invalid}
 		>
 			<SubmitBtn
-				type='submit'
+				onClick={handleClick}
 				pose={submitting ? 'submitting' : 'notSubmitting'}
-				textColor={textColor}
-				backgroundColor={backgroundColor}
 				submitting={submitting}
 				disabled={submitting}
 				data-testid='button'>
-				<div className='buttonText'>{buttonText}</div>
-				{completed && !error && !submitting &&
-        <Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}
-				{/*{error && <Error data-testid='error' show={error}>{renderSvg(svgs.Close)}</Error>}*/}
+				<div className='buttonText'>Log in with Facbook</div>
 				{submitting && <div data-testid='spinner' className='submit__spinner'>
           <svg className='spinner' viewBox='0 0 50 50'>
             <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
@@ -53,42 +40,8 @@ const SubmitButton = (props: IProps) => {
 
 interface IButtonProps {
 	submitting: boolean
-	completed: boolean
-	spinnerColor: string
-	show: boolean
-	invalid: boolean
 }
 
-interface ISVGProps {
-	show: boolean
-}
-
-const ButtonSvg = styled.div<ISVGProps>`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-50%) translateZ(0);
-	opacity: ${props => props.show ? 1 : 0};
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	width: 101%;
-	height: 101%;
-	svg{
-		transition: .4s cubic-bezier(.82,-0.3,.11,1.26);
-		width: 25px;
-		height: 25px;
-		transform: scale(${props => props.show ? 1 : 0});
-	}
-`
-const Completed = styled(ButtonSvg)`
-	background: ${colors.teal.i300};
-	
-	svg{
-		fill: ${colors.teal.i500};
-	}
-`
 const ErrorPosed = posed.div({
 	noError: {
 		height: 0,
@@ -126,7 +79,7 @@ const PosedButton = posed.button({
 	},
 	notSubmitting: {
 		width: '100%',
-		background: (props: any) => props.backgroundColor
+		background: '#1877F2'
 	}
 })
 const SubmitBtn = styled(PosedButton)`
@@ -163,8 +116,10 @@ const ButtonWrapper = styled.div<IButtonProps>`
 		top: 50%;
 		left: 50%;
 		transform: translateX(-50%) translateY(-50%);
-		opacity: ${props => props.submitting || props.show ? 0 : 1};
+		opacity: ${props => props.submitting ? 0 : 1};
 		transition: .2s;
+		width: 100%;
+		color: #fff;
 	}
 	
 	.submit__spinner{
@@ -182,7 +137,7 @@ const ButtonWrapper = styled.div<IButtonProps>`
 		height: 50px;
   
   & .path {
-    stroke: ${props => props.spinnerColor};
+    stroke: #1877F2;
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
   }
@@ -211,4 +166,4 @@ const ButtonWrapper = styled.div<IButtonProps>`
 }
 `
 
-export default SubmitButton
+export default FacebookSubmitBtn

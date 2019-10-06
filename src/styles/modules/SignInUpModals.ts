@@ -1,3 +1,4 @@
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import styled, { keyframes } from 'styled-components'
@@ -5,8 +6,8 @@ import styled, { keyframes } from 'styled-components'
 export const FormWrapper = styled.div`
 	position: absolute;
 	width: 100%;
-	padding: 50px 20px 20px;
-	height: 100%;
+	padding: 20px 20px 20px;
+	//height: 100%;
 `
 export const Form1 = styled.form`
 	display: flex;
@@ -14,22 +15,22 @@ export const Form1 = styled.form`
 `
 export const FormHeader1 = styled.div`
 	text-align: center;
-	margin-bottom: 35px;
+	margin-bottom: 25px;
 	padding: 0 15px;
 	
 	h3{
 		${Sentinel.black};
-		font-size: 34px;
+		font-size: 20px;
 		color: ${colors.grey.i800};
-		line-height: 34px;
-		margin: 10px 0 0;
+		line-height: 24px;
+		margin: 0 0 10px;
 	}
 	
 	.signup__subhead{
-		font-size: 18px;
+		font-size: 16px;
 		color: ${colors.grey.i800};
 		line-height: 24px;
-		margin: 10px 0 0;
+		margin: 0;
 	}
 	
 	.form__switchAccounts{
@@ -38,6 +39,7 @@ export const FormHeader1 = styled.div`
 		color: ${colors.primary.pink};
 		font-style: italic;
 		font-size: 14px;
+		display: inline-block;
 	}
 	
 	.FormHeader1__icon{
@@ -52,6 +54,14 @@ export const FormHeader1 = styled.div`
 			fill: ${colors.grey.i800};
 		}
 			
+	}
+	
+	@media ${device.mobileX} {
+		padding: 0;
+		h3{
+			font-size: 38px;
+			line-height: 38px;
+		}
 	}
 `
 export const FormGroup = styled.div`

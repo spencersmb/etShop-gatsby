@@ -1,3 +1,4 @@
+import FacebookSubmitBtn from '@components/buttons/facebookSubmitBtn'
 import SubmitButton from '@components/buttons/submitButton'
 import RxEmailField from '@components/forms/inputs/asyncEmail'
 import asyncEmailValidate from '@components/forms/userEmailValidation'
@@ -7,12 +8,14 @@ import { IFacebookUserCreate } from '@et/types/User'
 import { colors } from '@styles/global/colors'
 import { FormHeader1, FormWrapper, FormInput, Form1, FormGroup } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
-import FacebookLogin from 'react-facebook-login'
+import { ReactFacebookLoginInfo } from 'react-facebook-login'
 import styled from 'styled-components'
-import React, { RefObject } from 'react'
+import React, { Dispatch, RefObject, SetStateAction } from 'react'
 import { reduxForm } from 'redux-form'
 import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
 import RenderField from '@components/forms/inputs/renderField'
+// @ts-ignore
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 interface IPropsPublic {
 	handleUserSubmit: (props: any) => void
@@ -22,6 +25,10 @@ interface IPropsPublic {
 	firstRender: boolean;
 	poseRef: RefObject<any>;
 	signupError: { message: string } | null
+	facebookError: { message: string } | null
+	manualSubmitting: boolean
+	setManualSubmit: Dispatch<SetStateAction<boolean>>
+	setFacebookError: Dispatch<SetStateAction<null>>
 }
 
 const minLength5 = ReduxValidation.minLength(5)
@@ -29,12 +36,16 @@ const tooOld = (value: any) =>
 	value && value > 65 ? 'You might be too old for this' : undefined
 
 export const SignUpForm = (props: any) => {
-	const { handleSubmit, submitSucceeded, poseRef, signupError, firstRender, submitting, invalid, handleUserSubmit, handleFacebookSubmit } = props
+	const { handleSubmit, submitSucceeded, poseRef, signupError, submitting, invalid, handleUserSubmit, handleFacebookSubmit, manualSubmitting, setManualSubmit, setFacebookError, facebookError } = props
 
 	const { required } = ReduxValidation
-	const responseFacebook = (response: IFacebookUserCreate) => {
+	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
+		// handleSubmit(handleFacebookSubmit(response))
+		// await handleFacebookSubmit(response)
 		handleFacebookSubmit(response)
 	}
+	console.log('manualSubmitting', manualSubmitting)
+	console.log('props', props)
 
 	return (
 		<FormWrapper data-testid='signUp-form' ref={poseRef}>
@@ -98,16 +109,33 @@ export const SignUpForm = (props: any) => {
 			<FacebookLogin
 				appId='317306965764273'
 				autoLoad={false}
-				fields='name,email,picture'
+				fields='first_name,email,picture,last_name,name'
 				disableMobileRedirect={true}
 				state={
 					JSON.stringify({ facebookLogin: true })
 				}
-				callback={responseFacebook}/>
+				callback={responseFacebook}
+				onClick={() => {
+					if (facebookError) {
+						setFacebookError(null)
+					}
+					setManualSubmit(true)
+				}}
+				render={(renderProps: any) => (
+					<FacebookWrapper>
+						<FacebookSubmitBtn
+							error={facebookError}
+							submitting={manualSubmitting}
+							handleClick={renderProps.onClick}>This is my custom FB button</FacebookSubmitBtn>
+					</FacebookWrapper>
+				)}
+			/>
 		</FormWrapper>
 	)
 }
-
+const FacebookWrapper = styled.div`
+	margin-top: 15px;
+`
 export const RegisterSignupForm = reduxForm<{}, IPropsPublic>({
 	destroyOnUnmount: true, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount

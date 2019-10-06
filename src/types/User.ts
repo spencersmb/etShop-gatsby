@@ -39,7 +39,9 @@ export interface IFacebookUserCreate {
   email: string
   expiresIn: number
   id: number
+  first_name: string
   name: string
+  last_name: string
   picture:{
     data:{
       height: number

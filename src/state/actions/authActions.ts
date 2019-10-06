@@ -1,7 +1,9 @@
 import AuthApi from '@api/authApi'
 import { Actions } from '@et/types/Actions'
 import { AuthActionTypes } from '@et/types/Enums'
+import { IState } from '@et/types/State'
 import { IAuthResponse, ICreateAuthResponse, IFacebookUserCreate, IUser, IUserCreate } from '@et/types/User'
+import { emptyCart } from '@redux/actions/cartActions'
 import { loadCouponSuccess } from '@redux/actions/couponActions'
 import { clearPagination } from '@redux/actions/paginationActions'
 import { statusCheck } from '@utils/apiUtils'
@@ -36,11 +38,14 @@ export const loginUserSuccess: ILoginAction = (user) => {
 }
 
 export type ILogoutAction = () => Actions
-export const logout: ILogoutAction = () => {
+export const logout: any = () => (dispatch: Dispatch<Action>, getState: () => IState) => {
+
 	removeUserLocalStorage()
-	return {
+	dispatch(emptyCart())
+	dispatch(clearPagination())
+	dispatch({
 		type: AuthActionTypes.LOGOUT
-	}
+	})
 }
 
 export const createUser: any = (user: IUserCreate) => async (dispatch: Dispatch<Action>): Promise<any> => {
@@ -75,11 +80,13 @@ export const createUserFacebook: any = (user: IFacebookUserCreate) => async (dis
 	const body: ICreateAuthResponse = await response.json()
 	console.log('body', body)
 
-	// dispatch(loginUserSuccess(body))
-	// dispatch(loadCouponSuccess(body.coupon))
-	// saveUserLocalStorage(body)
+	dispatch(loginUserSuccess(body))
+	if (body.coupon) {
+		dispatch(loadCouponSuccess(body.coupon))
+	}
+	saveUserLocalStorage(body)
 	return {
-		firstName: 'test'
+		firstName: body.first_name
 	}
 
 }

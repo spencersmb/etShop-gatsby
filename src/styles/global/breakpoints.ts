@@ -63,10 +63,11 @@ export const maxMedia: IMediaKeys = Object.keys(sizes).reduce((finalMedia: any, 
 	}
 }, {})
 
-const size: {[id: string] : string} = {
+const size: { [id: string]: string } = {
 	mobileS: '320px',
 	mobileM: '375px',
-	mobileL: '425px',
+	mobileL: '414px',
+	mobileX: '812px',
 	tablet: '768px',
 	laptop: '1024px',
 	laptopL: '1440px',
@@ -77,16 +78,19 @@ interface IDeviceKeys {
 	mobileS: string,
 	mobileM: string,
 	mobileL: string,
+	mobileX: string,
 	tablet: string,
 	laptop: string,
 	laptopL: string,
 	desktop: string,
 	desktopL: string
 }
+
 export const device: IDeviceKeys = {
-	mobileS: `(min-width: ${size.mobileS})`,
-	mobileM: `(min-width: ${size.mobileM})`,
-	mobileL: `(min-width: ${size.mobileL})`,
+	mobileS: `(min-width: ${size.mobileS})`, // 320 iphone5
+	mobileM: `(min-width: ${size.mobileM})`, // 375 iphone 6
+	mobileL: `(min-width: ${size.mobileL})`, // 414 iphoone 678 +
+	mobileX: `only screen and (min-device-width: 375px) and (max-device-height: 896px)`, // 414 iphoone 678 +
 	tablet: `(min-width: ${size.tablet})`,
 	laptop: `(min-width: ${size.laptop})`,
 	laptopL: `(min-width: ${size.laptopL})`,

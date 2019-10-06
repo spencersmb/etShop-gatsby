@@ -95,7 +95,6 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 	function signOut () {
 		navigate('/')
-		clearPaginationAction()
 		setTimeout(() => {
 			logout()
 		}, 100)

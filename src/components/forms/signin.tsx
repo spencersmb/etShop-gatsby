@@ -14,6 +14,7 @@ interface IPropsPublic {
 	closeModal: () => void;
 	firstRender: boolean;
 	poseRef: RefObject<any>;
+	manualSubmitting: boolean
 }
 
 const minLength5 = ReduxValidation.minLength(5)
