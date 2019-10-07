@@ -33,7 +33,8 @@ export const SignInForm = (props: any) => {
 			<FormHeader1>
 				<div className='FormHeader1__icon'>{renderSvg(svgs.User)}</div>
 				<h3>Sign In</h3>
-				<p>or <span onClick={props.changeForm} data-form='signup'>create an account</span></p>
+				<p>or <span data-testid='changeFormBtn' onClick={props.changeForm} data-form='signup'>create an account</span>
+				</p>
 			</FormHeader1>
 			<form onSubmit={handleSubmit(handleUserSubmit)}>
 				<div>
@@ -60,7 +61,7 @@ export const SignInForm = (props: any) => {
 						svg={svgs.CreditCard}
 					/>
 				</div>
-				<button type='submit' disabled={invalid || submitting}>Submit</button>
+				<button data-testid={'submitButton'} type='submit' disabled={invalid || submitting}>Sign In</button>
 			</form>
 		</FormWrapper>
 	)

@@ -52,7 +52,6 @@ interface IProps {
 }
 
 export const RxEmailField = (props: IProps) => {
-	console.log('props async', props)
 
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const {

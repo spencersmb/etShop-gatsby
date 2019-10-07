@@ -2,15 +2,15 @@
 
 exports[`Navbar Layout renders correctly 1`] = `
 <nav
-  className="sc-kAzzGY eDyPqo"
+  className="sc-eHgmQL gOExqm"
   data-testid="navbar"
 >
   <div
-    className="sc-kgoBCf fkElcL"
+    className="sc-jWBwVP fXGfCz"
     data-testid="nav-logo"
   >
     <div
-      className="sc-kGXeez debjTL"
+      className="sc-brqgnP isaOCL"
     >
       <a
         href="/"
@@ -20,34 +20,34 @@ exports[`Navbar Layout renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-cSHVUG sc-jWBwVP edsDtl"
+    className="sc-hSdWYo sc-fBuWsC brUsxw"
     onClick={[Function]}
   >
     <div
-      className="sc-eHgmQL dgQcyp"
+      className="sc-hzDkRC gpRiNi"
     >
       <test-file-stub />
     </div>
   </div>
   <div
-    className="sc-chPdSV kvPeDg"
+    className="sc-cvbbAY crgaUu"
     data-testid="hamburger"
     onClick={[Function]}
   >
-    Button
+    <test-file-stub />
   </div>
   <div
-    className="sc-kpOJdX htKNSJ"
+    className="sc-cMljjf bTEwEk"
   >
     <div
-      className="sc-dxgOiQ fwiTqa"
+      className="sc-jAaTju eCmSwy"
       data-testid="nav-close"
       onClick={[Function]}
     >
       Close
     </div>
     <ul
-      className="sc-ckVGcZ eTBjLu"
+      className="sc-jDwBTQ lcAkqK"
       data-testid="nav-center"
     >
       <li>
@@ -75,20 +75,20 @@ exports[`Navbar Layout renders correctly 1`] = `
       </li>
     </ul>
     <div
-      className="sc-jKJlTe cTeKkm"
+      className="sc-gPEVay iGqrOo"
     >
       <div
-        className="sc-cSHVUG sc-eNQAEJ kASAKx"
+        className="sc-hSdWYo sc-iRbamj imskKR"
       >
         <div
-          className="sc-VigVT sc-kEYyzF iQlDtD"
+          className="sc-hMqMXs sc-gipzik fcYYAv"
           color="transparent"
           onClick={[Function]}
         >
           Sign In
         </div>
         <div
-          className="sc-VigVT sc-hMqMXs hpwWkl"
+          className="sc-hMqMXs sc-jlyJG jpZkHC"
           color="#A182E9"
           onClick={[Function]}
         >
@@ -96,16 +96,16 @@ exports[`Navbar Layout renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="sc-cSHVUG sc-hSdWYo bzLIHN"
+        className="sc-hSdWYo sc-bRBYWo kUxevv"
         onClick={[Function]}
       >
         <div
-          className="sc-eHgmQL dgQcyp"
+          className="sc-hzDkRC gpRiNi"
         >
           <test-file-stub />
         </div>
         <div
-          className="sc-cvbbAY jrAWlO"
+          className="sc-jhAzac bLLuGr"
           data-testid="cart-count"
         >
           <span>

@@ -12,26 +12,35 @@ const props = {
 	showModal: jest.fn(),
 	logout: jest.fn(),
 	cartToggle: jest.fn(),
+	toggleNav: jest.fn(),
 	clearPaginationAction: jest.fn(),
 	cart: {
 		...testCartEmpty
 	},
-	user: null
+	user: null,
+	nav: {
+		isOpen: false
+	}
 }
 const cartAdded = {
 	showModal: jest.fn(),
 	logout: jest.fn(),
 	cartToggle: jest.fn(),
+	toggleNav: jest.fn(),
 	clearPaginationAction: jest.fn(),
 	cart: {
 		...testCartWithMultiples
 	},
-	user: null
+	user: null,
+	nav: {
+		isOpen: false
+	}
 }
 const propsLoggedIn = {
 	showModal: jest.fn(),
 	logout: jest.fn(),
 	cartToggle: jest.fn(),
+	toggleNav: jest.fn(),
 	clearPaginationAction: jest.fn(),
 	cart: {
 		...testCartEmpty
@@ -42,6 +51,9 @@ const propsLoggedIn = {
 		lastName: 'bigum',
 		token: '12345',
 		gravatar: '23232323'
+	},
+	nav: {
+		isOpen: false
 	}
 }
 afterEach(() => {
@@ -58,20 +70,27 @@ describe('Navbar Layout', () => {
 		expect(tree).toMatchSnapshot()
 	})
 	it('Should have Logo Link to index page', () => {
-		const { getByText, getByTestId } = render(<Navbar {...props} />)
+		const { getByTestId } = render(<Navbar {...props} />)
 		const element = getByTestId('nav-logo')
 		// @ts-ignore
 		expect(element.children[0].children[0].href).toBe('http://localhost/')
 	})
 	it('Should have mobile hamburger button', () => {
-		const { getByText, getByTestId } = render(<Navbar {...props} />)
+		const { getByTestId } = render(<Navbar {...props} />)
 		const element = getByTestId('hamburger')
 		expect(element).toBeDefined()
 	})
 	it('Should have mobile close button', () => {
-		const { getByText, getByTestId } = render(<Navbar {...props} />)
+		const { getByTestId } = render(<Navbar {...props} />)
 		const element = getByTestId('nav-close')
 		expect(element).toBeDefined()
+	})
+
+	it('Should call toggle nav onClick', () => {
+		const { getByTestId } = render(<Navbar {...props} />)
+		const element = getByTestId('nav-close')
+		element.click()
+		expect(props.toggleNav).toHaveBeenCalled()
 	})
 	it('Should have 3 center nav links', () => {
 		const { getByText, getByTestId } = render(<Navbar {...props} />)

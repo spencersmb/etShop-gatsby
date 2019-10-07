@@ -95,10 +95,10 @@ export const RenderField = (props: IProps) => {
 
 		return !pristine || touched
 			? invalid
-				? <SvgValidation isValid={false}>
+				? <SvgValidation className={'svgValidation svgValidation--inValid'} isValid={false}>
 					{renderSvg(svgs.Close)}
 				</SvgValidation>
-				: <SvgValidation isValid={true}>
+				: <SvgValidation className={'svgValidation svgValidation--valid'} isValid={true}>
 					{renderSvg(svgs.Checkmark)}
 				</SvgValidation>
 			: null
@@ -118,7 +118,7 @@ export const RenderField = (props: IProps) => {
 
 	return (
 		<>
-			<div key={key} className={
+			<div data-testid={'formGroupTest'} key={key} className={
 				`formGroup ${isFocused} ${isValid} ${isEmpty}`
 			}>
 				<label
@@ -139,7 +139,7 @@ export const RenderField = (props: IProps) => {
 
 			</div>
 
-			{touched && <InputError>{messageTest(error)}</InputError>}
+			{touched && <InputError className={'jestError'}>{messageTest(error)}</InputError>}
 
 		</>
 	)

@@ -2,11 +2,11 @@
 
 exports[`Product List Layout renders correctly 1`] = `
 <div
-  className="sc-htoDjs frEqfh"
+  className="sc-htoDjs PrRER"
   data-testid="productList"
 >
   <div
-    className="sc-bdVaJa emmDvk"
+    className="sc-bdVaJa hKSJDv"
     data-testid="listItem"
   >
     <a
@@ -107,7 +107,7 @@ exports[`Product List Layout renders correctly 1`] = `
     </a>
   </div>
   <div
-    className="sc-bdVaJa emmDvk"
+    className="sc-bdVaJa hKSJDv"
     data-testid="listItem"
   >
     <a

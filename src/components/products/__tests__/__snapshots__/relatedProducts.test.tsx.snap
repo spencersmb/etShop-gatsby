@@ -2,7 +2,7 @@
 
 exports[`Related Products Related Product renders correctly 1`] = `
 <div
-  className="sc-bdVaJa emmDvk"
+  className="sc-bdVaJa hKSJDv"
   data-testid="listItem"
 >
   <a
@@ -110,7 +110,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
     data-testid="productsList"
   >
     <div
-      className="sc-bdVaJa emmDvk"
+      className="sc-bdVaJa hKSJDv"
       data-testid="listItem"
     >
       <a

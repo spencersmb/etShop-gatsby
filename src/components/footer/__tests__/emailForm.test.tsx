@@ -14,7 +14,7 @@ const defaultProps = {
 	completed: false,
 	hasError: false,
 	submitting: false,
-	error: null,
+	invalid: false,
 	handleTextInput: jest.fn((input: string) => (input))
 }
 
@@ -26,19 +26,10 @@ const completedProps = {
 const errorProps = {
 	...defaultProps,
 	hasError: true,
-	error: true
+	invalid: true
 
 }
 describe('Email Form Tests', () => {
-
-	it('renders correctly', () => {
-		const tree = renderer
-			.create(
-				<PinkEmailForm {...defaultProps}/>
-			)
-			.toJSON()
-		expect(tree).toMatchSnapshot()
-	})
 
 	it('Should render correct placeholder text', () => {
 		const modalRender = render(<PinkEmailForm {...defaultProps} />)

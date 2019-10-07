@@ -9,15 +9,7 @@ const props = {
 }
 
 describe('product Filter', () => {
-	it('renders correctly', () => {
-		const tree = renderer
-			.create(
-				<ProductFilter {...props}/>
-			)
-			.toJSON()
-		expect(tree).toMatchSnapshot()
-	})
-
+	
 	it('Should handleClick correctly', () => {
 		const modalRender = render(<ProductFilter {...props} filter=''/>)
 		const button = modalRender.getAllByTestId('filterItems')[0]

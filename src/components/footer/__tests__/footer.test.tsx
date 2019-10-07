@@ -11,41 +11,32 @@ afterEach(cleanup)
 
 describe('Footer Tests', () => {
 
-	it('renders correctly', () => {
-		const tree = renderer
-			.create(
-				<Footer/>
-			)
-			.toJSON()
-		expect(tree).toMatchSnapshot()
-	})
-
 	it('Should render correct header', () => {
-		const modalRender = render(<Footer/>)
+		const modalRender = render(<Footer productPage={false}/>)
 		const element = modalRender.getByText('Get notified')
 		expect(element.innerHTML).toEqual('Get notified')
 	})
 
 	it('Should render correct sub-head', () => {
-		const modalRender = render(<Footer/>)
+		const modalRender = render(<Footer productPage={false}/>)
 		const element = modalRender.getByText('when I release new products, send out promos or freebies.')
 		expect(element).toBeTruthy()
 	})
 
 	it('Should render correct email component', () => {
-		const modalRender = render(<Footer/>)
+		const modalRender = render(<Footer productPage={false}/>)
 		const element = modalRender.getByTestId('emailBox')
 		expect(element).toBeTruthy()
 	})
 
 	it('Should render Logo', () => {
-		const modalRender = render(<Footer/>)
+		const modalRender = render(<Footer productPage={false}/>)
 		const element = modalRender.getByTestId('footer-logo')
 		expect(element).toBeTruthy()
 	})
 
 	it('Should render correct nav links', () => {
-		const modalRender = render(<Footer/>)
+		const modalRender = render(<Footer productPage={false}/>)
 		const element = modalRender.getByTestId('footer-links')
 		expect(element).toBeTruthy()
 		expect(element.children.length).toEqual(4)
@@ -69,7 +60,7 @@ describe('Footer Tests', () => {
 	})
 
 	it('Should render correct social links', () => {
-		const modalRender = render(<Footer/>)
+		const modalRender = render(<Footer productPage={false}/>)
 		const element = modalRender.getByTestId('social-links')
 		expect(element).toBeTruthy()
 		expect(element.children.length).toEqual(5)

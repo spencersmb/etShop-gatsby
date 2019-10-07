@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { AuthActionTypes } from '@et/types/Enums'
+import { AuthActionTypes, CartActionTypes, PaginationTypes } from '@et/types/Enums'
 import { login, logout } from '@redux/actions/authActions'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -68,13 +68,20 @@ describe('Auth Action tests', () => {
 		const store = mockStore(initialState)
 		store.dispatch(logout())
 		const getActions = store.getActions()
-		const expectedActions =
+		const expectedActions = [
+			{
+				type: CartActionTypes.EMPTY_CART
+			},
+			{
+				type: PaginationTypes.CLEAR_ALL_PAGES
+			},
 			{
 				type: AuthActionTypes.LOGOUT
 			}
+		]
 
-		expect(getActions.length).toBe(1)
-		expect(getActions).toEqual([expectedActions])
+		expect(getActions.length).toBe(3)
+		expect(getActions).toEqual(expectedActions)
 	})
 
 })

@@ -32,7 +32,7 @@ const Footer = ({ productPage }: { productPage: boolean }) => {
 		formData.append('email', state.email)
 		// formData.append('first_name', 'spencer')
 		try {
-			const testResult = fakeApiCall()
+			const testResult = fakeApiCall('reject')
 			await testResult
 
 			// WORKING DATA
@@ -89,7 +89,7 @@ const Footer = ({ productPage }: { productPage: boolean }) => {
 				completed={state.completed}
 				hasError={state.hasError}
 				submitting={state.submitting}
-				error={state.error}
+				invalid={state.error}
 				handleTextInput={handleTextInput}/>
 			<FooterNav productPage={productPage}>
 				<SvgCircle>

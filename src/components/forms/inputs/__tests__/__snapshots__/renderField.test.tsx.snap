@@ -1,37 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RenderField Component should correct snapshot 1`] = `
-<div
-  style={
-    Object {
-      "position": "relative",
-    }
-  }
->
-  <input
-    aria-label="Coupon Code:"
-    disabled={false}
-    name="inputName"
-    onBlur={[Function]}
-    onChange={[Function]}
-    onDragStart={[Function]}
-    onDrop={[Function]}
-    onFocus={[Function]}
-    placeholder="Enter your coupon code"
-    readOnly={false}
-    type="text"
-    value={Object {}}
-  />
-  <label
-    className="renderLabel sc-bwzfXH OCRvs"
-  >
-    Coupon Code:
-  </label>
+Array [
   <div
-    className="renderInputSvg sc-bdVaJa fjHlRI"
-    color="red"
+    className="formGroup noFocus invalid has-value"
+    data-testid="formGroupTest"
   >
-    <test-file-stub />
-  </div>
-</div>
+    <label
+      className="renderLabel"
+      htmlFor="inputName"
+    >
+      Coupon Code:
+    </label>
+    <input
+      aria-label="Coupon Code:"
+      disabled={false}
+      id="inputName"
+      name="inputName"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      placeholder="Enter your coupon code"
+      readOnly={false}
+      type="text"
+      value={Object {}}
+    />
+    <div
+      className="svgValidation svgValidation--inValid sc-gzVnrw bXHyJk"
+    >
+      <test-file-stub />
+    </div>
+  </div>,
+  <div
+    className="jestError sc-EHOje bTDGTt"
+  />,
+]
 `;

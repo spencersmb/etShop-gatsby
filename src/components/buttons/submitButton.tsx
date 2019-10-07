@@ -8,7 +8,6 @@ import styled from 'styled-components'
 interface IProps {
 	submitting: boolean
 	completed: boolean
-	error: { message: string } | null
 	buttonText?: string
 	backgroundColor?: string
 	textColor?: string
@@ -18,7 +17,7 @@ interface IProps {
 
 const SubmitButton = (props: IProps) => {
 
-	const { submitting, completed, error, backgroundColor = '#fff', textColor = '#000', spinnerColor = colors.teal.i500, invalid, buttonText = 'submit' } = props
+	const { submitting, completed, backgroundColor = '#fff', textColor = '#000', spinnerColor = colors.teal.i500, invalid, buttonText = 'submit' } = props
 
 	return (
 		<ButtonWrapper
@@ -26,7 +25,7 @@ const SubmitButton = (props: IProps) => {
 			completed={completed}
 			submitting={submitting}
 			spinnerColor={spinnerColor}
-			show={completed && !error}
+			show={completed}
 			invalid={invalid}
 		>
 			<SubmitBtn
@@ -36,11 +35,10 @@ const SubmitButton = (props: IProps) => {
 				backgroundColor={backgroundColor}
 				submitting={submitting}
 				disabled={submitting}
-				data-testid='button'>
+				data-testid='submitButton'>
 				<div className='buttonText'>{buttonText}</div>
-				{completed && !error && !submitting &&
-        <Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}
-				{/*{error && <Error data-testid='error' show={error}>{renderSvg(svgs.Close)}</Error>}*/}
+				{/*{completed && !error && !submitting &&*/}
+        {/*<Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}*/}
 				{submitting && <div data-testid='spinner' className='submit__spinner'>
           <svg className='spinner' viewBox='0 0 50 50'>
             <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>

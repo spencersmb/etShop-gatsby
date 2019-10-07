@@ -119,11 +119,11 @@ const setupInvalid = () => {
 		dirty: false,
 		dispatch: () => {
 		},
-		error: {},
+		error: 'test error',
 		form: 'form',
 		initial: {},
 		invalid: true,
-		pristine: true,
+		pristine: false,
 		submitFailed: false,
 		submitting: false,
 		touched: true,
@@ -208,15 +208,15 @@ describe('RenderField Component', () => {
 			expect(wrapperShallow.find('.renderLabel').length).toBe(1)
 		})
 
-		it('should have label active = false by default', () => {
-			const label = wrapperShallow.find('.renderLabel')
-			expect(label.props().active).toBe(false)
+		it('should have correct default classes', () => {
+			const label = wrapperShallow.find('.formGroup')
+			expect(label.props().className).toBe('formGroup noFocus valid has-value')
 		})
 
-		it('should have active label when input is active', () => {
+		it('should have active class when input is active', () => {
 			const wrapperInvalid = setupValid()
-			const svg: any = wrapperInvalid.find('.renderLabel')
-			expect(svg.props().active).toBe(true)
+			const label = wrapperInvalid.find('.formGroup')
+			expect(label.props().className).toBe('formGroup hasFocus valid has-value')
 		})
 
 		it('should have correct name and type', () => {
@@ -231,27 +231,28 @@ describe('RenderField Component', () => {
 			expect(inputProps.placeholder).toBe('Enter your coupon code')
 		})
 
-		it('should have one svg element', () => {
-			expect(wrapperShallow.find('.renderInputSvg').length).toBe(1)
+		it('should not show svg element', () => {
+			expect(wrapperShallow.find('.svgValidation').length).toBe(0)
 		})
 
-		it('should have default SVG color of silver', () => {
-
-			const svg = wrapperShallow.find('.renderInputSvg')
-			expect(svg.props().color).toBe('grey')
-			expect(svg.props().children.type).toBe(svgs.CreditCard)
-		})
-
-		it('should have SVG color of red for invalid', () => {
+		it('should show SVG invalid', () => {
 			const wrapperInvalid = setupInvalid()
-			const svg = wrapperInvalid.find('.renderInputSvg')
-			expect(svg.props().color).toBe('red')
+			const svg = wrapperInvalid.find('.svgValidation--inValid')
+			expect(svg.length).toBe(1)
 		})
 
 		it('should have SVG color of green for valid', () => {
 			const wrapperInvalid = setupValid()
-			const svg = wrapperInvalid.find('.renderInputSvg')
-			expect(svg.props().color).toBe('green')
+			const svg = wrapperInvalid.find('.svgValidation--valid')
+			expect(svg.length).toBe(1)
+		})
+
+		it('should render error', () => {
+			const wrapperInvalid = setupInvalid()
+			const error = wrapperInvalid.find('.jestError')
+			expect(error.length).toBe(1)
+			expect(error.children().html()).toBe('<span>test error</span>'
+			)
 		})
 
 	}

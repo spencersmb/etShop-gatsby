@@ -8,12 +8,13 @@ import { combineReducers, createStore } from 'redux'
 import { reducer, FormReducer } from 'redux-form'
 import sinon from 'sinon'
 import { renderWithRedux } from '@redux/reduxTestUtils'
+
 afterEach(cleanup)
 
-const ConnectedFull = connect((state: FormReducer) =>{
+const ConnectedFull = connect((state: FormReducer) => {
 
 		return {
-			...state,
+			...state
 		}
 	}
 )(SignInForm)
@@ -24,31 +25,32 @@ const props = {
 	closeModal: jest.fn(),
 	changeForm: changeFormSpy,
 	poseRef: React.createRef(),
-	firstRender: true
+	firstRender: true,
+	manualSubmitting: false
 }
 
 const setup = (): any => {
 	const mounted = renderWithRedux(<ConnectedFull {...props}/>, reducer)
 	const emailInput = mounted.getByLabelText('Email:')
 	const passwordInput = mounted.getByLabelText('Password:')
-	const submitBtn = mounted.getByText('Submit')
+	const submitBtn = mounted.getByTestId('submitButton')
 	return {
 		submitBtn,
 		passwordInput,
 		emailInput,
-		...mounted,
+		...mounted
 	}
 }
 
-describe('Login Modal', () => {
+describe('SignIn Form', () => {
 
-	it('Should render email input type', ( ) => {
+	it('Should render email input type', () => {
 		const mountedForm = setup()
 		expect(mountedForm.emailInput.name).toBe('email')
 		expect(mountedForm.emailInput.type).toBe('email')
 	})
 
-	it('Should render password input type', ( ) => {
+	it('Should render password input type', () => {
 		const mountedForm = setup()
 		expect(mountedForm.passwordInput.name).toBe('password')
 		expect(mountedForm.passwordInput.type).toBe('password')
@@ -58,24 +60,22 @@ describe('Login Modal', () => {
 		const mountedForm = setup()
 		const btn = mountedForm.submitBtn
 		btn.click()
-		expect(btn).toBeTruthy()
 		expect(props.handleUserSubmit).toHaveBeenCalledTimes(1)
 	})
 
 	it('should have a changeForm btn and call changeForm on click', () => {
 		const mountedForm = setup()
-		const btn = mountedForm.getByText('Sign Up')
+		const btn = mountedForm.getByTestId('changeFormBtn')
 		btn.click()
 
 		expect(props.changeForm).toHaveBeenCalledTimes(1)
-		expect(btn).toBeTruthy()
 	})
 })
 
-describe('Login Modal Enzyme', () => {
+describe('Sign In Form Enzyme', () => {
 
 	it('Should take snapshot of blank form layout', () => {
-		const store = createStore(combineReducers({form: reducer}))
+		const store = createStore(combineReducers({ form: reducer }))
 
 		const enzymeProps = {
 			handleSubmit: jest.fn(),

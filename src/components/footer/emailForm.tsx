@@ -13,12 +13,12 @@ interface IProps {
 	completed: boolean
 	hasError: boolean
 	submitting: boolean
-	error: boolean | null
+	invalid: boolean
 	handleTextInput: (e: any) => void
 }
 
 const PinkEmailForm = (props: IProps) => {
-	const { handleSubmit, handleTextInput, completed, error, hasError, submitting } = props
+	const { handleSubmit, handleTextInput, completed, invalid, hasError, submitting } = props
 	return (
 		<EmailBox
 			data-testid='emailBox'
@@ -47,9 +47,9 @@ const PinkEmailForm = (props: IProps) => {
 			</EmailBoxLeft>
 			<EmailBoxRight completed={completed}>
 				<SubmitButton
+					invalid={invalid}
 					submitting={submitting}
 					completed={completed}
-					error={error}
 				/>
 			</EmailBoxRight>
 			<SvgBig>

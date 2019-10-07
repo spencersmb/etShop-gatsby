@@ -40,12 +40,8 @@ export const SignUpForm = (props: any) => {
 
 	const { required } = ReduxValidation
 	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
-		// handleSubmit(handleFacebookSubmit(response))
-		// await handleFacebookSubmit(response)
 		handleFacebookSubmit(response)
 	}
-	console.log('manualSubmitting', manualSubmitting)
-	console.log('props', props)
 
 	return (
 		<FormWrapper data-testid='signUp-form' ref={poseRef}>
@@ -54,11 +50,11 @@ export const SignUpForm = (props: any) => {
 				<p className='signup__subhead'>
 					Save 10% on your first purchse when you create an account
 				</p>
-				<p className='form__switchAccounts' data-form='signin' onClick={props.changeForm}>Already have an account? Sign
+				<p data-testid='switchAccounts-btn' className='form__switchAccounts' data-form='signin' onClick={props.changeForm}>Already have an account? Sign
 					in</p>
 			</FormHeader1>
 			<Form1 onSubmit={handleSubmit(handleUserSubmit)}>
-				<FormGroup>
+				<FormGroup data-testid={'formGroup'}>
 					<FormInput>
 						<ReduxFieldExt
 							name='firstName'
@@ -101,27 +97,26 @@ export const SignUpForm = (props: any) => {
 					spinnerColor={colors.teal.i500}
 					submitting={submitting}
 					completed={submitSucceeded}
-					error={signupError}
 					invalid={invalid}
 				/>
 
 			</Form1>
-			<FacebookLogin
-				appId='317306965764273'
-				autoLoad={false}
-				fields='first_name,email,picture,last_name,name'
-				disableMobileRedirect={true}
-				state={
+			{process.env.NODE_ENV !== 'test' && <FacebookLogin
+        appId='317306965764273'
+        autoLoad={false}
+        fields='first_name,email,picture,last_name,name'
+        disableMobileRedirect={true}
+        state={
 					JSON.stringify({ facebookLogin: true })
 				}
-				callback={responseFacebook}
-				onClick={() => {
+        callback={responseFacebook}
+        onClick={() => {
 					if (facebookError) {
 						setFacebookError(null)
 					}
 					setManualSubmit(true)
 				}}
-				render={(renderProps: any) => (
+        render={(renderProps: any) => (
 					<FacebookWrapper>
 						<FacebookSubmitBtn
 							error={facebookError}
@@ -129,7 +124,7 @@ export const SignUpForm = (props: any) => {
 							handleClick={renderProps.onClick}>This is my custom FB button</FacebookSubmitBtn>
 					</FacebookWrapper>
 				)}
-			/>
+      />}
 		</FormWrapper>
 	)
 }

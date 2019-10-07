@@ -92,7 +92,6 @@ export const LoginModal = (props: MixedFormProps) => {
 	}
 
 	const userSignUp = async (formProps: any) => {
-		console.log('formProps', formProps)
 		if (reduxError) {
 			setReduxError(null)
 		}
@@ -115,7 +114,6 @@ export const LoginModal = (props: MixedFormProps) => {
 		try {
 			const response: { firstName: string } = await props.createUserFacebook(formProps)
 			setSubmitting(false)
-			console.log('nav.isOpen', nav.isOpen)
 
 			if (nav.isOpen) {
 				navToggle()
@@ -185,7 +183,7 @@ export const LoginModal = (props: MixedFormProps) => {
 					</ContentContainer>
 				</LoginModalContent>
 
-				<CloseBtn className='jestCartToggle' onClick={closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
+				<CloseBtn data-testid='close-btn' className='jestCartToggle' onClick={closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
 			</LoginModalWrapper>
 		</ModalPose>
 	)
@@ -292,6 +290,7 @@ const ContentContainer = styled.div<any>`
 `
 const CloseBtn = styled.div`
 	width: 25px;
+	height: 25px;
 	position: absolute;
 	top: 10px;
 	right: 10px;
