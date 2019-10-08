@@ -50,7 +50,8 @@ const propsLoggedIn = {
 		firstName: 'spencer',
 		lastName: 'bigum',
 		token: '12345',
-		gravatar: '23232323'
+		gravatar: '23232323',
+		fbProfilePic: null
 	},
 	nav: {
 		isOpen: false
@@ -63,12 +64,6 @@ afterEach(() => {
 
 describe('Navbar Layout', () => {
 
-	it('renders correctly', () => {
-		const tree = renderer
-			.create(<Navbar {...props} />)
-			.toJSON()
-		expect(tree).toMatchSnapshot()
-	})
 	it('Should have Logo Link to index page', () => {
 		const { getByTestId } = render(<Navbar {...props} />)
 		const element = getByTestId('nav-logo')
@@ -80,15 +75,10 @@ describe('Navbar Layout', () => {
 		const element = getByTestId('hamburger')
 		expect(element).toBeDefined()
 	})
-	it('Should have mobile close button', () => {
-		const { getByTestId } = render(<Navbar {...props} />)
-		const element = getByTestId('nav-close')
-		expect(element).toBeDefined()
-	})
 
 	it('Should call toggle nav onClick', () => {
 		const { getByTestId } = render(<Navbar {...props} />)
-		const element = getByTestId('nav-close')
+		const element = getByTestId('hamburger')
 		element.click()
 		expect(props.toggleNav).toHaveBeenCalled()
 	})

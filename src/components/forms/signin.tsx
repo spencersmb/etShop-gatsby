@@ -1,12 +1,19 @@
+import FacebookSubmitBtn from '@components/buttons/facebookSubmitBtn'
+import SubmitButton from '@components/buttons/submitButton'
 import ReduxValidation from '@components/forms/validations'
-import { FormHeader1, FormWrapper } from '@styles/modules/SignInUpModals'
+import { IFacebookUserCreate } from '@et/types/User'
+import { colors } from '@styles/global/colors'
+import { FacebookWrapper, FormGroup, FormHeader1, FormInput, FormWrapper } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
+import { ReactFacebookLoginInfo } from 'react-facebook-login'
 import styled from 'styled-components'
-import React, { RefObject } from 'react'
+import React, { Dispatch, RefObject, SetStateAction } from 'react'
 import { reduxForm } from 'redux-form'
 import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
 import RenderField from '@components/forms/inputs/renderField'
+// @ts-ignore
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 interface IPropsPublic {
 	handleUserSubmit: (props: any) => void
@@ -14,7 +21,11 @@ interface IPropsPublic {
 	closeModal: () => void;
 	firstRender: boolean;
 	poseRef: RefObject<any>;
+	handleFacebookSubmit: (props: IFacebookUserCreate) => void
+	facebookError: { message: string } | null
 	manualSubmitting: boolean
+	setManualSubmit: Dispatch<SetStateAction<boolean>>
+	setFacebookError: Dispatch<SetStateAction<null>>
 }
 
 const minLength5 = ReduxValidation.minLength(5)
@@ -23,8 +34,11 @@ const tooOld = (value: any) =>
 
 export const SignInForm = (props: any) => {
 
-	const { handleSubmit, poseRef, firstRender, submitting, invalid, handleUserSubmit } = props
+	const { handleSubmit, poseRef, submitSucceeded, submitting, invalid, handleUserSubmit, setFacebookError, facebookError, manualSubmitting, setManualSubmit, handleFacebookSubmit } = props
 	const { required, email } = ReduxValidation
+	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
+		handleFacebookSubmit(response)
+	}
 
 	return (
 		<FormWrapper
@@ -33,36 +47,71 @@ export const SignInForm = (props: any) => {
 			<FormHeader1>
 				<div className='FormHeader1__icon'>{renderSvg(svgs.User)}</div>
 				<h3>Sign In</h3>
-				<p>or <span data-testid='changeFormBtn' onClick={props.changeForm} data-form='signup'>create an account</span>
-				</p>
+				<p style={{ margin: 0 }} data-testid='switchAccounts-btn' className='form__switchAccounts' data-form='signup'
+					 onClick={props.changeForm}>Save 10% with a new account and Sign
+					up!</p>
 			</FormHeader1>
 			<form onSubmit={handleSubmit(handleUserSubmit)}>
-				<div>
-					<ReduxFieldExt
-						name='email'
-						type='email'
-						component={RenderField}
-						placeholder=''
-						validate={[required, email]}
-						label='Email:'
-						svg={svgs.CreditCard}
-					/>
-				</div>
-				<div>
-					<ReduxFieldExt
-						name='password'
-						type='password'
-						component={RenderField}
-						placeholder=''
-						label='Password:'
-						validate={[required, minLength5]}
-						withRef={true}
-						warn={tooOld}
-						svg={svgs.CreditCard}
-					/>
-				</div>
-				<button data-testid={'submitButton'} type='submit' disabled={invalid || submitting}>Sign In</button>
+				<FormGroup data-testid={'formGroup'}>
+					<FormInput>
+						<ReduxFieldExt
+							name='email'
+							type='email'
+							component={RenderField}
+							placeholder=''
+							validate={[required, email]}
+							label='Email:'
+							svg={svgs.CreditCard}
+						/>
+					</FormInput>
+					<FormInput>
+						<ReduxFieldExt
+							name='password'
+							type='password'
+							component={RenderField}
+							placeholder=''
+							label='Password:'
+							validate={[required, minLength5]}
+							withRef={true}
+							warn={tooOld}
+							svg={svgs.CreditCard}
+						/>
+					</FormInput>
+				</FormGroup>
+				<SubmitButton
+					textColor={'#fff'}
+					buttonText={'Sign In'}
+					backgroundColor={colors.teal.i500}
+					spinnerColor={colors.teal.i500}
+					submitting={submitting}
+					completed={submitSucceeded}
+					invalid={invalid}
+				/>
 			</form>
+			{process.env.NODE_ENV !== 'test' && <FacebookLogin
+        appId='317306965764273'
+        autoLoad={false}
+        fields='first_name,email,picture,last_name,name'
+        disableMobileRedirect={true}
+        state={
+					JSON.stringify({ facebookLogin: true })
+				}
+        callback={responseFacebook}
+        onClick={() => {
+					if (facebookError) {
+						setFacebookError(null)
+					}
+					setManualSubmit(true)
+				}}
+        render={(renderProps: any) => (
+					<FacebookWrapper>
+						<FacebookSubmitBtn
+							error={facebookError}
+							submitting={manualSubmitting}
+							handleClick={renderProps.onClick}>This is my custom FB button</FacebookSubmitBtn>
+					</FacebookWrapper>
+				)}
+      />}
 		</FormWrapper>
 	)
 }

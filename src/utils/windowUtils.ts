@@ -34,3 +34,15 @@ export function getWindowPosition () {
 	}
 	return 0
 }
+
+export function getWindowSize () {
+	const width = window.innerWidth
+
+	if (width < 767) {
+		return 'mobile'
+	} else if (width < 1024) {
+		return 'tablet'
+	} else {
+		return 'desktop'
+	}
+}

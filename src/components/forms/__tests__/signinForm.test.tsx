@@ -1,4 +1,5 @@
-import React from 'react'
+import { IFacebookUserCreate } from '@et/types/User'
+import React, { Dispatch, SetStateAction } from 'react'
 import { connect, Provider } from 'react-redux'
 import { mount } from 'enzyme'
 import renderer from 'react-test-renderer'
@@ -26,7 +27,11 @@ const props = {
 	changeForm: changeFormSpy,
 	poseRef: React.createRef(),
 	firstRender: true,
-	manualSubmitting: false
+	handleFacebookSubmit: jest.fn(),
+	facebookError: null,
+	manualSubmitting: false,
+	setManualSubmit: jest.fn(),
+	setFacebookError: jest.fn()
 }
 
 const setup = (): any => {
@@ -65,7 +70,7 @@ describe('SignIn Form', () => {
 
 	it('should have a changeForm btn and call changeForm on click', () => {
 		const mountedForm = setup()
-		const btn = mountedForm.getByTestId('changeFormBtn')
+		const btn = mountedForm.getByTestId('switchAccounts-btn')
 		btn.click()
 
 		expect(props.changeForm).toHaveBeenCalledTimes(1)

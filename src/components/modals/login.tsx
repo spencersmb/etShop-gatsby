@@ -19,9 +19,7 @@ import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
 import SignInForm from '@components/forms/signin'
 import SignUpForm from '@components/forms/signup'
-// import SignUpForm from '@components/forms/signUpHooks'
 import { navigate } from 'gatsby'
-// import SignUpForm from '@et/forms/signUp'
 import React, { useState, useEffect, useRef } from 'react'
 import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 
@@ -61,7 +59,6 @@ export const LoginModal = (props: MixedFormProps) => {
 
 	const [name, setName] = useState(options.name)
 	const [submitting, setSubmitting] = useState(false)
-	const [reduxError, setReduxError] = useState(null)
 	const [facebookError, setFacebookError] = useState(null)
 	const firstRender = useRef(true)
 
@@ -92,9 +89,6 @@ export const LoginModal = (props: MixedFormProps) => {
 	}
 
 	const userSignUp = async (formProps: any) => {
-		if (reduxError) {
-			setReduxError(null)
-		}
 		try {
 			const response: { firstName: string } = await props.createUser(formProps)
 			if (nav.isOpen) {
@@ -106,11 +100,10 @@ export const LoginModal = (props: MixedFormProps) => {
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 		} catch (e) {
 			console.error('user signup fail:', e)
-			setReduxError(e)
 		}
 	}
 
-	const facebookSignUp = async (formProps: any) => {
+	const facebookSignUp = async (formProps: IFacebookUserCreate) => {
 		try {
 			const response: { firstName: string } = await props.createUserFacebook(formProps)
 			setSubmitting(false)
@@ -152,8 +145,12 @@ export const LoginModal = (props: MixedFormProps) => {
 										changeForm={changeForm}
 										closeModal={closeModal}
 										firstRender={firstRender.current}
-										manualSubmitting={submitting}
 										poseRef={ref}
+										setFacebookError={setFacebookError}
+										facebookError={facebookError}
+										setManualSubmit={setSubmitting}
+										manualSubmitting={submitting}
+										handleFacebookSubmit={facebookSignUp}
 									/>
 								)}
               </SignInPose>}
@@ -168,7 +165,6 @@ export const LoginModal = (props: MixedFormProps) => {
 										closeModal={closeModal}
 										firstRender={firstRender.current}
 										poseRef={ref}
-										signupError={reduxError}
 										setFacebookError={setFacebookError}
 										facebookError={facebookError}
 										setManualSubmit={setSubmitting}
@@ -183,7 +179,8 @@ export const LoginModal = (props: MixedFormProps) => {
 					</ContentContainer>
 				</LoginModalContent>
 
-				<CloseBtn data-testid='close-btn' className='jestCartToggle' onClick={closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
+				<CloseBtn data-testid='close-btn' className='jestCartToggle'
+									onClick={closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
 			</LoginModalWrapper>
 		</ModalPose>
 	)

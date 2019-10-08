@@ -11,7 +11,8 @@ import { clearPagination } from '@redux/actions/paginationActions'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import React, { useEffect, useRef, useState } from 'react'
+import { getWindowSize } from '@utils/windowUtils'
+import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react'
 import { Link, navigate } from 'gatsby'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -33,7 +34,7 @@ import {
 	SignOutBtn,
 	CartWrapper,
 	CartSvg,
-	CartCount, MobileCartWrapper
+	CartCount, MobileCartWrapper, NavItem
 } from '@styles/modules/nav'
 
 interface IPropsState {
@@ -52,7 +53,6 @@ interface IPropsActions {
 
 function Navbar (props: IPropsActions & IPropsState) {
 	const { user, logout, toggleNav, nav } = props
-	// const [isOpen, setIsOpen] = useState(false)
 	const target = useRef<HTMLElement | null>(null)
 	const bodyScrollPos = useRef(0)
 
@@ -107,7 +107,6 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 	function navToggle () {
 		toggleNav()
-		// setIsOpen(!isOpen)
 	}
 
 	function cartToggleEvent () {
@@ -129,6 +128,31 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 	}
 
+	function getUserImage (currentUser: IUser) {
+		if (currentUser.fbProfilePic) {
+			return (
+				<img src={currentUser.fbProfilePic} alt='facebook image'/>
+			)
+		}
+		return (
+			<img src={`https://www.gravatar.com/avatar/${currentUser.gravatar}`} alt='user image'/>
+		)
+
+	}
+
+	const changePage = (href: string) => (e: any) => {
+		e.preventDefault()
+		if (nav.isOpen) {
+			toggleNav()
+			setTimeout(() => {
+					navigate(href)
+				}, 300
+			)
+		} else {
+			navigate(href)
+		}
+	}
+
 	useEffect(() => {
 		target.current = document.querySelector('#___gatsby')
 	})
@@ -137,10 +161,12 @@ function Navbar (props: IPropsActions & IPropsState) {
 		<Nav data-testid='navbar'>
 			<Logo data-testid='nav-logo'>
 				<LogoContainer>
-					<Link
-						to='/'>
+					<a
+						href='/'
+						onClick={changePage('/')}
+						>
 						{renderSvg(svgs.ETLogo)}
-					</Link>
+					</a>
 				</LogoContainer>
 			</Logo>
 			<MobileCartWrapper onClick={cartToggleEvent}>
@@ -157,62 +183,82 @@ function Navbar (props: IPropsActions & IPropsState) {
 				{nav.isOpen ? renderSvg(svgs.HamburgerClose) : renderSvg(svgs.Hamburger)}
 			</Hamburger>
 
-			<NavLinks isOpen={nav.isOpen}>
-				<CloseButton
-					data-testid='nav-close'
-					onClick={navToggle}>Close</CloseButton>
+			<NavLinks
+				isMobile={getWindowSize() !== 'desktop'}
+				pose={nav.isOpen ? 'open' : 'closed'}
+			>
+
 				<NavCenter data-testid='nav-center'>
-					<li>
-						<Link
-							to='/'>
+					{user && <NavItem hideOnDesktop={true}>
+            <MyAccount>
+              <a
+                href='/account'
+                onClick={changePage('/account')}>
+								{getUserImage(user)}
+                <span>
+									My account
+								</span>
+              </a>
+            </MyAccount>
+          </NavItem>}
+					<NavItem>
+						<a
+							href='/'
+							onClick={changePage('/')}>
 							Products
-						</Link>
-					</li>
-					<li>
+						</a>
+					</NavItem>
+					<NavItem>
 						<a href='https://every-tuesday.com' rel='noreferrer' target='_blank'>Blog</a>
-					</li>
-					<li>
-						<Link
-							to='/support'>
+					</NavItem>
+					<NavItem>
+						<a
+							href='/support'
+							onClick={changePage('/support')}>
 							Support
-						</Link>
-					</li>
+						</a>
+					</NavItem>
 					{/*<li onClick={receipt}>Receipt test</li>*/}
 				</NavCenter>
 				<NavRight>
 					{!user &&
           <LoginStatus>
-            <SignInButton
-              outline={false}
-              color='transparent'
-              textColor={colors.purple.i500}
-              hoverColor='transparent'
-              hoverTextColor={colors.purple.i600}
-              onClick={openSignInModal('signin')}>Sign In</SignInButton>
-            <JoinButton
-              outline={false}
-              color={colors.purple.i500}
-              hoverColor={colors.purple.i600}
-              onClick={openSignInModal('signup')}>Join Now</JoinButton>
+            <NavItem>
+              <SignInButton
+                outline={false}
+                color='transparent'
+                textColor={colors.purple.i500}
+                hoverColor='transparent'
+                hoverTextColor={colors.purple.i600}
+                onClick={openSignInModal('signin')}>Sign In</SignInButton>
+            </NavItem>
+            <NavItem>
+              <JoinButton
+                outline={false}
+                color={colors.purple.i500}
+                hoverColor={colors.purple.i600}
+                onClick={openSignInModal('signup')}>Join Now</JoinButton>
+            </NavItem>
           </LoginStatus>
 					}
 					{user &&
           <LoginStatus>
-            <MyAccount>
-              <Link to='/account'>
-                <img src={`https://www.gravatar.com/avatar/${user.gravatar}`} alt='user gravatar image'/>
-                <span>
+            <NavItem hideOnMobile={true}>
+              <MyAccount>
+                <a
+                  href='javascript:void(0)'
+                  onClick={changePage('/account')}>
+									{getUserImage(user)}
+                  <span>
 									My account
 								</span>
-              </Link>
-            </MyAccount>
-            <SignOutBtn
-              outline={false}
-              color='transparent'
-              textColor={colors.primary.pink}
-              hoverColor='transparent'
-              hoverTextColor={colors.primary.pink}
-              onClick={signOut}>Sign Out</SignOutBtn>
+                </a>
+              </MyAccount>
+            </NavItem>
+            <NavItem>
+              <button className={'signOut'} onClick={signOut}>Sign Out</button>
+            </NavItem>
+
           </LoginStatus>
 					}
 					<CartWrapper onClick={cartToggleEvent}>
@@ -224,6 +270,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 						</CartCount>
 					</CartWrapper>
 				</NavRight>
+
 			</NavLinks>
 		</Nav>
 	)

@@ -2,10 +2,11 @@ import { device } from '@styles/global/breakpoints'
 import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { FlexRow } from '@styles/global/cssGrid'
+import posed from 'react-pose'
 import styled from 'styled-components'
 
 interface INavLinkProps {
-	isOpen: boolean
+	isMobile: boolean
 }
 
 export const Nav = styled.nav`
@@ -54,16 +55,38 @@ export const LogoContainer = styled.div`
 		max-width: 234px;
 	}
 `
-export const NavLinks = styled.div<INavLinkProps>`
+
+const NavLinksPose = posed.div({
+	open: {
+		x: 0,
+		delayChildren: 500,
+		staggerChildren: 50,
+		transition: {
+			duration: 600,
+			ease: [1, 0, 0, 1]
+		}
+	},
+	closed: {
+		x: `-100%`,
+		staggerChildren: 20,
+		transition: {
+			ease: [1, 0, 0, 1]
+		}
+	}
+})
+export const NavLinks = styled(NavLinksPose)<INavLinkProps>`
 	grid-column: 1 / -1;
 	position: absolute;
 	left: 0;
-	top: ${props => props.isOpen ? '75px' : '0px'};
+	top: ${props => props.isMobile ? '75px' : '0px'};
 	height: 100vh;
 	width: 100%;
 	background: #ff6363;
-	transform: ${props => props.isOpen ? `translateY(0)` : `translateY(-100%)`};
+	// transform: ${props => props.isOpen ? `translateY(0)` : `translateY(-100%)`};
 	//transition: .3s cubic-bezier(.17,.67,.14,1.03);
+	
+	//padding: 65px 0 0 0;
+	
 	
 	@media ${device.laptop} {
 		position: relative;
@@ -73,7 +96,7 @@ export const NavLinks = styled.div<INavLinkProps>`
 		display: grid;
 		grid-template-columns: repeat(2,minmax(auto,1fr));
 		height: 100%;
-		transform: translateY(0);
+		transform: translateX(0) !important;
 		transition: 0s;
 	}
 		
@@ -90,17 +113,41 @@ export const CloseButton = styled.div`
 		display: none;
 	}
 `
+const NavItemPose = posed.li({
+	open: { opacity: 1, x: 0 },
+	closed: { opacity: 0, x: -20 }
+})
+
+export const NavItem = styled(NavItemPose)`
+	${props => props.hideOnDesktop ? `
+		@media ${device.laptop} {
+			display: none;
+		}
+	` : ''};
+	${props => props.hideOnMobile ? `
+		display: none;
+		@media ${device.laptop} {
+			display: block;
+		}
+	` : ''};
+	
+`
+
 export const NavCenter = styled.ul`
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	margin: 0;
-	padding: 0;
+	padding: 20px 20px 0;
 	text-transform: uppercase;
 	
 	li{
 		list-style: none;
 		font-family: 'Fira Sans', sans-serif;
 		font-weight: 700;
+		padding: 10px 0; 
+		&:first-child{
+			padding: 0;
+		}
 	}
 	
 	a{
@@ -110,14 +157,20 @@ export const NavCenter = styled.ul`
 	@media ${device.laptop}{
 		align-items: center;
 		justify-content: space-around;
-
+		flex-direction: row;
+		margin: 0;
+		padding: 0;
+		
+		li{
+			padding:0;
+			opacity: 1 !important;
+			transform: translateX(0) !important;
+		}
 	}
 	
 `
 export const NavRight = styled.div`
-	li{
-		list-style: none;
-	}
+	flex-direction: column;
 	
 	@media ${device.laptop} {
 		align-items: center;
@@ -125,11 +178,43 @@ export const NavRight = styled.div`
 		display: flex;
 		flex-direction: row;
 	}
-		
 `
-export const LoginStatus = styled(FlexRow)`
+export const LoginStatus = styled.ul`
+	display: flex;
+	flex-direction: column;
 	border-right: 1px solid ${colors.grey.i600};
-	align-items: center;
+	align-items: flex-start;
+	padding: 0 20px 20px;
+	margin: 0;
+
+	li{
+		list-style: none;
+		padding: 0 0 10px;
+	}
+	
+	.signOut{
+		padding: 10px 0 0;
+		font-size: 16px;
+		font-weight: 700;
+		margin: 0;
+		color: ${colors.primary.text};
+		text-transform: uppercase;
+	}
+	
+	@media ${device.laptop} {
+		align-items: center;
+		flex-direction: row;
+		padding: 0;
+		li{
+			opacity: 1 !important;
+			transform: translateX(0) !important;
+			padding: 0;
+		}
+		.signOut{
+			padding: 0;
+		}
+	}
+		
 `
 export const JoinButton = styled(ButtonSmall)`
 	margin: 0 15px 0 0;
@@ -139,7 +224,8 @@ export const SignInButton = styled(ButtonSmall)`
 	margin: 0 20px 0 0;
 `
 export const MyAccount = styled.div`
-	margin: 0 20px 0 0;
+
+	margin: 0 20px 10px 0;
 	img{
 		width: 50px;
 		height: 50px;
@@ -148,12 +234,18 @@ export const MyAccount = styled.div`
 	}
 	span{
 		text-transform: uppercase;
-		font-size: 14px;
+		font-weight: 700;
+		font-size: 16px;
 	}
 	a{
 		color: ${colors.primary.text};
 		font-weight: 500;
 	}
+	
+	@media ${device.laptop} {
+		margin: 0 20px 0 0;
+	}
+		
 `
 export const SignOutBtn = styled(ButtonSmall)`
 	padding: 8px 0;

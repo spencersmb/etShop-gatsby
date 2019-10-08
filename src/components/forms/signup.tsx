@@ -6,10 +6,9 @@ import validate from '@components/forms/validate'
 import ReduxValidation from '@components/forms/validations'
 import { IFacebookUserCreate } from '@et/types/User'
 import { colors } from '@styles/global/colors'
-import { FormHeader1, FormWrapper, FormInput, Form1, FormGroup } from '@styles/modules/SignInUpModals'
+import { FacebookWrapper, FormHeader1, FormWrapper, FormInput, Form1, FormGroup } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
 import { ReactFacebookLoginInfo } from 'react-facebook-login'
-import styled from 'styled-components'
 import React, { Dispatch, RefObject, SetStateAction } from 'react'
 import { reduxForm } from 'redux-form'
 import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
@@ -19,12 +18,11 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 
 interface IPropsPublic {
 	handleUserSubmit: (props: any) => void
-	handleFacebookSubmit: (props: IFacebookUserCreate) => void
 	changeForm: (event: any) => void;
 	closeModal: () => void;
 	firstRender: boolean;
 	poseRef: RefObject<any>;
-	signupError: { message: string } | null
+	handleFacebookSubmit: (props: IFacebookUserCreate) => void
 	facebookError: { message: string } | null
 	manualSubmitting: boolean
 	setManualSubmit: Dispatch<SetStateAction<boolean>>
@@ -36,10 +34,12 @@ const tooOld = (value: any) =>
 	value && value > 65 ? 'You might be too old for this' : undefined
 
 export const SignUpForm = (props: any) => {
-	const { handleSubmit, submitSucceeded, poseRef, signupError, submitting, invalid, handleUserSubmit, handleFacebookSubmit, manualSubmitting, setManualSubmit, setFacebookError, facebookError } = props
+	const { handleSubmit, submitSucceeded, poseRef, submitting, invalid, handleUserSubmit, handleFacebookSubmit, manualSubmitting, setManualSubmit, setFacebookError, facebookError } = props
 
 	const { required } = ReduxValidation
 	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
+		console.log('response', response)
+
 		handleFacebookSubmit(response)
 	}
 
@@ -50,7 +50,8 @@ export const SignUpForm = (props: any) => {
 				<p className='signup__subhead'>
 					Save 10% on your first purchse when you create an account
 				</p>
-				<p data-testid='switchAccounts-btn' className='form__switchAccounts' data-form='signin' onClick={props.changeForm}>Already have an account? Sign
+				<p data-testid='switchAccounts-btn' className='form__switchAccounts' data-form='signin'
+					 onClick={props.changeForm}>Already have an account? Sign
 					in</p>
 			</FormHeader1>
 			<Form1 onSubmit={handleSubmit(handleUserSubmit)}>
@@ -128,9 +129,7 @@ export const SignUpForm = (props: any) => {
 		</FormWrapper>
 	)
 }
-const FacebookWrapper = styled.div`
-	margin-top: 15px;
-`
+
 export const RegisterSignupForm = reduxForm<{}, IPropsPublic>({
 	destroyOnUnmount: true, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount

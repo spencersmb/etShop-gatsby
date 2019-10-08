@@ -1,3 +1,4 @@
+import { device } from '@styles/global/breakpoints'
 import { createGlobalStyle } from 'styled-components'
 import cssReset from './cssReset'
 import cssFlickity from '../modules/flickity'
@@ -30,9 +31,13 @@ export default createGlobalStyle`
   a{
   	transition: color .3s;
   	will-change: color;
-  	&:hover{
-  		color: ${colors.primary.pink};
+  	
+  	@media ${device.laptop} {
+			&:hover{
+				color: ${colors.primary.pink};
+			}
   	}
+  		
   }
   
   #___gatsby{

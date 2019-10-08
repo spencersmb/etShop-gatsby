@@ -70,15 +70,12 @@ export const createUser: any = (user: IUserCreate) => async (dispatch: Dispatch<
 
 export const createUserFacebook: any = (user: IFacebookUserCreate) => async (dispatch: Dispatch<Action>): Promise<any> => {
 
-	// Add Loading Dispatch spinner
-	// insert LOADING BAR ACTION ?
-
 	const response: Response = await AuthApi.createFacebookUser(user)
 
 	await statusCheck(response, dispatch)
 
 	const body: ICreateAuthResponse = await response.json()
-	console.log('body', body)
+	body.fbProfilePic = user.picture ? user.picture.data.url : null
 
 	dispatch(loginUserSuccess(body))
 	if (body.coupon) {

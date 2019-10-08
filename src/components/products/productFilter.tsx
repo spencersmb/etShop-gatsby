@@ -3,6 +3,7 @@ import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
+import { getWindowSize } from '@utils/windowUtils'
 import React, { Ref, useEffect, useRef, useState } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -36,18 +37,6 @@ const filterItems: IFilterItem[] = [
 	}
 ]
 
-function getWindowSize () {
-	const width = window.innerWidth
-
-	if (width < 767) {
-		return 'mobile'
-	} else if (width < 1024) {
-		return 'tablet'
-	} else {
-		return 'desktop'
-	}
-}
-
 function getNavSize (windowSize: string) {
 
 	if (windowSize === 'desktop') {
@@ -66,8 +55,10 @@ const useScrollEvent = () => {
 
 	useEffect(() => {
 		const header = document.getElementById('header')
+		const cartCheck = document.getElementById('cart-Container')
 		const headerHeight = header ? header.getBoundingClientRect().height : 0
 		const watchNav = () => {
+			const carthasChildren = cartCheck ? cartCheck.children.length > 0 : false
 			const fromTop = window.scrollY
 			const windowDevice = getWindowSize()
 			const size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
@@ -76,6 +67,10 @@ const useScrollEvent = () => {
 				// console.log('sticky')
 				setFixed(true)
 
+			} else if (fromTop < size && prevFixed.current && carthasChildren) {
+				// link.classList.remove("current");
+				setFixed(true)
+				// console.log('unStick')
 			} else if (fromTop < size && prevFixed.current) {
 				// link.classList.remove("current");
 				setFixed(false)

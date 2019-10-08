@@ -239,6 +239,6 @@ export const SvgValidation = styled.div<{ isValid: boolean }>`
 	}
 `
 
-export const SubmitButton = styled.button`
-
+export const FacebookWrapper = styled.div`
+	margin-top: 15px;
 `
