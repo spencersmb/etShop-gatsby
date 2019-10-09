@@ -1,3 +1,4 @@
+import { IUser } from '@et/types/User'
 import { device } from '@styles/global/breakpoints'
 import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
@@ -78,26 +79,30 @@ export const NavLinks = styled(NavLinksPose)<INavLinkProps>`
 	grid-column: 1 / -1;
 	position: absolute;
 	left: 0;
-	top: ${props => props.isMobile ? '75px' : '0px'};
+	//top: ${props => props.isMobile ? '75px' : '0px'};
+	top: 75px;
 	height: 100vh;
 	width: 100%;
-	background: #ff6363;
-	// transform: ${props => props.isOpen ? `translateY(0)` : `translateY(-100%)`};
-	//transition: .3s cubic-bezier(.17,.67,.14,1.03);
+	background: ${colors.primary.headline};	
 	
-	//padding: 65px 0 0 0;
-	
+	a{
+		color: #fff;
+	}
 	
 	@media ${device.laptop} {
 		position: relative;
 		background: white;
-		top: auto;
+		top: 0px;
 		grid-column: 2 / -1;
 		display: grid;
 		grid-template-columns: repeat(2,minmax(auto,1fr));
 		height: 100%;
 		transform: translateX(0) !important;
 		transition: 0s;
+		
+		a{
+			color: ${colors.primary.text};
+		}
 	}
 		
 `
@@ -133,25 +138,30 @@ export const NavItem = styled(NavItemPose)`
 	
 `
 
-export const NavCenter = styled.ul`
+export const NavCenter = styled.ul<{ user: IUser | null }>`
 	display: flex;
 	flex-direction: column;
 	margin: 0;
-	padding: 20px 20px 0;
+	padding:0;
 	text-transform: uppercase;
 	
 	li{
 		list-style: none;
 		font-family: 'Fira Sans', sans-serif;
 		font-weight: 700;
-		padding: 10px 0; 
+		padding: 15px 0 15px 30px;
+		
+		${props => !props.user ? `
 		&:first-child{
-			padding: 0;
+			padding-top: 30px;
 		}
+		` : ``};
 	}
 	
-	a{
-		color: ${colors.primary.text};
+	.accountTop{
+	 	background: #628AAA;
+	 	padding: 25px 0 25px 30px;
+	 	margin: 0 0 10px;
 	}
 	
 	@media ${device.laptop}{
@@ -165,7 +175,11 @@ export const NavCenter = styled.ul`
 			padding:0;
 			opacity: 1 !important;
 			transform: translateX(0) !important;
+			&:first-child{
+				padding-top: 0;
+			}
 		}
+
 	}
 	
 `
@@ -184,20 +198,20 @@ export const LoginStatus = styled.ul`
 	flex-direction: column;
 	border-right: 1px solid ${colors.grey.i600};
 	align-items: flex-start;
-	padding: 0 20px 20px;
+	padding: 0 30px 20px;
 	margin: 0;
 
 	li{
 		list-style: none;
-		padding: 0 0 10px;
+		padding: 0 0 15px;
 	}
 	
 	.signOut{
-		padding: 10px 0 0;
+		padding: 15px 0 0;
 		font-size: 16px;
 		font-weight: 700;
 		margin: 0;
-		color: ${colors.primary.text};
+		color: #fff;
 		text-transform: uppercase;
 	}
 	
@@ -212,20 +226,37 @@ export const LoginStatus = styled.ul`
 		}
 		.signOut{
 			padding: 0;
+			color: ${colors.primary.text};
 		}
 	}
 		
 `
 export const JoinButton = styled(ButtonSmall)`
 	margin: 0 15px 0 0;
+	font-size: 16px;
+	font-weight: 700;
+	padding: 10px 25px;
 `
 export const SignInButton = styled(ButtonSmall)`
-	padding: 8px 0;
+	padding: 15px 0;
 	margin: 0 20px 0 0;
+	font-size: 16px;
+	color: #fff;
+	font-weight: 700;
+	
+	&:hover{
+		color: #fff;
+	}
+	
+	@media ${device.laptop} {
+		&:hover{
+			color: ${colors.purple.i600};
+		}
+		color: ${colors.purple.i500};
+	}
 `
 export const MyAccount = styled.div`
-
-	margin: 0 20px 10px 0;
+	margin: 0;
 	img{
 		width: 50px;
 		height: 50px;
@@ -238,12 +269,16 @@ export const MyAccount = styled.div`
 		font-size: 16px;
 	}
 	a{
-		color: ${colors.primary.text};
+		color: #fff;
 		font-weight: 500;
 	}
 	
 	@media ${device.laptop} {
 		margin: 0 20px 0 0;
+		a{
+			color: ${colors.primary.text};
+			font-weight: 500;
+		}
 	}
 		
 `

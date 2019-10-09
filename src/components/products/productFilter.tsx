@@ -48,40 +48,63 @@ function getNavSize (windowSize: string) {
 
 const useScrollEvent = () => {
 	const [fixed, setFixed] = useState(false)
+	const [mq, setMq] = useState('')
 	const prevFixed = useRef(fixed)
+	const prevMQ = useRef(mq)
+
 	useEffect(() => {
 		prevFixed.current = fixed
 	}, [fixed])
 
 	useEffect(() => {
+		prevMQ.current = mq
+	}, [mq])
+
+	useEffect(() => {
 		const header = document.getElementById('header')
 		const cartCheck = document.getElementById('cart-Container')
-		const headerHeight = header ? header.getBoundingClientRect().height : 0
+		let carthasChildren = cartCheck ? cartCheck.children.length > 0 : false
+		let headerHeight = 0
+		let windowDevice = getWindowSize()
+		let size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+
 		const watchNav = () => {
-			const carthasChildren = cartCheck ? cartCheck.children.length > 0 : false
 			const fromTop = window.scrollY
-			const windowDevice = getWindowSize()
-			const size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+			windowDevice = getWindowSize()
+			// console.log('windowDevice', windowDevice)
+			// console.log('prevMQ.current', prevMQ.current)
+
+			if (prevMQ.current !== windowDevice) {
+				carthasChildren = cartCheck ? cartCheck.children.length > 0 : false
+				headerHeight = header ? header.getBoundingClientRect().height : 0
+				size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+				setMq(windowDevice)
+				console.log('change', windowDevice)
+			}
 
 			if (fromTop >= size && !prevFixed.current) {
-				// console.log('sticky')
+				console.log('sticky')
 				setFixed(true)
 
 			} else if (fromTop < size && prevFixed.current && carthasChildren) {
 				// link.classList.remove("current");
 				setFixed(true)
-				// console.log('unStick')
+				console.log('Sticky cart')
 			} else if (fromTop < size && prevFixed.current) {
 				// link.classList.remove("current");
 				setFixed(false)
-				// console.log('unStick')
+				console.log('unStick')
 			}
 		}
 
-		window.addEventListener('scroll', watchNav)
+		const reqAnim = () => {
+			requestAnimationFrame(watchNav)
+		}
+
+		window.addEventListener('scroll', reqAnim)
 
 		return () => {
-			window.removeEventListener('scroll', watchNav)
+			window.removeEventListener('scroll', reqAnim)
 		}
 	}, [])
 

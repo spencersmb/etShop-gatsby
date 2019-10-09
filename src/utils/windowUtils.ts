@@ -35,7 +35,10 @@ export function getWindowPosition () {
 	return 0
 }
 
-export function getWindowSize () {
+export function getWindowSize (): string {
+	if (!window) {
+		return 'desktop'
+	}
 	const width = window.innerWidth
 
 	if (width < 767) {

@@ -164,7 +164,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 					<a
 						href='/'
 						onClick={changePage('/')}
-						>
+					>
 						{renderSvg(svgs.ETLogo)}
 					</a>
 				</LogoContainer>
@@ -188,8 +188,8 @@ function Navbar (props: IPropsActions & IPropsState) {
 				pose={nav.isOpen ? 'open' : 'closed'}
 			>
 
-				<NavCenter data-testid='nav-center'>
-					{user && <NavItem hideOnDesktop={true}>
+				<NavCenter data-testid='nav-center' user={user}>
+					{user && <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>
               <a
                 href='/account'
