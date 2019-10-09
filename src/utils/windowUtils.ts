@@ -36,7 +36,7 @@ export function getWindowPosition () {
 }
 
 export function getWindowSize (): string {
-	if (!window) {
+	if (typeof window === `undefined`) {
 		return 'desktop'
 	}
 	const width = window.innerWidth

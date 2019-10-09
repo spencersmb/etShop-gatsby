@@ -96,7 +96,6 @@ const useScrollEvent = () => {
 				console.log('unStick')
 			}
 		}
-
 		const reqAnim = () => {
 			requestAnimationFrame(watchNav)
 		}
