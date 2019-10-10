@@ -1,5 +1,6 @@
 import { IFacebookUserCreate } from '@et/types/User'
 import { INavAction } from '@redux/actions/navActions'
+import { StaticQuery } from 'gatsby'
 import React from 'react'
 import { connect } from 'react-redux'
 import { cleanup } from 'react-testing-library'
@@ -9,6 +10,47 @@ import { IModalState } from '@et/types/Modal'
 import Login, { LoginModal } from '../login'
 
 afterEach(cleanup)
+beforeEach(() => {
+	// @ts-ignore
+	StaticQuery.mockImplementationOnce((mock: any) =>
+		mock.render({
+			allFile: {
+				edges: [
+					{
+						node: {
+							name: 'Dreamy Ink Textures',
+							id: '46e80e85-da3a-5a1e-9ef3-bd46e38d1dd5',
+							relativePath: 'color-tray-round.png',
+							childImageSharp: {
+								fluid: {
+									aspectRatio: 12,
+									srcSet: 'srcSet',
+									sizes: '',
+									src: '/static/dreamy-textures-800x500.jpg'
+								}
+							}
+						}
+					},
+					{
+						node: {
+							name: 'Dreamy Ink Textures',
+							id: '46e80e85-da3a-5a1e-6666-bd46e38d1dd5',
+							relativePath: 'outlined-brushes-full.png',
+							childImageSharp: {
+								fluid: {
+									aspectRatio: 12,
+									srcSet: 'srcSet',
+									sizes: '',
+									src: '/static/dreamy-textures-800x500.jpg'
+								}
+							}
+						}
+					}
+				]
+			}
+		})
+	)
+})
 
 const close = jest.fn()
 const initialProps = {
@@ -74,7 +116,7 @@ const ConnectedSignUp = connect((state: IModalState) => {
 describe('Login Modal', () => {
 
 	// React pose wont render snapshots by default
-	// it('renders correctly', () => {
+	// xit('renders correctly', () => {
 	// 	const tree = renderer
 	// 		.create(<LoginModal {...initialProps}/>)
 	// 		.toJSON()
@@ -125,12 +167,5 @@ describe('Login Modal', () => {
 	it('Should render password input', () => {
 		const modalRender = renderWithRedux(<ConnectedSignUp {...signUpProps}/>, modalReducer)
 		expect(modalRender.getByLabelText('Password')).toBeTruthy()
-	})
-
-	it('Should switch states on click', () => {
-		const modalRender = renderWithRedux(<ConnectedSignUp {...signUpProps}/>, modalReducer)
-		const button = modalRender.getByTestId('switchAccounts-btn')
-		button.click()
-		expect(modalRender.getByTestId('signIn-form')).toBeTruthy()
 	})
 })

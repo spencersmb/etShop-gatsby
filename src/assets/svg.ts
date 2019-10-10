@@ -17,6 +17,7 @@ const Eye = require('./svg-icons/eye.svg')
 const ETLogo = require('./svg-icons/et-shop-logo.svg')
 const Filter = require('./svg-icons/Filter.svg')
 const Facebook = require('./svg-icons/Facebook.svg')
+const FacebookCir = require('./svg-icons/facebook-circle.svg')
 const FooterCircle = require('./svg-icons/Footer-Circle.svg')
 const Fonts = require('./svg-icons/Fonts.svg')
 const FontPreview = require('./svg-icons/fontPreview.svg')
@@ -52,6 +53,7 @@ export const svgs = {
 	Eye,
 	ETLogo,
 	Facebook,
+	FacebookCir,
 	Filter,
 	FontPreview,
 	FooterCircle,

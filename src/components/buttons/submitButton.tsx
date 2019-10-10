@@ -25,7 +25,6 @@ const SubmitButton = (props: IProps) => {
 			completed={completed}
 			submitting={submitting}
 			spinnerColor={spinnerColor}
-			show={completed}
 			invalid={invalid}
 		>
 			<SubmitBtn
@@ -38,7 +37,7 @@ const SubmitButton = (props: IProps) => {
 				data-testid='submitButton'>
 				<div className='buttonText'>{buttonText}</div>
 				{/*{completed && !error && !submitting &&*/}
-        {/*<Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}*/}
+				{/*<Completed data-testid='success' show={completed}>{renderSvg(svgs.Checkmark)}</Completed>}*/}
 				{submitting && <div data-testid='spinner' className='submit__spinner'>
           <svg className='spinner' viewBox='0 0 50 50'>
             <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
@@ -53,7 +52,6 @@ interface IButtonProps {
 	submitting: boolean
 	completed: boolean
 	spinnerColor: string
-	show: boolean
 	invalid: boolean
 }
 
@@ -161,7 +159,7 @@ const ButtonWrapper = styled.div<IButtonProps>`
 		top: 50%;
 		left: 50%;
 		transform: translateX(-50%) translateY(-50%);
-		opacity: ${props => props.submitting || props.show ? 0 : 1};
+		opacity: ${props => props.submitting ? 0 : 1};
 		transition: .2s;
 	}
 	

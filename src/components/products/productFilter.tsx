@@ -68,6 +68,9 @@ const useScrollEvent = () => {
 		let windowDevice = getWindowSize()
 		let size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
 
+		const reqAnim = () => {
+			requestAnimationFrame(watchNav)
+		}
 		const watchNav = () => {
 			const fromTop = window.scrollY
 			windowDevice = getWindowSize()
@@ -79,25 +82,22 @@ const useScrollEvent = () => {
 				headerHeight = header ? header.getBoundingClientRect().height : 0
 				size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
 				setMq(windowDevice)
-				console.log('change', windowDevice)
+				// console.log('change', windowDevice)
 			}
 
 			if (fromTop >= size && !prevFixed.current) {
-				console.log('sticky')
+				// console.log('sticky')
 				setFixed(true)
 
 			} else if (fromTop < size && prevFixed.current && carthasChildren) {
 				// link.classList.remove("current");
 				setFixed(true)
-				console.log('Sticky cart')
+				// console.log('Sticky cart')
 			} else if (fromTop < size && prevFixed.current) {
 				// link.classList.remove("current");
 				setFixed(false)
-				console.log('unStick')
+				// console.log('unStick')
 			}
-		}
-		const reqAnim = () => {
-			requestAnimationFrame(watchNav)
 		}
 
 		window.addEventListener('scroll', reqAnim)

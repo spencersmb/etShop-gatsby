@@ -27,7 +27,9 @@ const FacebookSubmitBtn = (props: IProps) => {
 				submitting={submitting}
 				disabled={submitting}
 				data-testid='button'>
-				<div className='buttonText'>Log in with Facbook</div>
+				<div className='buttonText'>
+					<span>{renderSvg(svgs.FacebookCir)}</span> Log in with Facbook
+				</div>
 				{submitting && <div data-testid='spinner' className='submit__spinner'>
           <svg className='spinner' viewBox='0 0 50 50'>
             <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
@@ -42,33 +44,6 @@ interface IButtonProps {
 	submitting: boolean
 }
 
-const ErrorPosed = posed.div({
-	noError: {
-		height: 0,
-		transition: {
-			height: { duration: 0 }
-		}
-	},
-	error: {
-		height: 'auto',
-		transition: {
-			height: { duration: 200, delay: 300 }
-		}
-	}
-})
-const Error = styled(ErrorPosed)`
-		font-size: 0.875rem;
-	font-weight: normal;
-	color: #E91E63;
-	display: flex;
-	flex-direction: column;
-	//position: absolute;
-	//left: 0;
-	//bottom: -25px;
-	span{
-		padding-top: 5px;
-	}
-`
 const PosedButton = posed.button({
 	submitting: {
 		width: '48px',
@@ -120,6 +95,19 @@ const ButtonWrapper = styled.div<IButtonProps>`
 		transition: .2s;
 		width: 100%;
 		color: #fff;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		line-height: 1px;
+		span{
+			width: 30px;
+			display: flex;
+			margin-right: 10px;
+		}
+		svg{
+			width: 100%;
+		}
 	}
 	
 	.submit__spinner{

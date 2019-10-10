@@ -220,6 +220,8 @@ const ModalStyled = styled.div`
 		@media ${device.tablet} {
 			border-radius: 15px;
 			box-shadow: 0 20px 45px -6px rgba(0,0,0,.2);
+			width: 710px;
+			height: 697px;
 		}
 			
 `
@@ -256,6 +258,7 @@ const LoginModalWrapper = styled.div`
 	background: #fff;
 	width: 100%;
 	height: 100%;
+		
 `
 const LoginModalContent = styled.div`
 	position: relative;
@@ -281,7 +284,8 @@ const ContentContainer = styled.div<any>`
 	
 	
 	@media ${device.laptop} {
-		justify-content: center;	
+		justify-content: center;
+		overflow: hidden;	
 	}
 		
 `

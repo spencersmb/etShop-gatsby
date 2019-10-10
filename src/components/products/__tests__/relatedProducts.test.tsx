@@ -6,7 +6,9 @@ import { StaticQuery } from 'gatsby'
 import renderer from 'react-test-renderer'
 
 const defaultProps = [
-	'watercolor-texture-kit-vol-1']
+	'watercolor-texture-kit-vol-1',
+	'watercolor-texture-kit-vol-2'
+]
 
 beforeEach(() => {
 	// @ts-ignore
@@ -40,12 +42,35 @@ beforeEach(() => {
 								}
 							}
 						}
+					},
+					{
+						node: {
+							name: 'Dreamy Ink Textures 2',
+							id: '46e80e85-da3a-5a1e-6666-bd46e38d1dd5',
+							slug: 'watercolor-texture-kit-vol-2',
+							sub_header: 'Alcohol Ink Texture Pack',
+							price: '15',
+							featuredImage: {
+								alt: 'Dreamy Ink Texture Pack',
+								localFile: {
+									childImageSharp: {
+										fluid: {
+											aspectRatio: 12,
+											srcSet: 'srcSet',
+											sizes: '',
+											src: '/static/dreamy-textures-800x500.jpg'
+										}
+									}
+								}
+							}
+						}
 					}
 				]
 			}
 		})
 	)
 })
+
 const data = {
 	site: {
 		siteMetadata: {
@@ -75,6 +100,28 @@ const data = {
 						}
 					}
 				}
+			},
+			{
+				node: {
+					name: 'Dreamy Ink Textures 2',
+					id: '46e80e85-da3a-5a1e-6666-bd46e38d1dd5',
+					slug: 'watercolor-texture-kit-vol-2',
+					sub_header: 'Alcohol Ink Texture Pack',
+					price: '15',
+					featuredImage: {
+						alt: 'Dreamy Ink Texture Pack',
+						localFile: {
+							childImageSharp: {
+								fluid: {
+									aspectRatio: 12,
+									srcSet: 'srcSet',
+									sizes: '',
+									src: '/static/dreamy-textures-800x500.jpg'
+								}
+							}
+						}
+					}
+				}
 			}
 		]
 	}
@@ -83,7 +130,7 @@ describe('Related Products', () => {
 	it('Related Products renders correctly', () => {
 		const tree = renderer
 			.create(
-				<RelatedProducts products={defaultProps} testData={data}/>
+				<RelatedProducts products={defaultProps} data={data}/>
 			)
 			.toJSON()
 		expect(tree).toMatchSnapshot()
@@ -99,8 +146,8 @@ describe('Related Products', () => {
 	})
 
 	it('Should render number of related Products', () => {
-		const modalRender = render(<RelatedProducts products={defaultProps} testData={data}/>)
-		expect(modalRender.getByTestId('productsList').children.length).toEqual(1)
+		const modalRender = render(<RelatedProducts products={defaultProps} data={data}/>)
+		expect(modalRender.getByTestId('productsList').children.length).toEqual(2)
 	})
 
 	it('Should render number of related Products', () => {

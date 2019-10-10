@@ -7,7 +7,43 @@ export const FormWrapper = styled.div`
 	position: absolute;
 	width: 100%;
 	padding: 20px 20px 20px;
-	//height: 100%;
+	display: flex;
+	flex-direction: column;
+	@media ${device.tablet} {
+		height: 100%;
+		padding: 20px 40px 20px;
+		flex-direction: row;
+		align-items: center;
+		overflow: hidden;
+	}
+`
+export const FormContent = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	@media ${device.tablet} {
+		margin-right: 40%;
+	}
+`
+
+export const FormImg = styled.div<{ type?: string }>`
+	display: none;
+	@media ${device.tablet} {
+		display: flex;
+		width: 413px;
+		position: absolute;
+		right: -100px;
+		top: 50px;
+		
+		${props => props.type === '1' ? `
+			width: 503px;
+			right: -190px;
+			top: 50px;
+		` : ``};
+		.gatsby-image-wrapper{
+			width: 100%;
+		}
+	}
 `
 export const Form1 = styled.form`
 	display: flex;
@@ -39,7 +75,8 @@ export const FormHeader1 = styled.div`
 		color: ${colors.primary.pink};
 		font-style: italic;
 		font-size: 14px;
-		display: inline-block;
+		display: inline-flex;
+		cursor: pointer;
 	}
 	
 	.FormHeader1__icon{
@@ -61,6 +98,20 @@ export const FormHeader1 = styled.div`
 		h3{
 			font-size: 38px;
 			line-height: 38px;
+		}
+	}
+	
+	@media ${device.tablet} {
+		padding: 0;
+		text-align: left;
+		h3{
+			font-size: 43px;
+			line-height: 48px;
+		}
+		.FormHeader1__icon{
+			margin: 0;
+		}
+		.signup__subhead{
 		}
 	}
 `
@@ -241,4 +292,22 @@ export const SvgValidation = styled.div<{ isValid: boolean }>`
 
 export const FacebookWrapper = styled.div`
 	margin-top: 15px;
+`
+export const ForgotPassword = styled.p`
+	color: ${colors.purple.i500};
+	padding-top: 10px;
+	text-align: center;
+`
+export const Arrow = styled.span`
+	width: 20px;
+	display: flex;
+	transform: rotate(180deg);
+	margin-left: 10px;
+
+	svg{
+		width: 100%;
+	}
+	path{
+		fill: ${colors.primary.pink};
+	}
 `

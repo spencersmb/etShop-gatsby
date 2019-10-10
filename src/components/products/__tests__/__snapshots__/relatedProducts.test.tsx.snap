@@ -101,7 +101,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
       <a
         href="/"
       >
-        View all products
+        View All products
       </a>
     </div>
   </div>
@@ -174,6 +174,90 @@ exports[`Related Products Related Products renders correctly 1`] = `
             >
               <h2>
                 Dreamy Ink Textures
+              </h2>
+              <p>
+                Alcohol Ink Texture Pack
+              </p>
+            </div>
+          </div>
+          <div
+            className="ListItemFooter sc-ifAKCX gYZfIE"
+          >
+            <span />
+            <p>
+              $
+              15
+            </p>
+            <test-file-stub />
+          </div>
+        </div>
+      </a>
+    </div>
+    <div
+      className="sc-bdVaJa hKSJDv"
+      data-testid="listItem"
+    >
+      <a
+        href="/products/watercolor-texture-kit-vol-2"
+      >
+        <div
+          className="sc-bwzfXH djTlgz"
+        >
+          <div
+            className="ListItemTop sc-bxivhb cXSKfV"
+          >
+            <div
+              className=" gatsby-image-wrapper"
+              style={
+                Object {
+                  "overflow": "hidden",
+                  "position": "relative",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "paddingBottom": "8.333333333333334%",
+                    "width": "100%",
+                  }
+                }
+              />
+              <picture>
+                <img
+                  alt="Dreamy Ink Texture Pack"
+                  onLoad={[Function]}
+                  sizes=""
+                  src="/static/dreamy-textures-800x500.jpg"
+                  srcSet="srcSet"
+                  style={
+                    Object {
+                      "height": "100%",
+                      "left": 0,
+                      "objectFit": "cover",
+                      "objectPosition": "center",
+                      "opacity": 0,
+                      "position": "absolute",
+                      "top": 0,
+                      "transition": "opacity 0.5s",
+                      "width": "100%",
+                    }
+                  }
+                />
+              </picture>
+              <noscript
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<picture><img srcset=\\"srcSet\\" src=\\"/static/dreamy-textures-800x500.jpg\\" alt=\\"Dreamy Ink Texture Pack\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
+                  }
+                }
+              />
+            </div>
+            <div
+              className="sc-htpNat kicMsp"
+            >
+              <h2>
+                Dreamy Ink Textures 2
               </h2>
               <p>
                 Alcohol Ink Texture Pack

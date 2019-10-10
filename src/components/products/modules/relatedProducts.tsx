@@ -3,39 +3,75 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
-import { Link } from 'gatsby'
+import { graphql, Link, StaticQuery } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
 
 interface IProps {
 	products: string[] // array of slugs
-	testData?: any
+	data?: any
 }
 
-const RelatedProducts = (props: IProps) => {
+const RelatedProducts = (props: IProps) => (
+	<StaticQuery
+		query={
+			graphql`
+				query {
+					allWcProduct{
+						edges{
+							node{
+								name
+								id
+								slug
+								sub_header
+								price
+								featuredImage{
+									alt
+									localFile{
+										childImageSharp {
+											fluid(maxWidth: 835) {
+												...GatsbyImageSharpFluid
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			`
+		}
+		render={(data) => {
+			const { products } = props
+			return (
+				<Wrapper>
 
-	const { products } = props
-	return (
-		<Wrapper>
+					{/*Header*/}
+					<TitleContainer>
+						<h5>Related Products</h5>
+						<div>
+							<Link to={`/`}>
+								View All products
+							</Link>
+						</div>
+					</TitleContainer>
 
-			{/*Header*/}
-			<TitleContainer>
-				<h5>Related Products</h5>
-				<div>
-					<Link to={`/`}>
-						View all products
-					</Link>
-				</div>
-			</TitleContainer>
-
-			{/*Products*/}
-			<Container data-testid={`productsList`}>
-				{products.map((productSlug: string) => <RelatedProduct data={props.testData} key={productSlug}
-																															 slug={productSlug}/>)}
-			</Container>
-		</Wrapper>
-	)
-}
+					{/*Products*/}
+					<Container data-testid={`productsList`}>
+						{products.map((productSlug: string) => {
+							return (<RelatedProduct
+								data={data}
+								key={productSlug}
+								slug={productSlug}/>)
+						})
+						}
+					</Container>
+				</Wrapper>
+			)
+		}
+		}
+	/>
+)
 const TitleContainer = styled.div`
 	grid-column: 2/4;
 	text-align: center;

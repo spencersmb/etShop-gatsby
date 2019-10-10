@@ -4,10 +4,20 @@ import RxEmailField from '@components/forms/inputs/asyncEmail'
 import asyncEmailValidate from '@components/forms/userEmailValidation'
 import validate from '@components/forms/validate'
 import ReduxValidation from '@components/forms/validations'
+import GatsbyImgMedium from '@components/images/gatsbyImgMedium'
 import { IFacebookUserCreate } from '@et/types/User'
 import { colors } from '@styles/global/colors'
-import { FacebookWrapper, FormHeader1, FormWrapper, FormInput, Form1, FormGroup } from '@styles/modules/SignInUpModals'
+import {
+	FacebookWrapper,
+	FormHeader1,
+	FormWrapper,
+	FormInput,
+	Form1,
+	FormGroup,
+	FormImg, FormContent, Arrow
+} from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import { ReactFacebookLoginInfo } from 'react-facebook-login'
 import React, { Dispatch, RefObject, SetStateAction } from 'react'
 import { reduxForm } from 'redux-form'
@@ -36,6 +46,8 @@ const tooOld = (value: any) =>
 export const SignUpForm = (props: any) => {
 	const { handleSubmit, submitSucceeded, poseRef, submitting, invalid, handleUserSubmit, handleFacebookSubmit, manualSubmitting, setManualSubmit, setFacebookError, facebookError } = props
 
+	console.log('props', props)
+
 	const { required } = ReduxValidation
 	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
 		console.log('response', response)
@@ -45,87 +57,92 @@ export const SignUpForm = (props: any) => {
 
 	return (
 		<FormWrapper data-testid='signUp-form' ref={poseRef}>
-			<FormHeader1>
-				<h3>Create an account and save 10%</h3>
-				<p className='signup__subhead'>
-					Save 10% on your first purchse when you create an account
-				</p>
-				<p data-testid='switchAccounts-btn' className='form__switchAccounts' data-form='signin'
-					 onClick={props.changeForm}>Already have an account? Sign
-					in</p>
-			</FormHeader1>
-			<Form1 onSubmit={handleSubmit(handleUserSubmit)}>
-				<FormGroup data-testid={'formGroup'}>
-					<FormInput>
-						<ReduxFieldExt
-							name='firstName'
-							type='text'
-							component={RenderField}
-							placeholder=''
-							validate={[required]}
-							label='First Name'
-							svg={svgs.CreditCard}
-						/>
-					</FormInput>
-					<FormInput>
-						<ReduxFieldExt
-							name='email'
-							type='email'
-							component={RxEmailField}
-							placeholder=''
-							label='Email'
-							svg={svgs.CreditCard}
-						/>
-					</FormInput>
-					<FormInput>
-						<ReduxFieldExt
-							name='password'
-							type='password'
-							component={RenderField}
-							placeholder=''
-							label='Password'
-							validate={[required, minLength5]}
-							withRef={true}
-							// warn={tooOld}
-							svg={svgs.CreditCard}
-						/>
-					</FormInput>
-				</FormGroup>
-				<SubmitButton
-					textColor={'#fff'}
-					buttonText={'Create Account!'}
-					backgroundColor={colors.teal.i500}
-					spinnerColor={colors.teal.i500}
-					submitting={submitting}
-					completed={submitSucceeded}
-					invalid={invalid}
-				/>
+			<FormContent>
+				<FormHeader1>
+					<h3>Create an account and save 10%</h3>
+					<p className='signup__subhead'>
+						Save 10% on your first purchse when you create an account
+					</p>
+					<p data-testid='switchAccounts-btn' className='form__switchAccounts' data-form='signin'
+						 onClick={props.changeForm}>Already have an account? Sign
+						in <Arrow>{renderSvg(svgs.ChevronLeft)}</Arrow></p>
+				</FormHeader1>
+				<Form1 onSubmit={handleSubmit(handleUserSubmit)}>
+					<FormGroup data-testid={'formGroup'}>
+						<FormInput>
+							<ReduxFieldExt
+								name='firstName'
+								type='text'
+								component={RenderField}
+								placeholder=''
+								validate={[required]}
+								label='First Name'
+								svg={svgs.CreditCard}
+							/>
+						</FormInput>
+						<FormInput>
+							<ReduxFieldExt
+								name='email'
+								type='email'
+								component={RxEmailField}
+								placeholder=''
+								label='Email'
+								svg={svgs.CreditCard}
+							/>
+						</FormInput>
+						<FormInput>
+							<ReduxFieldExt
+								name='password'
+								type='password'
+								component={RenderField}
+								placeholder=''
+								label='Password'
+								validate={[required, minLength5]}
+								withRef={true}
+								// warn={tooOld}
+								svg={svgs.CreditCard}
+							/>
+						</FormInput>
+					</FormGroup>
+					<SubmitButton
+						textColor={'#fff'}
+						buttonText={'Create Account!'}
+						backgroundColor={colors.teal.i500}
+						spinnerColor={colors.teal.i500}
+						submitting={submitting}
+						completed={submitSucceeded}
+						invalid={invalid}
+					/>
 
-			</Form1>
-			{process.env.NODE_ENV !== 'test' && <FacebookLogin
-        appId='317306965764273'
-        autoLoad={false}
-        fields='first_name,email,picture,last_name,name'
-        disableMobileRedirect={true}
-        state={
-					JSON.stringify({ facebookLogin: true })
-				}
-        callback={responseFacebook}
-        onClick={() => {
-					if (facebookError) {
-						setFacebookError(null)
+				</Form1>
+				{process.env.NODE_ENV !== 'test' && <FacebookLogin
+          appId='317306965764273'
+          autoLoad={false}
+          fields='first_name,email,picture,last_name,name'
+          disableMobileRedirect={true}
+          state={
+						JSON.stringify({ facebookLogin: true })
 					}
-					setManualSubmit(true)
-				}}
-        render={(renderProps: any) => (
-					<FacebookWrapper>
-						<FacebookSubmitBtn
-							error={facebookError}
-							submitting={manualSubmitting}
-							handleClick={renderProps.onClick}>This is my custom FB button</FacebookSubmitBtn>
-					</FacebookWrapper>
-				)}
-      />}
+          callback={responseFacebook}
+          onClick={() => {
+						if (facebookError) {
+							setFacebookError(null)
+						}
+						setManualSubmit(true)
+					}}
+          render={(renderProps: any) => (
+						<FacebookWrapper>
+							<FacebookSubmitBtn
+								error={facebookError}
+								submitting={manualSubmitting}
+								handleClick={renderProps.onClick}>This is my custom FB button</FacebookSubmitBtn>
+						</FacebookWrapper>
+					)}
+        />}
+			</FormContent>
+			<FormImg type={'1'}>
+				<GatsbyImgMedium imgName={'color-tray-round.png'} altTag={'Sign In and get access to tons of assets'}/>
+			</FormImg>
 		</FormWrapper>
 	)
 }

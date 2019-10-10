@@ -181,7 +181,6 @@ export const NavCenter = styled.ul<{ user: IUser | null }>`
 		}
 
 	}
-	
 `
 export const NavRight = styled.div`
 	flex-direction: column;
@@ -196,7 +195,6 @@ export const NavRight = styled.div`
 export const LoginStatus = styled.ul`
 	display: flex;
 	flex-direction: column;
-	border-right: 1px solid ${colors.grey.i600};
 	align-items: flex-start;
 	padding: 0 30px 20px;
 	margin: 0;
@@ -219,6 +217,7 @@ export const LoginStatus = styled.ul`
 		align-items: center;
 		flex-direction: row;
 		padding: 0;
+		border-right: 1px solid ${colors.grey.i600};
 		li{
 			opacity: 1 !important;
 			transform: translateX(0) !important;
