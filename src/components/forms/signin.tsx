@@ -43,13 +43,16 @@ const tooOld = (value: any) =>
 
 export const SignInForm = (props: any) => {
 
-	const { handleSubmit, poseRef, submitSucceeded, submitting, invalid, handleUserSubmit, setFacebookError, facebookError, manualSubmitting, setManualSubmit, handleFacebookSubmit } = props
+	const { handleSubmit, poseRef, submitSucceeded, submitting, invalid, handleUserSubmit, setFacebookError, facebookError, manualSubmitting, setManualSubmit, handleFacebookSubmit, closeModal } = props
 	const { required, email } = ReduxValidation
 	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
 		handleFacebookSubmit(response)
 	}
 	const forgotPassword = () => {
-		navigate('/forgotPassword')
+		closeModal()
+		setTimeout(() => {
+			navigate('/forgotPassword')
+		}, 300)
 	}
 
 	return (

@@ -289,22 +289,19 @@ const FilterListItem = styled.li<IFilterListItem>`
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
-	margin: 20px 20px 20px;
-	padding: 0;
+	padding: 20px 20px 20px;
+	margin: 0;
 	font-size: 15px;
 	font-weight: 500;
 	text-transform: uppercase;
-	color: ${props => props.selectedFilter ? colors.teal.i500 : colors.primary.headline};
+	color: ${props => props.selectedFilter ? `#fff` : colors.primary.headline};
 	transition: color .3s;
 	position: relative;
-	
-	&:first-child{
-		padding-top: 0;
-	}
-	
-	
+	background: ${props => props.selectedFilter ? colors.teal.i500 : 'transparent'};
 	
 	@media ${device.laptop} {
+		color: ${props => props.selectedFilter ? colors.teal.i500 : colors.primary.headline};
+		background: transparent;
 		&:hover{
 			color: ${colors.teal.i500};
 			border-color: ${colors.teal.i500};
@@ -338,9 +335,18 @@ const Svg = styled.span<IFilterListItem>`
 	svg{
 		path{
 			transition: .3s;
-			fill: ${props => props.selectedFilter ? colors.teal.i500 : colors.primary.headline};
+			fill: ${props => props.selectedFilter ? `#fff` : colors.primary.headline};
 		}
 	}
+	@media ${device.laptop} {
+		svg{
+			path{
+				transition: .3s;
+				fill: ${props => props.selectedFilter ? colors.teal.i500 : colors.primary.headline};
+			}
+		}
+	}
+		
 `
 const Slider = styled.span<IFilterListItem>`
 	height: 2px;

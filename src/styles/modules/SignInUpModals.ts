@@ -297,6 +297,11 @@ export const ForgotPassword = styled.p`
 	color: ${colors.purple.i500};
 	padding-top: 10px;
 	text-align: center;
+	cursor: pointer;
+	
+	&:hover{
+		color: ${colors.purple.i800};
+	}
 `
 export const Arrow = styled.span`
 	width: 20px;
