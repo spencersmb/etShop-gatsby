@@ -75,12 +75,14 @@ class AuthApi {
 		)
 	}
 
-	static resetPassword (reduxFormData: { email: string, password: string, key: string }): Promise<Response> {
-		const url: string = `${process.env.GATSBY_DB}/wp-json/et-shop/reset`
+	static resetPassword (reduxFormData: { email: string, password: string, rpKey: string }): Promise<Response> {
+
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/login/resetPassword`
 		const formData = new FormData()
 		formData.append('email', reduxFormData.email)
 		formData.append('password', reduxFormData.password)
-		formData.append('key', reduxFormData.key)
+		formData.append('rpKey', reduxFormData.rpKey)
+		formData.append('nonce', process.env.GATSBY_WPNONCE || '')
 
 		// log formData for debugging
 		// logFormData(formData)
@@ -95,9 +97,9 @@ class AuthApi {
 		)
 	}
 
-	static forgotPasswordRequest ({ email }: { email: string }): Promise<Response> {
+	static forgotPasswordRequest (email: string): Promise<Response> {
 
-		const url: string = `${process.env.GATSBY_DB}/wp-json/et-shop/forgotPassword`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/login/forgotPassword`
 		const formData = new FormData()
 		formData.append('email', email)
 

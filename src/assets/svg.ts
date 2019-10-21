@@ -27,6 +27,7 @@ const Illustrator = require('./svg-icons/illustrator.svg')
 const Indesign = require('./svg-icons/indesign.svg')
 const Instagram = require('./svg-icons/Instagram.svg')
 const Info = require('./svg-icons/info.svg')
+const Lock = require('./svg-icons/lock.svg')
 const MagnifyGlass = require('./svg-icons/magnify-glass.svg')
 const Photoshop = require('./svg-icons/photoshop.svg')
 const Programs = require('./svg-icons/programs.svg')
@@ -64,6 +65,7 @@ export const svgs = {
 	Indesign,
 	Instagram,
 	Info,
+	Lock,
 	MagnifyGlass,
 	Photoshop,
 	Programs,

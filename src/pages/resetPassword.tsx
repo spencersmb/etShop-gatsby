@@ -1,4 +1,4 @@
-import ForgotPasswordForm from '@components/forms/fogotPassword'
+import ResetPasswordForm from '@components/forms/resetPasswordForm'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { facebookDefaultMeta, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
@@ -8,8 +8,12 @@ import styled from 'styled-components'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 
-const ForgotPasswordPage = ({ data }: any) => {
-	const { site, featureImage } = data
+const ResetPassword = (props: any) => {
+	console.log('page props', props)
+	const { site, featureImage } = props.data
+	const searchString = props.location.search || ''
+	const urlParams = new URLSearchParams(searchString)
+	const rpKey = urlParams.get('key')
 
 	const jsonld = {
 		['@context']: 'http://schema.org',
@@ -105,7 +109,7 @@ const ForgotPasswordPage = ({ data }: any) => {
 				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
 			</SEO>
 			<PageContainer>
-				<ForgotPasswordForm/>
+				<ResetPasswordForm rpKey={rpKey}/>
 			</PageContainer>
 		</Layout>
 	)
@@ -119,10 +123,10 @@ const PageContainer = styled.div`
 
 `
 
-export default ForgotPasswordPage
+export default ResetPassword
 
 export const query = graphql`
-	query ForgotPasswordPageQuery {
+	query ResetPasswordQuery {
 		site {
 			siteMetadata {
 				title

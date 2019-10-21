@@ -70,7 +70,7 @@ export const FormHeader1 = styled.div`
 	}
 	
 	.form__switchAccounts{
-		margin: 10px 0 0;
+		margin: 5px 0 0;
 		font-weight: 500;
 		color: ${colors.primary.pink};
 		font-style: italic;
@@ -300,14 +300,14 @@ export const ForgotPassword = styled.p`
 	cursor: pointer;
 	
 	&:hover{
-		color: ${colors.purple.i800};
+		color: ${colors.purple.i700};
 	}
 `
 export const Arrow = styled.span`
 	width: 20px;
 	display: flex;
 	transform: rotate(180deg);
-	margin-left: 10px;
+	margin-left: 5px;
 
 	svg{
 		width: 100%;

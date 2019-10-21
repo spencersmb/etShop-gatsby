@@ -6,7 +6,9 @@ import { IModalState } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
+import { GridFluid } from '@styles/global/cssGrid'
 import { isPWYWItemInCart } from '@utils/cartUtils'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -70,30 +72,61 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			data-testid='cart-wrapper'
 			ref={props.poseRef}
 			id='cartWrapper'>
-			<button data-testid='close-btn' className='jestCloseCart' onClick={closeCart}>Close</button>
-
-			<div>
-				<button
-					data-testid='empty-cart-btn'
-					className='jestEmptyCart'
-					onClick={props.emptyCart}>
-					Empty Cart
-				</button>
-			</div>
-
-			<div>
-				<CartList/>
-			</div>
-
-			<div>
-				{checkout}
-				<hr/>
-
-			</div>
+			<CloseButton
+				data-testid='close-btn'
+				className='jestCloseCart'
+				onClick={closeCart}>Close</CloseButton>
+			<CartInner>
+				<CartLeft>
+					<CartHeader>
+						<div>
+							<button
+								data-testid='empty-cart-btn'
+								className='jestEmptyCart'
+								onClick={props.emptyCart}>
+								Empty Cart
+							</button>
+						</div>
+					</CartHeader>
+					<div>
+						<CartList/>
+					</div>
+				</CartLeft>
+				<CartRight>
+					{checkout}
+				</CartRight>
+			</CartInner>
 		</CartWrapper>
 	)
 }
 
+const CloseButton = styled.button`
+	position: absolute;
+	top:0;
+	right: 0;
+`
+const CartInner = styled(GridFluid)`
+	margin-top: 50px;
+	width: 100%;
+`
+const CartHeader = styled.div`
+
+`
+const CartRight = styled.div`
+	@media ${device.tablet} {
+		grid-column: 9 / 14;
+		background: rebeccapurple;
+		margin-right: -30px;
+	}
+`
+const CartLeft = styled.div`
+	@media ${device.tablet} {
+		grid-column: 2 / 9;
+		background: green;
+		margin-left: -30px;
+	}
+	
+`
 const CartWrapper = styled.div`
 	position: fixed;
 	top: 0;
@@ -106,6 +139,7 @@ const CartWrapper = styled.div`
 	width: 100%;
 	overflow-y: scroll;
 	background: ${colors.grey.i200};
+	display: flex;
 	//transform:translateY(0) translateX(0);
 	z-index: 4;
 	//transition: all 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);

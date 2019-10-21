@@ -750,7 +750,8 @@ export const testUser: IUser = {
 	firstName: 'spencer',
 	lastName: 'bigum',
 	token: '123456789',
-	gravatar: '1123131313213'
+	gravatar: '1123131313213',
+	fbProfilePic: null
 }
 
 export const testGuest: IGuestFormData = {

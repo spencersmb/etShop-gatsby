@@ -10,6 +10,7 @@ import { INavAction, toggleNav as toggleNavAction } from '@redux/actions/navActi
 import { clearPagination } from '@redux/actions/paginationActions'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
+import { getUserImage } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { getWindowSize } from '@utils/windowUtils'
 import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react'
@@ -53,6 +54,7 @@ interface IPropsActions {
 
 function Navbar (props: IPropsActions & IPropsState) {
 	const { user, logout, toggleNav, nav } = props
+	// const {src, alt} = getUserImage(user)
 	const target = useRef<HTMLElement | null>(null)
 	const bodyScrollPos = useRef(0)
 
@@ -128,18 +130,6 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 	}
 
-	function getUserImage (currentUser: IUser) {
-		if (currentUser.fbProfilePic) {
-			return (
-				<img src={currentUser.fbProfilePic} alt='facebook image'/>
-			)
-		}
-		return (
-			<img src={`https://www.gravatar.com/avatar/${currentUser.gravatar}`} alt='user image'/>
-		)
-
-	}
-
 	const changePage = (href: string) => (e: any) => {
 		e.preventDefault()
 		if (nav.isOpen) {
@@ -194,7 +184,7 @@ function Navbar (props: IPropsActions & IPropsState) {
               <a
                 href='/account'
                 onClick={changePage('/account')}>
-								{getUserImage(user)}
+                <img src={getUserImage(user).src} alt={getUserImage(user).alt}/>
                 <span>
 									My account
 								</span>
@@ -248,7 +238,7 @@ function Navbar (props: IPropsActions & IPropsState) {
                 <a
                   href='javascript:void(0)'
                   onClick={changePage('/account')}>
-									{getUserImage(user)}
+                  <img src={getUserImage(user).src} alt={getUserImage(user).alt}/>
                   <span>
 									My account
 								</span>

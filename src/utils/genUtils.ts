@@ -1,5 +1,6 @@
 import { Image } from '@et/types/Products'
 import { IMeta, IOGType } from '@et/types/SEO'
+import { IUser } from '@et/types/User'
 import React, { ReactChild } from 'react'
 import _ from 'lodash'
 
@@ -36,6 +37,7 @@ export const socialUtils = {
 export const matchString = (str: string, regexPattern: string): boolean => {
 	return !!str.match(regexPattern)
 }
+
 /**
  * * Tested
  * Facebook Card default
@@ -65,6 +67,7 @@ export const facebookDefaultMeta = (additionalProps: IOGType[] = []): IOGType[] 
 	]
 	return _.unionBy(additionalProps, facebook, 'property')
 }
+
 /**
  * * Tested
  * Twitter Card default
@@ -140,4 +143,19 @@ export function getCurrentPage (path: string) {
 	}
 	return 1
 }
+
+export function getUserImage (currentUser: IUser): {src: string, alt: string} {
+	if (currentUser.fbProfilePic) {
+		return {
+			src:currentUser.fbProfilePic,
+			alt:'facebook image'
+		}
+	}else{
+		return{
+			src:`https://www.gravatar.com/avatar/${currentUser.gravatar}`,
+			alt:'user image'
+		}
+	}
+}
+
 

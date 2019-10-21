@@ -103,7 +103,6 @@ export const SignInForm = (props: any) => {
 						completed={submitSucceeded}
 						invalid={invalid}
 					/>
-					<ForgotPassword onClick={forgotPassword}>Forgot Password?</ForgotPassword>
 				</form>
 				{process.env.NODE_ENV !== 'test' && <FacebookLogin
           appId='317306965764273'
@@ -129,6 +128,7 @@ export const SignInForm = (props: any) => {
 						</FacebookWrapper>
 					)}
         />}
+				<ForgotPassword onClick={forgotPassword}>Forgot Password?</ForgotPassword>
 			</FormContent>
 			<FormImg>
 				<GatsbyImgMedium

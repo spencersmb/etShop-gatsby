@@ -15,7 +15,8 @@ export enum WindowActionTypes {
 
 export enum AuthActionTypes {
   LOGIN_USER = '@@auth/login',
-  LOGOUT = '@@auth/logout'
+  LOGOUT = '@@auth/logout',
+  FORGOTPW = '@@auth/FORGOT_PW_COMPLETE',
 }
 
 export enum CartActionTypes {

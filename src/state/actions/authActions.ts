@@ -10,6 +10,9 @@ import { statusCheck } from '@utils/apiUtils'
 import { removeUserLocalStorage, saveUserLocalStorage } from '@utils/authUtils'
 import { Action, Dispatch } from 'redux'
 
+/**
+ * *TESTED
+ */
 export const login: any = ({ email, password }: { email: string, password: string }) => async (dispatch: Dispatch<Action>): Promise<{ firstName: string }> => {
 
 	// Add Loading Dispatch spinner
@@ -29,6 +32,9 @@ export const login: any = ({ email, password }: { email: string, password: strin
 
 }
 
+/**
+ * *TESTED
+ */
 export type ILoginAction = (user: IAuthResponse) => Actions
 export const loginUserSuccess: ILoginAction = (user) => {
 	return {
@@ -37,6 +43,9 @@ export const loginUserSuccess: ILoginAction = (user) => {
 	}
 }
 
+/**
+ * *TESTED
+ */
 export type ILogoutAction = () => Actions
 export const logout: any = () => (dispatch: Dispatch<Action>, getState: () => IState) => {
 
@@ -48,6 +57,9 @@ export const logout: any = () => (dispatch: Dispatch<Action>, getState: () => IS
 	})
 }
 
+/**
+ * *TESTED
+ */
 export const createUser: any = (user: IUserCreate) => async (dispatch: Dispatch<Action>): Promise<any> => {
 
 	// Add Loading Dispatch spinner
@@ -68,6 +80,9 @@ export const createUser: any = (user: IUserCreate) => async (dispatch: Dispatch<
 
 }
 
+/**
+ * *TESTED
+ */
 export const createUserFacebook: any = (user: IFacebookUserCreate) => async (dispatch: Dispatch<Action>): Promise<any> => {
 
 	const response: Response = await AuthApi.createFacebookUser(user)
@@ -86,4 +101,46 @@ export const createUserFacebook: any = (user: IFacebookUserCreate) => async (dis
 		firstName: body.first_name
 	}
 
+}
+
+/**
+ * *TESTED
+ */
+export const forgotPasswordSubmitComplete = (): Actions => {
+	return {
+		type: AuthActionTypes.FORGOTPW
+	}
+}
+
+/**
+ * *TESTED
+ */
+export type IForgotPWAction = (email: string) => (dispatch: Dispatch<Action>) => Promise<any>
+export const forgotPassword: IForgotPWAction = (email: string) => async (dispatch: Dispatch<Action>): Promise<any> => {
+	const response: Response = await AuthApi.forgotPasswordRequest(email)
+	await statusCheck(response, dispatch)
+	dispatch(forgotPasswordSubmitComplete())
+}
+
+/**
+ * *TESTED
+ */
+interface IResetFormProps {
+	email: string
+	password: string
+	rpKey: string
+}
+
+export const resetPassword: any = (formProps: IResetFormProps) => async (dispatch: Dispatch<Action>): Promise<any> => {
+	const response: Response = await AuthApi.resetPassword(formProps)
+
+	await statusCheck(response, dispatch)
+
+	const body: ICreateAuthResponse = await response.json()
+
+	dispatch(loginUserSuccess(body))
+	saveUserLocalStorage(body)
+	return {
+		firstName: body.first_name
+	}
 }

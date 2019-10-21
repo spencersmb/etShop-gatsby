@@ -48,6 +48,10 @@ export interface IAuthLogOut {
 	type: AuthActionTypes.LOGOUT
 }
 
+export interface IAuthForgotPW {
+	type: AuthActionTypes.FORGOTPW
+}
+
 export interface IAddItemToCart {
 	type: CartActionTypes.ADD_TO_CART,
 	payload: {
@@ -169,6 +173,7 @@ type ProductActions =
 export type AuthActions =
 	| IAuthLogin
 	| IAuthLogOut
+	| IAuthForgotPW
 
 type CartActions =
 	| IAddItemToCart

@@ -12,6 +12,7 @@ import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { toastrOptions } from '@utils/apiUtils'
 import { renderSvg } from '@utils/styleUtils'
+import { getWindowSize } from '@utils/windowUtils'
 import posed, { PoseGroup } from 'react-pose'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
@@ -221,9 +222,7 @@ const ModalStyled = styled.div`
 			border-radius: 15px;
 			box-shadow: 0 20px 45px -6px rgba(0,0,0,.2);
 			width: 710px;
-			height: 697px;
 		}
-			
 `
 const ModalPose = posed(ModalStyled)({
 	exit: {
@@ -233,7 +232,7 @@ const ModalPose = posed(ModalStyled)({
 			y: { ease: 'easeOut' }
 		},
 		// width: 0,
-		// height: 0,
+		height: 0,
 		x: `-50%`,
 		y: `-60%`
 	},
@@ -242,13 +241,17 @@ const ModalPose = posed(ModalStyled)({
 		delay: 300,
 		transition: {
 			default: { duration: 300 },
+			height: {
+				duration: 300,
+				ease: [1, 0, 0, 1]
+			},
 			// y: { type: 'spring', stiffness: 1500, damping: 15 },
 			y: { type: 'spring', stiffness: 1500, damping: 35 }
 		},
 		x: `-50%`,
-		y: `-50%`
+		y: `-50%`,
 		// width: `100%`,
-		// height: `100%`
+		height: 697
 	}
 })
 const LoginModalWrapper = styled.div`
@@ -296,6 +299,7 @@ const CloseBtn = styled.div`
 	top: 10px;
 	right: 10px;
 	display: flex;
+	cursor:pointer;
 	svg{
 		width: 100%
 	}
