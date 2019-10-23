@@ -753,6 +753,14 @@ export const testUser: IUser = {
 	gravatar: '1123131313213',
 	fbProfilePic: null
 }
+export const testFacebookUser: IUser = {
+	email: 'spencer@gmail.com',
+	firstName: 'spencer',
+	lastName: 'bigum',
+	token: '123456789',
+	gravatar: '1123131313213',
+	fbProfilePic: 'fb.com'
+}
 
 export const testGuest: IGuestFormData = {
 	email: 'guest@gmail.com',

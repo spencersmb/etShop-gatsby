@@ -1,6 +1,6 @@
-import { coupons, testCartWithMultiples } from '@redux/reduxTestUtils'
+import { coupons, testCartWithMultiples, testFacebookUser, testUser } from '@redux/reduxTestUtils'
 import { getCartTotal } from '@utils/cartUtils'
-import { jsonldImages, matchString, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
+import { getUserImage, jsonldImages, matchString, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
 import { cleanup } from 'react-testing-library'
 
 afterEach(cleanup)
@@ -164,5 +164,15 @@ describe('General Utils', () => {
 		const total = getCartTotal(testCartWithMultiples.items, coupons.fixedProduct)
 		const result = { 'discountedTotal': 13.45, 'total': 25.99 }
 		expect(total).toEqual(result)
+	})
+	it('Should return fb pic for user', () => {
+		const userImg = getUserImage(testFacebookUser)
+		expect(userImg.src).toEqual('fb.com')
+		expect(userImg.alt).toEqual('facebook image')
+	})
+	it('Should return gravatar pic for user', () => {
+		const userImg = getUserImage(testUser)
+		expect(userImg.src).toEqual(`https://www.gravatar.com/avatar/${testUser.gravatar}`)
+		expect(userImg.alt).toEqual('user image')
 	})
 })
