@@ -106,7 +106,8 @@ const CartStyled = styled.div`
 // animations
 const CartPose = posed(PoseHoc)({
 	enter: {
-		opacity: 1,
+		// opacity: 1,
+		x: 0,
 		transition: {
 			default: {
 				ease: 'easeOut'
@@ -114,7 +115,8 @@ const CartPose = posed(PoseHoc)({
 		}
 	},
 	exit: {
-		opacity: 0,
+		// opacity: 0,
+		x: '-100%',
 		transition: {
 			default: {}
 		}

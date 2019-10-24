@@ -5,6 +5,7 @@ import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 // import styled from 'styled-components'
 
@@ -17,6 +18,7 @@ export interface IProps {
 	freeCheckout: boolean;
 	initialLoad?: string;
 	handleChangeType: (type: string) => void
+	toggleCheckout: () => void
 }
 
 /**
@@ -61,8 +63,14 @@ export const CheckoutTabs = (props: IProps) => {
 		}
 	}
 
+	console.log('checkout render')
+
 	return (
-		<>
+		<CheckOutContainer>
+			<div>
+				header
+				<button onClick={props.toggleCheckout}>Close</button>
+			</div>
 			<ul data-testid='tabs__Nav'>
 				{React.Children.toArray(props.children)
 					.map((child: any, index: number) =>
@@ -92,8 +100,12 @@ export const CheckoutTabs = (props: IProps) => {
       </div>
 			}
 			{props.freeCheckout && <FreeCheckoutForm/>}
-		</>
+		</CheckOutContainer>
 	)
 }
-
+const CheckOutContainer = styled.div`
+ margin: 0 auto;
+ width: 100%;
+ max-width: 775px;
+`
 export default CheckoutTabs

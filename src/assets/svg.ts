@@ -1,4 +1,5 @@
 // import CreditCard from './svg-icons/genericCreditCard.svg'
+const ArrowLeft = require('./svg-icons/arrowLeft.svg')
 const CreditCard = require('./svg-icons/genericCreditCard.svg')
 const Pinterest = require('./svg-icons/Pinterest.svg')
 const CardSmall = require('./svg-icons/Card-small.svg')
@@ -38,6 +39,7 @@ const User = require('./svg-icons/user.svg')
 const Youtube = require('./svg-icons/Youtube.svg')
 
 export const svgs = {
+	ArrowLeft,
 	CardSmall,
 	CardTop,
 	Cart,
