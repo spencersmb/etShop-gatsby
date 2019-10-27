@@ -1,6 +1,7 @@
 import CartItem from '@components/cart/cartItem'
 import { ICartState } from '@et/types/Cart'
 import { IState } from '@et/types/State'
+import { EmptyCartList } from '@styles/modules/cart'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -14,19 +15,20 @@ export function CartList (props: IProps) {
 
 	if (itemsKeyArray.length < 1) {
 		return (
-			<div>Your cart is empty</div>
+			<EmptyCartList>Your cart is empty</EmptyCartList>
 		)
 	}
 	return (
-		<div data-testid='cartList'>
+		<>
 			{itemsKeyArray
 				.map((slug, index) =>
 					<CartItem
+						itemIndex={index}
 						cartIndex={slug}
 						key={index}
 					/>
 				)}
-		</div>
+		</>
 	)
 }
 

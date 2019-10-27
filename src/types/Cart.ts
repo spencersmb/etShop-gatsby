@@ -45,7 +45,7 @@ export interface ICartItem {
 	id: number,
 	name: string,
 	price: string,
-	qty: number | string,
+	qty: number,
 	slug: string
 }
 

@@ -46,11 +46,16 @@ function getNavSize (windowSize: string) {
 	}
 }
 
-const useScrollEvent = () => {
+export const useScrollEvent = (elementId: string, scrollElement?: any) => {
 	const [fixed, setFixed] = useState(false)
 	const [mq, setMq] = useState('')
 	const prevFixed = useRef(fixed)
 	const prevMQ = useRef(mq)
+	const scroller: any = useRef(null)
+
+	useEffect(() => {
+		scroller.current = scrollElement ? document.getElementById(scrollElement) : window
+	}, [])
 
 	useEffect(() => {
 		prevFixed.current = fixed
@@ -61,49 +66,80 @@ const useScrollEvent = () => {
 	}, [mq])
 
 	useEffect(() => {
-		const header = document.getElementById('header')
-		const cartCheck = document.getElementById('cart-Container')
-		let carthasChildren = cartCheck ? cartCheck.children.length > 0 : false
-		let headerHeight = 0
-		let windowDevice = getWindowSize()
-		let size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+		// const header = document.getElementById('header')
+		// const cartCheck = document.getElementById('cart-Container')
+		// let carthasChildren = cartCheck ? cartCheck.children.length > 0 : false
+		const filterContainer = document.getElementById(elementId)
+		// let headerHeight = 0
+		// let windowDevice = getWindowSize()
+		// let size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+		console.log('elementId', elementId)
 
 		const reqAnim = () => {
 			requestAnimationFrame(watchNav)
 		}
 		const watchNav = () => {
-			const fromTop = window.scrollY
-			windowDevice = getWindowSize()
+
+			// console.log('filterContainer', filterContainer)
+
+			// console.log('offset from top', filterContainer.getBoundingClientRect().top)
+			// console.log('window.pageYOffset', window.pageYOffset)
+			const elFromTop = filterContainer ? filterContainer.getBoundingClientRect().top : 0
+
+			// const elCart = document.getElementById('cart-Container')
+			// const fromTop = window.scrollY
+			const windowDevice = getWindowSize()
+			let size = windowDevice === 'desktop' ? 0 : 75
+			if (scrollElement) {
+				size = 0
+			}
+
+			// carthasChildren = elCart ? elCart.children.length > 0 : false
 			// console.log('windowDevice', windowDevice)
+			// console.log('fromTop < size', fromTop < size)
 			// console.log('prevMQ.current', prevMQ.current)
 
 			if (prevMQ.current !== windowDevice) {
-				carthasChildren = cartCheck ? cartCheck.children.length > 0 : false
-				headerHeight = header ? header.getBoundingClientRect().height : 0
-				size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+				// headerHeight = header ? header.getBoundingClientRect().height : 0
+				// size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
+
 				setMq(windowDevice)
 				// console.log('change', windowDevice)
 			}
 
-			if (fromTop >= size && !prevFixed.current) {
+			// if (carthasChildren) {
+			// 	return
+			// }
+
+			if (elFromTop <= size && !prevFixed.current) {
 				// console.log('sticky')
 				setFixed(true)
 
-			} else if (fromTop < size && prevFixed.current && carthasChildren) {
-				// link.classList.remove("current");
-				setFixed(true)
-				// console.log('Sticky cart')
-			} else if (fromTop < size && prevFixed.current) {
+			} else if (elFromTop > size && prevFixed.current) {
 				// link.classList.remove("current");
 				setFixed(false)
-				// console.log('unStick')
+
 			}
+
+			// if (fromTop >= size && !prevFixed.current) {
+			// 	// console.log('sticky')
+			// 	setFixed(true)
+			//
+			// } else if (fromTop < size && prevFixed.current && carthasChildren) {
+			// 	// link.classList.remove("current");
+			// 	setFixed(true)
+			// 	// console.log('Sticky cart')
+			// } else if (fromTop < size && prevFixed.current) {
+			// 	// link.classList.remove("current");
+			// 	setFixed(false)
+			//
+			// }
 		}
 
-		window.addEventListener('scroll', reqAnim)
+		scroller.current.addEventListener('scroll', reqAnim)
 
 		return () => {
-			window.removeEventListener('scroll', reqAnim)
+			scroller.current.removeEventListener('scroll', reqAnim)
 		}
 	}, [])
 
@@ -126,7 +162,7 @@ const useScrollEvent = () => {
 function ProductFilter (props: IProps) {
 	const { handleClick } = props
 	const [isOpen, setIsOpen] = useState(false)
-	const [fixed] = useScrollEvent()
+	const [fixed] = useScrollEvent('filterContainer')
 	const filterContainerRef = useRef(null)
 	const headerRef: any = useRef<HTMLElement>(null)
 

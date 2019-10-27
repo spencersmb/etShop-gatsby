@@ -63,6 +63,8 @@ export const calcBulkDiscount = (price: string, total: number): string => {
  * @return {string} Convert the result to readable USD string with dollar sign
  */
 export function calcBulkPriceDiscount (bulkDiscount: boolean, price: string, total: number = 1): string {
+	console.log('price', price)
+
 	return bulkDiscount
 		? calcBulkDiscount(price, total)
 		: price

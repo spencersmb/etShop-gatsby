@@ -35,17 +35,21 @@ interface IProps {
 
 const CheckoutNavBar = (props: IProps) => {
 	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant, featuredImage } = props
-	const windowPosRef = useRef(inView)
-	const [windowPos, setWindowPos] = useState(0)
+	const mounted = useRef(false)
 
+	// const windowPosRef = useRef(inView)
+	// const [windowPos, setWindowPos] = useState(0)
 	useEffect(() => {
-		// windowPosRef.current = inView
-		// setWindowPos(window.pageYOffset)
-		// console.log('getWindowPosition()', getWindowPosition())
-		// console.log('window.scrollY', windowPosRef.current)
-		// console.log('show nav', windowPosRef.current > 300 && !inView)
-
-	}, [inView])
+		mounted.current = true
+	})
+	// useEffect(() => {
+	// 	// windowPosRef.current = inView
+	// 	// setWindowPos(window.pageYOffset)
+	// 	// console.log('getWindowPosition()', getWindowPosition())
+	// 	// console.log('window.scrollY', windowPosRef.current)
+	// 	// console.log('show nav', windowPosRef.current > 300 && !inView)
+	//
+	// }, [inView])
 
 	function showInput () {
 		if (payWhatYouWant) {
@@ -74,12 +78,10 @@ const CheckoutNavBar = (props: IProps) => {
 
 	}
 
-	console.log('render')
-
 	return (
 		<CheckoutNavContainer
 			// pose={windowPos > 300 && !inView ? 'show' : 'hide'}
-			showNav={getWindowPosition() > 300 && !inView}>
+			showNav={getWindowPosition() > 300 && !inView && mounted.current}>
 			<Container>
 				<Section0>
 					<Img

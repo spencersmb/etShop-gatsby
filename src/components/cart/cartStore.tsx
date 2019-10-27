@@ -2,6 +2,7 @@ import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 import { OnPoseComplete } from '@et/types/Modal'
 import { IState } from '@et/types/State'
 import { cartLoadedComplete as cartLoaded, cartToggle, updateCartState } from '@redux/actions/cartActions'
+import { CartSliderTransition } from '@styles/modules/cart'
 import { getLocalStorageCart } from '@utils/cartUtils'
 import React, { useLayoutEffect, useRef } from 'react'
 import { connect } from 'react-redux'
@@ -108,17 +109,11 @@ const CartPose = posed(PoseHoc)({
 	enter: {
 		// opacity: 1,
 		x: 0,
-		transition: {
-			default: {
-				ease: 'easeOut'
-			}
-		}
+		transition: CartSliderTransition.enter
 	},
 	exit: {
 		// opacity: 0,
 		x: '-100%',
-		transition: {
-			default: {}
-		}
+		transition: CartSliderTransition.exit
 	}
 })

@@ -54,7 +54,7 @@ interface IPropsPublic {
 interface IPublicState {
 	selectedProduct: IProduct,
 	selectedLicense: string,
-	numberOfLicenses: number | string,
+	numberOfLicenses: number,
 	inCart: boolean,
 	bulkDiscount: boolean,
 	price: string,
@@ -168,6 +168,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	})
 
 	function selectChange (license: string) {
+		console.log('state.bulkDiscount', state.bulkDiscount)
 
 		if (license === 'standard') {
 			setState({
@@ -175,7 +176,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				selectedProduct: standardItem.current,
 				price: standardItem.current.on_sale
 					? standardItem.current.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price)
+					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price, state.numberOfLicenses)
 			})
 		} else if (license === 'extended' && extendedItem.current) {
 			setState({
@@ -183,7 +184,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				selectedProduct: extendedItem.current,
 				price: extendedItem.current.on_sale
 					? extendedItem.current.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price)
+					: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price, state.numberOfLicenses)
 			})
 		}
 	}
@@ -311,7 +312,11 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								licenseQty={state.numberOfLicenses}
 								price={state.price}
 								total={calcTotalQtyPrice(state.price, numberOfLicenses)}
-							/>), [state.inCart, state.price, state.numberOfLicenses])}
+							/>), [
+							state.inCart,
+							state.price,
+							state.numberOfLicenses
+						])}
 					</BuyNowWrapper>
 
 					{/*<p>has extended license: <span*/}

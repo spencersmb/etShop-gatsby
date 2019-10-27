@@ -1,4 +1,5 @@
 import CartList from '@components/cart/cartList'
+import { useScrollEvent } from '@components/products/productFilter'
 import StripeCheckout from '@components/stripe/stripeCheckout'
 import StripeProviderWrapper from '@components/stripe/stripeProvider'
 import CheckoutTabs from '@components/tabs/checkoutTabs'
@@ -7,21 +8,23 @@ import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
 import { device } from '@styles/global/breakpoints'
+import { ButtonReg } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
-import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
-import { CartHeader, CartHeaderTitle } from '@styles/modules/cart'
+import { shadowStyles } from '@styles/global/shadows'
+import { CartHeader, CartHeaderTitle, CartPageContainer, CartSliderTransition } from '@styles/modules/cart'
 import { svgs } from '@svg'
 import { isPWYWItemInCart } from '@utils/cartUtils'
 import { displayCurrency } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
+import { getWindowSize } from '@utils/windowUtils'
 import posed, { PoseGroup } from 'react-pose'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { ICartState } from '@et/types/Cart'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { Actions } from '@et/types/Actions'
-import React, { RefObject, useMemo, Suspense, useRef, useEffect, useState } from 'react'
+import React, { RefObject, useMemo, Suspense, useRef, useEffect, useState, useLayoutEffect } from 'react'
 
 const PaypalCheckout = React.lazy(() => import('@components/paypal/paypalCheckout'))
 
@@ -41,14 +44,101 @@ interface IReduxActions {
 	cartToggle: () => void
 }
 
+export const useScrollEventv2 = (elementId: string, fixedElement: any, scrollElement?: any) => {
+	const [fixed, setFixed] = useState(false)
+	const [offsetLeft, setOffsetLeft] = useState(0)
+	const [width, setWidth] = useState(0)
+	const [windowWidth, setwindowWidth] = useState(0)
+	const [mq, setMq] = useState('')
+	const prevFixed = useRef(fixed)
+	const prevMQ = useRef(mq)
+	const prevWindowWidth = useRef(0)
+	const scroller: any = useRef(null)
+	const fixedElementRef: any = useRef(null)
+
+	useEffect(() => {
+		fixedElementRef.current = document.getElementById(fixedElement)
+		scroller.current = scrollElement ? document.getElementById(scrollElement) : window
+		setWidth(fixedElementRef.current.getBoundingClientRect().width)
+		setTimeout(() => {
+			setOffsetLeft(fixedElementRef.current.getBoundingClientRect().left)
+		}, 600)
+	}, [])
+
+	useEffect(() => {
+		prevFixed.current = fixed
+	}, [fixed])
+
+	useEffect(() => {
+		prevMQ.current = mq
+	}, [mq])
+
+	useEffect(() => {
+		prevWindowWidth.current = window.innerWidth
+	}, [prevWindowWidth])
+
+	useEffect(() => {
+
+		const filterContainer = document.getElementById(elementId)
+		const size = 0
+
+		const reqAnim = () => {
+			requestAnimationFrame(watchNav)
+		}
+		const watchNav = () => {
+
+			const elFromTop = filterContainer ? filterContainer.getBoundingClientRect().top : 0
+
+			const windowDevice = getWindowSize()
+
+			// console.log('windowDevice', windowDevice)
+			// console.log('fromTop < size', fromTop < size)
+			// console.log('prevMQ.current', prevMQ.current)
+			// console.log('windowDevice', window.innerWidth)
+
+			if (prevMQ.current !== windowDevice) {
+				setMq(windowDevice)
+			}
+
+			if (windowDevice !== 'desktop') {
+				return
+			}
+			// console.log('prevWindowWidth.current', prevWindowWidth.current)
+			// console.log('window.width', window.innerWidth)
+
+			if (prevWindowWidth.current !== window.innerWidth) {
+				setwindowWidth(window.innerWidth)
+				setWidth(fixedElementRef.current.getBoundingClientRect().width)
+				setOffsetLeft(fixedElementRef.current.getBoundingClientRect().left)
+			}
+			if (elFromTop <= size && !prevFixed.current) {
+				setFixed(true)
+
+			} else if (elFromTop > size && prevFixed.current) {
+				setFixed(false)
+
+			}
+		}
+
+		scroller.current.addEventListener('scroll', reqAnim)
+
+		return () => {
+			scroller.current.removeEventListener('scroll', reqAnim)
+		}
+	}, [])
+
+	return [fixed, offsetLeft, width]
+}
+
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	const target = useRef<HTMLElement | null>(null)
 	const [checkoutOpen, setCheckoutOpen] = useState(false)
+	const [fixed, offsetLeft, width] = useScrollEventv2('cartPageContainer', 'cartCheckoutNav', 'cartWrapper')
 	const bodyScrollPos = useRef(0)
+
 	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
 	// to flip to the free checkout form
 	const toggleCheckout = () => {
-		console.log('toggleCart')
 		setCheckoutOpen(!checkoutOpen)
 	}
 	const checkout = useMemo(() => <CheckoutTabs
@@ -79,6 +169,8 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		props.cartToggle()
 	}
 
+	console.log('offsetLeft', offsetLeft)
+
 	return (
 		<CartWrapper
 			data-testid='cart-wrapper'
@@ -96,34 +188,47 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 					<h2>Your Cart</h2>
 					<p>{props.cart.totalItems} items</p>
 				</CartHeaderTitle>
-				<div className={`emptyCartBtn`}>
-					<button
-						data-testid='empty-cart-btn'
-						className='jestEmptyCart'
-						onClick={props.emptyCart}>
-						Empty Cart
-					</button>
-				</div>
+				<CartSubTotalHeader>
+					<span>Total</span>
+					<p>{displayCurrency(props.cart.totalPrice)}</p>
+				</CartSubTotalHeader>
 			</CartHeader>
 
 			{/* CartList Items */}
-			<CartListContainer>
+			<CartPageContainer id={'cartPageContainer'}>
 				<CartListInner>
 					<CartList/>
 				</CartListInner>
-				<CartSubTotal>
-					<SubTotalContainer>
-						<span>Total</span>
-						<p>{displayCurrency(props.cart.totalPrice)}</p>
-					</SubTotalContainer>
-					<button onClick={toggleCheckout}>Checkout</button>
-				</CartSubTotal>
+				<CartCheckoutNav id={'cartCheckoutNav'}
+												 width={width}
+												 fixed={fixed}
+												 offsetLeft={offsetLeft}>
+					<div className='inner'>
+						<h3>Order Summery</h3>
+						<CartSubTotal>
+							<span>Total</span>
+							<p>{displayCurrency(props.cart.totalPrice)}</p>
+						</CartSubTotal>
+						<ButtonStyled
+							data-testid='addToCart'
+							onClick={toggleCheckout}
+							disabled={props.cart.totalItems < 1}
+							outline={false}
+							color={colors.teal.i500}
+							hoverColor={colors.teal.i800}
+							hoverTextColor={'#fff'}
+						>
+							<span>Proceed To Checkout</span>
+							<span>{renderSvg(svgs.Cart)}</span>
+						</ButtonStyled>
+					</div>
+				</CartCheckoutNav>
 
-			</CartListContainer>
+			</CartPageContainer>
 
 			{/*CheckOut*/}
 			<PoseGroup>
-				{checkoutOpen && <CheckoutCart key={'z'}>
+				{checkoutOpen && <CheckoutSlide key={'z'}>
           <CheckoutTabs
             initialLoad='stripe'
             toggleCheckout={toggleCheckout}
@@ -141,36 +246,117 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
               </Suspense>
             </div>
           </CheckoutTabs>
-        </CheckoutCart>}
+        </CheckoutSlide>}
 			</PoseGroup>
 
 		</CartWrapper>
 	)
 }
 
-const CartListContainer = styled(GridFluid)`
+const ButtonStyled = styled(ButtonReg)`
+	display: flex;
+	flex-direction: row;
 	width: 100%;
+	align-items: center;
+	margin: 0;
+	text-align: left;
+	
+	span{
+		&:nth-child(1){
+			flex:1;
+		}
+		&:nth-child(2){
+			width: 25px;
+			display: flex;
+			margin-left: 25px;
+			svg{
+				width: 100%;
+			}
+			path{
+				fill: #fff;
+			}
+		}
+	}
+	
+	&:disabled{
+		background: ${colors.grey.i600};
+	}
+	
+	@media ${device.tablet} {
+		width: auto;
+	}
+	@media ${device.laptop} {
+		cursor: pointer;
+		font-size: 14px;
+		span{
+			&:nth-child(2){
+				margin-left: 15px;
+			}
+		}
+	}
 `
-
 const CheckoutPose = posed.div({
 	enter: {
 		// opacity: 1,
 		x: '0%',
-		transition: {
-			default: {
-				ease: 'easeOut'
-			}
-		}
+		transition: CartSliderTransition.enter
 	},
 	exit: {
 		// opacity: 0,
 		x: '-100%',
-		transition: {
-			default: {}
-		}
+		transition: CartSliderTransition.exit
 	}
 })
-const CheckoutCart = styled(CheckoutPose)`
+const CartCheckoutNav = styled.div<{ width: number, fixed: boolean, offsetLeft: number }>`
+	background: ${colors.grey.i200};
+	position: fixed;
+	z-index: 2;
+	bottom: 0;
+	width: 100%;
+	left: 0;
+	border-top: 1px solid ${colors.grey.i300};
+	
+	.inner{
+		padding: 15px 20px;
+		display: flex;
+		flex-direction: row;
+	}
+	
+	h3{
+		display: none;
+	}
+	
+	@media ${device.laptop} {
+		z-index: 1;
+		bottom: auto;
+		border: none;
+		grid-column: 10 / 14;
+		position: relative;
+
+		.inner{
+			position: ${props => props.fixed ? 'fixed' : 'relative'};
+			top: ${props => props.fixed ? '20px' : '0'};
+			left: ${props => props.fixed ? `${props.offsetLeft}px` : 'auto'};
+			width: ${props => props.fixed ? `${props.width}px` : 'auto'};
+			flex-direction: column;
+			background: #fff;
+			border-radius: 15px;
+			 ${shadowStyles.shadow3};
+			justify-content: center;
+			align-items: center;
+		}
+		
+		h3{
+			${Sentinel.reg};
+			font-weight: 800;
+			color: ${colors.grey.i800};
+			font-size: 24px;
+			display: flex;
+			text-align: center;
+		}
+	}
+`
+const CheckoutSlide = styled(CheckoutPose)`
 	position: fixed;
 	top: 0;
 	transform: translateX(-100%);
@@ -181,47 +367,76 @@ const CheckoutCart = styled(CheckoutPose)`
 `
 const CartListInner = styled.div`
 	grid-column: 2 / 4;
+	margin-bottom: 80px;
 	@media ${device.tablet} {
-		grid-column: 2 / 9;
-		background: green;
-		margin-left: -30px;
+		grid-column: 2 / 14;
+	}
+	
+	@media ${device.laptop} {
+		grid-column: 2 / 10;
+		position: relative;
+    z-index: 3;
+    margin: 0;
 	}
 	
 `
 const CartSubTotal = styled.div`
-	position: absolute;
-	z-index: 2;
-	bottom: 0;
-	width: 100%;
-	left: 0;
-	border-top: 1px solid ${colors.grey.i300};
-	padding: 25px 20px;
-
-	@media ${device.tablet} {
-		grid-column: 9 / 14;
-		margin-right: -30px;
-	}
-`
-
-const SubTotalContainer = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	justify-content: space-between;
+	display: none;
 	span{
+			color: ${colors.secondary.text};
+			font-size: 16px;
+			text-transform: uppercase;
+			font-weight: 400;
+			margin-right: 20px;
+	}
+	p{
 		${Sentinel.semiboldItalic};
+		color: ${colors.grey.i800};
+		font-size: 32px;
+		line-height: 32px;
+		margin: 0;
+	}
+	@media ${device.tablet} {
+		display: flex;
+		flex: 1;
+		flex-direction: row;
+		align-items: center;    
+	}
+	@media ${device.laptop} {
+		margin-bottom: 25px;
+		width: 100%;
+		justify-content: space-between;
+		p{
+			line-height: 34px;
+		}	    
+	}
+		
+`
+const CartSubTotalHeader = styled.div`
+	display: flex;
+	flex-direction: column;
+	text-align: right;
+	
+	span{
 		color: ${colors.secondary.text};
-		font-size: 18px;
+		font-size: 14px;
 		text-transform: uppercase;
 	}
 	p{
-		${Sentinel.reg};
+		${Sentinel.semiboldItalic};
 		color: ${colors.grey.i800};
 		font-weight: 600;
-		font-size: 52px;
-		line-height: 52px;
+		font-size: 18px;
+		line-height: 18px;
+		margin: 0;
 	}
+	
+	@media ${device.tablet} {
+		display: none;
+	}
+		
 `
+
 const CartWrapper = styled.div`
 	position: fixed;
 	top: 0;

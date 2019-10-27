@@ -35,7 +35,7 @@ export default class SubSelector extends Component<IProps> {
 		this.scrollAt = 1 / (items.length)
 
 		if (Flickity) {
-			setTimeout(this.initFlickity, 350)
+			setTimeout(this.initFlickity, 550)
 		}
 	}
 
@@ -124,6 +124,7 @@ const GallerySubNav = styled(ContainerPose)`
 	
 	@media ${device.tablet} {
 		display: block;	
+		height: 100%;
 		max-height: 136px;
 	}
 `

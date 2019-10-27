@@ -1,14 +1,27 @@
 import { CartPricingConfig } from '@components/cart/cartStatics'
 import NumberDial from '@components/forms/inputs/numberDial'
-import LicenseSelect from '@components/forms/inputs/productSelect'
 import { IState } from '@et/types/State'
 import {
-	changeLicenseType,
 	removeProductFromCart,
 	updateCartItemQty as updateCartItem
 } from '@redux/actions/cartActions'
+import { colors } from '@styles/global/colors'
+import {
+	CartItemContainer,
+	CartItemDetails,
+	CartItemLicense,
+	CartItemDetail,
+	CartItemTitle,
+	CartItemDiscount,
+	VolumeDiscountPin,
+	CartItemHeader,
+	CartItemContent,
+	CartItemBorder, CartItemDashedBorder, RemoveItemMobile, RemoveItemDesktop
+} from '@styles/modules/cartItem'
+import { svgs } from '@svg'
 import { checkForCoupon } from '@utils/cartUtils'
-import { calcCouponDiscount, displayCurrency, getPrice } from '@utils/priceUtils'
+import { calcCouponDiscount, displayCurrency, displayPercent, getPrice } from '@utils/priceUtils'
+import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useRef, useState } from 'react'
 import { IProduct, IProducts } from '@et/types/Products'
 import { ICartState, IChangeLicenseData, IChangeQty } from '@et/types/Cart'
@@ -22,6 +35,7 @@ import { connect } from 'react-redux'
  */
 interface IProps {
 	cartIndex: string;
+	itemIndex: number
 }
 
 interface IReduxProps {
@@ -55,9 +69,10 @@ interface IReduxPropActions {
  * Same thing is done for the total cart, we check for the coupon on the fly when creating the total
  */
 export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
-	const { cart, cartIndex, products, changeLicense, removeItem, updateCartItemQty } = props
+	const { cart, cartIndex, products, removeItem } = props
 	const [bulkDiscount, setBulkDiscount] = useState(false)
-	const selectedProduct = useRef<IProduct>(products[cartIndex])
+	const total = parseInt(cart.items[cartIndex].price, 10) * convertToNumber(cart.items[cartIndex].qty)
+	const cartItem = cart.items[cartIndex]
 
 	useEffect(() => {
 		if (cart.items[cartIndex].qty > CartPricingConfig.minQuantity) {
@@ -65,30 +80,12 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 		}
 	}, [])
 
-	function handleLicenseChange (e: any) {
-		changeLicense({
-			currentCartItem: cart.items[cartIndex], // item in cart
-			extended: e.target.value === 'extended', // value from dropdown
-			cartItemIndex: cartIndex, // redundent?
-			products, // all our products
-			bulkDiscount // is bulkdiscount enabled
-		})
-	}
-
-	function handleNumberDialInputChange (total: number | string) {
-		const cartItemRef = cart.items[cartIndex]
-		const isBulkPricing = total >= CartPricingConfig.minQuantity
-		setBulkDiscount(isBulkPricing)
-		updateCartItemQty({
-			key: cartIndex,
-			cartItem: {
-				...cartItemRef,
-				qty: total
-			},
-			bulkDiscount: isBulkPricing,
-			regularPrice: getPrice(products[cartItemRef.slug])
-		})
-
+	function convertToNumber (item: any): number {
+		if (typeof item === 'string') {
+			return parseInt(item, 10)
+		} else {
+			return item
+		}
 	}
 
 	function hasCoupon (): boolean {
@@ -104,36 +101,122 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 		removeItem(cartIndex)
 	}
 
+	function showLicenseType () {
+		if (cart.items[cartIndex].extended) {
+			return (
+				<CartItemLicense
+					type={'extended'}>
+					Extended License
+				</CartItemLicense>
+			)
+		}
+
+		return (
+			<CartItemLicense
+				type={'standard'}>
+				Standard License
+			</CartItemLicense>
+		)
+	}
+
+	function displaySavings () {
+		const originalTotal = parseInt(products[cartItem.slug].price, 10) * cartItem.qty
+		const currentTotal = parseInt(cartItem.price, 10) * cartItem.qty
+		return displayCurrency(originalTotal - currentTotal)
+	}
+
+	function displayOriginalTotal () {
+		return displayCurrency(parseInt(products[cartItem.slug].price, 10) * cartItem.qty)
+	}
+
 	return (
-		<div>
-			<div data-testid='productName'>{products[cartIndex].name}</div>
-			{/*<div>*/}
-			{/*<LicenseSelect*/}
-			{/*onChange={handleLicenseChange}*/}
-			{/*selectedLicense={cart.items[cartIndex].extended ? 'extended' : 'standard'}*/}
-			{/*showDropdown={products[cartIndex].license.hasExtendedLicense}*/}
-			{/*/>*/}
-			{/*</div>*/}
-			{bulkDiscount &&
-      <span data-testid='bulkDiscount'>Bulk discount of {CartPricingConfig.bulkDiscount} applied</span>}
-			<NumberDial
-				label='Quantity'
-				qty={cart.items[cartIndex].qty}
-				inputOnChange={handleNumberDialInputChange}
-				disableInput={selectedProduct.current.pwyw}
-			/>
+		<CartItemContainer>
+			<CartItemBorder className={props.itemIndex === 0 ? 'top' : ''}>
+				<svg viewBox='0 0 709 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+					<path fillRule='evenodd' clipRule='evenodd'
+								d='M331 0C331 4.41827 327.418 8 323 8C318.582 8 315 4.41827 315 0H15C8.46889 0 2.91269 4.17401 0.853516 10H708.146C706.087 4.17401 700.531 0 694 0H331Z'
+								fill='#525252'/>
+				</svg>
 
-			<div>Item:</div>
-			<div data-testid='productPrice'>{displayCurrency(cart.items[cartIndex].price)}</div>
-			{hasCoupon() &&
-      <div>
-        <div>Item discount:</div>
-        <div className='jestDiscount'>-{calcDiscount()}</div>
-      </div>}
+			</CartItemBorder>
 
-			<button onClick={handleRemoveItem} data-testid='removeItemBtn'>Remove Item</button>
-			<hr/>
-		</div>
+			<CartItemContent>
+				<CartItemHeader>
+					<CartItemTitle data-testid='productName'>
+						{products[cartIndex].name}
+					</CartItemTitle>
+
+					{showLicenseType()}
+
+					<RemoveItemDesktop>
+						<button onClick={handleRemoveItem} data-testid='removeItemBtn'>
+							Remove Item
+						</button>
+					</RemoveItemDesktop>
+				</CartItemHeader>
+
+				<CartItemDashedBorder>
+					<svg viewBox='0 0 2 186' fill='none' xmlns='http://www.w3.org/2000/svg'>
+						<path d='M1 0L0.999992 186' stroke='#DADADA' strokeDasharray='5 5'/>
+					</svg>
+
+				</CartItemDashedBorder>
+
+				<CartItemDetails>
+
+					{/*Price Per License*/}
+					<CartItemDetail>
+						<span>Price per license</span>
+						<p data-testid='productPrice'>{displayCurrency(cart.items[cartIndex].price)}</p>
+					</CartItemDetail>
+
+					{/*License Qty*/}
+					<CartItemDetail>
+						<span>License Qty</span>
+						<p>{cart.items[cartIndex].qty}</p>
+					</CartItemDetail>
+
+					{/*Discount*/}
+					{bulkDiscount &&
+          <>
+            <CartItemDiscount>
+              <span>Original Total</span>
+              <p>{displayOriginalTotal()}</p>
+            </CartItemDiscount>
+            <CartItemDiscount>
+              <span className={'discountLabel'}>{displayPercent(CartPricingConfig.bulkDiscount)}% Savings</span>
+              <div className={'discountPin'}>
+                <VolumeDiscountPin>
+                  Volume Discount
+                </VolumeDiscountPin>
+              </div>
+              <div className={'discount'}>-{displaySavings()}</div>
+            </CartItemDiscount>
+          </>
+					}
+
+					{/*Total*/}
+					<CartItemDetail total={true}>
+						<span className={'totalLabel'}>total</span>
+						<div className={'total'}>{displayCurrency(total)}</div>
+					</CartItemDetail>
+				</CartItemDetails>
+
+				<RemoveItemMobile>
+					<button onClick={handleRemoveItem} data-testid='removeItemBtn'>
+						Remove Item
+					</button>
+				</RemoveItemMobile>
+			</CartItemContent>
+
+			<CartItemBorder bottom={true}>
+				<svg viewBox='0 0 709 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+					<path fillRule='evenodd' clipRule='evenodd'
+								d='M0.853516 0C2.91269 5.82599 8.46889 10 15 10H315C315 5.58173 318.582 2 323 2C327.418 2 331 5.58173 331 10H694C700.531 10 706.087 5.82599 708.146 0H0.853516Z'
+								fill='#525252'/>
+				</svg>
+			</CartItemBorder>
+		</CartItemContainer>
 	)
 }
 
@@ -146,7 +229,6 @@ const mapStateToProps = (state: IState): { cart: ICartState, products: IProducts
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 	return {
-		changeLicense: bindActionCreators(changeLicenseType, dispatch),
 		removeItem: bindActionCreators(removeProductFromCart, dispatch),
 		updateCartItemQty: bindActionCreators(updateCartItem, dispatch)
 	}

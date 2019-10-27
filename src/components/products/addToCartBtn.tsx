@@ -104,7 +104,7 @@ const Total = styled.div`
 `
 const ButtonStyled = styled(ButtonReg)`
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
 	margin: 0;
 	
@@ -115,7 +115,6 @@ const ButtonStyled = styled(ButtonReg)`
 		line-height: 24px;
 		margin-left: 15px; 
 	}
-		
 `
 
 const mapStateToProps = (state: IState): { cart: ICartState } => {
