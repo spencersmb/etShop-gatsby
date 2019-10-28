@@ -136,6 +136,7 @@ export const RemoveItemMobile = styled.div`
 	padding: 10px 15px;
 	text-align: center;
 	display: flex;
+	justify-content: center;
 	button{
 		color: ${colors.red.warning};
 		background: none;
@@ -143,6 +144,9 @@ export const RemoveItemMobile = styled.div`
 		border: none;
 		margin: 0;
 		padding: 0;
+		&:focus{
+			outline: none;
+		}
 	}
 	
 	@media ${device.tablet} {
@@ -157,6 +161,7 @@ export const RemoveItemMobile = styled.div`
 		
 `
 export const RemoveItemDesktop = styled(RemoveItemMobile)`
+	display: none;
 	@media ${device.tablet} {
 		display: flex;
 		font-size: 14px;

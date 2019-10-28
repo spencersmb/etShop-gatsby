@@ -70,6 +70,11 @@ export const LoginModal = (props: MixedFormProps) => {
 		}
 	}, [])
 
+	if (options.data && options.data.checkingOut) {
+		console.log('checkout')
+
+	}
+
 	function changeForm (event: any) {
 		const formName = event.target.getAttribute('data-form')
 		setName(formName)
@@ -128,6 +133,7 @@ export const LoginModal = (props: MixedFormProps) => {
 		<ModalPose
 			animateOnMount={true}
 			key='loginmodal'
+			device={getWindowSize()}
 		>
 			<LoginModalWrapper>
 				<LoginModalContent>
@@ -228,7 +234,7 @@ const ModalPose = posed(ModalStyled)({
 	exit: {
 		opacity: 0,
 		transition: {
-			default: { duration: 150 },
+			default: { duration: 200 },
 			y: { ease: 'easeOut' }
 		},
 		// width: 0,
@@ -251,7 +257,7 @@ const ModalPose = posed(ModalStyled)({
 		x: `-50%`,
 		y: `-50%`,
 		// width: `100%`,
-		height: 697
+		height: (props: any) => props.device === 'desktop' ? 697 : '100%'
 	}
 })
 const LoginModalWrapper = styled.div`
@@ -306,6 +312,8 @@ const CloseBtn = styled.div`
 	path{
 		fill: ${colors.grey.i800};
 	}
+
+		
 `
 // animations
 //   ...(flag1 && { optionalKey1: 5 }),

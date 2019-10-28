@@ -2,7 +2,7 @@ import CartList from '@components/cart/cartList'
 import { useScrollEvent } from '@components/products/productFilter'
 import StripeCheckout from '@components/stripe/stripeCheckout'
 import StripeProviderWrapper from '@components/stripe/stripeProvider'
-import CheckoutTabs from '@components/tabs/checkoutTabs'
+import CheckoutPage from '@components/tabs/checkoutTabs'
 import { IModalState } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
@@ -44,7 +44,8 @@ interface IReduxActions {
 	cartToggle: () => void
 }
 
-export const useScrollEventv2 = (elementId: string, fixedElement: any, scrollElement?: any) => {
+type useScrollReturn = [boolean, number, number]
+export const useScrollEventv2 = (elementId: string, fixedElement: any, scrollElement?: any): useScrollReturn => {
 	const [fixed, setFixed] = useState(false)
 	const [offsetLeft, setOffsetLeft] = useState(0)
 	const [width, setWidth] = useState(0)
@@ -141,7 +142,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	const toggleCheckout = () => {
 		setCheckoutOpen(!checkoutOpen)
 	}
-	const checkout = useMemo(() => <CheckoutTabs
+	const checkout = useMemo(() => <CheckoutPage
 		initialLoad='stripe'
 		toggleCheckout={toggleCheckout}
 		handleChangeType={props.changeCheckout}
@@ -157,7 +158,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 				<PaypalCheckout/>
 			</Suspense>
 		</div>
-	</CheckoutTabs>, [
+	</CheckoutPage>, [
 		props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products) && checkoutOpen || !checkoutOpen
 	])
 
@@ -169,7 +170,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		props.cartToggle()
 	}
 
-	console.log('offsetLeft', offsetLeft)
+	console.log('checkoutOpen', checkoutOpen)
 
 	return (
 		<CartWrapper
@@ -227,32 +228,42 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			</CartPageContainer>
 
 			{/*CheckOut*/}
-			<PoseGroup>
-				{checkoutOpen && <CheckoutSlide key={'z'}>
-          <CheckoutTabs
-            initialLoad='stripe'
-            toggleCheckout={toggleCheckout}
-            handleChangeType={props.changeCheckout}
-            freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
-          >
-            <div data-payment='stripe'>
-              <StripeProviderWrapper>
-                <StripeCheckout/>
-              </StripeProviderWrapper>
-            </div>
-            <div data-payment='paypal'>
-              <Suspense fallback={null}>
-                <PaypalCheckout/>
-              </Suspense>
-            </div>
-          </CheckoutTabs>
-        </CheckoutSlide>}
-			</PoseGroup>
+			<CheckoutSlide pose={checkoutOpen ? 'open' : 'closed'}>
+				<CheckoutPage
+					initialLoad='stripe'
+					toggleCheckout={toggleCheckout}
+					handleChangeType={props.changeCheckout}
+					freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
+				>
+					<div data-payment='stripe'>
+						<StripeProviderWrapper>
+							<StripeCheckout/>
+						</StripeProviderWrapper>
+					</div>
+					<div data-payment='paypal'>
+						<Suspense fallback={null}>
+							<PaypalCheckout/>
+						</Suspense>
+					</div>
+				</CheckoutPage>
+			</CheckoutSlide>
 
 		</CartWrapper>
 	)
 }
 
+const Test = styled.div`
+	height: 50px;
+	width: 50px;
+`
+const Box = posed(Test)({
+	open: {
+		background: '#000000'
+	},
+	closed: {
+		background: '#ff0300'
+	}
+})
 const ButtonStyled = styled(ButtonReg)`
 	display: flex;
 	flex-direction: row;
@@ -296,12 +307,12 @@ const ButtonStyled = styled(ButtonReg)`
 	}
 `
 const CheckoutPose = posed.div({
-	enter: {
+	open: {
 		// opacity: 1,
 		x: '0%',
 		transition: CartSliderTransition.enter
 	},
-	exit: {
+	closed: {
 		// opacity: 0,
 		x: '-100%',
 		transition: CartSliderTransition.exit
@@ -363,7 +374,8 @@ const CheckoutSlide = styled(CheckoutPose)`
 	background: #fff;
 	width: 100%;
 	height: 100%;
-	z-index: 3	;
+	z-index: 3;
+	overflow-y: scroll;
 `
 const CartListInner = styled.div`
 	grid-column: 2 / 4;

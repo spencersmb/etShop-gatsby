@@ -1,3 +1,6 @@
+import { PaymentTab } from '@styles/modules/checkout'
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import React, { Component } from 'react'
 
 // import styled from 'styled-components'
@@ -9,6 +12,7 @@ export interface IProps {
 	/** itemIndex description */
 	paymentType: string;
 	handleClick: any;
+	selected: boolean
 }
 
 /**
@@ -27,11 +31,32 @@ export class CheckoutTab extends Component<IProps, {}> {
 		}
 	}
 
+	renderPaypal = () => {
+		return (
+			<p className={'paypal'}>
+				<span className={'cc-paypal'}>{renderSvg(svgs.Paypal)}</span>
+			</p>
+		)
+	}
+
+	renderStripe = () => {
+		return (
+			<p className={'stripe'}>
+				<span className={'cc-svg'}>{renderSvg(svgs.CreditCard)}</span>
+				<span className={'cc-text'}>Credit Card</span>
+			</p>
+		)
+	}
+
 	render () {
 		return (
-			<li data-testid={`tab-${this.props.paymentType}`} onClick={this.tabClick}>
-				<span>{this.props.paymentType.toUpperCase()}</span>
-			</li>
+			<PaymentTab
+				selected={this.props.selected}
+				data-testid={`tab-${this.props.paymentType}`}
+				onClick={this.tabClick}>
+				{this.props.paymentType === 'stripe' && this.renderStripe()}
+				{this.props.paymentType === 'paypal' && this.renderPaypal()}
+			</PaymentTab>
 		)
 	}
 }

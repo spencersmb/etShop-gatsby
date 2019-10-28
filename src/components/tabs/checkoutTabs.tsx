@@ -3,7 +3,12 @@ import CartLogin from '@components/cart/login/cartLogin'
 import FreeCheckoutForm from '@components/forms/freeItem-checkout'
 import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
+import { CartHeader, CartHeaderTitle } from '@styles/modules/cart'
+import { CheckoutTabs } from '@styles/modules/checkout'
+import { svgs } from '@svg'
 import { reduceChildrenByDataType } from '@utils/genUtils'
+import { displayCurrency } from '@utils/priceUtils'
+import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -38,7 +43,7 @@ export interface IProps {
  * calls clickHandler1 with a value.
  */
 
-export const CheckoutTabs = (props: IProps) => {
+export const CheckoutPage = (props: IProps) => {
 	const [key, setKey] = useState('stripe')
 	// onMount
 	useEffect(() => {
@@ -63,31 +68,36 @@ export const CheckoutTabs = (props: IProps) => {
 		}
 	}
 
-	console.log('checkout render')
-
 	return (
 		<CheckOutContainer>
-			<div>
-				header
-				<button onClick={props.toggleCheckout}>Close</button>
-			</div>
-			<ul data-testid='tabs__Nav'>
+			<CartHeader>
+				<div
+					data-testid='close-btn'
+					className='closeCheckoutBtn jestCloseCheckout'
+					onClick={props.toggleCheckout}>
+					{renderSvg(svgs.ArrowLeft)}
+				</div>
+				<CartHeaderTitle>
+					<h2>Checkout</h2>
+				</CartHeaderTitle>
+				<div className='spacer' style={{ width: '56px' }}/>
+			</CartHeader>
+			<CheckoutTabs data-testid='tabs__Nav'>
 				{React.Children.toArray(props.children)
 					.map((child: any, index: number) =>
 						<CheckoutTab
 							key={index}
+							selected={child.props['data-payment'] === key}
 							paymentType={child.props['data-payment']}
 							handleClick={onTabClick}
 						/>
 					)}
-			</ul>
+			</CheckoutTabs>
 
 			<CheckoutTotal/>
+
 			<CartLogin/>
-			{/*Possible dropdown for country code selecttion goes here*/}
-			<div>
-				<CouponInput/>
-			</div>
+
 
 			{/*Render Matching Content*/}
 			{!props.freeCheckout &&
@@ -106,6 +116,5 @@ export const CheckoutTabs = (props: IProps) => {
 const CheckOutContainer = styled.div`
  margin: 0 auto;
  width: 100%;
- max-width: 775px;
 `
-export default CheckoutTabs
+export default CheckoutPage

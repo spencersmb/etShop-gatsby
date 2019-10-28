@@ -10,6 +10,7 @@ const ChevronLeft = require('./svg-icons/chevron-left.svg')
 const Close = require('./svg-icons/Close.svg')
 const Computer = require('./svg-icons/Computer.svg')
 const Controls = require('./svg-icons/controls.svg')
+const Coupon = require('./svg-icons/Coupon.svg')
 const Divider1 = require('./svg-icons/divider-1.svg')
 const DottedLine = require('./svg-icons/Dotted-line.svg')
 const Download = require('./svg-icons/download.svg')
@@ -30,6 +31,7 @@ const Instagram = require('./svg-icons/Instagram.svg')
 const Info = require('./svg-icons/info.svg')
 const Lock = require('./svg-icons/lock.svg')
 const MagnifyGlass = require('./svg-icons/magnify-glass.svg')
+const Paypal = require('./svg-icons/Paypal.svg')
 const Photoshop = require('./svg-icons/photoshop.svg')
 const Programs = require('./svg-icons/programs.svg')
 const Templates = require('./svg-icons/Templates.svg')
@@ -48,6 +50,7 @@ export const svgs = {
 	Close,
 	Computer,
 	Controls,
+	Coupon,
 	CreditCard,
 	Divider1,
 	DottedLine,
@@ -69,6 +72,7 @@ export const svgs = {
 	Info,
 	Lock,
 	MagnifyGlass,
+	Paypal,
 	Photoshop,
 	Programs,
 	Pinterest,

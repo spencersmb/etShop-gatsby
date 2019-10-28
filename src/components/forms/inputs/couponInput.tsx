@@ -9,6 +9,11 @@ import {
 	submitCoupon as submitCouponAction,
 	submitCouponCode
 } from '@redux/actions/couponActions'
+import { colors } from '@styles/global/colors'
+import { CouponContainer, InputSpinner } from '@styles/modules/checkout'
+import { FormGroup, FormInput, SvgValidation } from '@styles/modules/SignInUpModals'
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -31,9 +36,14 @@ interface IProps {
 
 export function CouponInput (props: IProps & IReduxActions) {
 	const [input, setInput] = useState('')
+	const [active, setActive] = useState(false)
+	const [pristine, setPristine] = useState(true)
 	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const prevTotal = useRef(total)
+	useEffect(() => {
+		prevTotal.current = total
+	})
 
 	useEffect(() => {
 		prevTotal.current = total
@@ -45,10 +55,13 @@ export function CouponInput (props: IProps & IReduxActions) {
 			const inputObsv: Observable<any> = fromEvent(inputRef.current, 'input')
 			const inputPipe: any = inputObsv.pipe(
 				map((e: any) => e.target.value),
-				filter((e: string) => e !== '' && e.length > 4),
+				filter((e: string) => e !== ''),
 				debounceTime(500),
 				distinctUntilChanged(),
 				switchMap((target: string) => {
+					if (target.length < 4) {
+						return 'undefined'
+					}
 					submitCoupon()
 					return from(CheckoutApi.checkCoupon(target))
 				})
@@ -63,6 +76,9 @@ export function CouponInput (props: IProps & IReduxActions) {
 						invalidCoupon()
 						if (total !== prevTotal.current) {
 							updatePrice()
+						}
+						if (inputRef.current) {
+							inputRef.current.focus()
 						}
 				}
 			})
@@ -79,24 +95,86 @@ export function CouponInput (props: IProps & IReduxActions) {
 		}
 	}, [])
 
+	const isFocused = active ? 'hasFocus' : 'noFocus'
+	const isValid = coupon.valid ? 'valid' : 'invalid'
+	const isEmpty = () => {
+		if (!inputRef.current) {
+			return
+		}
+
+		if (inputRef.current.value === '' || !inputRef.current.value) {
+			return 'empty'
+		}
+
+		return 'has-value'
+	}
+	const showIcon = () => {
+		// console.log('pristine', pristine)
+		// console.log('isValid', coupon.valid)
+		// console.log('coupon.submitted', coupon.submitted)
+
+		return !pristine && coupon.submitted && !coupon.loading
+			? !coupon.valid
+				? <SvgValidation className={'svgValidation svgValidation--inValid'} isValid={false}>
+					{renderSvg(svgs.Close)}
+				</SvgValidation>
+				: <SvgValidation className={'svgValidation svgValidation--valid'} isValid={true}>
+					{renderSvg(svgs.Checkmark)}
+				</SvgValidation>
+			: null
+	}
+
 	return (
-		<form>
-			{coupon.valid && <span data-testid='valid-notice'>Valid code!</span>}
-			{!coupon.valid && coupon.submitted && <span data-testid='invalid-notice'>Invalid code!</span>}
-			<label htmlFor='coupon'>Coupon</label>
-			<div>{JSON.stringify(coupon.loading)}</div>
-			<input
-				ref={inputRef}
-				id='couponInput'
-				aria-label={'coupon'}
-				type='text'
-				// onChange={handleInputChange}
-				data-testid='couponInput'
-				defaultValue={input || ''}
-				placeholder='Enter Promo Coupon'
-				// readOnly={coupon.loading}
-			/>
-		</form>
+		<CouponContainer>
+			<form>
+				{/*{coupon.valid && <span data-testid='valid-notice'>Valid code!</span>}*/}
+				{/*{!coupon.valid && coupon.submitted && <span data-testid='invalid-notice'>Invalid code!</span>}*/}
+				{/*<div>{JSON.stringify(coupon.loading)}</div>*/}
+				<FormGroup data-testid={'formGroup'} className={'formGroup__Container'}>
+					<FormInput className={`formInput`}>
+						<div data-testid={'formGroupTest'}
+								 className={`formGroup ${isFocused} ${isValid} ${isEmpty()}`}>
+							<label
+								htmlFor='couponInput'
+								className={'renderLabel'}>
+								Enter Coupon Code
+							</label>
+							<input
+								ref={inputRef}
+								id='couponInput'
+								aria-label={'coupon'}
+								type='text'
+								onFocus={() => {
+									setActive(true)
+								}}
+								onBlur={() => {
+									setActive(false)
+								}}
+								onChange={() => {
+									if (pristine) {
+										setPristine(false)
+									}
+								}}
+								data-testid='couponInput'
+								defaultValue={input || ''}
+								disabled={coupon.loading}
+								// readOnly={coupon.loading}
+							/>
+							{showIcon()}
+							{<InputSpinner
+								spinnerColor={colors.purple.i500}
+								submitting={coupon.loading}
+								data-testid='spinner' className='submit__spinner'>
+								<svg className='spinner' viewBox='0 0 50 50'>
+									<circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
+								</svg>
+							</InputSpinner>}
+						</div>
+					</FormInput>
+				</FormGroup>
+
+			</form>
+		</CouponContainer>
 	)
 }
 

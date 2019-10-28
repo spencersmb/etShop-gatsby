@@ -9,7 +9,6 @@ function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) 
 		<StaticQuery
 			query={detailsQuery}
 			render={(data: IGatsbyConfig) => {
-
 				return (
 					<Helmet
 						htmlAttributes={{
@@ -18,6 +17,10 @@ function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) 
 						title={title}
 						titleTemplate={`%s | ${data.site.siteMetadata.title}`}
 						meta={[
+							{
+								name: 'viewport',
+								content: 'width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no'
+							},
 							{
 								name: 'google-site-verification',
 								content: 'verification_token'

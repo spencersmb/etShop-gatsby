@@ -122,7 +122,7 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 							target.current.style.width = `100%`
 							target.current.style.top = `-${scrollPos.current}px`
 							target.current.style.bottom = '0'
-							// target.current.style.position = 'fixed'
+							target.current.style.position = 'fixed'
 						}
 					}}
 				/>

@@ -46,8 +46,6 @@ const tooOld = (value: any) =>
 export const SignUpForm = (props: any) => {
 	const { handleSubmit, submitSucceeded, poseRef, submitting, invalid, handleUserSubmit, handleFacebookSubmit, manualSubmitting, setManualSubmit, setFacebookError, facebookError } = props
 
-	console.log('props', props)
-
 	const { required } = ReduxValidation
 	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
 		console.log('response', response)

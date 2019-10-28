@@ -32,7 +32,8 @@ export const CartHeader = styled.div`
 	border-bottom: 1px solid ${colors.grey.i300};
 	padding: 15px;
 
-	.closeCartBtn{
+	.closeCartBtn,
+	.closeCheckoutBtn{
 		width: 56px;
 		height: 60px;
 		display: flex;
