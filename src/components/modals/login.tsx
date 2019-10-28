@@ -137,9 +137,6 @@ export const LoginModal = (props: MixedFormProps) => {
 		>
 			<LoginModalWrapper>
 				<LoginModalContent>
-					<LeftContent style={{ background: '#7ACC28' }} className='content'>
-						TEst left content
-					</LeftContent>
 					<ContentContainer modalHeight={name}>
 
 						<PoseGroup>

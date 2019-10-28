@@ -46,11 +46,12 @@ export const PaymentTab = styled.li<{ selected: boolean }>`
 	.cc-paypal{
 		width: 63px;
 		display: flex;
-
+		align-items: center;
 	}
 	.cc-svg{
 		width: 46px;
 		display: flex;
+		align-items: center;
 	}
 	.cc-text{
 		font-size: 15px;

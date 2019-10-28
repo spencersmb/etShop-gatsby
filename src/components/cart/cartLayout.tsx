@@ -280,6 +280,7 @@ const ButtonStyled = styled(ButtonReg)`
 			width: 25px;
 			display: flex;
 			margin-left: 25px;
+			align-items: center;
 			svg{
 				width: 100%;
 			}

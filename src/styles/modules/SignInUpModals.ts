@@ -84,6 +84,7 @@ export const FormHeader1 = styled.div`
 		display: flex;
 		margin: 0 auto;
 		justify-content: center;
+		align-items: center;
 		svg{
 			width: 100%;
 		}
@@ -178,7 +179,7 @@ export const FormInput = styled.div`
 			border-color: #cccccc;
 			color: ${colors.primary.text};
 			display: block;
-			font-size: 0.875rem;
+			font-size: 16px;
 			height: 2.3125rem;
 			width: 100%;
 			box-sizing: border-box;
@@ -308,6 +309,7 @@ export const Arrow = styled.span`
 	display: flex;
 	transform: rotate(180deg);
 	margin-left: 5px;
+	align-items: center;
 
 	svg{
 		width: 100%;
