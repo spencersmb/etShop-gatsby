@@ -1,3 +1,4 @@
+import { ICartState } from '@et/types/Cart'
 import { IModal, INavState } from '@et/types/Modal'
 import { IState } from '@et/types/State'
 import { IFacebookUserCreate } from '@et/types/User'
@@ -46,6 +47,7 @@ interface IpropsReduxActions {
 
 interface IPropsReduxState {
 	nav: INavState
+	cart: ICartState
 }
 
 interface IFormProps {
@@ -56,8 +58,7 @@ interface IFormProps {
 type MixedFormProps = IModal & IpropsReduxActions & IPropsReduxState
 
 export const LoginModal = (props: MixedFormProps) => {
-	const { options, closeModal, nav, navToggle } = props
-
+	const { options, closeModal, nav, navToggle, cart } = props
 	const [name, setName] = useState(options.name)
 	const [submitting, setSubmitting] = useState(false)
 	const [facebookError, setFacebookError] = useState(null)
@@ -69,11 +70,6 @@ export const LoginModal = (props: MixedFormProps) => {
 			firstRender.current = true
 		}
 	}, [])
-
-	if (options.data && options.data.checkingOut) {
-		console.log('checkout')
-
-	}
 
 	function changeForm (event: any) {
 		const formName = event.target.getAttribute('data-form')
@@ -88,7 +84,9 @@ export const LoginModal = (props: MixedFormProps) => {
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 			closeModal()
-			navigate(`/account/`)
+			if (!cart.isOpen) {
+				navigate(`/account/`)
+			}
 		} catch (e) {
 			console.error('user login fail:', e)
 		}
@@ -101,9 +99,12 @@ export const LoginModal = (props: MixedFormProps) => {
 				navToggle()
 			}
 			closeModal()
-			navigate(`/account/`)
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+			if (!cart.isOpen) {
+				navigate(`/account/`)
+			}
+
 		} catch (e) {
 			console.error('user signup fail:', e)
 		}
@@ -118,9 +119,11 @@ export const LoginModal = (props: MixedFormProps) => {
 				navToggle()
 			}
 			closeModal()
-			navigate(`/account/`)
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
+			if (!cart.isOpen) {
+				navigate(`/account/`)
+			}
 
 		} catch (e) {
 			console.error('user facebook signup fail:', e)
@@ -191,9 +194,10 @@ export const LoginModal = (props: MixedFormProps) => {
 }
 
 // export default LoginModal
-const mapStateToProps = (state: IState): { nav: INavState } => {
+const mapStateToProps = (state: IState): { nav: INavState, cart: ICartState } => {
 	return {
-		nav: state.nav
+		nav: state.nav,
+		cart: state.cart
 	}
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {

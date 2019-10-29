@@ -73,8 +73,9 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 
 			return {
 				...state,
-				totalPrice: updateTotalPrice.discountedTotal, // es6 destructure totalItems: totalItems
-				originalPrice: updateTotalPrice.total
+				totalPrice: updateTotalPrice.discountedTotal, // es6 destructure
+				// totalItems: totalItems
+				originalPrice: updateTotalPrice.total // used if a coupon is added
 			}
 
 		/*

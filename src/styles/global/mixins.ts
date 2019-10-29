@@ -1,4 +1,4 @@
-export function placeholderColor(color: string): string {
+export function placeholderColor (color: string): string {
 	return `
 		&::-webkit-input-placeholder {
 			color: ${color};
@@ -12,5 +12,12 @@ export function placeholderColor(color: string): string {
 		&:-moz-placeholder { /* Firefox 18- */
 			color: ${color};
 		}
+	`
+}
+
+export function svgFlex () {
+	return `
+		display:flex;
+		align-items: center;
 	`
 }

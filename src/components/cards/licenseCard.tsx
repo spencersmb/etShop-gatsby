@@ -220,6 +220,8 @@ const LicSvgPosed = posed.div({
 const LicSvg = styled(LicSvgPosed)`
 	display: flex;
 	opacity: 1;
+	position: relative;
+	top: 1px;
 	//width: 100%;
 	svg{
 		height: 100%;
@@ -383,21 +385,25 @@ const LicCard = styled(LicCardPosed)`
 	overflow: hidden;
 	position: relative;
 	z-index: ${props => props.type === 'extended' ? 1 : 2};
-	&:hover {
-		${LicSvg}{
-				svg{
-					path{
-						fill: ${props => cardStyles[props.type].main} !important;
+	@media ${device.laptop} {
+		&:hover {
+			${LicSvg}{
+					svg{
+						path{
+							fill: ${props => cardStyles[props.type].main} !important;
+						}
 					}
 				}
+			${LicTitle}, ${LicPrice}{
+				 color: #fff !important;
+			 }
+			${LicFooterList}{
+				background: ${props => cardStyles[props.type].main} !important;
 			}
-		${LicTitle}, ${LicPrice}{
-			 color: #fff !important;
-		 }
-		${LicFooterList}{
-			background: ${props => cardStyles[props.type].main} !important;
 		}
+	    
 	}
+		
 }
 
 `

@@ -72,12 +72,6 @@ export default css`
 	.carousel-cell {
   	max-width: 420px;
   	cursor: pointer;
-		&:hover{
-			span{
-				opacity: 1;
-				transform: translateY(-50%)translateX(-50%);
-			}
-		}
   	span{
 			transition: .3s;
 			transform: translateY(-60%)translateX(-50%);
@@ -89,6 +83,16 @@ export default css`
   	
   	@media ${device.tablet} {
   	  	max-width: 700px;
+  	}  
+  		
+		@media ${device.laptop} {
+			&:hover{
+				span{
+					opacity: 1;
+					transform: translateY(-50%)translateX(-50%);
+				}
+			}
+
   	}
   		
 	}

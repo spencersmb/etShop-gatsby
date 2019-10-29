@@ -35,7 +35,7 @@ export function wc_createBilling (user: IUserState, formData: IGuestFormData): I
  */
 export function wc_createOrder (cart: ICartState, billing: IBillingWc, products: IProducts): IOrderDetails {
 	return {
-		cardType: 'Paypal',
+		cardType: cart.paymentType,
 		billing,
 		coupon_code: cart.coupon.valid ? cart.coupon.code : null,
 		customer_user_agent: billing.email,
@@ -63,11 +63,12 @@ export const wcCreateOrderLineItems = (cartItems: ICartItemWithKey, products: IP
 		name: cartItems[key].name,
 		price: cartItems[key].price,
 		product_id: cartItems[key].id,
+		bulkDiscount: cartItems[key].bulkDiscount,
 		pwyw: {
 			enabled: products[cartItems[key].slug].pwyw ? cartItems[key].price !== '0.00' : false,
 			price: cartItems[key].price
 		},
-		quantity: typeof cartItems[key].qty === 'number' ? cartItems[key].qty : 0
+		quantity: cartItems[key].qty
 	}))
 }
 

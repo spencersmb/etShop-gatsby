@@ -20,18 +20,20 @@ import { Action, Dispatch } from 'redux'
  */
 export type IAddProductAction = (
 	product: IProduct,
-	cartItems: { [id: string]: ICartItem },
+	// cartItems: { [id: string]: ICartItem },
 	slug: string,
 	qty: number,
-	price: string
+	price: string,
+	bulkDiscount: boolean
 ) => any
 export const addProductToCart: IAddProductAction =
 	(
 		product: IProduct,
-		cartItems: ICartItemWithKey,
+		// cartItems: ICartItemWithKey,
 		slug: string,
 		qty: number,
-		price: string
+		price: string,
+		bulkDiscount: boolean
 	) =>
 		(dispatch: Dispatch<Action>, getState: () => IState) => {
 
@@ -46,7 +48,8 @@ export const addProductToCart: IAddProductAction =
 								name: product.name,
 								price,
 								qty,
-								slug: product.slug
+								slug: product.slug,
+								bulkDiscount
 							}
 						}
 					}

@@ -307,6 +307,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 							<AddToCartBtn
 								handleAddToCartState={() => (setState({ inCart: true }))}
 								isInCart={state.inCart}
+								bulkDiscount={bulkDiscount}
 								slug={product.slug}
 								selectedProduct={state.selectedProduct}
 								licenseQty={state.numberOfLicenses}
@@ -522,12 +523,14 @@ const LabelHeader = styled.div`
 const LicenseSelectWrapper = styled(productRowGap)`
 	margin: 0 auto;
 	grid-column: 2 / 4;
-	max-width: 484px;
+	max-width: 413px;
 	width: 100%;
 	//display: flex;
 	//flex-direction: column;
 	@media ${device.tablet} {
 		grid-column: 4 / 12;
+		max-width: 484px;
+		
 	}
 	@media ${device.laptop} {
 		grid-column: 9 / 14;

@@ -1,9 +1,17 @@
+import SubmitButton from '@components/buttons/submitButton'
 import GuestBilling from '@components/stripe/guestBilling'
 import { ICartState } from '@et/types/Cart'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
 import { IBillingWc, IOrderResponse, IStripeGuestForm } from '@et/types/WC_Order'
+import { colors } from '@styles/global/colors'
+import {
+	CheckoutFormLabel,
+	CreditCardFormWrapper,
+	GuestBillingContainer,
+	StripeCardWrapper
+} from '@styles/modules/checkout'
 import { wc_createBilling, wc_createOrder } from '@utils/orderUtils'
 import React, { useRef, useState } from 'react'
 import { connect } from 'react-redux'
@@ -31,7 +39,7 @@ type AllProps = IProps & IPropsPublic & IReduxActions
 
 export function StripeCheckoutForm (props: AllProps & InjectedFormProps<IStripeGuestForm, AllProps>) {
 	const stripeElement = useRef(null)
-	const { submitting, invalid, valid, pristine, cart, handleSubmit, stripCheckoutSubmit, user, products } = props
+	const { submitting, invalid, valid, pristine, cart, handleSubmit, stripCheckoutSubmit, user, products, submitSucceeded } = props
 	const [ccValid, setccValid] = useState(false)
 
 	/**
@@ -70,20 +78,49 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		}
 	}
 
+	// console.log('inValid', invalid)
+	// console.log('valid && pristine', valid && pristine)
+	// console.log('cart.totalPrice === 0', cart.totalPrice === 0)
+	// console.log('ccValid', ccValid)
+
 	return (
 		<div>
 			<form onSubmit={handleSubmit(submit)}>
-				{!user && <GuestBilling/>}
-				<CardElement
-					onReady={(element: any) => stripeElement.current = element}
-					onChange={onCreditCardChange}
-				/>
-				<div>
-					{submitting && <div>Spinner</div>}
-					{!submitting && <button
-            disabled={user ? cart.totalPrice === 0 || !ccValid : invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}
-          >Purchase</button>}
-				</div>
+				{!user &&
+        <GuestBillingContainer>
+          <CheckoutFormLabel>
+            Billing
+          </CheckoutFormLabel>
+          <GuestBilling/>
+        </GuestBillingContainer>
+				}
+
+				<StripeCardWrapper>
+					<CheckoutFormLabel>
+						PAYMENT
+					</CheckoutFormLabel>
+					<CreditCardFormWrapper>
+						<CardElement
+							onReady={(element: any) => stripeElement.current = element}
+							onChange={onCreditCardChange}
+						/>
+					</CreditCardFormWrapper>
+					<SubmitButton
+						textColor={'#fff'}
+						buttonText={'Purchase'}
+						backgroundColor={colors.teal.i500}
+						spinnerColor={colors.teal.i500}
+						submitting={submitting}
+						invalid={invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}
+					/>
+				</StripeCardWrapper>
+
+				{/*<div>*/}
+				{/*	{submitting && <div>Spinner</div>}*/}
+				{/*	{!submitting && <button*/}
+				{/*    disabled={user ? cart.totalPrice === 0 || !ccValid : invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}*/}
+				{/*  >Purchase</button>}*/}
+				{/*</div>*/}
 			</form>
 		</div>
 	)

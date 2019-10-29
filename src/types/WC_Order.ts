@@ -34,6 +34,7 @@ export interface IWcOrderItem {
 	product_id: number
 	name: string,
 	price: string,
+	bulkDiscount: boolean
 	pwyw: {
 		enabled: boolean,
 		price: string,

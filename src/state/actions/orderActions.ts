@@ -10,16 +10,16 @@ import { Action, Dispatch } from 'redux'
 /**
  * * Tested
  */
-export type ICreateOrderAction = (orderData: IOrderDetails, stripeToken?: stripe.Token) => Promise<IOrderResponse>
-export const createOrder = (orderData: IOrderDetails, stripeToken?: stripe.Token) => async (dispatch: Dispatch<Action>, getState: any): Promise<IOrderResponse> => {
+export type ICreateOrderAction = (orderData: IOrderDetails, stripeSourceToken?: string) => Promise<IOrderResponse>
+export const createOrder = (orderData: IOrderDetails, stripeSourceToken?: string) => async (dispatch: Dispatch<Action>, getState: any): Promise<IOrderResponse> => {
 	dispatch({
 		type: OrderActionTypes.SUBMIT_ORDER
 	})
 
 	let completeOrder
-	if (orderData.payment_method === 'stripe' && stripeToken) {
+	if (orderData.payment_method === 'stripe' && stripeSourceToken) {
 		completeOrder = {
-			payment_token: stripeToken.id,
+			payment_token: stripeSourceToken,
 			...orderData
 		}
 	} else {

@@ -7,7 +7,6 @@ import styled from 'styled-components'
 
 interface IProps {
 	submitting: boolean
-	completed: boolean
 	buttonText?: string
 	backgroundColor?: string
 	textColor?: string
@@ -17,12 +16,11 @@ interface IProps {
 
 const SubmitButton = (props: IProps) => {
 
-	const { submitting, completed, backgroundColor = '#fff', textColor = '#000', spinnerColor = colors.teal.i500, invalid, buttonText = 'submit' } = props
+	const { submitting, backgroundColor = '#fff', textColor = '#000', spinnerColor = colors.teal.i500, invalid, buttonText = 'submit' } = props
 
 	return (
 		<ButtonWrapper
 			data-testid='submitBtn'
-			completed={completed}
 			submitting={submitting}
 			spinnerColor={spinnerColor}
 			invalid={invalid}
@@ -33,7 +31,7 @@ const SubmitButton = (props: IProps) => {
 				textColor={textColor}
 				backgroundColor={backgroundColor}
 				submitting={submitting}
-				disabled={submitting}
+				disabled={submitting || invalid}
 				data-testid='submitButton'>
 				<div className='buttonText'>{buttonText}</div>
 				{/*{completed && !error && !submitting &&*/}
@@ -50,7 +48,6 @@ const SubmitButton = (props: IProps) => {
 
 interface IButtonProps {
 	submitting: boolean
-	completed: boolean
 	spinnerColor: string
 	invalid: boolean
 }
@@ -144,6 +141,10 @@ const SubmitBtn = styled(PosedButton)`
 		
 		&:focus{
 			outline: none;
+		}
+		
+		&:disabled{
+		 background: ${colors.grey.i400} !important;
 		}
 `
 const ButtonWrapper = styled.div<IButtonProps>`

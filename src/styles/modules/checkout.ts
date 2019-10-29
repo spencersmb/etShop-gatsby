@@ -129,6 +129,7 @@ export const CouponButton = styled.div`
 			width: 40px;
 			display: flex;
 			margin-right: 8px;
+			align-items: center;
 		}
 		&:nth-child(2){
 			${Sentinel.semiboldItalic};
@@ -170,6 +171,10 @@ export const CouponContainer = styled.div`
 	}
 	.formInput{
 		margin-bottom: 0;
+	}
+	
+	.formGroup .renderLabel{
+		color: ${colors.grey.i800};
 	}
 `
 
@@ -237,4 +242,29 @@ export const LoginAdButtons = styled.div`
 			padding:9px 24px;
 		}
 	}
+`
+
+export const GuestBillingContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px;
+`
+
+export const CheckoutFormLabel = styled.div`
+	font-size: 13px;
+	text-transform: uppercase;
+	color: ${colors.grey.i800};
+	padding: 30px 0 20px;
+	font-weight: bold;
+`
+
+export const StripeCardWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px;
+	margin-bottom: 20px;
+`
+
+export const CreditCardFormWrapper = styled.div`
+ margin-bottom: 30px;
 `

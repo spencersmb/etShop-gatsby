@@ -71,22 +71,14 @@ interface IReduxPropActions {
 export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	const { cart, cartIndex, products, removeItem } = props
 	const [bulkDiscount, setBulkDiscount] = useState(false)
-	const total = parseInt(cart.items[cartIndex].price, 10) * convertToNumber(cart.items[cartIndex].qty)
 	const cartItem = cart.items[cartIndex]
+	const total = parseFloat(cartItem.price) * cartItem.qty
 
 	useEffect(() => {
 		if (cart.items[cartIndex].qty > CartPricingConfig.minQuantity) {
 			setBulkDiscount(true)
 		}
 	}, [])
-
-	function convertToNumber (item: any): number {
-		if (typeof item === 'string') {
-			return parseInt(item, 10)
-		} else {
-			return item
-		}
-	}
 
 	function hasCoupon (): boolean {
 		return checkForCoupon(cart.coupon.product_ids, cart.items[cartIndex].id)
@@ -121,8 +113,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 
 	function displaySavings () {
 		const originalTotal = parseInt(products[cartItem.slug].price, 10) * cartItem.qty
-		const currentTotal = parseInt(cartItem.price, 10) * cartItem.qty
-		return displayCurrency(originalTotal - currentTotal)
+		return displayCurrency(originalTotal - total)
 	}
 
 	function displayOriginalTotal () {
@@ -137,7 +128,6 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 								d='M331 0C331 4.41827 327.418 8 323 8C318.582 8 315 4.41827 315 0H15C8.46889 0 2.91269 4.17401 0.853516 10H708.146C706.087 4.17401 700.531 0 694 0H331Z'
 								fill='#525252'/>
 				</svg>
-
 			</CartItemBorder>
 
 			<CartItemContent>

@@ -121,10 +121,12 @@ export const FormGroup = styled.div`
 	flex-direction: column;
 	margin-bottom: 10px;
 `
-export const FormInput = styled.div`
+export const FormInput = styled.div<{ removeMargin?: boolean }>`
 	position: relative;
 	margin-top: 16px;
-	margin-bottom: 26px;
+	${props => props.removeMargin ? `margin-bottom: 0;` : `margin-bottom: 26px;`}
+	
+	
 
 	.formGroup{
 		position: relative;
@@ -209,7 +211,7 @@ export const FormInput = styled.div`
 			transform: translateY(-50%);
 			line-height: 1;
 			cursor: text;
-			color: ${colors.grey.i600};
+			color: #8996a4;
 			transition: transform ease 0.3s, color ease 0.3s;
 			transform-origin: 0 0;
 			}

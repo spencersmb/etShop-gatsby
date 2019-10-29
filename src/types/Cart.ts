@@ -1,6 +1,5 @@
 import { IProduct, IProducts } from '@et/types/Products'
 
-
 export interface ICouponApiResponse {
 	code: number,
 	data: {
@@ -46,7 +45,8 @@ export interface ICartItem {
 	name: string,
 	price: string,
 	qty: number,
-	slug: string
+	slug: string,
+	bulkDiscount: boolean
 }
 
 export interface ICartItemWithKey {

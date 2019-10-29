@@ -4,6 +4,7 @@ import { IOrderDetails, IOrderResponse } from '@et/types/WC_Order'
 import { cartToggle, emptyCart } from '@redux/actions/cartActions'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { createOrder, ICreateOrderAction } from '@redux/actions/orderActions'
+import { displayCurrency } from '@utils/priceUtils'
 import React from 'react'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
@@ -27,43 +28,66 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			return null
 		}
 
-		const result: stripe.TokenResponse = await props.stripe.createToken(
-			{
-				name: `${order.billing.first_name} ${order.billing.last_name}`
+		const stripeCalcTotal = parseInt(order.total, 10) * 100
+		const ownerInfo = {
+			owner: {
+				name: `${order.billing.first_name} ${order.billing.last_name}`,
+				email: `${order.billing.email}`
 			}
+		}
+		const card = {
+			type: 'card',
+			amount: stripeCalcTotal,
+			currency: 'USD',
+			statement_descriptor: 'Every-Tuesday Shop Purchase',
+			usage: 'single_use'
+		}
+		const sourceOrder = {
+			source_order: {
+				items: order.line_items.map(item => {
+					return {
+						amount: parseInt(item.price, 10) * 100,
+						currency: 'USD',
+						description: item.name,
+						parent: item.product_id,
+						quantity: item.quantity,
+						type: 'sku'
+					}
+				})
+			}
+		}
+
+		const result: stripe.SourceResponse = await props.stripe.createSource(
+			// @ts-ignore
+			{ ...card, ...ownerInfo, ...sourceOrder }
 		)
-
+		console.log('result', result)
 		if (!result) {
-			return null
-		} else if (result.error) {
-			// this.props.hideLoadingBar()
-			// this.setState({
-			// 	userSubmitting: false
-			// })
-			console.error('error handler:', result.error.message)
-			return null
-
-			// 3. Success Token created
-		} else if (result.token) {
-			// 2. Submit form to server
-			console.log('result from stripe', result.token)
-
-			// send approved order to DB
-
-			return sendOrderToBackend(result.token, {
-				...order,
-				'cardType': result.token.card ? result.token.card.brand : 'CreditCard',
-			})
-		} else {
+			console.error('source null:', result)
 			return null
 		}
+
+		if (result.source && result.source.status !== 'chargeable') {
+			console.error('source status:', result.source.status)
+			return null
+		}
+
+		if (result.source) {
+			return sendOrderToBackend(result.source.id, {
+				...order,
+				'cardType': result.source.card ? result.source.card.brand : 'CreditCard'
+			})
+		}
+
+		return null
+
 	}
 
-	async function sendOrderToBackend (token: stripe.Token, orderData: IOrderDetails): Promise<IOrderResponse | null> {
+	async function sendOrderToBackend (sourceID: string, orderData: IOrderDetails): Promise<IOrderResponse | null> {
 		try {
 			// send order to DB
 			// returns us back the order object
-			return await props.wc_createOrder(orderData, token)
+			return await props.wc_createOrder(orderData, sourceID)
 
 		} catch (e) {
 			console.error('DB error', e)

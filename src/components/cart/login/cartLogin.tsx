@@ -29,9 +29,6 @@ export function CartLogin (props: IReduxState & IReduxActions) {
 				options: {
 					closeModal: true,
 					hasBackground: true,
-					data: {
-						checkingOut: true
-					},
 					name
 				}
 			})

@@ -170,8 +170,6 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		props.cartToggle()
 	}
 
-	console.log('checkoutOpen', checkoutOpen)
-
 	return (
 		<CartWrapper
 			data-testid='cart-wrapper'
@@ -211,7 +209,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 							<p>{displayCurrency(props.cart.totalPrice)}</p>
 						</CartSubTotal>
 						<ButtonStyled
-							data-testid='addToCart'
+							data-testid='checkout'
 							onClick={toggleCheckout}
 							disabled={props.cart.totalItems < 1}
 							outline={false}

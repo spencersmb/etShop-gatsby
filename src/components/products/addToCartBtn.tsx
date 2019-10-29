@@ -18,6 +18,7 @@ interface IPropsPublic {
 	licenseQty: number | string;
 	price: string
 	total: string
+	bulkDiscount: boolean
 }
 
 interface IPropsReduxActions {
@@ -30,14 +31,15 @@ interface IPropsPrivate {
 }
 
 export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxActions) {
-	const { addToCart, cart, selectedProduct, handleAddToCartState, licenseQty, price, slug, cartToggle, isInCart, total } = props
+	const { addToCart, bulkDiscount, selectedProduct, handleAddToCartState, licenseQty, price, slug, cartToggle, isInCart, total } = props
 	const disabled = (licenseQty === 0) || (typeof licenseQty === 'string')
 
 	async function handleAddToCart () {
 		// secure check for 0 licenses
 		if (typeof licenseQty !== 'string') {
 			handleAddToCartState()
-			addToCart(selectedProduct, cart.items, slug, licenseQty, price)
+			// addToCart(selectedProduct, cart.items, slug, licenseQty, price)
+			addToCart(selectedProduct, slug, licenseQty, price, bulkDiscount)
 		}
 	}
 
