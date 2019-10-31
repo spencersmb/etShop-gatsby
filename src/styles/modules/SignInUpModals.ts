@@ -60,6 +60,11 @@ export const FormHeader1 = styled.div`
 		color: ${colors.grey.i800};
 		line-height: 24px;
 		margin: 0 0 10px;
+		
+		&.signUp{
+			font-size: 21px;
+			line-height: 21px;
+		}
 	}
 	
 	.signup__subhead{

@@ -286,6 +286,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
               numberOfLicenses={numberOfLicenses}
               showModal={showModalAction}
               onDialChange={onDialChange}/>
+            <p>** 1 License per device</p>
           </LicenseQtyWrapper>
 					}
 
@@ -355,6 +356,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					payWhatYouWant={payWhatYouWant}
 					onPwywChange={onPwywChange}
 					inView={inView}
+					bulkDiscount={bulkDiscount}
 					numberOfLicenses={numberOfLicenses}
 					selectedProduct={state.selectedProduct}
 					slug={product.slug}
@@ -364,7 +366,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					price={state.price}
 					total={calcTotalQtyPrice(state.price, numberOfLicenses)}
 				/>
-			), [inView, state.price, numberOfLicenses, inCart, payWhatYouWant])}
+			), [inView, state.price, numberOfLicenses, inCart, payWhatYouWant, bulkDiscount])}
 		</Layout>
 	)
 
@@ -431,6 +433,11 @@ const ButtonWrapper = styled.div`
 			fill: ${colors.primary.text};
 		}
 	}
+	
+	@media ${device.laptop} {
+		padding: 20px;
+	}
+		
 `
 const BackBtnMobile = styled.div`
 	text-align: center;
@@ -444,17 +451,15 @@ const BackBtnMobile = styled.div`
 const BackBtn = styled.div`
 	position: absolute;
 	background: #fff;
-
 	height: 100px;
 	width: 100%;
-	padding: 20px 0 0 30px;
 	text-transform: uppercase;
 	font-weight: 500;
 	display: none;
 	
 	@media ${device.laptop} {
 		top: -55px;
-		left: 0;
+		left: -15px;
 		width: 270px;
 		display: block;   
 	}
@@ -539,12 +544,22 @@ const LicenseSelectWrapper = styled(productRowGap)`
 `
 const LicenseQtyWrapper = styled(productRowGap)`
 	grid-column: 2 / 4;
+	& >div{
+		padding: 5px;
+	}
 	@media ${device.tablet} {
 	 grid-column: 4 / 12;
 	}
 	@media ${device.laptop} {
 	 grid-column: 9 / 14;
 	 	grid-row: 3;
+	}
+	p{
+	text-align: right;
+	max-width: 484px;
+	margin: 0 auto;
+		font-size: 14px;
+		color: ${colors.grey.i800};
 	}
 `
 const PWYWWrapper = styled(productRowGap)`

@@ -830,21 +830,13 @@ type wcProductLicense {
 }
 
 type wcProductLicenseExtendedItem {
-    bullets: [wcProductLicenseExtendedItemBullets]
+    desc: String
     slug: String
-}
-
-type wcProductLicenseExtendedItemBullets {
-    bullet_point: String
 }
 
 type wcProductLicenseStandardItem {
-    bullets: [wcProductLicenseStandardItemBullets]
+    desc: String
     slug: String
-}
-
-type wcProductLicenseStandardItemBullets {
-    bullet_point: String
 }
 
 type wcProductSeo {
@@ -1995,12 +1987,10 @@ enum wcProductFieldsEnum {
     internal___type
     intro_description
     intro_title
-    license___extendedItem___bullets
-    license___extendedItem___bullets___bullet_point
+    license___extendedItem___desc
     license___extendedItem___slug
     license___hasExtendedLicense
-    license___standardItem___bullets
-    license___standardItem___bullets___bullet_point
+    license___standardItem___desc
     license___standardItem___slug
     license___type
     name
@@ -2618,16 +2608,8 @@ input wcProductImagesThumbnailFilterInput {
     url: StringQueryOperatorInput
 }
 
-input wcProductLicenseExtendedItemBulletsFilterInput {
-    bullet_point: StringQueryOperatorInput
-}
-
-input wcProductLicenseExtendedItemBulletsFilterListInput {
-    elemMatch: wcProductLicenseExtendedItemBulletsFilterInput
-}
-
 input wcProductLicenseExtendedItemFilterInput {
-    bullets: wcProductLicenseExtendedItemBulletsFilterListInput
+    desc: StringQueryOperatorInput
     slug: StringQueryOperatorInput
 }
 
@@ -2638,16 +2620,8 @@ input wcProductLicenseFilterInput {
     type: StringQueryOperatorInput
 }
 
-input wcProductLicenseStandardItemBulletsFilterInput {
-    bullet_point: StringQueryOperatorInput
-}
-
-input wcProductLicenseStandardItemBulletsFilterListInput {
-    elemMatch: wcProductLicenseStandardItemBulletsFilterInput
-}
-
 input wcProductLicenseStandardItemFilterInput {
-    bullets: wcProductLicenseStandardItemBulletsFilterListInput
+    desc: StringQueryOperatorInput
     slug: StringQueryOperatorInput
 }
 

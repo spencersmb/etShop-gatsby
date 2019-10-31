@@ -24,14 +24,14 @@ export interface ICreateAuthResponse {
 }
 
 export interface IUserSubmit {
-	email: string,
-	password: string
+	signinEmail: string,
+	signinPassword: string
 }
 
 export interface IUserCreate {
-	email: string,
-	firstName: string,
-	lastName: string,
+	signupEmail: string,
+	signupFirstName: string,
+	signupLastName: string,
 	password: string
 }
 

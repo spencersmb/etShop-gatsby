@@ -187,7 +187,7 @@ export const LoginModal = (props: MixedFormProps) => {
 				</LoginModalContent>
 
 				<CloseBtn data-testid='close-btn' className='jestCartToggle'
-									onClick={closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
+									onClick={closeModal}>{renderSvg(svgs.HamburgerClose)}</CloseBtn>
 			</LoginModalWrapper>
 		</ModalPose>
 	)
@@ -233,6 +233,7 @@ const ModalStyled = styled.div`
 `
 const ModalPose = posed(ModalStyled)({
 	exit: {
+		zIndex: 7,
 		opacity: 0,
 		transition: {
 			default: { duration: 200 },
@@ -244,6 +245,7 @@ const ModalPose = posed(ModalStyled)({
 		y: `-60%`
 	},
 	enter: {
+		zIndex: 7,
 		opacity: 1,
 		delay: 300,
 		transition: {
@@ -291,7 +293,7 @@ const ContentContainer = styled.div<any>`
 	align-items: center;
 	justify-content: center;
 	overflow-y: scroll;
-	
+	-webkit-overflow-scrolling: touch;
 	
 	@media ${device.laptop} {
 		justify-content: center;
@@ -300,8 +302,8 @@ const ContentContainer = styled.div<any>`
 		
 `
 const CloseBtn = styled.div`
-	width: 25px;
-	height: 25px;
+	width: 45px;
+	height: 45px;
 	position: absolute;
 	top: 10px;
 	right: 10px;

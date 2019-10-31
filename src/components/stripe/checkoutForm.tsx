@@ -111,16 +111,9 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 						backgroundColor={colors.teal.i500}
 						spinnerColor={colors.teal.i500}
 						submitting={submitting}
-						invalid={invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}
+						invalid={user ? cart.totalPrice === 0 || !ccValid : invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}
 					/>
 				</StripeCardWrapper>
-
-				{/*<div>*/}
-				{/*	{submitting && <div>Spinner</div>}*/}
-				{/*	{!submitting && <button*/}
-				{/*    disabled={user ? cart.totalPrice === 0 || !ccValid : invalid || valid && pristine || cart.totalPrice === 0 || !ccValid}*/}
-				{/*  >Purchase</button>}*/}
-				{/*</div>*/}
 			</form>
 		</div>
 	)

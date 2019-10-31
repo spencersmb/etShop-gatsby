@@ -10,8 +10,8 @@ class AuthApi {
 		const url: string = `${process.env.GATSBY_DB}/wp-json/jwt-auth/v1/token`
 
 		const formData = new FormData()
-		formData.append('username', user.email)
-		formData.append('password', user.password)
+		formData.append('username', user.signinEmail)
+		formData.append('password', user.signinPassword)
 
 		// log formData for debugging
 		// logFormData(formData)
@@ -30,9 +30,10 @@ class AuthApi {
 		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/login/createUser`
 
 		const formData = new FormData()
-		formData.append('email', user.email)
+		formData.append('email', user.signupEmail)
 		formData.append('password', user.password)
-		formData.append('firstName', user.firstName)
+		formData.append('firstName', user.signupFirstName)
+		formData.append('lastName', user.signupLastName)
 		formData.append('nonce', process.env.GATSBY_WPNONCE || '')
 
 		// log formData for debugging

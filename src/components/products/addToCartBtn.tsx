@@ -50,7 +50,7 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 					data-testid='checkout'
 					onClick={cartToggle}
 					color={colors.teal.i500}
-					hoverColor={colors.teal.i500}
+					hoverColor={colors.teal.i600}
 					hoverTextColor={'#fff'}
 					outline={false}
 				>

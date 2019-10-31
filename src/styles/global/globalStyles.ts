@@ -44,6 +44,10 @@ export default createGlobalStyle`
   	min-height: 100vh;
   }
   
+  svg{
+  	width: 100%;
+  }
+  
   ${toastr}
   ${rangeSlider}
   

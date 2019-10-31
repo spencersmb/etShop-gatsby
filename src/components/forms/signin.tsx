@@ -71,7 +71,7 @@ export const SignInForm = (props: any) => {
 					<FormGroup data-testid={'formGroup'}>
 						<FormInput>
 							<ReduxFieldExt
-								name='email'
+								name='signinEmail'
 								type='email'
 								component={RenderField}
 								placeholder=''
@@ -82,7 +82,7 @@ export const SignInForm = (props: any) => {
 						</FormInput>
 						<FormInput>
 							<ReduxFieldExt
-								name='password'
+								name='signinPassword'
 								type='password'
 								component={RenderField}
 								placeholder=''
@@ -100,7 +100,6 @@ export const SignInForm = (props: any) => {
 						backgroundColor={colors.teal.i500}
 						spinnerColor={colors.teal.i500}
 						submitting={submitting}
-						completed={submitSucceeded}
 						invalid={invalid}
 					/>
 				</form>

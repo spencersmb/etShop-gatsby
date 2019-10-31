@@ -67,6 +67,11 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			return null
 		}
 
+		if (result.error) {
+			console.error('stripe error:', result.error.message)
+			return null
+		}
+
 		if (result.source && result.source.status !== 'chargeable') {
 			console.error('source status:', result.source.status)
 			return null

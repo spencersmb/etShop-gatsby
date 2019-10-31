@@ -13,11 +13,11 @@ interface IProps {
 		hasExtendedLicense: boolean,
 		standardItem: {
 			slug: string,
-			bullets: IProductBullet[]
+			desc: string
 		},
 		extendedItem: {
 			slug: string,
-			bullets: IProductBullet[]
+			desc: string
 		}
 	}
 	onChange: any,
@@ -30,6 +30,8 @@ interface IProps {
 
 const ProductSelect = (
 	{ standardLicPrice, extendedLicPrice, onChange, selectedLicense, inCart, license, showModal, bulkDiscount, licenceQty }: IProps) => {
+
+	console.log('license', license)
 
 	function handleLicClick (e: SyntheticEvent) {
 		e.preventDefault()
@@ -65,7 +67,8 @@ const ProductSelect = (
 					price={calcBulkPriceDiscount(bulkDiscount, standardLicPrice, licenceQty)}
 					type='standard'
 					title='Standard License'
-					bullets={license.standardItem.bullets}
+					desc={license.standardItem.desc}
+					// bullets={license.standardItem.bullets}
 					handleViewLicense={triggerViewLicense}
 					handleLicenseClick={handleLicClick}
 				/>
@@ -78,7 +81,8 @@ const ProductSelect = (
           price={calcBulkPriceDiscount(bulkDiscount, extendedLicPrice, licenceQty)}
           type='extended'
           title='Extended License'
-          bullets={license.extendedItem.bullets}
+          desc={license.standardItem.desc}
+					// bullets={license.extendedItem.bullets}
           handleViewLicense={triggerViewLicense}
           handleLicenseClick={handleLicClick}
         />}
@@ -96,7 +100,7 @@ const ProductSelect = (
 				price={calcBulkPriceDiscount(bulkDiscount, standardLicPrice, licenceQty)}
 				type='standard'
 				title='Standard License'
-				bullets={license.standardItem.bullets}
+				desc={license.standardItem.desc}
 				handleViewLicense={triggerViewLicense}
 				handleLicenseClick={handleLicClick}
 			/>

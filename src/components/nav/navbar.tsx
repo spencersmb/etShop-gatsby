@@ -56,7 +56,6 @@ function Navbar (props: IPropsActions & IPropsState) {
 	const { user, logout, toggleNav, nav } = props
 	// const {src, alt} = getUserImage(user)
 	const target = useRef<HTMLElement | null>(null)
-	const bodyScrollPos = useRef(0)
 
 	function openSignInModal (name: string) {
 		return () => [
@@ -112,20 +111,6 @@ function Navbar (props: IPropsActions & IPropsState) {
 	}
 
 	function cartToggleEvent () {
-		if (!nav.isOpen && target.current) {
-			// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-			// target.current.style.width = `100%`
-			// target.current.style.top = `-${bodyScrollPos.current}px`
-			// target.current.style.bottom = `0`
-			// target.current.style.padding = `0 15px 0 0`
-			// target.current.style.position = 'fixed'
-		} else if (nav.isOpen && target.current) {
-			// target.current.style.removeProperty('position')
-			// target.current.style.removeProperty('top')
-			// target.current.style.removeProperty('bottom')
-			// target.current.style.removeProperty('padding')
-			// document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
-		}
 		props.cartToggle()
 
 	}

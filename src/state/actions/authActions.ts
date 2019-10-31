@@ -2,8 +2,7 @@ import AuthApi from '@api/authApi'
 import { Actions } from '@et/types/Actions'
 import { AuthActionTypes } from '@et/types/Enums'
 import { IState } from '@et/types/State'
-import { IAuthResponse, ICreateAuthResponse, IFacebookUserCreate, IUser, IUserCreate } from '@et/types/User'
-import { emptyCart } from '@redux/actions/cartActions'
+import { IAuthResponse, ICreateAuthResponse, IFacebookUserCreate, IUserCreate } from '@et/types/User'
 import { loadCouponSuccess } from '@redux/actions/couponActions'
 import { clearPagination } from '@redux/actions/paginationActions'
 import { statusCheck } from '@utils/apiUtils'
@@ -13,12 +12,12 @@ import { Action, Dispatch } from 'redux'
 /**
  * *TESTED
  */
-export const login: any = ({ email, password }: { email: string, password: string }) => async (dispatch: Dispatch<Action>): Promise<{ firstName: string }> => {
+export const login: any = ({ signinEmail, signinPassword }: { signinEmail: string, signinPassword: string }) => async (dispatch: Dispatch<Action>): Promise<{ firstName: string }> => {
 
 	// Add Loading Dispatch spinner
 	// insert LOADING BAR ACTION ?
 
-	const response: Response = await AuthApi.login({ email, password })
+	const response: Response = await AuthApi.login({ signinEmail, signinPassword })
 
 	await statusCheck(response, dispatch)
 
@@ -50,7 +49,6 @@ export type ILogoutAction = () => Actions
 export const logout: any = () => (dispatch: Dispatch<Action>, getState: () => IState) => {
 
 	removeUserLocalStorage()
-	dispatch(emptyCart())
 	dispatch(clearPagination())
 	dispatch({
 		type: AuthActionTypes.LOGOUT

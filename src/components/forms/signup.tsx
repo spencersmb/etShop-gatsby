@@ -57,10 +57,10 @@ export const SignUpForm = (props: any) => {
 		<FormWrapper data-testid='signUp-form' ref={poseRef}>
 			<FormContent>
 				<FormHeader1>
-					<h3>Create an account and save 10%</h3>
-					<p className='signup__subhead'>
-						Save 10% on your first purchse when you create an account
-					</p>
+					<h3 className={'signUp'}>Create an account and save 10% on your first purchase</h3>
+					{/*<p className='signup__subhead'>*/}
+					{/*	Save 10% on your first purchse when you create an account*/}
+					{/*</p>*/}
 					<p data-testid='switchAccounts-btn' className='form__switchAccounts' data-form='signin'
 						 onClick={props.changeForm}>Already have an account? Sign
 						in <Arrow>{renderSvg(svgs.ChevronLeft)}</Arrow></p>
@@ -69,7 +69,7 @@ export const SignUpForm = (props: any) => {
 					<FormGroup data-testid={'formGroup'}>
 						<FormInput>
 							<ReduxFieldExt
-								name='firstName'
+								name='signupFirstName'
 								type='text'
 								component={RenderField}
 								placeholder=''
@@ -80,7 +80,18 @@ export const SignUpForm = (props: any) => {
 						</FormInput>
 						<FormInput>
 							<ReduxFieldExt
-								name='email'
+								name='signupLastName'
+								type='text'
+								component={RenderField}
+								placeholder=''
+								validate={[required]}
+								label='Last Name'
+								svg={svgs.CreditCard}
+							/>
+						</FormInput>
+						<FormInput>
+							<ReduxFieldExt
+								name='signupEmail'
 								type='email'
 								component={RxEmailField}
 								placeholder=''
@@ -108,7 +119,6 @@ export const SignUpForm = (props: any) => {
 						backgroundColor={colors.teal.i500}
 						spinnerColor={colors.teal.i500}
 						submitting={submitting}
-						completed={submitSucceeded}
 						invalid={invalid}
 					/>
 
@@ -151,7 +161,7 @@ export const RegisterSignupForm = reduxForm<{}, IPropsPublic>({
 	form: 'SignUpForm',
 	validate,
 	asyncValidate: asyncEmailValidate,
-	asyncBlurFields: ['email']
+	asyncBlurFields: ['signupEmail']
 })(SignUpForm)
 
 export default RegisterSignupForm

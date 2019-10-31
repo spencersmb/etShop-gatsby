@@ -29,12 +29,13 @@ interface IProps {
 	handleDialChange: (total: number | string) => void
 	price: string
 	payWhatYouWant: boolean
+	bulkDiscount: boolean
 	onPwywChange: (total: number | string) => void
 	featuredImage: IProductFeaturedImage
 }
 
 const CheckoutNavBar = (props: IProps) => {
-	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant, featuredImage } = props
+	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant, featuredImage, bulkDiscount } = props
 	const mounted = useRef(false)
 
 	// const windowPosRef = useRef(inView)
@@ -120,6 +121,7 @@ const CheckoutNavBar = (props: IProps) => {
 						selectedProduct={selectedProduct}
 						licenseQty={numberOfLicenses}
 						price={price}
+						bulkDiscount={bulkDiscount}
 						total={total}
 					/>
 				</Section3>
@@ -196,10 +198,14 @@ const Section1 = styled.div`
 	height: 100%;
 	justify-content: center;
 	background: #fff;
+	
+	@media ${device.tablet} {
+		flex: 1;
+	}
+		
 
 	@media ${device.laptop} {
 		padding: 0 30px;
-		flex: 1;
 	}
 `
 const Section2 = styled.div`

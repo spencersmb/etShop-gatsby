@@ -1,5 +1,6 @@
 import Receipt from '@components/modals/receipt'
 import PaypalButton from '@components/paypal/paypalButton'
+import PaypalDisabledBtn from '@components/paypal/paypalDisabledBtn'
 import paypalProvider from '@components/paypal/paypalProvider'
 import GuestBilling from '@components/stripe/guestBilling'
 import { ICartState } from '@et/types/Cart'
@@ -15,10 +16,11 @@ import {
 	IProcessPaypalOrderAction,
 	processPaypalOrder as processPaypalOrderAction
 } from '@redux/actions/orderActions'
+import { InputSpinner, PaypalButtonPoseWrapper, PaypalFormContainer, PaypalSpinner } from '@styles/modules/checkout'
 import { wc_createBilling, wcCreateOrderLineItems } from '@utils/orderUtils'
 import { getPaypalFormatItems } from '@utils/paypalUtils'
 import { displayCurrency } from '@utils/priceUtils'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { reduxForm, InjectedFormProps, reset, formValueSelector } from 'redux-form'
@@ -50,6 +52,7 @@ type AllProps = IReduxActions & IPublicProps & IReduxState
 
 export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeGuestForm, AllProps>) {
 	const { submitting, invalid, valid, pristine, cart, formProps, user, products, processPaypalOrder } = props
+	const [manualSubmitting, setManualSubmitting] = useState(false)
 	const { PaypalButtonLoader } = paypalProvider()
 
 	// 1.
@@ -58,6 +61,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		// console.log('payment data', data)
 		const currency = 'USD'
 		// console.log('total', cart.totalPrice)
+		setManualSubmitting(true)
 
 		return actions.order.create({
 			purchase_units: [{
@@ -93,6 +97,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 			if (!myOrder || myOrder && myOrder.code !== 200) {
 				actions.restart()
 				onError('order create error')
+				setManualSubmitting(false)
 				return
 			}
 
@@ -122,6 +127,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					// clear form
 					// controll success from parent
 					const { order } = result
+					setManualSubmitting(false)
 					props.showModal({
 						modal: Receipt,
 						options: {
@@ -145,14 +151,17 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 
 				} else {
 					actions.restart()
+					setManualSubmitting(false)
 					onError('order process error')
 				}
 
 			}).catch((e: Error) => {
+				setManualSubmitting(false)
 				console.error('paypal success error', e)
 			})
 
 		} catch (e) {
+			setManualSubmitting(false)
 			actions.restart()
 			onError('order create error')
 		}
@@ -180,10 +189,11 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 	// this gets fired so far ...beacuse an error creating an order on our server
 	// not sure where else to call this
 	function onError (error: any) {
-		console.log('Erroneous payment OR failed to load script!', error)
+		console.error('Erroneous payment OR failed to load script!', error)
 	}
 
 	function onCancel (data: any) {
+		setManualSubmitting(false)
 		console.log('Cancelled payment!', data)
 	}
 
@@ -195,7 +205,8 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 				sandbox: process.env.PAYPAL_TEST_KEY || ''
 			}
 		}
-		invalid={invalid && pristine}
+		submitting={manualSubmitting}
+		invalid={invalid}
 		PaypalCheckoutButton={PaypalButtonLoader}
 		createOrder={createOrder}
 		onApprove={onApproval}
@@ -203,18 +214,20 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		onError={onError}
 	/>, [PaypalButtonLoader, invalid, cart.totalPrice])
 
-	console.log('render form', props.formProps)
-
 	return (
-		<div>
-			<div>
-				<h3>paypal checkout</h3>
-				{!user && <GuestBilling/>}
-
+		<PaypalFormContainer>
+			{!user && <GuestBilling/>}
+			{manualSubmitting && <PaypalSpinner>
+        <InputSpinner submitting={true} spinnerColor={'#009cde'}>
+          <svg className='spinner' viewBox='0 0 50 50'>
+            <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
+          </svg>
+        </InputSpinner>
+      </PaypalSpinner>}
+			<PaypalButtonPoseWrapper pose={manualSubmitting ? 'hide' : 'show'}>
 				{Button}
-
-			</div>
-		</div>
+			</PaypalButtonPoseWrapper>
+		</PaypalFormContainer>
 	)
 }
 

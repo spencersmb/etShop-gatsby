@@ -26,13 +26,13 @@ interface IProps {
 	price: string
 	type: string
 	title: string
-	bullets: IProductBullet[]
+	desc: string
 	handleViewLicense: (e: any) => void
 	handleLicenseClick: (e: SyntheticEvent) => void
 }
 
 function LicenseCard (props: IProps) {
-	const { type, isSelected, bullets, handleLicenseClick, handleViewLicense, price, title, inCart } = props
+	const { type, isSelected, handleLicenseClick, handleViewLicense, price, title, inCart, desc } = props
 
 	return (
 		<LicCard type={type}
@@ -82,16 +82,19 @@ function LicenseCard (props: IProps) {
 				type={type}
 				isOpen={isSelected}
 				pose={isSelected ? 'open' : 'closed'}>
-				<LicBulletContainer>
-					{bullets && bullets.length > 0 && <ul data-testid='bullets'>
-						{bullets.map((bullet: { bullet_point: string }) => (
-							<li key={bullet.bullet_point}>
-								<span>{renderSvg(svgs.Checkmark)}</span>
-								{bullet.bullet_point}
-							</li>
-						))}
-          </ul>
-					}
+				<LicDescContainer>
+					<p>
+						{desc}
+					</p>
+					{/*{bullets && bullets.length > 0 && <ul data-testid='bullets'>*/}
+					{/*	{bullets.map((bullet: { bullet_point: string }) => (*/}
+					{/*		<li key={bullet.bullet_point}>*/}
+					{/*			<span>{renderSvg(svgs.Checkmark)}</span>*/}
+					{/*			{bullet.bullet_point}*/}
+					{/*		</li>*/}
+					{/*	))}*/}
+					{/*</ul>*/}
+					{/*}*/}
 					<LicViewBtn
 						hoverTextColor={cardStyles[type].main}
 						data-testid='viewLicBtn'
@@ -100,7 +103,7 @@ function LicenseCard (props: IProps) {
 					>
 						View license
 					</LicViewBtn>
-				</LicBulletContainer>
+				</LicDescContainer>
 
 
 			</LicFooterList>
@@ -207,13 +210,13 @@ const LicSvgPosed = posed.div({
 	closed: {
 		opacity: 1,
 		// background: 'rgb(247, 248, 252)'
-		background: (props: any) => props.width >= 1024 ? 'linear-gradient(90deg, rgba(232,232,232,1) 0%, rgba(247,248,252,1) 100%)' : 'rgb(247, 248, 252)'
+		background: (props: any) => props.width >= 1024 ? 'linear-gradient(90deg, rgba(238,238,238,1) 0%, rgba(247,248,252,1) 100%)' : 'linear-gradient(90deg, rgba(244,244,244,1) 0%, rgba(247,248,252,1) 100%)'
 		// background: 'linear-gradient(90deg, rgba(232,232,232,1) 0%, rgba(247,248,252,1) 100%)'
 	},
 	open: {
 		opacity: 1,
 		// background: 'rgb(218, 218, 218, 1)'
-		background: (props: any) => props.width >= 1024 ? 'linear-gradient(90deg, rgba(218,218,218,1) 0%, rgba(218,218,218,1) 100%)' : 'rgb(218, 218, 218, 1)'
+		background: (props: any) => 'linear-gradient(90deg, rgba(218,218,218,1) 0%, rgba(218,218,218,1) 100%)'
 		// background: 'linear-gradient(90deg, rgba(218,218,218,1) 0%, rgba(218,218,218,1) 100%)'
 	}
 })
@@ -239,19 +242,17 @@ const LicHeaderContent = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: baseline;
+	align-items: center;
 	padding: 0 15px;
 	
 	@media ${device.tablet} {
 		padding: 0 30px;
-		top: 9px;
+		top: 11px;
 	}	
 	@media ${device.laptop} {
-		top: 6px;
+		top: 13px;
 	}	
-	@media ${device.laptopL} {
-		top: 9px;
-	}
+
 `
 
 const ContentPosed = posed.div({
@@ -309,10 +310,11 @@ const LicFooterList = styled(ContentPosed)`
 		}
 `
 
-const LicBulletContainer = styled.div`
+const LicDescContainer = styled.div`
 	padding: 5px 15px 20px;
 	display: flex;
 	flex-direction: column;
+	color: #fff;
 	
 	@media ${device.tablet} {
 		padding: 5px 30px 20px;

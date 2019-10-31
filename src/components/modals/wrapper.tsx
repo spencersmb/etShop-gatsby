@@ -156,10 +156,14 @@ const depth = 6
 
 const ModalPose = posed.div({
 	exit: {
-		opacity: 1
+		opacity: 1,
+		position: 'relative',
+		zIndex: 7
 	},
 	enter: {
-		opacity: 1
+		opacity: 1,
+		position: 'relative',
+		zIndex: 7
 	}
 })
 const Shade = styled.div`

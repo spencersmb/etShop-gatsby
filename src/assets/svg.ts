@@ -15,6 +15,7 @@ const Divider1 = require('./svg-icons/divider-1.svg')
 const DottedLine = require('./svg-icons/Dotted-line.svg')
 const Download = require('./svg-icons/download.svg')
 const Email = require('./svg-icons/Email_outline.svg')
+const Enlarge = require('./svg-icons/enlarge.svg')
 const Eye = require('./svg-icons/eye.svg')
 const ETLogo = require('./svg-icons/et-shop-logo.svg')
 const Filter = require('./svg-icons/Filter.svg')
@@ -32,6 +33,10 @@ const Info = require('./svg-icons/info.svg')
 const Lock = require('./svg-icons/lock.svg')
 const MagnifyGlass = require('./svg-icons/magnify-glass.svg')
 const Paypal = require('./svg-icons/Paypal.svg')
+const PaypalColorLogo = require('./svg-icons/paypal-color-logo.svg')
+const PaypalDisabledLogo = require('./svg-icons/paypal-disabled-logo.svg')
+const PaypalPPLogo = require('./svg-icons/paypal-pp-logo.svg')
+const PaypalPPLogoDisabled = require('./svg-icons/paypal-pp-logo-disabled.svg')
 const Photoshop = require('./svg-icons/photoshop.svg')
 const Programs = require('./svg-icons/programs.svg')
 const Templates = require('./svg-icons/Templates.svg')
@@ -56,6 +61,7 @@ export const svgs = {
 	DottedLine,
 	Download,
 	Email,
+	Enlarge,
 	Eye,
 	ETLogo,
 	Facebook,
@@ -73,6 +79,10 @@ export const svgs = {
 	Lock,
 	MagnifyGlass,
 	Paypal,
+	PaypalColorLogo,
+	PaypalPPLogo,
+	PaypalPPLogoDisabled,
+	PaypalDisabledLogo,
 	Photoshop,
 	Programs,
 	Pinterest,

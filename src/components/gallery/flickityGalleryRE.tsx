@@ -1,6 +1,7 @@
 import GalleryModal from '@components/gallery/flickityGalleryModal'
 import ThumbnailGallery from '@components/gallery/thumbnailGallery'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { useSetState } from '@utils/stateUtils'
@@ -161,6 +162,9 @@ const FlickityGalleryContext = (props: IProps) => {
 						<FullScreenIcon>
 							{renderSvg(svgs.MagnifyGlass)}
 						</FullScreenIcon>
+						<EnlargeIcon>
+							{renderSvg(svgs.Enlarge)}
+						</EnlargeIcon>
 						{/*<picture>*/}
 						{/*	<source*/}
 						{/*		srcSet={`*/}
@@ -202,6 +206,28 @@ const FlickityGalleryContext = (props: IProps) => {
 		</FlickityWrapper>
 	)
 }
+
+const EnlargeIcon = styled.div`
+	position: absolute;
+	top:10px;
+	right: 10px;
+	display: flex;
+	align-items: center;
+	z-index: 5;
+	max-width: 46px;
+	border-radius: 8px;
+	width: 100%;
+	background: #e2eaf28a;
+	padding: 8px;
+	path{
+		fill: #111;
+	}
+	@media ${device.laptop} {
+		display: none;
+		z-index: 1;
+	}
+			
+`
 const FullScreenIcon = styled.span`
 	background: #333f4fa3;
 	position: absolute;

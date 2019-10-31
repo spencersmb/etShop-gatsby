@@ -375,6 +375,7 @@ const CheckoutSlide = styled(CheckoutPose)`
 	height: 100%;
 	z-index: 3;
 	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 `
 const CartListInner = styled.div`
 	grid-column: 2 / 4;
@@ -459,6 +460,7 @@ const CartWrapper = styled.div`
 	height: 100%;
 	width: 100%;
 	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	background: ${colors.grey.i200};
 	display: flex;
 	flex-direction: column;

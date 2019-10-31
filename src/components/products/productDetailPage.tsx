@@ -153,8 +153,8 @@ export class ProductDetailPage extends Component<IProductQuery> {
 				seller: {
 					['@type']: 'Organization',
 					name: 'Every Tuesday, LLC'
-				},
-			},
+				}
+			}
 
 		}
 	}
@@ -305,15 +305,11 @@ export const productQuery = graphql`
 				hasExtendedLicense
 				standardItem{
 					slug
-					bullets{
-						bullet_point
-					}
+					desc
 				}
 				extendedItem{
 					slug
-					bullets{
-						bullet_point
-					}
+					desc
 				}
 			}
 			features{

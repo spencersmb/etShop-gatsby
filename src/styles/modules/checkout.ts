@@ -268,3 +268,30 @@ export const StripeCardWrapper = styled.div`
 export const CreditCardFormWrapper = styled.div`
  margin-bottom: 30px;
 `
+export const PaypalFormContainer = styled.div`
+	padding: 20px;
+`
+export const PaypalSpinner = styled.div`
+	position:relative;
+	height: 52px;
+	margin-top: 20px;
+	
+	${InputSpinner}{
+		height: 52px;
+		width: 52px;
+		left: 50%;
+		top:50%;
+		transform: translate(-50%,-50%);
+	}
+`
+
+export const PaypalButtonPoseWrapper = posed.div({
+	show: {
+		marginTop: 20,
+		height: 'auto'
+	},
+	hide: {
+		marginTop: 20,
+		height: 0
+	}
+})
