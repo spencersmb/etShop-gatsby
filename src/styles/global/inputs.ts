@@ -57,27 +57,30 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 	}
 	
 		input{
-		${Sentinel.reg};
-		font-style: italic;
-		background: transparent;
-		font-weight: 600;
-		font-size: 24px;
-		line-height: 24px;
-		text-align: center;
-		color: ${props => props.disableInput ? colors.grey.i600 : colors.primary.text};
-		border: 3px solid #D2DCE5;
-		border-radius: 10px;
-		padding: 2.5px 5px 2.5px 0;
-		width: 100%;
-		&:focus{
-			outline: none;
-		}
-		-moz-appearance: textfield;
-		&::-webkit-outer-spin-button, 
-		::-webkit-inner-spin-button{
-			-webkit-appearance: none;
-			margin: 0;
-		};
+			${Sentinel.reg};
+			font-style: italic;
+			background: transparent;
+			font-weight: 600;
+			font-size: 24px;
+			line-height: 24px;
+			text-align: center;
+			color: ${props => props.disableInput ? colors.grey.i600 : colors.primary.text};
+			border: 3px solid #D2DCE5;
+			border-radius: 10px;
+			padding: 2.5px 5px 2.5px 0;
+			width: 100%;
+			&:focus{
+				outline: none;
+			}
+			-moz-appearance: textfield;
+			&::-webkit-outer-spin-button, 
+			::-webkit-inner-spin-button{
+				-webkit-appearance: none;
+				margin: 0;
+			};
+			&:read-only{
+				cursor: auto;
+			}
 	}
 `
 

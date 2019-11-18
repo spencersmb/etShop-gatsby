@@ -85,6 +85,19 @@ export interface IFeatureItem {
 	icon: string
 	title: string
 }
+export interface IProductLicenseType {
+	type: string,
+	// may not need this if we are testing the extendedItem itself
+	hasExtendedLicense: boolean,
+	standardItem: {
+		slug: string,
+		desc: string
+	},
+	extendedItem: {
+		slug: string,
+		desc: string
+	}
+}
 export interface IProductFeaturedImage {
 	alt: string
 	localFile: {
@@ -142,19 +155,7 @@ export interface IProduct {
 	categories: ICat[],
 	tags: Itag [],
 	images: Image[],
-	license: {
-		type: string,
-		// may not need this if we are testing the extendedItem itself
-		hasExtendedLicense: boolean,
-		standardItem: {
-			slug: string,
-			bullets: IProductBullet[]
-		},
-		extendedItem: {
-			slug: string,
-			bullets: IProductBullet[]
-		}
-	},
+	license: IProductLicenseType,
 	features: IFeatureItem[]
 	related_products: string[] | null
 	pwyw: boolean,

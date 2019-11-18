@@ -96,8 +96,8 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 			const myOrder = await createWcOrder()
 			if (!myOrder || myOrder && myOrder.code !== 200) {
 				actions.restart()
-				onError('order create error')
 				setManualSubmitting(false)
+				onError('order create error')
 				return
 			}
 
@@ -127,7 +127,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					// clear form
 					// controll success from parent
 					const { order } = result
-					setManualSubmitting(false)
+
 					props.showModal({
 						modal: Receipt,
 						options: {
@@ -145,9 +145,8 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					})
 					props.emptyCart()
 					props.reset()
-					setTimeout(() => {
-						props.closeCart()
-					}, 500)
+					props.closeCart()
+					setManualSubmitting(false)
 
 				} else {
 					actions.restart()

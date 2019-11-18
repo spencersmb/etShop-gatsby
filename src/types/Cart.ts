@@ -14,6 +14,7 @@ export interface ICouponRaw {
 	discount_type: string,
 	product_ids: number[],
 	excluded_product_ids: number [],
+	error?: null | {message: string, couponCode :string}
 }
 
 export interface ICouponState {

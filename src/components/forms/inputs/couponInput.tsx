@@ -13,6 +13,7 @@ import { colors } from '@styles/global/colors'
 import { CouponContainer, InputSpinner } from '@styles/modules/checkout'
 import { FormGroup, FormInput, SvgValidation } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
+import { toastrOptions } from '@utils/apiUtils'
 import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
@@ -20,6 +21,7 @@ import { Action, bindActionCreators, Dispatch } from 'redux'
 import { Observable, from, fromEvent } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map, switchMap, filter } from 'rxjs/operators'
 import { Subscription } from 'rxjs/src/internal/Subscription'
+import { toastr } from 'react-redux-toastr'
 
 interface IReduxActions {
 	checkCoupon: (couponCode: string) => void
@@ -56,7 +58,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 			const inputPipe: any = inputObsv.pipe(
 				map((e: any) => e.target.value),
 				filter((e: string) => e !== ''),
-				debounceTime(500),
+				debounceTime(1000),
 				distinctUntilChanged(),
 				switchMap((target: string) => {
 					if (target.length < 4) {
@@ -67,20 +69,23 @@ export function CouponInput (props: IProps & IReduxActions) {
 				})
 			)
 			inputSubscribe = inputPipe.subscribe((x: ICouponApiResponse) => {
-				switch (x.code) {
-					case 200:
-						loadCoupon(x.data.coupon)
+
+				if(x.data.coupon.error){
+					toastr.error('Invalid', x.data.coupon.error.message, toastrOptions.noHover)
+					invalidCoupon()
+					// Sync up total and and prevTotal Ref locally
+					if (total !== prevTotal.current) {
 						updatePrice()
-						break
-					default:
-						invalidCoupon()
-						if (total !== prevTotal.current) {
-							updatePrice()
-						}
-						if (inputRef.current) {
-							inputRef.current.focus()
-						}
+					}
+
+					// focus back into the input
+					if (inputRef.current) {
+						inputRef.current.focus()
+					}
+					return
 				}
+				loadCoupon(x.data.coupon)
+				updatePrice()
 			})
 		}
 

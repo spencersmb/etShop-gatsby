@@ -88,6 +88,7 @@ export const createUserFacebook: any = (user: IFacebookUserCreate) => async (dis
 	await statusCheck(response, dispatch)
 
 	const body: ICreateAuthResponse = await response.json()
+
 	body.fbProfilePic = user.picture ? user.picture.data.url : null
 
 	dispatch(loginUserSuccess(body))

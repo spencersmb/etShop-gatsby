@@ -1,5 +1,5 @@
 import LicenseCard from '@components/cards/licenseCard'
-import { IProductBullet } from '@et/types/Products'
+import { IProductBullet, IProductLicenseType } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import { calcBulkPriceDiscount } from '@utils/priceUtils'
 import React, { SyntheticEvent } from 'react'
@@ -8,18 +8,7 @@ import styled from 'styled-components'
 interface IProps {
 	standardLicPrice: string,
 	extendedLicPrice?: string,
-	license: {
-		type: string,
-		hasExtendedLicense: boolean,
-		standardItem: {
-			slug: string,
-			desc: string
-		},
-		extendedItem: {
-			slug: string,
-			desc: string
-		}
-	}
+	license: IProductLicenseType
 	onChange: any,
 	selectedLicense: string,
 	inCart?: boolean
@@ -31,7 +20,7 @@ interface IProps {
 const ProductSelect = (
 	{ standardLicPrice, extendedLicPrice, onChange, selectedLicense, inCart, license, showModal, bulkDiscount, licenceQty }: IProps) => {
 
-	console.log('license', license)
+	// console.log('license', license)
 
 	function handleLicClick (e: SyntheticEvent) {
 		e.preventDefault()

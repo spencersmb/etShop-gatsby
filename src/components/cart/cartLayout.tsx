@@ -376,6 +376,11 @@ const CheckoutSlide = styled(CheckoutPose)`
 	z-index: 3;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
+	
+	@media ${device.laptop} {
+		background: ${colors.grey.i200};
+	}
+		
 `
 const CartListInner = styled.div`
 	grid-column: 2 / 4;

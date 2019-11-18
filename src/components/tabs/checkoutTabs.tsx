@@ -4,7 +4,7 @@ import FreeCheckoutForm from '@components/forms/freeItem-checkout'
 import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
 import { CartHeader, CartHeaderTitle } from '@styles/modules/cart'
-import { CheckoutTabs } from '@styles/modules/checkout'
+import { CartInner, CheckoutTabs } from '@styles/modules/checkout'
 import { svgs } from '@svg'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import { displayCurrency } from '@utils/priceUtils'
@@ -82,34 +82,37 @@ export const CheckoutPage = (props: IProps) => {
 				</CartHeaderTitle>
 				<div className='spacer' style={{ width: '56px' }}/>
 			</CartHeader>
-			<CheckoutTabs data-testid='tabs__Nav'>
-				{React.Children.toArray(props.children)
-					.map((child: any, index: number) =>
-						<CheckoutTab
-							key={index}
-							selected={child.props['data-payment'] === key}
-							paymentType={child.props['data-payment']}
-							handleClick={onTabClick}
-						/>
-					)}
-			</CheckoutTabs>
 
-			<CheckoutTotal/>
+			<CartInner>
+				<CheckoutTabs data-testid='tabs__Nav'>
+					{React.Children.toArray(props.children)
+						.map((child: any, index: number) =>
+							<CheckoutTab
+								key={index}
+								selected={child.props['data-payment'] === key}
+								paymentType={child.props['data-payment']}
+								handleClick={onTabClick}
+							/>
+						)}
+				</CheckoutTabs>
 
-			<CartLogin/>
+				<CheckoutTotal/>
+
+				<CartLogin/>
 
 
-			{/*Render Matching Content*/}
-			{!props.freeCheckout &&
-      <div data-testid='tabs__Content'>
-				{React.Children.toArray(props.children)
-					.map((child: any) => {
-							return child.props['data-payment'] === key ? child.props.children : null
-						}
-					)}
-      </div>
-			}
-			{props.freeCheckout && <FreeCheckoutForm/>}
+				{/*Render Matching Payment Form Content*/}
+				{!props.freeCheckout &&
+        <div data-testid='tabs__Content'>
+					{React.Children.toArray(props.children)
+						.map((child: any) => {
+								return child.props['data-payment'] === key ? child.props.children : null
+							}
+						)}
+        </div>
+				}
+				{props.freeCheckout && <FreeCheckoutForm/>}
+			</CartInner>
 		</CheckOutContainer>
 	)
 }

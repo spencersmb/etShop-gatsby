@@ -33,13 +33,22 @@ function calcSavings (cart: ICartState) {
 export function CheckoutTotal (props: IProps) {
 	const { cart } = props
 	const [showCouponInput, setShowCouponInput] = useState(false)
+	const getDiscountText = () => {
+		if(cart.coupon.type === 'percent'){
+			const discountToDecimal = parseInt(cart.coupon.discount, 10) / 100
+			return(
+				<span className={'discountLabel'}>{displayPercent(discountToDecimal)}% discount</span>
+			)
+		}
+		return(
+			<span className={'discountLabel'}>Discount applied</span>
+		)
+	}
 	return (
 		<OrderSummery>
 			<h3>Order Summery</h3>
 
 			<TotalSummery>
-
-				<span>Total</span>
 
 				{cart.coupon.valid &&
         <DiscountSummary>
@@ -48,24 +57,25 @@ export function CheckoutTotal (props: IProps) {
             <p>{displayCurrency(cart.originalPrice)}</p>
           </CartItemDetail>
           <CartItemDiscount>
-            <span className={'discountLabel'}>Discount applied</span>
+						{getDiscountText()}
             <div className={'discount'}>-{displayCurrency(calcSavings(cart)).substring(1)}</div>
           </CartItemDiscount>
         </DiscountSummary>
 				}
 
-				<div data-testid='orderTotal' className={'orderTotal'}>{displayCurrency(cart.totalPrice)}</div>
+				<div className={'orderTotal__wrapper'}>
+					<div data-testid='orderTotal' className={'orderTotal__numbers'}>{displayCurrency(cart.totalPrice)}</div>
 
-				<CouponButtonWrapper pose={showCouponInput ? 'hide' : 'show'}>
-					<CouponButton
-						onClick={() => setShowCouponInput(true)}>
-						<span>{renderSvg(svgs.Coupon)}</span>
-						<span>Have coupon?</span>
-					</CouponButton>
-				</CouponButtonWrapper>
+					<CouponButtonWrapper pose={showCouponInput ? 'hide' : 'show'}>
+						<CouponButton
+							onClick={() => setShowCouponInput(true)}>
+							<span>{renderSvg(svgs.Coupon)}</span>
+							<span>Have coupon?</span>
+						</CouponButton>
+					</CouponButtonWrapper>
+				</div>
 
 
-				{/*Possible dropdown for country code selecttion goes here*/}
 				<CouponWrapper pose={showCouponInput ? 'show' : 'hide'}>
 					<CouponInput/>
 				</CouponWrapper>

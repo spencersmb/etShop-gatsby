@@ -298,6 +298,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
                 className={`numberDial__outline`}
                 label='Pay what you want'
                 qty={state.price}
+								disableInput={inCart}
                 inputOnChange={onPwywChange}/>
             </InputWrapper>
           </PWYWWrapper>

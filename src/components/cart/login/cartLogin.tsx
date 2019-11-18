@@ -46,7 +46,13 @@ export function CartLogin (props: IReduxState & IReduxActions) {
 		: (
 			<CartLoginAd>
 				<LoginAdLeft>
-					Ad left
+					<span>Save</span>
+					<div className={`percent`}>10%</div>
+					<span>now</span>
+					<div className='circle large'/>
+					<div className='circle med'/>
+					<div className='circle med outline'/>
+					<div className='circle med-lrg'/>
 				</LoginAdLeft>
 				<LoginRight>
 					<h5>Create an account and save 10% on your purchase.</h5>

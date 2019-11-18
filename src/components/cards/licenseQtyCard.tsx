@@ -50,6 +50,7 @@ function LicenseQtyCard (props: IProps) {
 						className={`numberDial__outline`}
 						label='LICENSE FOR'
 						qty={numberOfLicenses}
+						disableInput={inCart}
 						inputOnChange={onDialChange}/>
 					<Icon onClick={triggerViewLicense}>{renderSvg(svgs.Info)}</Icon>
 				</InputWrapper>

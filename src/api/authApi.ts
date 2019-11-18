@@ -115,7 +115,8 @@ class AuthApi {
 	}
 
 	static getAllOrders (page: number): Promise<Response> {
-		const url: string = `${process.env.GATSBY_DB}/wp-json/et-shop/user/getAllOrdersExt/?page=${page}`
+		// const url: string = `${process.env.GATSBY_DB}/wp-json/et-shop/user/getAllOrdersExt/?page=${page}`
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/order/getAllOrdersExt/?page=${page}`
 		const options: any = {
 			headers: createHeaders(),
 			method: 'GET',

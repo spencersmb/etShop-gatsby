@@ -1,14 +1,34 @@
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
+import { shadowStyles } from '@styles/global/shadows'
 import posed from 'react-pose'
 import styled from 'styled-components'
 
+export const CartInner = styled.div`
+ margin:0;
+ padding: 0;
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ 
+ @media ${device.laptop} {
+ 	max-width: 770px;
+	margin: 60px auto;
+	width: 100%;
+	background: #fff;
+	box-shadow: ${shadowStyles.shadow4};
+	border-radius: 15px;
+	overflow: hidden;
+ }
+`
 export const CheckoutTabs = styled.ul`
  margin:0;
  padding: 0;
  display: flex;
  flex-direction: row;
  width: 100%;
+ 	
 `
 
 export const PaymentTab = styled.li<{ selected: boolean }>`
@@ -81,21 +101,48 @@ export const TotalSummery = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
-	
-	& > span{
-		text-align: center;
-		color: ${colors.grey.i600};
-		display: none;
-	}
+	position: relative;
+	align-items: center;
 	
 	.orderTotal{
-		${Sentinel.semiboldItalic};
-		font-size: 42px;
-		line-height: 42px;
-		color: ${colors.grey.i800};
-		text-align: center;
-		margin-bottom: 20px;
+		&__wrapper{
+			display: flex;
+			flex-direction: column;
+		}
+		&__name{
+			text-align: center;
+			color: ${colors.grey.i600};
+			display: none;
+			font-size: 16px;
+		}
+		&__numbers{
+			${Sentinel.semiboldItalic};
+			font-size: 42px;
+			line-height: 42px;
+			color: ${colors.grey.i800};
+			text-align: center;
+			margin-bottom: 20px;
+			position: relative;
+		}
 	}
+	
+	@media ${device.tablet} {
+		.orderTotal{
+				&__wrapper{
+					position: relative;
+					align-items: center;
+				}
+				&__name{
+					display: flex;
+					position: absolute;
+					left: -50px;
+				}
+				&__numbers{
+					
+				}
+		}
+	}
+		
 	
 `
 const CouponBtnPosed = posed.div({
@@ -117,6 +164,7 @@ export const CouponButtonWrapper = styled(CouponBtnPosed)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+		
 `
 export const CouponButton = styled.div`
 	display:flex;
@@ -201,20 +249,79 @@ export const InputSpinner = styled.div<{ submitting: boolean, spinnerColor: stri
 export const DiscountSummary = styled.div`
 	display: flex;
 	flex-direction: column;
-	max-width: 250px;
-	margin: 0 auto 5px;
-	width: 100%;
+	min-width: 200px;
+	margin: .5rem auto;
 `
 
 export const CartLoginAd = styled.div`
-	background: ${colors.teal.i500};
+	background: #46d0d1;
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
 `
 export const LoginAdLeft = styled.div`
 	display: none;
+	position: relative;
+	
+	@media ${device.tablet} {
+		display: flex;
+		flex: 1 0 50%;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		span{
+			color: ${colors.teal.i600};
+			font-size: 28px;
+			line-height: 28px;
+			${Sentinel.semiboldItalic};
+			z-index: 5;
+		}		
+		.percent{
+			z-index: 5;
+			${Sentinel.semiboldItalic};
+			color: #168392;
+			font-size: 76px;
+			line-height: 76px;
+		}
+		.circle{
+			background: #fff;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			
+			&.large{
+				width: 400px;
+				height: 400px;
+				z-index: 1;
+				opacity: .2;
+			}			
+			
+			&.med{
+				width: 240px;
+				height: 240px;
+				z-index: 1;
+				opacity: .2;
+			}
+			&.outline{
+				opacity: .5;
+				background: none;
+				border: 6px solid #fff;
+			}
+			&.med-lrg{
+				width: 300px;
+				height: 300px;
+				z-index: 2;
+				opacity: .2;
+			}
+		}
+	}
 `
 export const LoginRight = styled.div`
 	display: flex;
 	flex-direction: column;
+	flex: 1;
 	padding: 20px 30px;
 	h5, p{
 		color: white;
@@ -225,6 +332,11 @@ export const LoginRight = styled.div`
 		font-weight: 300;
 		line-height: 25px;
 	}
+	
+	@media ${device.tablet} {
+		flex: 1 0 50%;		
+	}
+		
 `
 
 export const LoginAdButtons = styled.div`
@@ -288,10 +400,12 @@ export const PaypalSpinner = styled.div`
 export const PaypalButtonPoseWrapper = posed.div({
 	show: {
 		marginTop: 20,
-		height: 'auto'
+		height: 'auto',
+		overflow: 'hidden'
 	},
 	hide: {
 		marginTop: 20,
-		height: 0
+		height: 0,
+		overflow: 'hidden'
 	}
 })
