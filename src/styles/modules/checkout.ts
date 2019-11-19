@@ -381,7 +381,7 @@ export const CreditCardFormWrapper = styled.div`
  margin-bottom: 30px;
 `
 export const PaypalFormContainer = styled.div`
-	padding: 20px;
+	padding-bottom: 20px;
 `
 export const PaypalSpinner = styled.div`
 	position:relative;
@@ -400,11 +400,13 @@ export const PaypalSpinner = styled.div`
 export const PaypalButtonPoseWrapper = posed.div({
 	show: {
 		marginTop: 20,
+		padding: '0px 20px',
 		height: 'auto',
 		overflow: 'hidden'
 	},
 	hide: {
-		marginTop: 20,
+		marginTop: 0,
+		padding: '0px 20px',
 		height: 0,
 		overflow: 'hidden'
 	}

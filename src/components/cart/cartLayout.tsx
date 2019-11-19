@@ -3,7 +3,7 @@ import { useScrollEvent } from '@components/products/productFilter'
 import StripeCheckout from '@components/stripe/stripeCheckout'
 import StripeProviderWrapper from '@components/stripe/stripeProvider'
 import CheckoutPage from '@components/tabs/checkoutTabs'
-import { IModalState } from '@et/types/Modal'
+import { IModalState, OnPoseComplete } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
@@ -136,31 +136,20 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	const [checkoutOpen, setCheckoutOpen] = useState(false)
 	const [fixed, offsetLeft, width] = useScrollEventv2('cartPageContainer', 'cartCheckoutNav', 'cartWrapper')
 	const bodyScrollPos = useRef(0)
+	const CheckoutSliderRef: any = useRef(null)
+
 
 	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
 	// to flip to the free checkout form
 	const toggleCheckout = () => {
+		if(checkoutOpen){
+			CheckoutSliderRef.current.style.overflowY = `hidden`
+			if(window.innerWidth > 1024){
+				CheckoutSliderRef.current.style.padding = `0 15px 0 0`
+			}
+		}
 		setCheckoutOpen(!checkoutOpen)
 	}
-	const checkout = useMemo(() => <CheckoutPage
-		initialLoad='stripe'
-		toggleCheckout={toggleCheckout}
-		handleChangeType={props.changeCheckout}
-		freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
-	>
-		<div data-payment='stripe'>
-			<StripeProviderWrapper>
-				<StripeCheckout/>
-			</StripeProviderWrapper>
-		</div>
-		<div data-payment='paypal'>
-			<Suspense fallback={null}>
-				<PaypalCheckout/>
-			</Suspense>
-		</div>
-	</CheckoutPage>, [
-		props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products) && checkoutOpen || !checkoutOpen
-	])
 
 	useEffect(() => {
 		target.current = document.querySelector('#___gatsby')
@@ -226,7 +215,20 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			</CartPageContainer>
 
 			{/*CheckOut*/}
-			<CheckoutSlide pose={checkoutOpen ? 'open' : 'closed'}>
+			<CheckoutSlide
+				ref={CheckoutSliderRef}
+				pose={checkoutOpen ? 'open' : 'closed'}
+				onPoseComplete={(type: OnPoseComplete) => {
+						if (type === 'open') {
+							CheckoutSliderRef.current.style.overflowY = `scroll`
+							// check width for laptop or larger to do the padding issue
+							if(window.innerWidth > 1024){
+								CheckoutSliderRef.current.style.padding = `0px`
+							}
+						}
+					}
+				}
+			>
 				<CheckoutPage
 					initialLoad='stripe'
 					toggleCheckout={toggleCheckout}
@@ -313,6 +315,7 @@ const CheckoutPose = posed.div({
 	},
 	closed: {
 		// opacity: 0,
+		// overflowY: 'hidden',
 		x: '-100%',
 		transition: CartSliderTransition.exit
 	}
@@ -374,11 +377,14 @@ const CheckoutSlide = styled(CheckoutPose)`
 	width: 100%;
 	height: 100%;
 	z-index: 3;
-	overflow-y: scroll;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	//padding-right: 15px;
 	-webkit-overflow-scrolling: touch;
 	
-	@media ${device.laptop} {
+	@media ${device.laptopL} {
 		background: ${colors.grey.i200};
+		padding-right: 15px;
 	}
 		
 `

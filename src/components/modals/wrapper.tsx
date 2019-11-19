@@ -1,4 +1,5 @@
 import { OnPoseComplete } from '@et/types/Modal'
+import { bodyScrollBar } from '@utils/windowUtils'
 import React, {
 	ComponentType,
 	RefObject,
@@ -82,9 +83,8 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 
 		// on close - render body before modal closes to stop safari from blinking text
 		if (!show && target.current && !cartIsOpen) {
-			target.current.style.removeProperty('position')
-			target.current.style.removeProperty('top')
-			target.current.style.removeProperty('bottom')
+			bodyScrollBar.remove(target.current)
+
 			document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 		}
 
@@ -119,10 +119,7 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 								? topReverse
 								: document.body.scrollTop || document.documentElement.scrollTop || 0
 
-							target.current.style.width = `100%`
-							target.current.style.top = `-${scrollPos.current}px`
-							target.current.style.bottom = '0'
-							target.current.style.position = 'fixed'
+							bodyScrollBar.show(target.current, scrollPos.current)
 						}
 					}}
 				/>

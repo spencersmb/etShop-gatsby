@@ -16,7 +16,13 @@ import {
 	IProcessPaypalOrderAction,
 	processPaypalOrder as processPaypalOrderAction
 } from '@redux/actions/orderActions'
-import { InputSpinner, PaypalButtonPoseWrapper, PaypalFormContainer, PaypalSpinner } from '@styles/modules/checkout'
+import {
+	CheckoutFormLabel, GuestBillingContainer,
+	InputSpinner,
+	PaypalButtonPoseWrapper,
+	PaypalFormContainer,
+	PaypalSpinner
+} from '@styles/modules/checkout'
 import { wc_createBilling, wcCreateOrderLineItems } from '@utils/orderUtils'
 import { getPaypalFormatItems } from '@utils/paypalUtils'
 import { displayCurrency } from '@utils/priceUtils'
@@ -126,6 +132,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 				if (result) {
 					// clear form
 					// controll success from parent
+
 					const { order } = result
 
 					props.showModal({
@@ -215,7 +222,12 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 
 	return (
 		<PaypalFormContainer>
-			{!user && <GuestBilling/>}
+			{!user && <GuestBillingContainer>
+        <CheckoutFormLabel>
+          Billing
+        </CheckoutFormLabel>
+				<GuestBilling/>
+			</GuestBillingContainer>}
 			{manualSubmitting && <PaypalSpinner>
         <InputSpinner submitting={true} spinnerColor={'#009cde'}>
           <svg className='spinner' viewBox='0 0 50 50'>

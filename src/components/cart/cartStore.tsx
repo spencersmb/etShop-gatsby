@@ -4,6 +4,7 @@ import { IState } from '@et/types/State'
 import { cartLoadedComplete as cartLoaded, cartToggle, updateCartState } from '@redux/actions/cartActions'
 import { CartSliderTransition } from '@styles/modules/cart'
 import { getLocalStorageCart } from '@utils/cartUtils'
+import { bodyScrollBar, getWindowSize } from '@utils/windowUtils'
 import React, { useLayoutEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -58,17 +59,11 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 					if (type === 'enter' && !overlayOpen && target.current) {
 						// MOVED TO NAV so happen faster
 						bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-						target.current.style.width = `100%`
-						target.current.style.top = `-${bodyScrollPos.current}px`
-						target.current.style.bottom = `0`
-						target.current.style.position = 'fixed'
+						bodyScrollBar.show(target.current, bodyScrollPos.current)
 					}
 
 					if (type === 'exit' && !overlayOpen && target.current) {
-						target.current.style.removeProperty('position')
-						target.current.style.removeProperty('top')
-						target.current.style.removeProperty('bottom')
-						target.current.style.removeProperty('padding')
+						bodyScrollBar.remove(target.current)
 
 						document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
 					}

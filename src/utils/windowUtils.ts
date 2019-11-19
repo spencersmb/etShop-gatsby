@@ -49,3 +49,25 @@ export function getWindowSize (): string {
 		return 'desktop'
 	}
 }
+
+export const bodyScrollBar = {
+	remove: (el: HTMLElement) => {
+		el.style.removeProperty('position')
+		el.style.removeProperty('top')
+		el.style.removeProperty('bottom')
+
+		if(window.innerWidth > 1024){
+			el.style.removeProperty('padding')
+		}
+	},
+	show: (el: HTMLElement, scrollPos: number) => {
+		el.style.width = `100%`
+		el.style.top = `-${scrollPos}px`
+		el.style.bottom = `0`
+		el.style.position = 'fixed'
+
+		if( window.innerWidth > 1024){
+			el.style.padding = '0 15px 0 0'
+		}
+	}
+}
