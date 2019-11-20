@@ -77,7 +77,7 @@ export function CheckoutTotal (props: IProps) {
 
 
 				<CouponWrapper pose={showCouponInput ? 'show' : 'hide'}>
-					<CouponInput/>
+					{/*<CouponInput/>*/}
 				</CouponWrapper>
 			</TotalSummery>
 		</OrderSummery>

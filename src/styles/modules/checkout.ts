@@ -14,7 +14,7 @@ export const CartInner = styled.div`
  
  @media ${device.laptop} {
  	max-width: 770px;
-	margin: 60px auto;
+	margin: 30px auto;
 	width: 100%;
 	background: #fff;
 	box-shadow: ${shadowStyles.shadow4};
@@ -36,6 +36,7 @@ export const PaymentTab = styled.li<{ selected: boolean }>`
 	list-style: none;
 	background: ${props => props.selected ? '#fff' : colors.grey.i400};
 	transition: .3s;
+	
 	svg{
 		width: 100%;
 	}
@@ -79,6 +80,13 @@ export const PaymentTab = styled.li<{ selected: boolean }>`
 		margin-left: 8px;
 		color: ${props => props.selected ? colors.teal.i500 : colors.secondary.text};
 	}
+	
+	@media ${device.laptop} {
+		&:hover{
+			cursor:  ${props => props.selected ? 'default' : 'pointer'};			
+		}
+	}
+		
 `
 
 export const OrderSummery = styled.div`
@@ -188,6 +196,11 @@ export const CouponButton = styled.div`
 	svg{
 		width: 100%;
 	}
+	
+	@media ${device.laptop} {
+		cursor: pointer;		
+	}
+		
 `
 
 const CouponContainerPosed = posed.div({
@@ -211,8 +224,8 @@ export const CouponWrapper = styled(CouponContainerPosed)`
 
 `
 export const CouponContainer = styled.div`
-	background: ${colors.grey.i200};
-	padding: 20px;
+	//background: ${colors.grey.i200};
+	padding: 0 20px 10px;
 	
 	.formGroup__Container{
 		margin: 0;

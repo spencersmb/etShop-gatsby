@@ -10,7 +10,7 @@ import {
 	submitCouponCode
 } from '@redux/actions/couponActions'
 import { colors } from '@styles/global/colors'
-import { CouponContainer, InputSpinner } from '@styles/modules/checkout'
+import { CheckoutFormLabel, CouponContainer, InputSpinner } from '@styles/modules/checkout'
 import { FormGroup, FormInput, SvgValidation } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
 import { toastrOptions } from '@utils/apiUtils'
@@ -131,6 +131,9 @@ export function CouponInput (props: IProps & IReduxActions) {
 
 	return (
 		<CouponContainer>
+			<CheckoutFormLabel>
+				COUPON
+			</CheckoutFormLabel>
 			<form>
 				{/*{coupon.valid && <span data-testid='valid-notice'>Valid code!</span>}*/}
 				{/*{!coupon.valid && coupon.submitted && <span data-testid='invalid-notice'>Invalid code!</span>}*/}

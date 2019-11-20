@@ -17,6 +17,7 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     color: ${colors.text};
     position: relative;
+    overflow-x: hidden;
     
     &.mobileNavOpen{
       overflow-y: hidden;

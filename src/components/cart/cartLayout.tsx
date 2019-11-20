@@ -379,7 +379,6 @@ const CheckoutSlide = styled(CheckoutPose)`
 	z-index: 3;
 	overflow-y: hidden;
 	overflow-x: hidden;
-	//padding-right: 15px;
 	-webkit-overflow-scrolling: touch;
 	
 	@media ${device.laptopL} {

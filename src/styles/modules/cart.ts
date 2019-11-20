@@ -49,6 +49,12 @@ export const CartHeader = styled.div`
 			position: absolute;
 			left: 20px;		    
 		}
+		
+		@media ${device.laptop} {
+			&:hover{
+				cursor: pointer;
+			}
+		}
 			
 	}
 	

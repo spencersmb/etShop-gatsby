@@ -130,8 +130,6 @@ export const FormInput = styled.div<{ removeMargin?: boolean }>`
 	position: relative;
 	margin-top: 16px;
 	${props => props.removeMargin ? `margin-bottom: 0;` : `margin-bottom: 26px;`}
-	
-	
 
 	.formGroup{
 		position: relative;

@@ -1,3 +1,4 @@
+import { device } from '@styles/global/breakpoints'
 import { svgFlex } from '@styles/global/mixins'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
@@ -44,5 +45,13 @@ const PPBtnContainer = styled.div`
 		}
 		${svgFlex()}
 	}
+	
+	@media ${device.laptop} {
+		&:hover{
+			cursor: pointer;
+		}	    
+		
+	}
+		
 `
 export default PaypalDisabledBtn

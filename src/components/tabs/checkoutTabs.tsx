@@ -70,6 +70,7 @@ export const CheckoutPage = (props: IProps) => {
 
 	return (
 		<CheckOutContainer>
+
 			<CartHeader>
 				<div
 					data-testid='close-btn'
@@ -83,7 +84,12 @@ export const CheckoutPage = (props: IProps) => {
 				<div className='spacer' style={{ width: '56px' }}/>
 			</CartHeader>
 
+			<CartLogin/>
+
 			<CartInner>
+
+				<CheckoutTotal/>
+
 				<CheckoutTabs data-testid='tabs__Nav'>
 					{React.Children.toArray(props.children)
 						.map((child: any, index: number) =>
@@ -96,10 +102,7 @@ export const CheckoutPage = (props: IProps) => {
 						)}
 				</CheckoutTabs>
 
-				<CheckoutTotal/>
-
-				<CartLogin/>
-
+				<CouponInput/>
 
 				{/*Render Matching Payment Form Content*/}
 				{!props.freeCheckout &&
@@ -113,6 +116,7 @@ export const CheckoutPage = (props: IProps) => {
 				}
 				{props.freeCheckout && <FreeCheckoutForm/>}
 			</CartInner>
+
 		</CheckOutContainer>
 	)
 }

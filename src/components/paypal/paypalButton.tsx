@@ -19,8 +19,6 @@ interface IProps {
 export function PaypalButton (props: IProps) {
 	const { PaypalCheckoutButton, createOrder, onApprove, invalid, client, onCancel, onError, submitting } = props
 
-	console.log('paypal button render', invalid)
-
 	return (
 		<div>
 

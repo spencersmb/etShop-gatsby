@@ -63,7 +63,7 @@ export function CartLogin (props: IReduxState & IReduxActions) {
 							onClick={login('signup')}
 							color={'#FFEE93'}
 							textColor={colors.teal.i600}
-							hoverColor={colors.teal.i500}
+							hoverColor={colors.primary.headline}
 							hoverTextColor={'#fff'}
 							outline={false}
 						>
@@ -73,8 +73,8 @@ export function CartLogin (props: IReduxState & IReduxActions) {
 							data-testid='signin'
 							onClick={login('signin')}
 							color={colors.teal.i500}
-							hoverColor={colors.teal.i500}
-							hoverTextColor={'#fff'}
+							hoverColor={'#fff'}
+							hoverTextColor={colors.teal.i500}
 							textColor={'#fff'}
 							outline={true}
 						>
