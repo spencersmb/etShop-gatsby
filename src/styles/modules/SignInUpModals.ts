@@ -125,11 +125,27 @@ export const FormGroup = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 10px;
+	
+	@media ${device.laptop} {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
 `
 export const FormInput = styled.div<{ removeMargin?: boolean }>`
 	position: relative;
 	margin-top: 16px;
 	${props => props.removeMargin ? `margin-bottom: 0;` : `margin-bottom: 26px;`}
+	
+	@media ${device.laptop} {
+		flex: 1 0 50%;
+		&:nth-child(1){
+			padding-right: 10px;
+		}
+		&:nth-child(2){
+			padding-left: 10px;
+		}
+	}
+		
 
 	.formGroup{
 		position: relative;
@@ -162,8 +178,9 @@ export const FormInput = styled.div<{ removeMargin?: boolean }>`
 				color: ${colors.text};
 			}
 		}
+		
     &.valid.hasFocus,
-	 &.invalid.hasFocus{
+	 	&.invalid.hasFocus{
 			&:before{
 				width: 100%;
 			}
@@ -173,8 +190,6 @@ export const FormInput = styled.div<{ removeMargin?: boolean }>`
 			}
 		}
 		
-
-	
 		input{
 			-webkit-appearance: none;
 			appearance: none;

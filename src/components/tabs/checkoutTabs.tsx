@@ -3,8 +3,10 @@ import CartLogin from '@components/cart/login/cartLogin'
 import FreeCheckoutForm from '@components/forms/freeItem-checkout'
 import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
+import { device } from '@styles/global/breakpoints'
+import { GridFluid } from '@styles/global/cssGrid'
 import { CartHeader, CartHeaderTitle } from '@styles/modules/cart'
-import { CartInner, CheckoutTabs } from '@styles/modules/checkout'
+import { CartInner, CheckoutFormLabel, CheckoutTabs, CouponWrapper } from '@styles/modules/checkout'
 import { svgs } from '@svg'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import { displayCurrency } from '@utils/priceUtils'
@@ -45,6 +47,7 @@ export interface IProps {
 
 export const CheckoutPage = (props: IProps) => {
 	const [key, setKey] = useState('stripe')
+	const [showCouponInput, setShowCouponInput] = useState(false)
 	// onMount
 	useEffect(() => {
 		if (props.initialLoad && props.initialLoad !== 'stripe') {
@@ -69,8 +72,7 @@ export const CheckoutPage = (props: IProps) => {
 	}
 
 	return (
-		<CheckOutContainer>
-
+		<div>
 			<CartHeader>
 				<div
 					data-testid='close-btn'
@@ -83,45 +85,71 @@ export const CheckoutPage = (props: IProps) => {
 				</CartHeaderTitle>
 				<div className='spacer' style={{ width: '56px' }}/>
 			</CartHeader>
+      <CheckOutContainer>
 
-			<CartLogin/>
+        <CartLogin/>
 
-			<CartInner>
+        <CartInner>
 
-				<CheckoutTotal/>
+          <CheckoutTotal
+            showCouponInput={showCouponInput}
+            setShowCouponInput={setShowCouponInput}
+          />
 
-				<CheckoutTabs data-testid='tabs__Nav'>
-					{React.Children.toArray(props.children)
-						.map((child: any, index: number) =>
-							<CheckoutTab
-								key={index}
-								selected={child.props['data-payment'] === key}
-								paymentType={child.props['data-payment']}
-								handleClick={onTabClick}
-							/>
-						)}
-				</CheckoutTabs>
+          <CheckoutTabs data-testid='tabs__Nav'>
+            <CheckoutFormLabel>
+              SELECT PAYMENT
+            </CheckoutFormLabel>
+            <div className='inner'>
+							{React.Children.toArray(props.children)
+								.map((child: any, index: number) =>
+									<CheckoutTab
+										key={index}
+										selected={child.props['data-payment'] === key}
+										paymentType={child.props['data-payment']}
+										handleClick={onTabClick}
+									/>
+								)}
+            </div>
+          </CheckoutTabs>
 
-				<CouponInput/>
+          <CouponWrapper pose={showCouponInput ? 'show' : 'hide'}>
+            <CouponInput/>
+          </CouponWrapper>
 
-				{/*Render Matching Payment Form Content*/}
-				{!props.freeCheckout &&
-        <div data-testid='tabs__Content'>
-					{React.Children.toArray(props.children)
-						.map((child: any) => {
-								return child.props['data-payment'] === key ? child.props.children : null
-							}
-						)}
-        </div>
-				}
-				{props.freeCheckout && <FreeCheckoutForm/>}
-			</CartInner>
+					{/*Render Matching Payment Form Content*/}
+					{!props.freeCheckout &&
+          <div data-testid='tabs__Content' style={{flex: 1}}>
+						{React.Children.toArray(props.children)
+							.map((child: any) => {
+									return child.props['data-payment'] === key ? child.props.children : null
+								}
+							)}
+          </div>
+					}
+					{props.freeCheckout && <FreeCheckoutForm/>}
+        </CartInner>
 
-		</CheckOutContainer>
+      </CheckOutContainer>
+		</div>
+
 	)
 }
-const CheckOutContainer = styled.div`
+const CheckOutContainer = styled(GridFluid)`
  margin: 0 auto;
  width: 100%;
+ align-items: flex-start;
+ @supports(display: grid){
+ 	padding: 0;
+ 	grid-row-gap: 0;
+	height: 100%;
+	grid-template-rows: auto auto 1fr;
+ }
+ 
+ @media ${device.laptop} {
+ 	max-width: 1050px;
+ 	margin: 0 auto;
+ }
+ 	
 `
 export default CheckoutPage

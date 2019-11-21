@@ -7,7 +7,7 @@ import {
 	ITotal,
 	ITotalItem
 } from '@et/types/Cart'
-import { IProducts } from '@et/types/Products'
+import { IProduct, IProducts } from '@et/types/Products'
 import { calcCouponDiscount } from '@utils/priceUtils'
 import _ from 'lodash'
 
@@ -228,7 +228,7 @@ export const emptyLocalStorageCart = (): void => {
 
 /**
  * * Tested!
- * Check if any of the product ids match any ids in the coupon array
+ * Check if a product id matches any ids in the coupon array
  *
  * How it works:
  * Filter over the array and return 0 or 1 if something is found, then convert that to a boolean
@@ -239,6 +239,24 @@ export const emptyLocalStorageCart = (): void => {
  */
 export const checkForCoupon = (couponIds: number[], needleId: number): boolean => {
 	return !!couponIds.filter(id => (id === needleId)).length
+}
+
+/**
+ * Check if any of the product ids in the cart match any ids in the coupon array
+ *
+ * How it works:
+ * Filter over the array and return 0 or 1 if something is found, then convert that to a boolean
+ *
+ * @param {number[]} couponIds
+ * @param {IProducts} cartProducts
+ * @return boolean
+ */
+export const checkCartForItemMatchingCoupon = (couponIds: number[], cartProducts: ICartItemWithKey) => {
+	const productsKeys = Object.keys(cartProducts)
+	return !!productsKeys.filter(key => {
+		const product: ICartItem = cartProducts[key]
+		return checkForCoupon(couponIds, product.id)
+	}).length
 }
 
 /**

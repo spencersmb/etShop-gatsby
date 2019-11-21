@@ -144,9 +144,9 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	const toggleCheckout = () => {
 		if(checkoutOpen){
 			CheckoutSliderRef.current.style.overflowY = `hidden`
-			if(window.innerWidth > 1024){
-				CheckoutSliderRef.current.style.padding = `0 15px 0 0`
-			}
+			// if(window.innerWidth > 1024){
+			// 	CheckoutSliderRef.current.style.padding = `0 15px 0 0`
+			// }
 		}
 		setCheckoutOpen(!checkoutOpen)
 	}
@@ -178,7 +178,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 				</CartHeaderTitle>
 				<CartSubTotalHeader>
 					<span>Total</span>
-					<p>{displayCurrency(props.cart.totalPrice)}</p>
+					<p>{displayCurrency(props.cart.originalPrice)}</p>
 				</CartSubTotalHeader>
 			</CartHeader>
 
@@ -195,7 +195,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 						<h3>Order Summery</h3>
 						<CartSubTotal>
 							<span>Total</span>
-							<p>{displayCurrency(props.cart.totalPrice)}</p>
+							<p>{displayCurrency(props.cart.originalPrice)}</p>
 						</CartSubTotal>
 						<ButtonStyled
 							data-testid='checkout'
@@ -252,18 +252,6 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	)
 }
 
-const Test = styled.div`
-	height: 50px;
-	width: 50px;
-`
-const Box = posed(Test)({
-	open: {
-		background: '#000000'
-	},
-	closed: {
-		background: '#ff0300'
-	}
-})
 const ButtonStyled = styled(ButtonReg)`
 	display: flex;
 	flex-direction: row;
@@ -373,7 +361,7 @@ const CheckoutSlide = styled(CheckoutPose)`
 	position: fixed;
 	top: 0;
 	transform: translateX(-100%);
-	background: #fff;
+	background: #F7F8FC;
 	width: 100%;
 	height: 100%;
 	z-index: 3;

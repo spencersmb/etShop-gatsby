@@ -34,7 +34,14 @@ export class CheckoutTab extends Component<IProps, {}> {
 	renderPaypal = () => {
 		return (
 			<p className={'paypal'}>
-				<span className={'cc-paypal'}>{renderSvg(svgs.Paypal)}</span>
+				<input
+					type='radio'
+					id='test2'
+					name='radio-group'
+					onChange={()=>{}}
+					checked={this.props.selected}
+				/>
+				<label htmlFor='test2'>{renderSvg(svgs.Paypal)}</label>
 			</p>
 		)
 	}
@@ -42,8 +49,17 @@ export class CheckoutTab extends Component<IProps, {}> {
 	renderStripe = () => {
 		return (
 			<p className={'stripe'}>
-				<span className={'cc-svg'}>{renderSvg(svgs.CreditCard)}</span>
-				<span className={'cc-text'}>Credit Card</span>
+				<input
+					type='radio'
+					id='test1'
+					name='radio-group'
+					onChange={()=>{}}
+					checked={this.props.selected}
+				/>
+				<label htmlFor='test1'>
+					<span className={'cc-svg'}>{renderSvg(svgs.CreditCard)}</span>
+					<span className={'cc-text'}>Credit Card</span>
+				</label>
 			</p>
 		)
 	}

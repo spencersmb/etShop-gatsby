@@ -31,6 +31,7 @@ export const CartHeader = styled.div`
 	justify-content: space-between;
 	border-bottom: 1px solid ${colors.grey.i300};
 	padding: 15px;
+	grid-column: 1 / -1;
 
 	.closeCartBtn,
 	.closeCheckoutBtn{

@@ -84,8 +84,11 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 	// console.log('ccValid', ccValid)
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit(submit)}>
+		<form onSubmit={handleSubmit(submit)} style={{
+			height: '100%',
+			display: 'flex',
+			flexDirection: 'column'
+		}}>
 				{!user &&
         <GuestBillingContainer>
           <CheckoutFormLabel>
@@ -115,7 +118,6 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					/>
 				</StripeCardWrapper>
 			</form>
-		</div>
 	)
 }
 

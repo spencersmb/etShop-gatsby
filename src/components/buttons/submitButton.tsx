@@ -134,7 +134,6 @@ const SubmitBtn = styled(PosedButton)`
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100%;
 		cursor: pointer;
 		padding: ${props => props.submitting ? '24px 0px' : '25px 80px'};
 		overflow: hidden;
@@ -152,8 +151,9 @@ const ButtonWrapper = styled.div<IButtonProps>`
 	//max-width: 160px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
+	justify-content: flex-end;
+	height: 100%;
 	
 	.buttonText{
 		position: absolute;

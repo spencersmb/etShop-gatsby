@@ -1,5 +1,5 @@
 import { CheckoutApi } from '@api/checkoutApi'
-import { ICouponApiResponse, ICouponState } from '@et/types/Cart'
+import { ICartItemWithKey, ICouponApiResponse, ICouponRaw, ICouponState } from '@et/types/Cart'
 import { IState } from '@et/types/State'
 import { updateCartPrice } from '@redux/actions/cartActions'
 import {
@@ -14,6 +14,7 @@ import { CheckoutFormLabel, CouponContainer, InputSpinner } from '@styles/module
 import { FormGroup, FormInput, SvgValidation } from '@styles/modules/SignInUpModals'
 import { svgs } from '@svg'
 import { toastrOptions } from '@utils/apiUtils'
+import { checkCartForItemMatchingCoupon } from '@utils/cartUtils'
 import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
@@ -34,22 +35,27 @@ interface IReduxActions {
 interface IProps {
 	coupon: ICouponState
 	total: number
+	cartItems: ICartItemWithKey
 }
 
 export function CouponInput (props: IProps & IReduxActions) {
 	const [input, setInput] = useState('')
 	const [active, setActive] = useState(false)
 	const [pristine, setPristine] = useState(true)
-	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total } = props
+	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total, cartItems } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const prevTotal = useRef(total)
+
 	useEffect(() => {
 		prevTotal.current = total
 	})
 
 	useEffect(() => {
-		prevTotal.current = total
-	})
+		if(coupon.valid){
+			setActive(true)
+			setPristine(false)
+		}
+	}, [])
 
 	useEffect(() => {
 		let inputSubscribe: Subscription
@@ -65,13 +71,17 @@ export function CouponInput (props: IProps & IReduxActions) {
 						return 'undefined'
 					}
 					submitCoupon()
+					toastr.clean()
 					return from(CheckoutApi.checkCoupon(target))
 				})
 			)
 			inputSubscribe = inputPipe.subscribe((x: ICouponApiResponse) => {
 
-				if(x.data.coupon.error){
-					toastr.error('Invalid', x.data.coupon.error.message, toastrOptions.noHover)
+				const newCoupon: ICouponRaw = x.data.coupon
+
+				// check if valid server response but no coupon found or expired or invalid types fall into this category
+				if(newCoupon.error){
+					toastr.error('Invalid', newCoupon.error.message, toastrOptions.noHover)
 					invalidCoupon()
 					// Sync up total and and prevTotal Ref locally
 					if (total !== prevTotal.current) {
@@ -84,7 +94,16 @@ export function CouponInput (props: IProps & IReduxActions) {
 					}
 					return
 				}
-				loadCoupon(x.data.coupon)
+
+				// if there is no error check if a coupon applies to a product in the cart and add it in if found, or reject if not found
+				if(newCoupon.discount_type === 'fixed_product'){
+					const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
+					if( !isFound ){
+						toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
+					}
+				}
+
+				loadCoupon(newCoupon)
 				updatePrice()
 			})
 		}
@@ -189,7 +208,8 @@ export function CouponInput (props: IProps & IReduxActions) {
 const mapStateToProps = (state: IState): any => {
 	return {
 		coupon: state.cart.coupon,
-		total: state.cart.totalPrice
+		total: state.cart.totalPrice,
+		cartItems: state.cart.items
 	}
 }
 

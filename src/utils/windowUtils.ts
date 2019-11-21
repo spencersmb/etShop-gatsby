@@ -56,9 +56,9 @@ export const bodyScrollBar = {
 		el.style.removeProperty('top')
 		el.style.removeProperty('bottom')
 
-		if(window.innerWidth > 1024){
-			el.style.removeProperty('padding')
-		}
+		// if(window.innerWidth > 1024){
+		// 	el.style.removeProperty('padding')
+		// }
 	},
 	show: (el: HTMLElement, scrollPos: number) => {
 		el.style.width = `100%`
@@ -66,8 +66,8 @@ export const bodyScrollBar = {
 		el.style.bottom = `0`
 		el.style.position = 'fixed'
 
-		if( window.innerWidth > 1024){
-			el.style.padding = '0 15px 0 0'
-		}
+		// if( window.innerWidth > 1024){
+		// 	el.style.padding = '0 15px 0 0'
+		// }
 	}
 }

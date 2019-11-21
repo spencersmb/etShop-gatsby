@@ -11,30 +11,57 @@ export const CartInner = styled.div`
  display: flex;
  flex-direction: column;
  width: 100%;
+ grid-column: 1 / -1;
+ background: #fff;
+ position: relative;
+ z-index: 2;
+ 
+ @media ${device.tablet} {
+	flex: 1;
+	align-self: stretch;
+ }
+ 
  
  @media ${device.laptop} {
- 	max-width: 770px;
-	margin: 30px auto;
+	max-width: 658px;
+	margin: 25px auto 0;
 	width: 100%;
-	background: #fff;
-	box-shadow: ${shadowStyles.shadow4};
+	box-shadow: ${shadowStyles.shadow2};
 	border-radius: 15px;
 	overflow: hidden;
+	grid-row: 2;
+	grid-column: 2 / 10;
  }
+ 
+ 	// @media ${device.laptopL} {
+   //  grid-column: 4 /11;
+   //  margin-left: 30px;
+ 	// }
 `
 export const CheckoutTabs = styled.ul`
- margin:0;
- padding: 0;
- display: flex;
- flex-direction: row;
- width: 100%;
- 	
+	margin:0;
+	padding: 0 20px;
+	display: flex;
+	flex-direction: column;
+
+ 	.inner{
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		height: 100%;
+		align-items: center;
+		max-width: 400px;
+		
+		@media ${device.laptop} {
+		}
+			
+ 	}
 `
 
 export const PaymentTab = styled.li<{ selected: boolean }>`
 	flex: 1;
 	list-style: none;
-	background: ${props => props.selected ? '#fff' : colors.grey.i400};
+	// background: ${props => props.selected ? '#fff' : colors.grey.i400};
 	transition: .3s;
 	
 	svg{
@@ -45,24 +72,29 @@ export const PaymentTab = styled.li<{ selected: boolean }>`
 		transition: .3s;
 		fill: ${props => props.selected ? colors.teal.i500 : colors.secondary.text}
 	}
+	
+	p{
+		padding: 0 0 15px;
+	}
 		
 	// CreditCard
 	.stripe{
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: center;
 		margin: 0;
-		padding: 25px 15px;
 	}
 	.paypal{
 		flex-direction: column;
-		align-items: center;
-		justify-content: center;
 		margin: 0;
 		display: flex;
-		padding: 25px 15px;
 		height: 100%;
+		padding-left: 15px;
+		justify-content: center;
+		
+		svg{
+			max-width: 80px;
+		}
 	}
 	.cc-paypal{
 		width: 63px;
@@ -86,6 +118,68 @@ export const PaymentTab = styled.li<{ selected: boolean }>`
 			cursor:  ${props => props.selected ? 'default' : 'pointer'};			
 		}
 	}
+	
+	label{
+		display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin:0;
+    max-height: 29px;
+	}
+	
+	[type="radio"]:checked,
+	[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 31px;
+    cursor: pointer;
+    line-height: 20px;
+    color: #666;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+		transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border: 2px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+[type="radio"]:checked + label:before{
+	border: 2px solid #F87DA9;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #F87DA9;
+    position: absolute;
+    top: 50%;
+		transform: translateY(-50%);
+		left: 5px;
+    border-radius: 100%;
+    transition: all 0.2s ease;
+    transform-origin: top;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0) translateY(-50%);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    transform: scale(1) translateY(-50%);
+}
 		
 `
 
@@ -94,23 +188,32 @@ export const OrderSummery = styled.div`
 	flex-direction: column;
 	width: 100%;
 	margin-top: 20px;
-	align-items: center;
+	padding: 0 20px;
+	position: relative;
 	
 	h3{
-		text-align: center;
+		text-align: left;
 		${Sentinel.black};
-		font-size: 18px;
+		font-size: 24px;
 		color: ${colors.grey.i800};
+		margin-bottom: 0;
 	}
+	
+	@media ${device.tablet} {
+		margin: 30px 0 0;
+		h3{
+			margin-bottom: 10px;
+		}
+	}
+		
 `
 
-export const TotalSummery = styled.div`
+export const TotalSummery = styled.div<{hasDiscount: boolean}>`
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	width: 100%;
 	position: relative;
-	align-items: center;
+	align-items: left;
 	
 	.orderTotal{
 		&__wrapper{
@@ -119,31 +222,38 @@ export const TotalSummery = styled.div`
 		}
 		&__name{
 			text-align: center;
-			color: ${colors.grey.i600};
-			display: none;
+			padding-top: 10px;
 			font-size: 16px;
+			line-height: 16px;
+			padding-right: 15px;
+			text-transform: uppercase;
+			font-style: normal;
+			font-weight: 400;
+			font-family: 'Fira Sans',sans-serif;
+			justify-self: flex-start;
 		}
 		&__numbers{
 			${Sentinel.semiboldItalic};
-			font-size: 42px;
-			line-height: 42px;
+			font-size: 52px;
+			line-height: 52px;
 			color: ${colors.grey.i800};
-			text-align: center;
-			margin-bottom: 20px;
+			text-align: left;
+			margin-bottom: 0;
 			position: relative;
+			display: flex;
+			flex-direction: row;
 		}
 	}
 	
 	@media ${device.tablet} {
+		flex-direction: ${props => props.hasDiscount ? 'row-reverse' : 'row'};
 		.orderTotal{
 				&__wrapper{
 					position: relative;
-					align-items: center;
+					margin-right: 20px;
 				}
 				&__name{
-					display: flex;
-					position: absolute;
-					left: -50px;
+					
 				}
 				&__numbers{
 					
@@ -169,9 +279,17 @@ const CouponBtnPosed = posed.div({
 })
 export const CouponButtonWrapper = styled(CouponBtnPosed)`
 	overflow: hidden;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
+	
+	@media ${device.tablet} {
+		display: flex;
+		position: absolute;
+		top:0;
+		right: 40px;  
+	}
+		
 		
 `
 export const CouponButton = styled.div`
@@ -221,7 +339,12 @@ export const CouponWrapper = styled(CouponContainerPosed)`
 	overflow: hidden;
 	position: relative;
 	width: 100%;
+	
+	@media (max-width: 767px){
+		height: auto !important;
+	}
 
+	
 `
 export const CouponContainer = styled.div`
 	//background: ${colors.grey.i200};
@@ -262,15 +385,41 @@ export const InputSpinner = styled.div<{ submitting: boolean, spinnerColor: stri
 export const DiscountSummary = styled.div`
 	display: flex;
 	flex-direction: column;
-	min-width: 200px;
-	margin: .5rem auto;
+	min-width: 240px;
+	margin: .5rem auto .5rem 0;
+	
+	@media ${device.tablet} {
+		min-width: 0;
+	}
+		
 `
 
 export const CartLoginAd = styled.div`
 	background: #46d0d1;
 	display: flex;
 	flex-direction: row;
-	overflow: hidden;
+	position: relative;
+	z-index: 1;
+	grid-column: 1 / -1;
+	
+	@media ${device.laptop} {
+		grid-row: 2;
+		grid-column: 9 /14;
+		border-radius: 15px;
+		flex-direction: column;
+		box-shadow: ${shadowStyles.shadow2};
+		max-width: 343px;
+		margin: 25px auto 0 0;
+		overflow: hidden;
+ 	}
+ 	
+ 	@media ${device.laptop} {
+		grid-column: 10 /14;
+ 	} 	
+ 	// @media ${device.laptopL} {
+		// grid-column: 11 /14;
+		// margin-right: -30px;
+ 	// }
 `
 export const LoginAdLeft = styled.div`
 	display: none;
@@ -330,12 +479,21 @@ export const LoginAdLeft = styled.div`
 			}
 		}
 	}
+	
+	@media ${device.laptop} {
+		span{
+		 &:nth-child(1){
+		 	margin-top: 15px;
+		 }
+		}
+	}
+		
 `
 export const LoginRight = styled.div`
 	display: flex;
 	flex-direction: column;
 	flex: 1;
-	padding: 20px 30px;
+	padding: 10px 30px 15px;
 	h5, p{
 		color: white;
 	}
@@ -349,7 +507,10 @@ export const LoginRight = styled.div`
 	@media ${device.tablet} {
 		flex: 1 0 50%;		
 	}
-		
+	
+	@media ${device.laptop} {
+		margin-top: 80px;
+	}
 `
 
 export const LoginAdButtons = styled.div`
@@ -373,6 +534,7 @@ export const GuestBillingContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 0 20px;
+	flex:1;
 `
 
 export const CheckoutFormLabel = styled.div`
@@ -388,6 +550,8 @@ export const StripeCardWrapper = styled.div`
 	flex-direction: column;
 	padding: 0 20px;
 	margin-bottom: 20px;
+	height: 100%;
+	justify-content: flex-start;
 `
 
 export const CreditCardFormWrapper = styled.div`
@@ -395,6 +559,9 @@ export const CreditCardFormWrapper = styled.div`
 `
 export const PaypalFormContainer = styled.div`
 	padding-bottom: 20px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 `
 export const PaypalSpinner = styled.div`
 	position:relative;

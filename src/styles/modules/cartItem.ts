@@ -84,6 +84,8 @@ export const CartItemDetail = styled.div<{ total?: boolean }>`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
 	
 	${props => props.total ? `
 		flex: 1;
@@ -95,11 +97,13 @@ export const CartItemDetail = styled.div<{ total?: boolean }>`
 		color: ${colors.grey.i600};
 		margin-right: 5px;
 		font-size: 12px;
+		line-height: 12px;
 		font-weight: 500;
 	}
 	p{
 		${Sentinel.semiboldItalic};
 		font-size: 16px;
+		line-height: 16px;
 		color: ${colors.grey.i800};
 		margin: 0;
 	}
@@ -111,6 +115,12 @@ export const CartItemDetail = styled.div<{ total?: boolean }>`
 	.totalLabel{
 		color: ${colors.grey.i800}; 
 	}
+	
+		@media ${device.tablet} {
+			span{
+				margin-right: 20px;
+			}
+		}
 `
 
 export const CartItemDiscount = styled(CartItemDetail)`
