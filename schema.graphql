@@ -461,7 +461,7 @@ type Query {
     site(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, host: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, pathPrefix: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, port: IntQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput): Site
     sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, componentPath: StringQueryOperatorInput, context: SitePageContextFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, isCreatedByStatefulCreatePages: BooleanQueryOperatorInput, matchPath: StringQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput, pluginCreatorId: StringQueryOperatorInput): SitePage
     sitePlugin(browserAPIs: StringQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, name: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, packageJson: SitePluginPackageJsonFilterInput, parent: NodeFilterInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: SitePluginPluginOptionsFilterInput, resolve: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, version: StringQueryOperatorInput): SitePlugin
-    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, intro_title: StringQueryOperatorInput, license: wcProductLicenseFilterInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
+    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, intro_title: StringQueryOperatorInput, license: wcProductLicenseFilterInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, product_licenses: wcProductProduct_licensesFilterListInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
 }
 
 type Site implements Node {
@@ -721,6 +721,7 @@ type wcProduct implements Node {
     parent: Node
     price: String
     product_id: Int
+    product_licenses: [wcProductProduct_licenses]
     pwyw: Boolean
     regular_price: String
     related_products: [String]
@@ -837,6 +838,24 @@ type wcProductLicenseExtendedItem {
 type wcProductLicenseStandardItem {
     desc: String
     slug: String
+}
+
+type wcProductProduct_licenses {
+    item: wcProductProduct_licensesItem
+    type: wcProductProduct_licensesType
+}
+
+type wcProductProduct_licensesItem {
+    id: Int
+    name: String
+    onSale: Boolean
+    price: String
+    slug: String
+}
+
+type wcProductProduct_licensesType {
+    name: String
+    value: String
 }
 
 type wcProductSeo {
@@ -2035,6 +2054,14 @@ enum wcProductFieldsEnum {
     parent___parent___parent___id
     price
     product_id
+    product_licenses
+    product_licenses___item___id
+    product_licenses___item___name
+    product_licenses___item___onSale
+    product_licenses___item___price
+    product_licenses___item___slug
+    product_licenses___type___name
+    product_licenses___type___value
     pwyw
     regular_price
     related_products
@@ -2551,6 +2578,7 @@ input wcProductFilterInput {
     parent: NodeFilterInput
     price: StringQueryOperatorInput
     product_id: IntQueryOperatorInput
+    product_licenses: wcProductProduct_licensesFilterListInput
     pwyw: BooleanQueryOperatorInput
     regular_price: StringQueryOperatorInput
     related_products: StringQueryOperatorInput
@@ -2623,6 +2651,28 @@ input wcProductLicenseFilterInput {
 input wcProductLicenseStandardItemFilterInput {
     desc: StringQueryOperatorInput
     slug: StringQueryOperatorInput
+}
+
+input wcProductProduct_licensesFilterInput {
+    item: wcProductProduct_licensesItemFilterInput
+    type: wcProductProduct_licensesTypeFilterInput
+}
+
+input wcProductProduct_licensesFilterListInput {
+    elemMatch: wcProductProduct_licensesFilterInput
+}
+
+input wcProductProduct_licensesItemFilterInput {
+    id: IntQueryOperatorInput
+    name: StringQueryOperatorInput
+    onSale: BooleanQueryOperatorInput
+    price: StringQueryOperatorInput
+    slug: StringQueryOperatorInput
+}
+
+input wcProductProduct_licensesTypeFilterInput {
+    name: StringQueryOperatorInput
+    value: StringQueryOperatorInput
 }
 
 input wcProductSeoFilterInput {

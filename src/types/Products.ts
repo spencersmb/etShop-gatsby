@@ -98,6 +98,19 @@ export interface IProductLicenseType {
 		desc: string
 	}
 }
+export interface ILicenseType {
+	type: {
+		value: string,
+		name: string
+	},
+	item: {
+		id: string,
+		name: string,
+		slug: string,
+		price: string,
+		onSale: boolean
+	}
+}
 export interface IProductFeaturedImage {
 	alt: string
 	localFile: {
@@ -156,6 +169,7 @@ export interface IProduct {
 	tags: Itag [],
 	images: Image[],
 	license: IProductLicenseType,
+	product_licenses: ILicenseType[]
 	features: IFeatureItem[]
 	related_products: string[] | null
 	pwyw: boolean,

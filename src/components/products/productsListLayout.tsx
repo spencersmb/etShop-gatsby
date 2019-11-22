@@ -41,8 +41,10 @@ class ProductsListLayout extends Component<IProps> {
               categories{
               	slug
               }
-              license{
-              	type
+              product_licenses{
+              	type{
+              		name
+              	}
               }
               featuredImage{
 								alt
@@ -62,7 +64,7 @@ class ProductsListLayout extends Component<IProps> {
     `}
 				render={data => {
 					const filter = data.allWcProduct.edges
-						.filter(({ node }: { node: IProduct }) => node.license.type === 'standard')
+						.filter(({ node }: { node: IProduct }) => node.product_licenses)
 						.filter(({ node }: { node: IProduct }) => {
 
 							// check for view all selected

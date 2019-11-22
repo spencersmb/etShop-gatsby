@@ -24,7 +24,8 @@ export type IAddProductAction = (
 	slug: string,
 	qty: number,
 	price: string,
-	bulkDiscount: boolean
+	bulkDiscount: boolean,
+	selectedLicense: string
 ) => any
 export const addProductToCart: IAddProductAction =
 	(
@@ -33,7 +34,8 @@ export const addProductToCart: IAddProductAction =
 		slug: string,
 		qty: number,
 		price: string,
-		bulkDiscount: boolean
+		bulkDiscount: boolean,
+		selectedLicense: string
 	) =>
 		(dispatch: Dispatch<Action>, getState: () => IState) => {
 
@@ -43,7 +45,8 @@ export const addProductToCart: IAddProductAction =
 					payload: {
 						item: {
 							[slug]: {
-								extended: product.license.type !== 'standard',
+								licenseType: selectedLicense,
+								// extended: product.license.type !== 'standard',
 								id: product.product_id,
 								name: product.name,
 								price,

@@ -68,8 +68,8 @@ export const SignInForm = (props: any) => {
 						up! <Arrow>{renderSvg(svgs.ChevronLeft)}</Arrow></p>
 				</FormHeader1>
 				<form onSubmit={handleSubmit(handleUserSubmit)}>
-					<FormGroup data-testid={'formGroup'}>
-						<FormInput>
+					<FormGroup data-testid={'formGroup'} column={true}>
+						<FormInput fullWidth={true}>
 							<ReduxFieldExt
 								name='signinEmail'
 								type='email'
@@ -80,7 +80,7 @@ export const SignInForm = (props: any) => {
 								svg={svgs.CreditCard}
 							/>
 						</FormInput>
-						<FormInput>
+						<FormInput fullWidth={true}>
 							<ReduxFieldExt
 								name='signinPassword'
 								type='password'

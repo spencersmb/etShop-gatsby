@@ -121,29 +121,31 @@ export const FormHeader1 = styled.div`
 		}
 	}
 `
-export const FormGroup = styled.div`
+export const FormGroup = styled.div<{column?: boolean}>`
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 10px;
 	
 	@media ${device.laptop} {
-		flex-direction: row;
-		flex-wrap: wrap;
+		flex-direction: ${props => props.column ? 'column' : 'row'};
+		flex-wrap: ${props => props.column ? 'no-wrap' : 'wrap'};
 	}
 `
-export const FormInput = styled.div<{ removeMargin?: boolean }>`
+export const FormInput = styled.div<{ removeMargin?: boolean, fullWidth?: boolean }>`
 	position: relative;
 	margin-top: 16px;
 	${props => props.removeMargin ? `margin-bottom: 0;` : `margin-bottom: 26px;`}
 	
 	@media ${device.laptop} {
-		flex: 1 0 50%;
-		&:nth-child(1){
-			padding-right: 10px;
-		}
-		&:nth-child(2){
-			padding-left: 10px;
-		}
+		${props => props.fullWidth ? '' : `
+			flex: 1 0 50%;
+			&:nth-child(1){
+				padding-right: 10px;
+			}
+			&:nth-child(2){
+				padding-left: 10px;
+			}
+		`}
 	}
 		
 

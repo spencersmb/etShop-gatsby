@@ -3,7 +3,7 @@ import FontPreviewer from '@components/fontPreviewer/fontPreview'
 import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
-import LicenseSelect from '@components/forms/inputs/productSelect'
+import LicenseSelect from '@components/products/modules/licenseSelect'
 import Layout from '@components/layout'
 import CheckoutNavBar from '@components/products/modules/checkoutNavBar'
 import FeaturesList from '@components/products/modules/features/FeaturesList'
@@ -70,6 +70,7 @@ interface INewState {
 	price?: string,
 	payWhatYouWant?: boolean
 }
+export type ISelectProduct = ({license, slug}: {license: string, slug: string}) => void
 
 // TODO: Dont show related if none are present,
 // switch off of has ext license data point instead if needed
@@ -85,7 +86,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		price: product.price
 	})
 	const standardItem = useRef(props.product)
-	const extendedItem = useRef(product.license.extendedItem ? products[product.license.extendedItem.slug] : null)
 
 	// dispatch effect after cart is loaded
 	// check for product in cart on load
@@ -96,24 +96,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		const productFound: boolean = checkCartForProduct(cart, product.slug).length > 0
 
 		if (productFound && !state.inCart) {
-
-			// 1. Get the item in the cart
-			const cartItem: ICartItem = cart.items[product.slug]
-
-			// 2. Set the correct item
-			const selectedProduct = cartItem.extended && extendedItem.current ? extendedItem.current : standardItem.current
-			const bulkDiscountCalc: boolean = cartItem.qty >= CartPricingConfig.minQuantity
-
-			// 3. Set state
-			setState({
-				selectedProduct,
-				selectedLicense: cartItem.extended ? 'extended' : 'standard',
-				numberOfLicenses: cartItem.qty,
-				inCart: true,
-				bulkDiscount: bulkDiscountCalc,
-				payWhatYouWant: selectedProduct.pwyw,
-				price: cartItem.price
-			})
+			updatePage()
 		}
 
 	}, [cart.loaded])
@@ -139,23 +122,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				// check if the items are equal
 				if (!_.isEqual(previousCart.current.items[product.slug], cart.items[product.slug])) {
 					// product is in cart and may have changed
-					// 1. Get the item in the cart
-					const cartItem: ICartItem = cart.items[product.slug]
-
-					// 2. Set the correct item
-					const selectedProduct = cartItem.extended && extendedItem.current ? extendedItem.current : standardItem.current
-					const bulkDiscountCalc: boolean = cartItem.qty >= CartPricingConfig.minQuantity
-
-					// 3. Set state
-					setState({
-						selectedProduct,
-						selectedLicense: cartItem.extended ? 'extended' : 'standard',
-						numberOfLicenses: cartItem.qty,
-						inCart: true,
-						bulkDiscount: bulkDiscountCalc,
-						payWhatYouWant: selectedProduct.pwyw,
-						price: cartItem.price
-					})
+					updatePage()
 				}
 
 			}
@@ -167,10 +134,28 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		previousCart.current = cart
 	})
 
-	function selectChange (license: string) {
-		console.log('state.bulkDiscount', state.bulkDiscount)
+	function updatePage(){
+		// 1. Get the item in the cart
+		const cartItem: ICartItem = cart.items[product.slug]
 
-		if (license === 'standard') {
+		// 2. Set the correct item
+		const selectedProduct = cartItem.extended ? products[cartItem.slug] : standardItem.current
+		const bulkDiscountCalc: boolean = cartItem.qty >= CartPricingConfig.minQuantity
+
+		// 3. Set state
+		setState({
+			selectedProduct,
+			selectedLicense: cartItem.extended ? 'extended' : 'standard',
+			numberOfLicenses: cartItem.qty,
+			inCart: true,
+			bulkDiscount: bulkDiscountCalc,
+			payWhatYouWant: selectedProduct.pwyw,
+			price: cartItem.price
+		})
+	}
+
+	function onSelectChange({license, slug}: {license: string, slug: string}){
+		if(license === 'standard'){
 			setState({
 				selectedLicense: license,
 				selectedProduct: standardItem.current,
@@ -178,13 +163,16 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					? standardItem.current.sale_price
 					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price, state.numberOfLicenses)
 			})
-		} else if (license === 'extended' && extendedItem.current) {
+		}
+
+		if(license === 'extended'){
+			const extendedProduct = products[slug]
 			setState({
 				selectedLicense: license,
-				selectedProduct: extendedItem.current,
-				price: extendedItem.current.on_sale
-					? extendedItem.current.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, extendedItem.current.price, state.numberOfLicenses)
+				selectedProduct: extendedProduct,
+				price: extendedProduct.on_sale
+					? extendedProduct.sale_price
+					: calcBulkPriceDiscount(state.bulkDiscount, extendedProduct.price, state.numberOfLicenses)
 			})
 		}
 	}
@@ -220,15 +208,14 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	}
 
-	const { name, sub_header, license: { hasExtendedLicense }, images, intro_title, intro_description, details, font_preview } = props.product
+	const { name, sub_header, images } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
 
 	const [ref, inView, entry] = useInView({
 		/* Optional options */
-
-
 		threshold: 0
 	})
+
 	return (
 		<Layout productPage={true}>
 			<ProductWrapper>
@@ -262,15 +249,11 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						<LabelHeader>
 							Choose License:
 						</LabelHeader>
+
 						{React.useMemo(() => (
 							<LicenseSelect
-								showModal={showModalAction}
-								license={standardItem.current.license}
-								standardLicPrice={standardItem.current.price}
-								extendedLicPrice={extendedItem.current ? extendedItem.current.price : ''}
-								onChange={selectChange}
-								selectedLicense={state.selectedLicense}
-								inCart={state.inCart}
+								onChange={onSelectChange}
+								licenses={standardItem.current.product_licenses}
 								bulkDiscount={bulkDiscount}
 								licenceQty={typeof numberOfLicenses === 'number' ? numberOfLicenses : 0}
 							/>
@@ -314,6 +297,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								selectedProduct={state.selectedProduct}
 								licenseQty={state.numberOfLicenses}
 								price={state.price}
+								selectedLicense={state.selectedLicense}
 								total={calcTotalQtyPrice(state.price, numberOfLicenses)}
 							/>), [
 							state.inCart,
@@ -321,22 +305,19 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 							state.numberOfLicenses
 						])}
 					</BuyNowWrapper>
-
-					{/*<p>has extended license: <span*/}
-					{/*style={{ color: hasExtendedLicense ? 'green' : 'blue' }}>{JSON.stringify(hasExtendedLicense)}</span>*/}
-					{/*</p>*/}
-
-
 				</SliderGrid>
+
 				{standardItem.current.font_preview.enabled &&
         <FontPreviewer styles={standardItem.current.font_preview.styles}/>}
+
 				<DescriptionWrapper>
 					<ProductDescription
 						intro_title={standardItem.current.intro_title}
 						intro_description={standardItem.current.intro_description}
 					/>
 					{React.useMemo(() => (<SideBar
-						onChange={selectChange}
+						onChange={onSelectChange}
+						licenses={standardItem.current.product_licenses}
 						isExtLicenseSelected={state.selectedLicense === 'extended'}
 						details={standardItem.current.details}
 						fontPreview={standardItem.current.font_preview.enabled}
@@ -347,13 +328,16 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 				{standardItem.current.related_products && standardItem.current.related_products.length > 0 &&
         <RelatedProducts products={standardItem.current.related_products}/>}
+
 			</ProductWrapper>
+
 			{Width > 767 && React.useMemo(() => (
 				<CheckoutNavBar
 					featuredImage={product.featuredImage}
 					handleDialChange={onDialChange}
 					handleAddToCartState={() => (setState({ inCart: true }))}
-					handleLicenseChange={selectChange}
+					handleLicenseChange={onSelectChange}
+					licenses={standardItem.current.product_licenses}
 					payWhatYouWant={payWhatYouWant}
 					onPwywChange={onPwywChange}
 					inView={inView}
@@ -372,6 +356,18 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 	)
 
 }
+
+const mapStateToProps = (state: IState) => ({
+	cart: state.cart,
+	products: state.products
+})
+const mapDispatchToProps = (dispatch: ReduxDispatch<Action>) => {
+	return {
+		showModalAction: bindActionCreators(showModal, dispatch)
+	}
+}
+export default connect<IPropsPrivate, IPropsActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(ProductLayout)
+
 const productRowGap = styled.div`
 	margin-bottom: 15px;
 `
@@ -587,13 +583,4 @@ const BuyNowWrapper = styled.div`
 		text-align: right;
 	}
 `
-const mapStateToProps = (state: IState) => ({
-	cart: state.cart,
-	products: state.products
-})
-const mapDispatchToProps = (dispatch: ReduxDispatch<Action>) => {
-	return {
-		showModalAction: bindActionCreators(showModal, dispatch)
-	}
-}
-export default connect<IPropsPrivate, IPropsActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(ProductLayout)
+

@@ -1,32 +1,28 @@
 import { CartPricingConfig } from '@components/cart/cartStatics'
-import NumberDial from '@components/forms/inputs/numberDial'
+import { ICartState, IChangeLicenseData, IChangeQty, LicenseEnum } from '@et/types/Cart'
+import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
+import { removeProductFromCart, updateCartItemQty as updateCartItem } from '@redux/actions/cartActions'
 import {
-	removeProductFromCart,
-	updateCartItemQty as updateCartItem
-} from '@redux/actions/cartActions'
-import { colors } from '@styles/global/colors'
-import {
+	CartItemBorder,
 	CartItemContainer,
-	CartItemDetails,
-	CartItemLicense,
-	CartItemDetail,
-	CartItemTitle,
-	CartItemDiscount,
-	VolumeDiscountPin,
-	CartItemHeader,
 	CartItemContent,
-	CartItemBorder, CartItemDashedBorder, RemoveItemMobile, RemoveItemDesktop
+	CartItemDashedBorder,
+	CartItemDetail,
+	CartItemDetails,
+	CartItemDiscount,
+	CartItemHeader,
+	CartItemLicense,
+	CartItemTitle,
+	RemoveItemDesktop,
+	RemoveItemMobile,
+	VolumeDiscountPin
 } from '@styles/modules/cartItem'
-import { svgs } from '@svg'
 import { checkForCoupon } from '@utils/cartUtils'
-import { calcCouponDiscount, displayCurrency, displayPercent, getPrice } from '@utils/priceUtils'
-import { renderSvg } from '@utils/styleUtils'
-import React, { useEffect, useRef, useState } from 'react'
-import { IProduct, IProducts } from '@et/types/Products'
-import { ICartState, IChangeLicenseData, IChangeQty } from '@et/types/Cart'
-import { Action, bindActionCreators, Dispatch } from 'redux'
+import { calcCouponDiscount, displayCurrency, displayPercent } from '@utils/priceUtils'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { Action, bindActionCreators, Dispatch } from 'redux'
 
 // import styled from 'styled-components'
 
@@ -94,21 +90,30 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	}
 
 	function showLicenseType () {
-		if (cart.items[cartIndex].extended) {
-			return (
-				<CartItemLicense
-					type={'extended'}>
-					Extended License
-				</CartItemLicense>
-			)
-		}
 
-		return (
-			<CartItemLicense
-				type={'standard'}>
-				Standard License
-			</CartItemLicense>
-		)
+		switch (cart.items[cartIndex].licenseType) {
+			case LicenseEnum.standard:
+				return(
+					<CartItemLicense
+						type={'standard'}>
+						Standard License
+					</CartItemLicense>
+				)
+			case LicenseEnum.extended:
+				return (
+					<CartItemLicense
+						type={'extended'}>
+						Extended License
+					</CartItemLicense>
+				)
+			case LicenseEnum.server:
+				return (
+					<CartItemLicense
+						type={'server'}>
+						Server License
+					</CartItemLicense>
+				)
+		}
 	}
 
 	function displaySavings () {

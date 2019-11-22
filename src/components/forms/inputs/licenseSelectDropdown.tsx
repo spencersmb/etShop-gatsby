@@ -1,32 +1,33 @@
-import React, { ChangeEvent, ReactEventHandler } from 'react'
+import { ISelectProduct } from '@components/products/productLayout'
+import { ILicenseType } from '@et/types/Products'
+import React, { ChangeEvent } from 'react'
 
 interface IProps {
-	hasExtendedLicesnse: boolean
-	change: any
+	licenses: ILicenseType[]
+	change: ISelectProduct
 	selected: string
 }
 
 const LicenseSelectDropdown = (props: IProps) => {
-	const { hasExtendedLicesnse, change, selected } = props
+	const { change, selected, licenses } = props
 
 	function handleChange (e: ChangeEvent<HTMLSelectElement>) {
-		change(e.target.value)
+		change({
+			license: licenses[e.target.selectedIndex].type.value,
+			slug: licenses[e.target.selectedIndex].item.slug
+		})
 	}
 
-	if (hasExtendedLicesnse) {
-		return (
-			<select onChange={handleChange} value={selected} data-testid={'license_select'}>
-				<option value='standard'>Standard License</option>
-				<option value='extended'>Extended License</option>
-			</select>
-		)
-	} else {
-		return (
-			<select>
-				<option value='standard'>Standard License</option>
-			</select>
-		)
-	}
+	return (
+		<select onChange={handleChange} value={selected} data-testid={'license_select'}>
+			{licenses && licenses.map((license, index) => (
+				<option value={license.type.value} key={license.type.value}>
+					{license.type.name} License
+				</option>
+			))}
+		</select>
+	)
+
 }
 
 export default LicenseSelectDropdown

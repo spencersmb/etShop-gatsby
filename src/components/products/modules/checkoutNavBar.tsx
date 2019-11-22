@@ -1,7 +1,8 @@
 import LicenseSelectDropdown from '@components/forms/inputs/licenseSelectDropdown'
 import NumberDial from '@components/forms/inputs/numberDial'
 import AddToCartBtn from '@components/products/addToCartBtn'
-import { IProduct, IProductFeaturedImage } from '@et/types/Products'
+import { ISelectProduct } from '@components/products/productLayout'
+import { ILicenseType, IProduct, IProductFeaturedImage } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -25,17 +26,18 @@ interface IProps {
 	numberOfLicenses: number | string,
 	inCart: boolean,
 	handleAddToCartState: () => void
-	handleLicenseChange: (license: string) => void
+	handleLicenseChange: ISelectProduct
 	handleDialChange: (total: number | string) => void
 	price: string
 	payWhatYouWant: boolean
 	bulkDiscount: boolean
 	onPwywChange: (total: number | string) => void
-	featuredImage: IProductFeaturedImage
+	featuredImage: IProductFeaturedImage,
+	licenses: ILicenseType[]
 }
 
 const CheckoutNavBar = (props: IProps) => {
-	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant, featuredImage, bulkDiscount } = props
+	const { inView, price, title, total, selectedLicense, numberOfLicenses, inCart, slug, handleDialChange, handleLicenseChange, handleAddToCartState, onPwywChange, selectedProduct, payWhatYouWant, featuredImage, bulkDiscount, licenses } = props
 	const mounted = useRef(false)
 
 	// const windowPosRef = useRef(inView)
@@ -96,7 +98,7 @@ const CheckoutNavBar = (props: IProps) => {
 					</Title>
 					<SelectBtn selectedLic={selectedLicense}>
 						<LicenseSelectDropdown
-							hasExtendedLicesnse={selectedProduct.license.hasExtendedLicense}
+							licenses={licenses}
 							change={handleLicenseChange}
 							selected={selectedLicense}/>
 						<span>
@@ -272,7 +274,8 @@ const CheckoutNavContainer = styled.div<{ showNav: boolean }>`
 	background: #fff;
 	box-shadow: 0px -10px 60px rgba(0,0,0,0.13);
 	transform:  ${props => props.showNav ? 'translateY(0)' : 'translateY(100px)'};
-	display: none;
+	//display: none;
+	display: block;
 	@media ${device.tablet} {
 		display: block;
 	}

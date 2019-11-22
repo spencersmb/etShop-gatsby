@@ -39,9 +39,13 @@ export interface ICartState {
 		[id: string]: ICartItem
 	}
 }
-
+export enum LicenseEnum {
+	standard ='standard',
+	extended = 'extended',
+	server = 'server'
+}
 export interface ICartItem {
-	extended: boolean
+	licenseType: LicenseEnum
 	id: number,
 	name: string,
 	price: string,

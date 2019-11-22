@@ -14,9 +14,6 @@ interface IlayoutProps {
 }
 
 const Layout = ({ children, productPage = false }: IlayoutProps) => {
-	useEffect(() => {
-
-	}, [])
 
   return (
 		<StaticQuery

@@ -300,17 +300,18 @@ export const productQuery = graphql`
 			categories{
 				name
 			}
-			license{
-				type
-				hasExtendedLicense
-				standardItem{
-					slug
-					desc
-				}
-				extendedItem{
-					slug
-					desc
-				}
+			product_licenses{
+					item{
+							id
+							name
+							onSale
+							price
+							slug
+					}
+					type{
+							name
+							value
+					}
 			}
 			features{
 				description

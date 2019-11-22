@@ -123,7 +123,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 
 		setTimeout(() => {
 			props.closeCart()
-		}, 500)
+		}, 1000)
 
 	}
 

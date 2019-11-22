@@ -1,4 +1,5 @@
-import { IProductDetails } from '@et/types/Products'
+import { ISelectProduct } from '@components/products/productLayout'
+import { ILicenseType, IProductDetails } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -12,7 +13,8 @@ interface IProps {
 	details: IProductDetails
 	fontPreview: boolean,
 	isExtLicenseSelected: boolean,
-	onChange: (license: string) => void
+	onChange: ISelectProduct,
+	licenses: ILicenseType[]
 }
 
 function updatePills (fileTypes: string[], isExtLicenseSelected: boolean) {
@@ -88,6 +90,7 @@ const SideBar = ({
 										 },
 									 fontPreview = false,
 									 onChange,
+									 licenses,
 									 isExtLicenseSelected
 								 }: IProps) => {
 	if (!details) {
@@ -97,7 +100,7 @@ const SideBar = ({
 	const updateFileTypes = updatePills(file_types, isExtLicenseSelected)
 
 	function changeLicense () {
-		onChange('extended')
+		onChange({license:'extended', slug:licenses[1].item.slug})
 	}
 
 	return (
