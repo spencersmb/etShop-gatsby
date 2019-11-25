@@ -1,7 +1,9 @@
+import { LicenseEnum } from '@et/types/Cart'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
+import { getLicenseColor } from '@utils/styleUtils'
 import styled from 'styled-components'
 
 export const CartItemContainer = styled.div`
@@ -49,9 +51,9 @@ export const CartItemTitle = styled.div`
 	}
 		
 `
-export const CartItemLicense = styled.div<{ type: string }>`
+export const CartItemLicense = styled.div<{ type: LicenseEnum }>`
 	text-align: center;
-	color: ${props => props.type === 'standard' ? colors.teal.i500 : colors.purple.i500};
+	color: ${props => getLicenseColor(props.type)};
 	font-size: 14px;
 	font-weight: 600;
 	
@@ -94,7 +96,7 @@ export const CartItemDetail = styled.div<{ total?: boolean }>`
 	
 	span{
 		text-transform: uppercase;
-		color: ${colors.grey.i600};
+		color: ${colors.grey.i800};
 		margin-right: 5px;
 		font-size: 12px;
 		line-height: 12px;
@@ -148,7 +150,7 @@ export const RemoveItemMobile = styled.div`
 	display: flex;
 	justify-content: center;
 	button{
-		color: ${colors.red.warning};
+		color: ${colors.grey.i800};
 		background: none;
 		outline: none;
 		border: none;

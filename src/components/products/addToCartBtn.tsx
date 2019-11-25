@@ -100,7 +100,7 @@ align-items: center;
 justify-content: flex-end;
 `
 const Total = styled.div`
-	${Sentinel.italic};
+	${Sentinel.semiboldItalic};
 	margin-right: 15px;
 	font-size: 21px;
 	color: ${colors.primary.text};

@@ -1,4 +1,5 @@
 import { device } from '@styles/global/breakpoints'
+import { radioClass } from '@styles/global/inputs'
 import { createGlobalStyle } from 'styled-components'
 import cssReset from './cssReset'
 import cssFlickity from '../modules/flickity'
@@ -51,5 +52,6 @@ export default createGlobalStyle`
   
   ${toastr}
   ${rangeSlider}
+  ${radioClass}
   
 `

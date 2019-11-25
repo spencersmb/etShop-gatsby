@@ -12,15 +12,15 @@ import styled from 'styled-components'
 interface IProps {
 	details: IProductDetails
 	fontPreview: boolean,
-	isExtLicenseSelected: boolean,
+	isStandardLicense: boolean,
 	onChange: ISelectProduct,
 	licenses: ILicenseType[]
 }
 
-function updatePills (fileTypes: string[], isExtLicenseSelected: boolean) {
+function updatePills (fileTypes: string[], isStandardLicense: boolean) {
 	const woffFilteredTypes = fileTypes.filter(type => (type === 'woff' || type === 'woff2'))
 
-	if (woffFilteredTypes.length > 0 && !isExtLicenseSelected) {
+	if (woffFilteredTypes.length > 0 && isStandardLicense) {
 		return fileTypes.filter(type => (type !== 'woff' && type !== 'woff2'))
 	} else {
 		return fileTypes
@@ -91,13 +91,13 @@ const SideBar = ({
 									 fontPreview = false,
 									 onChange,
 									 licenses,
-									 isExtLicenseSelected
+									 isStandardLicense
 								 }: IProps) => {
 	if (!details) {
 		return null
 	}
 	const { file_types, dpi, file_size, programs } = details
-	const updateFileTypes = updatePills(file_types, isExtLicenseSelected)
+	const updateFileTypes = updatePills(file_types, isStandardLicense)
 
 	function changeLicense () {
 		onChange({license:'extended', slug:licenses[1].item.slug})
@@ -122,7 +122,7 @@ const SideBar = ({
           </FileTypes>
 
 					{/*Check for extend lic if product is a font*/}
-					{fontPreview && !isExtLicenseSelected && <ExtLicMsg onClick={changeLicense} data-testid={'upgrade'}>
+					{fontPreview && isStandardLicense && <ExtLicMsg onClick={changeLicense} data-testid={'upgrade'}>
             <p>Web Font? Upgrade to</p>
             <span>Extended License</span>
           </ExtLicMsg>}

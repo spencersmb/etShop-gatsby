@@ -5,7 +5,7 @@ import {
 	ICouponState,
 	ILocalStorageCart,
 	ITotal,
-	ITotalItem
+	ITotalItem, LicenseEnum
 } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { calcCouponDiscount } from '@utils/priceUtils'
@@ -284,4 +284,16 @@ export function isPWYWItemInCart (cartItems: ICartItemWithKey, products: IProduc
 	})
 
 	return itemFound.length > 0
+}
+
+
+export function getIndexFromLicenseType(type: LicenseEnum){
+	switch (type) {
+		case LicenseEnum.extended:
+			return 1
+		case LicenseEnum.server:
+			return 2
+		default:
+			return 0
+	}
 }

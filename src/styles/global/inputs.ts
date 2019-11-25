@@ -1,6 +1,7 @@
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import styled from 'styled-components'
+import { css } from 'styled-components'
 
 export const InputOutline = styled.div<{ disableInput: boolean }>`
 	input{
@@ -69,8 +70,10 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 			border-radius: 10px;
 			padding: 2.5px 5px 2.5px 0;
 			width: 100%;
+			transition: border .3s;
 			&:focus{
 				outline: none;
+				border-color: ${colors.teal.i500};
 			}
 			-moz-appearance: textfield;
 			&::-webkit-outer-spin-button, 
@@ -80,6 +83,7 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 			};
 			&:read-only{
 				cursor: auto;
+				border-color: #D2DCE5;
 			}
 	}
 `
@@ -92,4 +96,59 @@ export const resetInput = `
     color: inherit;
     line-height: inherit;
     appearance: none;
+`
+
+export const radioClass = css`
+	.etRadioWrapper{
+		[type="radio"]:checked,
+		[type="radio"]:not(:checked) {
+			position: absolute;
+			left: -9999px;
+		}
+		[type="radio"]:checked + label,
+		[type="radio"]:not(:checked) + label
+		{
+				position: relative;
+				padding-left: 31px;
+				cursor: pointer;
+				line-height: 20px;
+		}
+		[type="radio"]:checked + label:before,
+		[type="radio"]:not(:checked) + label:before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 22px;
+				height: 22px;
+				border: 2px solid ${colors.grey.i600};
+				border-radius: 100%;
+				background: transparent;
+				transition: all 0.2s ease;
+		}
+
+		[type="radio"]:checked + label:after,
+		[type="radio"]:not(:checked) + label:after {
+				content: '';
+				width: 12px;
+				height: 12px;
+				background: ${colors.teal.i500};
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				left: 5px;
+				border-radius: 100%;
+				transition: all 0.2s ease;
+				transform-origin: top;
+		}
+		[type="radio"]:not(:checked) + label:after {
+				opacity: 0;
+				transform: scale(0) translateY(-50%);
+		}
+		[type="radio"]:checked + label:after {
+				opacity: 1;
+				transform: scale(1) translateY(-50%);
+		}
+	}
 `

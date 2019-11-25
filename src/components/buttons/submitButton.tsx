@@ -24,6 +24,7 @@ const SubmitButton = (props: IProps) => {
 			submitting={submitting}
 			spinnerColor={spinnerColor}
 			invalid={invalid}
+			className={'submitButton__wrapper'}
 		>
 			<SubmitBtn
 				type='submit'

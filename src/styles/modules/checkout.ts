@@ -126,60 +126,6 @@ export const PaymentTab = styled.li<{ selected: boolean }>`
     margin:0;
     max-height: 29px;
 	}
-	
-	[type="radio"]:checked,
-	[type="radio"]:not(:checked) {
-    position: absolute;
-    left: -9999px;
-}
-[type="radio"]:checked + label,
-[type="radio"]:not(:checked) + label
-{
-    position: relative;
-    padding-left: 31px;
-    cursor: pointer;
-    line-height: 20px;
-    color: #666;
-}
-[type="radio"]:checked + label:before,
-[type="radio"]:not(:checked) + label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-		transform: translateY(-50%);
-    width: 22px;
-    height: 22px;
-    border: 2px solid #ddd;
-    border-radius: 100%;
-    background: #fff;
-    transition: all 0.2s ease;
-}
-[type="radio"]:checked + label:before{
-	border: 2px solid #F87DA9;
-}
-[type="radio"]:checked + label:after,
-[type="radio"]:not(:checked) + label:after {
-    content: '';
-    width: 12px;
-    height: 12px;
-    background: #F87DA9;
-    position: absolute;
-    top: 50%;
-		transform: translateY(-50%);
-		left: 5px;
-    border-radius: 100%;
-    transition: all 0.2s ease;
-    transform-origin: top;
-}
-[type="radio"]:not(:checked) + label:after {
-    opacity: 0;
-    transform: scale(0) translateY(-50%);
-}
-[type="radio"]:checked + label:after {
-    opacity: 1;
-    transform: scale(1) translateY(-50%);
-}
 		
 `
 

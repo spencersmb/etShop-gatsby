@@ -95,21 +95,21 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 			case LicenseEnum.standard:
 				return(
 					<CartItemLicense
-						type={'standard'}>
+						type={LicenseEnum.standard}>
 						Standard License
 					</CartItemLicense>
 				)
 			case LicenseEnum.extended:
 				return (
 					<CartItemLicense
-						type={'extended'}>
+						type={LicenseEnum.extended}>
 						Extended License
 					</CartItemLicense>
 				)
 			case LicenseEnum.server:
 				return (
 					<CartItemLicense
-						type={'server'}>
+						type={LicenseEnum.server}>
 						Server License
 					</CartItemLicense>
 				)

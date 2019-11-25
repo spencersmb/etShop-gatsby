@@ -2,6 +2,7 @@ import LicenseSelectDropdown from '@components/forms/inputs/licenseSelectDropdow
 import NumberDial from '@components/forms/inputs/numberDial'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import { ISelectProduct } from '@components/products/productLayout'
+import { LicenseEnum } from '@et/types/Cart'
 import { ILicenseType, IProduct, IProductFeaturedImage } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
@@ -9,7 +10,7 @@ import { Sentinel } from '@styles/global/fonts'
 import { InputWrapper, resetInput } from '@styles/global/inputs'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
-import { renderSvg } from '@utils/styleUtils'
+import { getLicenseColor, renderSvg } from '@utils/styleUtils'
 import { getWindowPosition } from '@utils/windowUtils'
 import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
@@ -21,7 +22,7 @@ interface IProps {
 	title: string
 	slug: string
 	total: string
-	selectedLicense: string,
+	selectedLicense: LicenseEnum,
 	selectedProduct: IProduct
 	numberOfLicenses: number | string,
 	inCart: boolean,
@@ -60,6 +61,7 @@ const CheckoutNavBar = (props: IProps) => {
 				<InputWrapper disableInput={inCart}>
 					<div className={`label`}>Pay What You Want</div>
 					<NumberDial
+						disableInput={inCart}
 						className={`numberDial__outline`}
 						label='Pay what you want'
 						qty={price}
@@ -71,6 +73,7 @@ const CheckoutNavBar = (props: IProps) => {
 				<InputWrapper disableInput={inCart}>
 					<div className={`label`}>Number of Licences</div>
 					<NumberDial
+						disableInput={inCart}
 						className={`numberDial__outline`}
 						label='LICENSE FOR'
 						qty={numberOfLicenses}
@@ -117,6 +120,7 @@ const CheckoutNavBar = (props: IProps) => {
 				{/*</div>*/}
 				<Section3>
 					<AddToCartBtn
+						selectedLicense={selectedLicense}
 						handleAddToCartState={handleAddToCartState}
 						isInCart={inCart}
 						slug={slug}
@@ -131,13 +135,13 @@ const CheckoutNavBar = (props: IProps) => {
 		</CheckoutNavContainer>
 	)
 }
-const SelectBtn = styled.div<{ selectedLic: string }>`
+const SelectBtn = styled.div<{ selectedLic: LicenseEnum }>`
 	position: relative;
 	select{
 		${resetInput};
 		${Sentinel.semiboldItalic};
 		font-size: 16px;
-		color: ${props => props.selectedLic === 'standard' ? colors.teal.i500 : '#FF6363'};
+		color: ${props => getLicenseColor(props.selectedLic)};
 		padding-right: 25px;
 		position: relative;
 		z-index: 1;
@@ -159,7 +163,7 @@ const SelectBtn = styled.div<{ selectedLic: string }>`
 			transform: rotate(-90deg);
 		}
 		path{
-			fill: ${props => props.selectedLic === 'standard' ? colors.teal.i500 : '#FF6363'};
+			fill: ${props => getLicenseColor(props.selectedLic)};
 		}
 	}
 `
@@ -274,8 +278,8 @@ const CheckoutNavContainer = styled.div<{ showNav: boolean }>`
 	background: #fff;
 	box-shadow: 0px -10px 60px rgba(0,0,0,0.13);
 	transform:  ${props => props.showNav ? 'translateY(0)' : 'translateY(100px)'};
-	//display: none;
-	display: block;
+	display: none;
+	//display: block;
 	@media ${device.tablet} {
 		display: block;
 	}

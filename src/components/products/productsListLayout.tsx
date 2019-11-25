@@ -64,7 +64,7 @@ class ProductsListLayout extends Component<IProps> {
     `}
 				render={data => {
 					const filter = data.allWcProduct.edges
-						.filter(({ node }: { node: IProduct }) => node.product_licenses)
+						.filter(({ node }: { node: IProduct }) => node.product_licenses.length > 0)
 						.filter(({ node }: { node: IProduct }) => {
 
 							// check for view all selected

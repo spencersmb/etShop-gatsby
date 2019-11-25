@@ -1,4 +1,5 @@
 import PinkEmailForm from '@components/footer/emailForm'
+import FooterGallery from '@components/footer/footerGallery'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -6,6 +7,7 @@ import { svgs } from '@svg'
 import { fakeApiCall } from '@utils/apiUtils'
 import { useSetState } from '@utils/stateUtils'
 import { renderSvg } from '@utils/styleUtils'
+import { useScrollToElement } from '@utils/windowUtils'
 import { Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
@@ -13,152 +15,95 @@ import fetched from 'isomorphic-unfetch'
 
 const Footer = ({ productPage }: { productPage: boolean }) => {
 
-	const [state, setState] = useSetState({
-		email: '',
-		submitting: false,
-		completed: false,
-		submitted: false,
-		error: null
-	})
-
-	async function handleSubmit (e: any) {
-		e.preventDefault()
-		console.log('submit email', state.email)
-		setState({ submitting: true })
-
-		const url = 'https://api.convertkit.com/v3/forms/173619/subscribe'
-		const formData = new FormData()
-		formData.append('api_key', process.env.GATSBY_CONVERTKIT_KEY || '')
-		formData.append('email', state.email)
-		// formData.append('first_name', 'spencer')
-		try {
-			const testResult = fakeApiCall('reject')
-			await testResult
-
-			// WORKING DATA
-			const result = await fetched(
-				url,
-				{
-					body: formData,
-					method: 'POST'
-				}
-			)
-			const resultData = await result.json()
-			setState({
-				submitting: false,
-				hasError: false,
-				completed: true
-			})
-			console.log('result', resultData)
-
-		} catch (error) {
-			console.log('error', error)
-			setState({
-				completed: false,
-				submitting: false,
-				hasError: true,
-				error: true
-			})
-		}
-
-		if (state.error) {
-
-		}
-		setTimeout(() => {
-			// reset
-			setState({
-				error: null
-			})
-		}, 2500)
-	}
-
-	function handleTextInput (e: any) {
-		setState({
-			email: e.target.value
-		})
-	}
+	// const scroll = useScrollToElement()
 
 	return (
 		<FooterContainer id={'my-div'}>
-			<FooterHeader>
-				<h4>Get notified</h4>
-				<p>when I release new products, send out promos or freebies.</p>
-			</FooterHeader>
-			<PinkEmailForm
-				handleSubmit={handleSubmit}
-				completed={state.completed}
-				hasError={state.hasError}
-				submitting={state.submitting}
-				invalid={state.error}
-				handleTextInput={handleTextInput}/>
-			<FooterNav productPage={productPage}>
-				<SvgCircle>
-					{renderSvg(svgs.FooterCircle)}
-				</SvgCircle>
-				<FooterNavInner>
-					<Logo data-testid='footer-logo'>
-						{renderSvg(svgs.ETLogo)}
-					</Logo>
-					<Links data-testid='footer-links'>
-						<li>
-							<Link to={'/products'}>
-								Products
-							</Link>
-						</li>
-						<li>
-							<a href='https://every-tuesday.com' target='_blank' rel='noreferrer'>
-								Blog
-							</a>
-						</li>
-						<li>
-							<Link to={'/support'}>
-								Support
-							</Link>
-						</li>
-						<li>
-							<Link to={'/privacy'}>
-								Privacy Policy
-							</Link>
-						</li>
-					</Links>
-					<SocialMediaLinks data-testid='social-links'>
-						<li>
-							<a href='https://www.youtube.com/user/everytues' target='_blank' rel='noreferrer'>
-								{renderSvg(svgs.Youtube)}
-							</a>
-						</li>
-						<li>
-							<a href='https://www.instagram.com/everytuesday/' target='_blank' rel='noreferrer'>
-								{renderSvg(svgs.Instagram)}
-							</a>
-						</li>
-						<li>
-							<a href='https://www.pinterest.com/teelac/' target='_blank' rel='noreferrer'>
-								{renderSvg(svgs.Pinterest)}
-							</a>
-						</li>
-						<li>
-							<a href='https://www.facebook.com/everytues' target='_blank' rel='noreferrer'>
-								{renderSvg(svgs.Facebook)}
-							</a>
-						</li>
-						<li>
-							<a href='https://twitter.com/teelacunningham' target='_blank' rel='noreferrer'>
-								{renderSvg(svgs.Twitter)}
-							</a>
-						</li>
-					</SocialMediaLinks>
-				</FooterNavInner>
+			{/*<FooterHeader>*/}
+			{/*	<h4>Get notified</h4>*/}
+			{/*	<p>when I release new products, send out promos or freebies.</p>*/}
+			{/*</FooterHeader>*/}
+			{/*<PinkEmailForm*/}
+			{/*	handleSubmit={handleSubmit}*/}
+			{/*	completed={state.completed}*/}
+			{/*	hasError={state.hasError}*/}
+			{/*	submitting={state.submitting}*/}
+			{/*	invalid={state.error}*/}
+			{/*	handleTextInput={handleTextInput}/>*/}
+			{/*<FooterGallery/>*/}
+			<FooterNav>
+
+				<FooterNavWrapper productPage={productPage}>
+					<FooterNavInner>
+						<SvgCircle>
+							{renderSvg(svgs.FooterCircle)}
+						</SvgCircle>
+						<Logo data-testid='footer-logo'>
+							{renderSvg(svgs.ETLogo)}
+						</Logo>
+						<Links data-testid='footer-links'>
+							<li>
+								<Link to={'/products'}>
+									Products
+								</Link>
+							</li>
+							<li>
+								<a href='https://every-tuesday.com' target='_blank' rel='noreferrer'>
+									Blog
+								</a>
+							</li>
+							<li>
+								<Link to={'/support'}>
+									Support
+								</Link>
+							</li>
+							<li>
+								<Link to={'/privacy'}>
+									Privacy Policy
+								</Link>
+							</li>
+						</Links>
+						<SocialMediaLinks data-testid='social-links'>
+							<li>
+								<a href='https://www.youtube.com/user/everytues' target='_blank' rel='noreferrer'>
+									{renderSvg(svgs.Youtube)}
+								</a>
+							</li>
+							<li>
+								<a href='https://www.instagram.com/everytuesday/' target='_blank' rel='noreferrer'>
+									{renderSvg(svgs.Instagram)}
+								</a>
+							</li>
+							<li>
+								<a href='https://www.pinterest.com/teelac/' target='_blank' rel='noreferrer'>
+									{renderSvg(svgs.Pinterest)}
+								</a>
+							</li>
+							<li>
+								<a href='https://www.facebook.com/everytues' target='_blank' rel='noreferrer'>
+									{renderSvg(svgs.Facebook)}
+								</a>
+							</li>
+							<li>
+								<a href='https://twitter.com/teelacunningham' target='_blank' rel='noreferrer'>
+									{renderSvg(svgs.Twitter)}
+								</a>
+							</li>
+						</SocialMediaLinks>
+					</FooterNavInner>
+				</FooterNavWrapper>
 			</FooterNav>
 		</FooterContainer>
 	)
 }
 
 const FooterContainer = styled.footer`
-	background: ${colors.grey.i200};
+	background: #f7f8fc;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	//overflow: hidden;
+	
+	overflow-x: hidden;
 `
 const FooterHeader = styled.div`
 	text-align: center;
@@ -189,38 +134,59 @@ const FooterHeader = styled.div`
 
 const SvgCircle = styled.div`
 	position: absolute;
-	top: -100px;
+	top: -33px;
 	left: 50%;
 	transform: translateX(-50%);
-	width: 2300px;
+	width: 530px;
+	width: 100vw;
 	z-index: 0;
+	@media (min-width: 568px) {
+		top: -53px;    
+	}
+		
+	@media ${device.tablet} {
+		top: -77px;
+		width: 2300px;
+	}
+		
 `
 
 // footer nav
-const FooterNav = styled.nav<{ productPage: boolean }>`
-	padding: 45px 0;
+const FooterNav = styled.nav`
+	padding: 0;
 	width: 100%;
-	background: white;
 	position: relative;
 	z-index: 0;
+`
+const FooterNavWrapper = styled.div<{ productPage: boolean }>`
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+	width: 100%;
+	z-index: 1;
+	position: relative;
+	padding: 0 0 45px;
+	margin-top: 100px;
 	
 	@media ${device.tablet}{
-		padding: 45px 0 ${props => props.productPage ? '130px' : '45px'};
+		padding: 0 0 ${props => props.productPage ? '130px' : '45px'};
 	}
 	
 	@media ${device.laptop}{
-		padding: 45px 0 ${props => props.productPage ? '145px' : '65px'};
+		flex-direction: row;
+		align-items: baseline;
+		padding: 0 0 ${props => props.productPage ? '145px' : '65px'};
 	}
-`
 
+`
 const FooterNavInner = styled.div`
 	display: flex;
 	flex-direction: column;
-	max-width: 1200px;
 	margin: 0 auto;
-	z-index: 1;
-	position: relative;
 	align-items: center;
+	width: 100%;
+	max-width: 1200px;
+	padding: 0 15px;
 	
 	@media ${device.laptop}{
 		flex-direction: row;
@@ -230,6 +196,8 @@ const FooterNavInner = styled.div`
 const Logo = styled.div`
 	width: 260px;
 	margin-bottom: 30px;
+	z-index: 2;
+	position: relative;
 	svg{
 		width: 100%;
 	}
@@ -239,6 +207,8 @@ const Logo = styled.div`
 	}
 `
 const Links = styled.ul`
+	z-index: 2;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	padding: 0;
@@ -250,13 +220,13 @@ const Links = styled.ul`
 		list-style: none;
 		text-transform: uppercase;
 		font-weight: 600;
-		color: ${colors.secondary.text};
-		font-size: 18px;
+		color: ${colors.primary.headline};
+		font-size: 14px;
 		padding: 0 20px;
 		margin-bottom: 20px;
 	}
 	a{
-		color: ${colors.secondary.text};
+		color: ${colors.primary.headline};
 	}
 	
 	@media ${device.tablet}{
@@ -277,6 +247,8 @@ const SocialMediaLinks = styled.ul`
 	align-items: center;
 	margin: 0;
 	padding:0;
+	z-index: 2;
+	position: relative;
 	li{
 		margin: 0 10px;
 		width: 24px;

@@ -1,16 +1,17 @@
 import LicenseQtyCard from '@components/cards/licenseQtyCard'
+import { CartPricingConfig } from '@components/cart/cartStatics'
 import FontPreviewer from '@components/fontPreviewer/fontPreview'
-import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
-import AddToCartBtn from '@components/products/addToCartBtn'
 import NumberDial from '@components/forms/inputs/numberDial'
-import LicenseSelect from '@components/products/modules/licenseSelect'
+import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
 import Layout from '@components/layout'
+import AddToCartBtn from '@components/products/addToCartBtn'
 import CheckoutNavBar from '@components/products/modules/checkoutNavBar'
 import FeaturesList from '@components/products/modules/features/FeaturesList'
+import LicenseSelect from '@components/products/modules/licenseSelect'
 import ProductDescription from '@components/products/modules/productDesc'
 import SideBar from '@components/products/modules/productDetailsSidebar'
 import RelatedProducts from '@components/products/modules/relatedProducts'
-import { ICartItem, ICartState } from '@et/types/Cart'
+import { ICartItem, ICartState, LicenseEnum } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
@@ -20,23 +21,18 @@ import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
 import { InputWrapper } from '@styles/global/inputs'
 import { svgs } from '@svg'
-import { checkCartForProduct } from '@utils/cartUtils'
+import { checkCartForProduct, getIndexFromLicenseType } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
 import { useSetState } from '@utils/stateUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { Width } from '@utils/windowUtils'
 import { Link } from 'gatsby'
-import React, {
-	useEffect,
-	useLayoutEffect,
-	useRef
-} from 'react'
+import _ from 'lodash'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch as ReduxDispatch } from 'redux'
 import styled from 'styled-components'
-import _ from 'lodash'
-import { CartPricingConfig } from '@components/cart/cartStatics'
 
 interface IPropsPrivate {
 	products: IProducts,
@@ -53,7 +49,7 @@ interface IPropsPublic {
 
 interface IPublicState {
 	selectedProduct: IProduct,
-	selectedLicense: string,
+	selectedLicense: LicenseEnum,
 	numberOfLicenses: number,
 	inCart: boolean,
 	bulkDiscount: boolean,
@@ -139,13 +135,15 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		const cartItem: ICartItem = cart.items[product.slug]
 
 		// 2. Set the correct item
-		const selectedProduct = cartItem.extended ? products[cartItem.slug] : standardItem.current
+		// Check what license is selected then get that product
+		// const licenseIndex = getIndexFromLicenseType(cartItem.licenseType)
+		const selectedProduct = products[cartItem.slug]
 		const bulkDiscountCalc: boolean = cartItem.qty >= CartPricingConfig.minQuantity
 
 		// 3. Set state
 		setState({
 			selectedProduct,
-			selectedLicense: cartItem.extended ? 'extended' : 'standard',
+			selectedLicense: cartItem.licenseType, // standard - extended - server
 			numberOfLicenses: cartItem.qty,
 			inCart: true,
 			bulkDiscount: bulkDiscountCalc,
@@ -163,18 +161,18 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					? standardItem.current.sale_price
 					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price, state.numberOfLicenses)
 			})
-		}
-
-		if(license === 'extended'){
-			const extendedProduct = products[slug]
+		}else{
+			const selectedProduct = products[slug]
 			setState({
 				selectedLicense: license,
-				selectedProduct: extendedProduct,
-				price: extendedProduct.on_sale
-					? extendedProduct.sale_price
-					: calcBulkPriceDiscount(state.bulkDiscount, extendedProduct.price, state.numberOfLicenses)
+				selectedProduct,
+				price: selectedProduct.on_sale
+					? selectedProduct.sale_price
+					: calcBulkPriceDiscount(state.bulkDiscount, selectedProduct.price, state.numberOfLicenses)
 			})
 		}
+
+
 	}
 
 	function onDialChange (total: number | string) {
@@ -246,12 +244,10 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 					{/*License Selection*/}
 					<LicenseSelectWrapper ref={ref}>
-						<LabelHeader>
-							Choose License:
-						</LabelHeader>
-
 						{React.useMemo(() => (
 							<LicenseSelect
+								showModal={showModalAction}
+								selectedLicense={state.selectedLicense}
 								onChange={onSelectChange}
 								licenses={standardItem.current.product_licenses}
 								bulkDiscount={bulkDiscount}
@@ -318,7 +314,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					{React.useMemo(() => (<SideBar
 						onChange={onSelectChange}
 						licenses={standardItem.current.product_licenses}
-						isExtLicenseSelected={state.selectedLicense === 'extended'}
+						isStandardLicense={state.selectedLicense === 'standard'}
 						details={standardItem.current.details}
 						fontPreview={standardItem.current.font_preview.enabled}
 					/>), [state.selectedLicense])}
@@ -503,7 +499,7 @@ const ProductTitle = styled(productRowGap)`
 		p{
 			${Sentinel.italic};
 			font-size: 25px;
-			color: ${colors.secondary.text};
+			color: ${colors.grey.i800};
 			font-weight: 500;
 			letter-spacing: -.8px;
 			margin:0;
@@ -512,7 +508,7 @@ const ProductTitle = styled(productRowGap)`
 			grid-column: 2 / 14;
 		}
 		@media ${device.laptop} {
-			margin: 20px 0 25px;
+			margin: 20px 0 20px;
 			grid-column: 9 / 14;
 			grid-row: 1;	
 			text-align: left;

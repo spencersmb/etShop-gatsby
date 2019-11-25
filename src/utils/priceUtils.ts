@@ -86,12 +86,19 @@ export const displayCurrency = (price: string | number): string => {
 			style: 'currency'
 		})
 	}
-	return parseFloat(price).toLocaleString('en-US', {
+	const hasDecimal = price.indexOf('.')
+	const converted = parseFloat(price).toLocaleString('en-US', {
 		currency: 'USD',
 		maximumFractionDigits: 2,
 		minimumFractionDigits: 2,
 		style: 'currency'
 	})
+
+	if(hasDecimal === 1){
+		return converted
+	}else{
+		return converted.slice(0, -3)
+	}
 
 }
 

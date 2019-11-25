@@ -151,6 +151,7 @@ export const NavCenter = styled.ul<{ user: IUser | null }>`
 		font-weight: 700;
 		padding: 15px 0 15px 30px;
 		
+		
 		${props => !props.user ? `
 		&:first-child{
 			padding-top: 30px;
@@ -175,6 +176,7 @@ export const NavCenter = styled.ul<{ user: IUser | null }>`
 			padding:0;
 			opacity: 1 !important;
 			transform: translateX(0) !important;
+			font-size: 14px;
 			&:first-child{
 				padding-top: 0;
 			}
@@ -235,6 +237,12 @@ export const JoinButton = styled(ButtonSmall)`
 	font-size: 16px;
 	font-weight: 700;
 	padding: 10px 25px;
+	
+	@media ${device.laptop} {
+	    font-size: 14px;
+	    padding: 8px 20px;
+	}
+		
 `
 export const SignInButton = styled(ButtonSmall)`
 	padding: 15px 0;
@@ -251,6 +259,7 @@ export const SignInButton = styled(ButtonSmall)`
 		&:hover{
 			color: ${colors.purple.i600};
 		}
+		font-size: 14px;
 		color: ${colors.purple.i500};
 	}
 `

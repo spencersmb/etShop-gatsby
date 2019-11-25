@@ -1,6 +1,8 @@
 /**
  * Basic Sizes.
  */
+import { useEffect } from 'react'
+
 let thisWidth = 640
 let thisHeight = 480
 if (typeof window !== `undefined`) {
@@ -70,4 +72,17 @@ export const bodyScrollBar = {
 		// 	el.style.padding = '0 15px 0 0'
 		// }
 	}
+}
+
+export const useScrollToElement = () => {
+	useEffect(() => {
+		setTimeout(() => {
+			const elmnt = document.getElementById('my-div')
+			if (elmnt) {
+				elmnt.scrollIntoView()
+				console.log('go to: ', elmnt)
+			}
+		}, 300)
+
+	})
 }

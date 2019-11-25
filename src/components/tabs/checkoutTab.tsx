@@ -33,34 +33,34 @@ export class CheckoutTab extends Component<IProps, {}> {
 
 	renderPaypal = () => {
 		return (
-			<p className={'paypal'}>
+			<div className={'paypal etRadioWrapper'}>
 				<input
 					type='radio'
-					id='test2'
-					name='radio-group'
+					id={'paypal-radio'}
+					name='paypal-radio-group'
 					onChange={()=>{}}
 					checked={this.props.selected}
 				/>
-				<label htmlFor='test2'>{renderSvg(svgs.Paypal)}</label>
-			</p>
+				<label htmlFor={'paypal-radio'}>{renderSvg(svgs.Paypal)}</label>
+			</div>
 		)
 	}
 
 	renderStripe = () => {
 		return (
-			<p className={'stripe'}>
+			<div className={'stripe etRadioWrapper'}>
 				<input
 					type='radio'
-					id='test1'
-					name='radio-group'
+					id={'stripe-radio'}
+					name='stripe-radio-group'
 					onChange={()=>{}}
 					checked={this.props.selected}
 				/>
-				<label htmlFor='test1'>
+				<label htmlFor={'stripe-radio'}>
 					<span className={'cc-svg'}>{renderSvg(svgs.CreditCard)}</span>
 					<span className={'cc-text'}>Credit Card</span>
 				</label>
-			</p>
+			</div>
 		)
 	}
 

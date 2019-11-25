@@ -1,3 +1,5 @@
+import { LicenseEnum } from '@et/types/Cart'
+import { colors } from '@styles/global/colors'
 import React, { ReactNode } from 'react'
 
 /**
@@ -12,4 +14,15 @@ export const renderSvg = (Svg: string): ReactNode=> {
 		return (<div>No SVG found</div>)
 	}
 	return <Svg />
+}
+
+export const getLicenseColor = (type: LicenseEnum) => {
+	switch (type) {
+		case LicenseEnum.extended:
+			return colors.primary.pink
+		case LicenseEnum.server:
+			return colors.purple.i500
+		default:
+			return colors.teal.i500
+	}
 }
