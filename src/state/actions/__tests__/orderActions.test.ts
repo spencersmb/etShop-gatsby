@@ -61,7 +61,7 @@ describe('Order Action tests', () => {
 			.defaultReplyHeaders({
 				'Content-Type': 'application/json'
 			})
-			.post(`/wp-json/${process.env.GATSBY_ROUTE}/orders`)
+			.post(`/wp-json/${process.env.GATSBY_ROUTE}/v1/order/createOrder`)
 			.reply(200, bodyData)
 
 		// @ts-ignore
@@ -114,7 +114,7 @@ describe('Order Action tests', () => {
 			.defaultReplyHeaders({
 				'Content-Type': 'application/json'
 			})
-			.post(`/wp-json/${process.env.GATSBY_ROUTE}/paypalOrder`)
+			.post(`/wp-json/${process.env.GATSBY_ROUTE}/v1/order/paypalOrder`)
 			.reply(200, bodyData)
 
 		// @ts-ignore

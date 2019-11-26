@@ -1,22 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Coupon Input renders correctly 1`] = `
-<form>
-  <label
-    htmlFor="coupon"
+<div
+  className="sc-htoDjs kZkykA"
+>
+  <div
+    className="sc-jzJRlG gBiMFt"
   >
-    Coupon
-  </label>
-  <div>
-    false
+    COUPON
   </div>
-  <input
-    aria-label="coupon"
-    data-testid="couponInput"
-    defaultValue=""
-    id="couponInput"
-    placeholder="Enter Promo Coupon"
-    type="text"
-  />
-</form>
+  <form>
+    <div
+      className="formGroup__Container sc-eNQAEJ CbWlr"
+      data-testid="formGroup"
+    >
+      <div
+        className="formInput sc-hMqMXs jwjJTg"
+      >
+        <div
+          className="formGroup noFocus invalid undefined"
+          data-testid="formGroupTest"
+        >
+          <label
+            className="renderLabel"
+            htmlFor="couponInput"
+          >
+            Enter Coupon Code
+          </label>
+          <input
+            aria-label="coupon"
+            data-testid="couponInput"
+            defaultValue=""
+            disabled={false}
+            id="couponInput"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            type="text"
+          />
+          <div
+            className="submit__spinner sc-dnqmqq iKaPWV"
+            data-testid="spinner"
+          >
+            <svg
+              className="spinner"
+              viewBox="0 0 50 50"
+            >
+              <circle
+                className="path"
+                cx="25"
+                cy="25"
+                fill="none"
+                r="20"
+                strokeWidth="6"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 `;

@@ -38,7 +38,8 @@ describe('Cart List of items', () => {
 					}
 				}
 			})
-		expect(modalRender.getByTestId('cartList').children.length).toEqual(testCartWithMultiples.totalItems)
+		const items = modalRender.queryAllByTestId('cartItem')
+		expect(items.length).toEqual(testCartWithMultiples.totalItems)
 	})
 
 	it('Should show empty cart', () => {

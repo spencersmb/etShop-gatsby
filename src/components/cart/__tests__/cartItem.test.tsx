@@ -14,6 +14,7 @@ afterEach(cleanup)
 
 const props = {
 	cartIndex: ProductKey.WatercolorStd,
+	itemIndex: 0,
 	cart: {
 		...testCartWithItem
 	},
@@ -25,38 +26,53 @@ const props = {
 
 describe('Cart Item tests', () => {
 
-	// TODO: add coupon & discount tests
-
 	it('Should render correct item name', () => {
 		const modalRender = render(<CartItem {...props}/>)
 		expect(modalRender.getByTestId('productName').innerHTML).toBe(testProducts[ProductKey.WatercolorStd].name)
 	})
 
-	it('Should render correct regular price', () => {
+	it('Should render correct price per license', () => {
 		const modalRender = render(<CartItem {...props}/>)
 		expect(modalRender.getByTestId('productPrice').innerHTML).toBe(displayCurrency(testProducts[ProductKey.WatercolorStd].price))
 	})
 
-	xit('Should render correct license', () => {
+	it('Should render correct license Quantity', () => {
 		const modalRender = render(<CartItem {...props}/>)
-		const select = modalRender.getByTestId('selectID')
-		expect(select.children[0].innerHTML).toEqual('Standard')
+		expect(modalRender.getByTestId('itemQty').innerHTML).toBe(testCartWithItem.items[ProductKey.WatercolorStd].qty.toString())
+	})
+
+	it('Should render correct total', () => {
+		const modalRender = render(<CartItem {...props}/>)
+		expect(modalRender.getByTestId('itemTotal').innerHTML).toBe('$16')
+	})
+
+	it('Should render correct license', () => {
+		const modalRender = render(<CartItem {...props}/>)
+		const select = modalRender.getByTestId('itemLicense')
+		expect(select.innerHTML).toEqual('Standard License')
 	})
 
 	it('Should render correct discounted price and show discount content', () => {
 		const discountedProps = props
-		const totalLicenses = 12
-		discountedProps.cart.items[ProductKey.WatercolorStd].qty = totalLicenses
-		discountedProps.cart.items[ProductKey.WatercolorStd].price = '14.4'
+		discountedProps.cart.items[ProductKey.WatercolorStd].qty = 12
+		discountedProps.cart.items[ProductKey.WatercolorStd].price = '11.7'
 		const modalRender = render(<CartItem {...discountedProps}/>)
-		const input: any = modalRender.getByTestId('numberDial')
+		const discount = modalRender.getByTestId('discountSavings')
+		const originalTotal = modalRender.getByTestId('originalTotal')
 
-		expect(modalRender.getByTestId('bulkDiscount').innerHTML).toEqual('Bulk discount of 0.1 applied')
-		expect(modalRender.getByTestId('productPrice').innerHTML).toBe(displayCurrency(calcBulkDiscount(testProducts[ProductKey.WatercolorStd].price, totalLicenses)))
-		expect(input.value).toEqual(totalLicenses.toString())
+		expect(discount.innerHTML).toBe('-$51.60')
+		expect(originalTotal.innerHTML).toBe('$192')
 	})
 
-	it('Should call updateCartItemQty action', () => {
+	it('Should call removeItem action with correct item index', () => {
+		const modalRender = render(<CartItem {...props}/>)
+		const btn = modalRender.getByTestId('removeItemBtn')
+		btn.click()
+		expect(props.removeItem).toHaveBeenCalledTimes(1)
+		expect(props.removeItem).toHaveBeenCalledWith(ProductKey.WatercolorStd)
+	})
+
+	xit('Should call updateCartItemQty action', () => {
 		const modalRender = render(<CartItem {...props}/>)
 		const input: any = modalRender.getByTestId('numberDial')
 		fireEvent.input(input, { target: { value: 23 } })
@@ -91,14 +107,6 @@ describe('Cart Item tests', () => {
 		expect(props.changeLicense).toHaveBeenCalledTimes(1)
 		expect(props.changeLicense).toHaveBeenCalledWith(calledWith)
 
-	})
-
-	it('Should call removeItem action with correct item index', () => {
-		const modalRender = render(<CartItem {...props}/>)
-		const btn = modalRender.getByTestId('removeItemBtn')
-		btn.click()
-		expect(props.removeItem).toHaveBeenCalledTimes(1)
-		expect(props.removeItem).toHaveBeenCalledWith(ProductKey.WatercolorStd)
 	})
 
 	// renders pose component so we can't do snapshot

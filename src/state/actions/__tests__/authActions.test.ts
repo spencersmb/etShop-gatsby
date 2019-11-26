@@ -77,9 +77,6 @@ describe('Auth Action tests', () => {
 		const getActions = store.getActions()
 		const expectedActions = [
 			{
-				type: CartActionTypes.EMPTY_CART
-			},
-			{
 				type: PaginationTypes.CLEAR_ALL_PAGES
 			},
 			{
@@ -87,7 +84,7 @@ describe('Auth Action tests', () => {
 			}
 		]
 
-		expect(getActions.length).toBe(3)
+		expect(getActions.length).toBe(2)
 		expect(getActions).toEqual(expectedActions)
 	})
 

@@ -46,11 +46,10 @@ const PinkEmailForm = (props: IProps) => {
         </div>}
 			</EmailBoxLeft>
 			<EmailBoxRight completed={completed}>
-				{/*<SubmitButton*/}
-				{/*	invalid={invalid}*/}
-				{/*	submitting={submitting}*/}
-				{/*	completed={completed}*/}
-				{/*/>*/}
+				<SubmitButton
+					invalid={invalid}
+					submitting={submitting}
+				/>
 			</EmailBoxRight>
 			<SvgBig>
 				{renderSvg(svgs.Email)}

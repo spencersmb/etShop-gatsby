@@ -1,12 +1,12 @@
 // this is a handy function that I normally make available for all my tests
-import { ICartState } from '@et/types/Cart'
+import { ICartState, LicenseEnum } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
-import { IPaginateOrder, IPaginateState } from '@et/types/Pagination'
-import { IProduct, IProductBullet, IProducts } from '@et/types/Products'
+import { IPaginateState } from '@et/types/Pagination'
+import { IProduct, IProducts } from '@et/types/Products'
 import { IUser } from '@et/types/User'
-import { IGuestFormData, IOrderDownload, IOrderDownloadItem, IReceipt, IRefund } from '@et/types/WC_Order'
-import React from 'react'
+import { IGuestFormData, IReceipt } from '@et/types/WC_Order'
 import initialState from '@redux/reducers/initialState'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { render } from 'react-testing-library'
 // that deal with connected components.
@@ -61,7 +61,8 @@ export const testCartEmpty: ICartState = {
 
 export const standardItemAddToCart = {
 	['watercolor-texture-kit-vol-1']: {
-		extended: false,
+		licenseType: LicenseEnum.standard,
+		bulkDiscount: false,
 		id: 222,
 		name: 'Watercolor texture kit Vol. 1',
 		price: '16',
@@ -178,19 +179,21 @@ export const singleProduct: IProduct = {
 		{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 	],
 	images: [...images],
-	license: {
-		// may not need this if we are testing the extendedItem itself
-		hasExtendedLicense: true,
-		type: 'standard',
-		standardItem: {
-			slug: 'watercolor-texture-kit-vol-1',
-			bullets: []
-		},
-		extendedItem: {
-			slug: 'watercolor-texture-kit-vol-1-ext',
-			bullets: []
+	product_licenses: [
+		{
+			type: {
+				value: 'standard',
+				name: 'Standard'
+			},
+			item: {
+				id: '797',
+				name: 'Watercolor texture kit Vol. 1',
+				onSale: false,
+				price: '16',
+				slug: 'watercolor-texture-kit-vol-1'
+			}
 		}
-	},
+	],
 	seo: {
 		desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 		title: 'Watercolor texture kit Vol. 1'
@@ -248,18 +251,34 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
-		license: {
-			hasExtendedLicense: true,
-			type: 'standard',
-			standardItem: {
-				slug: 'watercolor-texture-kit-vol-1',
-				bullets: []
+		product_licenses: [
+			{
+				type: {
+					value: 'standard',
+					name: 'Standard'
+				},
+				item: {
+					id: '797',
+					name: 'Watercolor texture kit Vol. 1',
+					onSale: false,
+					price: '16',
+					slug: 'watercolor-texture-kit-vol-1'
+				}
 			},
-			extendedItem: {
-				slug: 'watercolor-texture-kit-vol-1-ext',
-				bullets: []
+			{
+				type: {
+					value: 'extended',
+					name: 'Extended'
+				},
+				item: {
+					id: '979',
+					name: 'Watercolor texture kit Vol. 1 EXT',
+					onSale: false,
+					price: '20',
+					slug: 'watercolor-texture-kit-vol-1-ext'
+				}
 			}
-		},
+		],
 		seo: {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Watercolor texture kit Vol. 1'
@@ -284,7 +303,7 @@ export const testProducts: IProducts = {
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
 		id: '202eca74-fc90-56e7-8269-b59f18a19194-ext',
-		name: 'Watercolor texture kit Vol. 1',
+		name: 'Watercolor texture kit Vol. 1 EXT',
 		price: '20',
 		product_id: 40,
 		pwyw: false,
@@ -306,18 +325,7 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
-		license: {
-			hasExtendedLicense: true,
-			type: 'extended',
-			standardItem: {
-				slug: 'watercolor-texture-kit-vol-1',
-				bullets: []
-			},
-			extendedItem: {
-				slug: 'watercolor-texture-kit-vol-1-ext',
-				bullets: []
-			}
-		},
+		product_licenses: [],
 		seo: {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Watercolor texture kit Vol. 1 Ext'
@@ -365,18 +373,21 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
-		license: {
-			hasExtendedLicense: false,
-			type: 'standard',
-			standardItem: {
-				slug: 'honeymoon',
-				bullets: []
-			},
-			extendedItem: {
-				slug: '',
-				bullets: []
+		product_licenses: [
+			{
+				type: {
+					value: 'standard',
+					name: 'Standard'
+				},
+				item: {
+					id: '352',
+					name: 'Honeymoon',
+					onSale: false,
+					price: '0',
+					slug: 'honeymoon'
+				}
 			}
-		},
+		],
 		seo: {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Honeymoon seo title'
@@ -421,18 +432,21 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
-		license: {
-			hasExtendedLicense: false,
-			type: 'standard',
-			standardItem: {
-				slug: 'skinny-jeans',
-				bullets: []
-			},
-			extendedItem: {
-				slug: '',
-				bullets: []
+		product_licenses: [
+			{
+				type: {
+					value: 'standard',
+					name: 'Standard'
+				},
+				item: {
+					id: '30',
+					name: 'Skinny Jeans',
+					onSale: true,
+					price: '9.99',
+					slug: 'skinny-jeans'
+				}
 			}
-		},
+		],
 		seo: {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
 			title: 'Skinny Jeans seo title'
@@ -464,7 +478,8 @@ export const testCartWithItem: ICartState = {
 	isOpen: false,
 	items: {
 		[ProductKey.WatercolorStd]: {
-			extended: false,
+			licenseType: LicenseEnum.standard,
+			bulkDiscount: false,
 			id: testProducts[ProductKey.WatercolorStd].product_id,
 			name: testProducts[ProductKey.WatercolorStd].name,
 			price: testProducts[ProductKey.WatercolorStd].price,
@@ -495,7 +510,8 @@ export const testCartWithItemAndCoupon: ICartState = {
 	isOpen: false,
 	items: {
 		[ProductKey.WatercolorStd]: {
-			extended: false,
+			bulkDiscount: false,
+			licenseType: LicenseEnum.standard,
 			id: testProducts[ProductKey.WatercolorStd].product_id,
 			name: testProducts[ProductKey.WatercolorStd].name,
 			price: testProducts[ProductKey.WatercolorStd].price,
@@ -522,7 +538,8 @@ export const testCartWithMultiples: ICartState = {
 	isOpen: false,
 	items: {
 		[ProductKey.WatercolorStd]: {
-			extended: false,
+			licenseType: LicenseEnum.standard,
+			bulkDiscount: false,
 			id: testProducts[ProductKey.WatercolorStd].product_id,
 			name: testProducts[ProductKey.WatercolorStd].name,
 			price: testProducts[ProductKey.WatercolorStd].price,
@@ -530,7 +547,8 @@ export const testCartWithMultiples: ICartState = {
 			slug: testProducts[ProductKey.WatercolorStd].slug
 		},
 		[ProductKey.Skinnyjeans]: {
-			extended: false,
+			licenseType: LicenseEnum.standard,
+			bulkDiscount: false,
 			id: testProducts[ProductKey.Skinnyjeans].product_id,
 			name: testProducts[ProductKey.Skinnyjeans].name,
 			price: testProducts[ProductKey.Skinnyjeans].price,
@@ -578,7 +596,8 @@ export const testCartWithMultiplesFixedCartCouponWithFREEITEM: ICartState = {
 	items: {
 		...testCartWithMultiples.items,
 		[ProductKey.Honeymoon]: {
-			extended: false,
+			licenseType: LicenseEnum.standard,
+			bulkDiscount: false,
 			id: testProducts[ProductKey.Honeymoon].product_id,
 			name: testProducts[ProductKey.Honeymoon].name,
 			price: testProducts[ProductKey.Honeymoon].price,
@@ -665,7 +684,8 @@ export const testCartWithFreeItem: ICartState = {
 	isOpen: false,
 	items: {
 		[ProductKey.Honeymoon]: {
-			extended: false,
+			licenseType: LicenseEnum.standard,
+			bulkDiscount: false,
 			id: testProducts[ProductKey.Honeymoon].product_id,
 			name: testProducts[ProductKey.Honeymoon].name,
 			price: testProducts[ProductKey.Honeymoon].price,

@@ -32,28 +32,24 @@ const Connected = connect((state: IState) => {
 
 describe('Cart Layout', () => {
 
-	it('Should render Close Btn and call toggle cart on click', () => {
+	it('Should render Back Btn and call toggle cart on click', () => {
 		const modalRender = renderWithRedux(<Connected {...props}/>, combineReducers({
 			products: productReducer,
 			cart: cartReducer
 		}))
 		const btn = modalRender.getByTestId('close-btn')
 		btn.click()
-		expect(btn.innerHTML).toEqual('Close')
-		expect(btn).toBeTruthy()
 		expect(props.cartToggle).toHaveBeenCalledTimes(1)
 	})
 
-	it('Should render Empty Cart Btn and call empty cart on click', () => {
+	it('Should render proceed to checkout Btn and toggle cart on click', () => {
 		const modalRender = renderWithRedux(<Connected {...props}/>, combineReducers({
 			products: productReducer,
 			cart: cartReducer
 		}))
-		const btn = modalRender.getByTestId('empty-cart-btn')
+		const btn = modalRender.getByTestId('checkout')
 		btn.click()
-		expect(btn.innerHTML).toEqual('Empty Cart')
-		expect(btn).toBeTruthy()
-		expect(props.emptyCart).toHaveBeenCalledTimes(1)
+		expect(props.cartToggle).toHaveBeenCalledTimes(1)
 	})
 
 })

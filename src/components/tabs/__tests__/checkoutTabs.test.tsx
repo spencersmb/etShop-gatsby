@@ -19,18 +19,21 @@ afterEach(cleanup)
 const props = {
 	initialLoad: 'stripe',
 	handleChangeType: jest.fn(),
+	toggleCheckout: jest.fn(),
 	freeCheckout: false
 }
 
 const propsPaypal = {
 	initialLoad: 'paypal',
 	handleChangeType: jest.fn(),
+	toggleCheckout: jest.fn(),
 	freeCheckout: false
 }
 
 const propsFree = {
 	initialLoad: 'paypal',
 	handleChangeType: jest.fn(),
+	toggleCheckout: jest.fn(),
 	freeCheckout: true
 }
 
@@ -73,7 +76,7 @@ describe('Checkout Tabs', () => {
 			products: productReducer,
 			cart: cartReducer
 		}))
-		expect(modalRender.getByTestId('orderTotal').innerHTML).toEqual('Order Total: $0.00')
+		expect(modalRender.getByTestId('orderTotal').innerHTML).toEqual('<span class="orderTotal__name">Total</span>$0')
 	})
 
 	it('Should render correct tab stripe content', () => {

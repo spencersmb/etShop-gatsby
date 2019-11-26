@@ -51,7 +51,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 	})
 
 	useEffect(() => {
-		if(coupon.valid){
+		if (coupon.valid) {
 			setActive(true)
 			setPristine(false)
 		}
@@ -80,7 +80,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 				const newCoupon: ICouponRaw = x.data.coupon
 
 				// check if valid server response but no coupon found or expired or invalid types fall into this category
-				if(newCoupon.error){
+				if (newCoupon.error) {
 					toastr.error('Invalid', newCoupon.error.message, toastrOptions.noHover)
 					invalidCoupon()
 					// Sync up total and and prevTotal Ref locally
@@ -96,9 +96,9 @@ export function CouponInput (props: IProps & IReduxActions) {
 				}
 
 				// if there is no error check if a coupon applies to a product in the cart and add it in if found, or reject if not found
-				if(newCoupon.discount_type === 'fixed_product'){
+				if (newCoupon.discount_type === 'fixed_product') {
 					const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
-					if( !isFound ){
+					if (!isFound) {
 						toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
 					}
 				}
@@ -134,12 +134,12 @@ export function CouponInput (props: IProps & IReduxActions) {
 	}
 	const showIcon = () => {
 		// console.log('pristine', pristine)
-		// console.log('isValid', coupon.valid)
 		// console.log('coupon.submitted', coupon.submitted)
 
 		return !pristine && coupon.submitted && !coupon.loading
 			? !coupon.valid
-				? <SvgValidation className={'svgValidation svgValidation--inValid'} isValid={false}>
+				? <SvgValidation className={'svgValidation svgValidation--inValid'}
+												 isValid={false}>
 					{renderSvg(svgs.Close)}
 				</SvgValidation>
 				: <SvgValidation className={'svgValidation svgValidation--valid'} isValid={true}>

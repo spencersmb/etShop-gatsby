@@ -1,4 +1,5 @@
 import { AddToCartBtn } from '@components/products/addToCartBtn'
+import { LicenseEnum } from '@et/types/Cart'
 import { ProductKey, testCartEmpty, testProducts } from '@redux/reduxTestUtils'
 import { calcTotalQtyPrice } from '@utils/priceUtils'
 import React from 'react'
@@ -18,10 +19,12 @@ const propsDefault = {
 	selectedProduct: testProducts[ProductKey.WatercolorStd],
 	licenseQty: 0,
 	price: testProducts[ProductKey.WatercolorStd].price,
+	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 0),
+	bulkDiscount: false,
+	selectedLicense: LicenseEnum.standard,
 	cart: testCartEmpty,
 	addToCart: jest.fn(),
-	cartToggle: jest.fn(),
-	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 0)
+	cartToggle: jest.fn()
 }
 
 const propsCheckout = {
@@ -31,6 +34,8 @@ const propsCheckout = {
 	selectedProduct: testProducts[ProductKey.WatercolorStd],
 	licenseQty: 1,
 	price: testProducts[ProductKey.WatercolorStd].price,
+	bulkDiscount: false,
+	selectedLicense: LicenseEnum.standard,
 	cart: testCartEmpty,
 	addToCart: jest.fn(),
 	cartToggle: jest.fn(),
@@ -56,7 +61,7 @@ describe('AddToCart Button', () => {
 			total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 1)
 		}
 		const modalRender = render(<AddToCartBtn {...propsTotal}/>)
-		expect(modalRender.getByTestId('total').innerHTML).toEqual('$16.00')
+		expect(modalRender.getByTestId('total').innerHTML).toEqual('$16')
 	})
 
 	it('Should render I want this button.', () => {

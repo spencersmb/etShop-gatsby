@@ -42,9 +42,11 @@ describe('Price Utility helpers', () => {
 	it('Should display a price with dollar sign for string or number type', () => {
 		const numberType = displayCurrency(12.5)
 		const stringType = displayCurrency('12.5')
+		const stringWithZeros = displayCurrency('12')
 
 		expect(numberType).toEqual('$12.50')
 		expect(stringType).toEqual('$12.50')
+		expect(stringWithZeros).toEqual('$12')
 	})
 
 	it('Should return a number instead of a fixed string for calcCouponDiscount', () => {

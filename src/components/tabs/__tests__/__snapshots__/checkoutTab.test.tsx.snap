@@ -2,11 +2,35 @@
 
 exports[`Checkout Tab renders correctly 1`] = `
 <li
+  className="sc-htpNat fwvtES"
   data-testid="tab-stripe"
   onClick={[Function]}
+  selected={true}
 >
-  <span>
-    STRIPE
-  </span>
+  <div
+    className="stripe etRadioWrapper"
+  >
+    <input
+      checked={true}
+      id="stripe-radio"
+      name="stripe-radio-group"
+      onChange={[Function]}
+      type="radio"
+    />
+    <label
+      htmlFor="stripe-radio"
+    >
+      <span
+        className="cc-svg"
+      >
+        <test-file-stub />
+      </span>
+      <span
+        className="cc-text"
+      >
+        Credit Card
+      </span>
+    </label>
+  </div>
 </li>
 `;

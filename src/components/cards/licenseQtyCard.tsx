@@ -7,7 +7,7 @@ import { InputOutline, InputWrapper } from '@styles/global/inputs'
 import { svgs } from '@svg'
 import { chooseDiscountPercentage, displayPercent } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 interface IProps {
@@ -21,6 +21,19 @@ interface IProps {
 function LicenseQtyCard (props: IProps) {
 	const { bulkDiscount, numberOfLicenses, inCart, onDialChange, showModal } = props
 	const disabled = (numberOfLicenses === 0) || (typeof numberOfLicenses === 'string')
+
+	useEffect(() => {
+		showModal({
+			modal: () => (<div>License</div>),
+			options: {
+				closeModal: true,
+				hasBackground: true,
+				data: {
+					test: 'spencer s'
+				}
+			}
+		})
+	}, [])
 
 	function triggerViewLicense (e: any) {
 		e.preventDefault()

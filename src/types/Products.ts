@@ -168,7 +168,6 @@ export interface IProduct {
 	categories: ICat[],
 	tags: Itag [],
 	images: Image[],
-	license: IProductLicenseType,
 	product_licenses: ILicenseType[]
 	features: IFeatureItem[]
 	related_products: string[] | null

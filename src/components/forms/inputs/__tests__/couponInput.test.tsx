@@ -1,5 +1,6 @@
 import { CouponInput } from '@components/forms/inputs/couponInput'
 import initialState from '@redux/reducers/initialState'
+import { testCartWithItem, testCartWithMultiplesFixedCartCoupon } from '@redux/reduxTestUtils'
 import React from 'react'
 import rxjs from 'rxjs'
 import renderer from 'react-test-renderer'
@@ -21,7 +22,8 @@ const propsDefault = {
 	submitCoupon: jest.fn(),
 	updatePrice: jest.fn(),
 	coupon: initialState.cart.coupon,
-	total: 12
+	total: 12,
+	cartItems: initialState.cart.items
 }
 const propsValid = {
 	checkCoupon: jest.fn(),
@@ -30,15 +32,10 @@ const propsValid = {
 	submitCoupon: jest.fn(),
 	updatePrice: jest.fn(),
 	coupon: {
-		code: 'test-valid',
-		discount: '33.00',
-		loading: false,
-		product_ids: [24],
-		submitted: true,
-		type: 'fixed-cart',
-		valid: true
+		...testCartWithMultiplesFixedCartCoupon.coupon
 	},
-	total: 12
+	total: 12,
+	cartItems: testCartWithMultiplesFixedCartCoupon.items
 }
 const propsInvalid = {
 	checkCoupon: jest.fn(),
@@ -55,7 +52,8 @@ const propsInvalid = {
 		type: '',
 		valid: false
 	},
-	total: 12
+	total: 12,
+	cartItems: testCartWithItem.items
 }
 const propsLoading = {
 	checkCoupon: jest.fn(),
@@ -84,10 +82,10 @@ describe('Coupon Input', () => {
 		expect(tree).toMatchSnapshot()
 	})
 
-	it('Should display valid notice', () => {
+	it('Should display valid class', () => {
 		const modalRender = render(<CouponInput {...propsValid}/>)
-		const notice = modalRender.getByTestId('valid-notice')
-		expect(notice.innerHTML).toBe('Valid code!')
+		const notice = modalRender.getByTestId('formGroupTest')
+		expect(notice).toHaveClass('valid')
 	})
 
 	it('Should display valid code text', () => {
@@ -96,10 +94,10 @@ describe('Coupon Input', () => {
 		expect(input.value).toBe(propsValid.coupon.code)
 	})
 
-	it('Should display invalid notice', () => {
+	it('Should display invalid class', () => {
 		const modalRender = render(<CouponInput {...propsInvalid}/>)
-		const notice = modalRender.getByTestId('invalid-notice')
-		expect(notice.innerHTML).toBe('Invalid code!')
+		const notice = modalRender.getByTestId('formGroupTest')
+		expect(notice).toHaveClass('invalid')
 	})
 
 	// xit('Should not call api if input is blank', () => {

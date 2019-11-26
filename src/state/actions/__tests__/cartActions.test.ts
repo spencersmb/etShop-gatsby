@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { Actions } from '@et/types/Actions'
+import { LicenseEnum } from '@et/types/Cart'
 import { CartActionTypes } from '@et/types/Enums'
 import { IProduct } from '@et/types/Products'
 import {
 	addProductToCart, cartLoadedComplete,
-	cartToggle, changeCheckoutType, changeLicenseType,
+	cartToggle, changeCheckoutType,
 	emptyCart, removeProductFromCart, updateCartItemQty,
 	updateCartPrice,
 	updateCartState,
@@ -32,10 +33,12 @@ describe('Cart Action tests', () => {
 		const store = mockStore(initialState)
 		store.dispatch(addProductToCart(
 			singleProduct,
-			testCartEmpty.items,
 			singleProduct.slug,
 			1,
-			singleProduct.price))
+			singleProduct.price,
+			false,
+			LicenseEnum.standard
+		))
 		const getActions = store.getActions()
 		const expectedActions = [
 			{
@@ -65,7 +68,14 @@ describe('Cart Action tests', () => {
 		const product: IProduct = testProducts[ProductKey.WatercolorExt]
 		const productKey = testProducts[ProductKey.WatercolorStd].slug
 		const cartItems = testCartEmpty.items
-		const action = addProductToCart(product, cartItems, productKey, 1, product.price)
+		const action = addProductToCart(
+			product,
+			productKey,
+			1,
+			product.price,
+			false,
+			LicenseEnum.extended
+		)
 
 		// @ts-ignore
 		store.dispatch(action)
@@ -76,12 +86,13 @@ describe('Cart Action tests', () => {
 					payload: {
 						item: {
 							[productKey]: {
-								extended: true,
+								licenseType: LicenseEnum.extended,
 								id: product.product_id,
 								name: product.name,
 								price: product.price,
 								qty: 1,
-								slug: product.slug
+								slug: product.slug,
+								bulkDiscount: false
 							}
 						}
 					},
@@ -260,47 +271,6 @@ describe('Cart Action tests', () => {
 		]
 
 		expect(getActions.length).toBe(3)
-		expect(getActions).toEqual(expectedActions)
-
-	})
-
-	it('Should have type changeLicenseType + correct payload', () => {
-		const stateWithCartItem = initialState
-		stateWithCartItem.cart = testCartWithItem
-		const store = mockStore(stateWithCartItem)
-		const extendedItem = testProducts[ProductKey.WatercolorExt]
-
-		// @ts-ignore
-		store.dispatch(changeLicenseType({
-			currentCartItem: stateWithCartItem.cart.items[ProductKey.WatercolorStd], // item in cart
-			extended: true, // value from dropdown
-			cartItemIndex: ProductKey.WatercolorStd, // redundent?
-			products: testProducts, // all our products
-			bulkDiscount: false // is bulkdiscount enabled
-		}))
-		const getActions = store.getActions()
-		const expectedActions: Actions[] = [
-			{
-				payload: {
-					item: {
-						[ProductKey.WatercolorStd]: {
-							extended: true,
-							id: extendedItem.product_id,
-							name: extendedItem.name,
-							price: extendedItem.price,
-							qty: 1,
-							slug: extendedItem.slug
-						}
-					}
-				},
-				type: CartActionTypes.UPDATE_CART_LICENSE
-			},
-			{
-				type: CartActionTypes.UPDATE_CART_PRICE
-			}
-		]
-
-		expect(getActions.length).toBe(2)
 		expect(getActions).toEqual(expectedActions)
 
 	})

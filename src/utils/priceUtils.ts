@@ -78,26 +78,32 @@ export function calcBulkPriceDiscount (bulkDiscount: boolean, price: string, tot
  * @return {string} Convert the result to readable USD string with dollar sign
  */
 export const displayCurrency = (price: string | number): string => {
+	let hasDecimal = 0
+	let newPrice = '$0.00'
 	if (typeof price === 'number') {
-		return price.toLocaleString('en-US', {
+		const convertedPrice: string = price.toString()
+		hasDecimal = convertedPrice.indexOf('.')
+		newPrice = price.toLocaleString('en-US', {
+			currency: 'USD',
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 2,
+			style: 'currency'
+		})
+
+	} else {
+		hasDecimal = price.indexOf('.')
+		newPrice = parseFloat(price).toLocaleString('en-US', {
 			currency: 'USD',
 			maximumFractionDigits: 2,
 			minimumFractionDigits: 2,
 			style: 'currency'
 		})
 	}
-	const hasDecimal = price.indexOf('.')
-	const converted = parseFloat(price).toLocaleString('en-US', {
-		currency: 'USD',
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 2,
-		style: 'currency'
-	})
 
-	if(hasDecimal === 1){
-		return converted
-	}else{
-		return converted.slice(0, -3)
+	if (hasDecimal > 0) {
+		return newPrice
+	} else {
+		return newPrice.slice(0, -3)
 	}
 
 }

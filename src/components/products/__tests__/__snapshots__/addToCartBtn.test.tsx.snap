@@ -8,13 +8,13 @@ exports[`AddToCart Button renders correctly 1`] = `
     className="buttonWrapper sc-bxivhb awxGE"
   >
     <div
-      className="addToCart__total sc-ifAKCX dccGlY"
+      className="addToCart__total sc-ifAKCX kvwkwF"
       data-testid="total"
     >
-      $0.00
+      $0
     </div>
     <button
-      className="sc-bwzfXH sc-EHOje iaPnNw"
+      className="sc-bwzfXH sc-EHOje gNegOl"
       color="#18C3C3"
       data-testid="addToCart"
       disabled={true}

@@ -95,6 +95,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 			case LicenseEnum.standard:
 				return(
 					<CartItemLicense
+						data-testid={'itemLicense'}
 						type={LicenseEnum.standard}>
 						Standard License
 					</CartItemLicense>
@@ -102,6 +103,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 			case LicenseEnum.extended:
 				return (
 					<CartItemLicense
+						data-testid={'itemLicense'}
 						type={LicenseEnum.extended}>
 						Extended License
 					</CartItemLicense>
@@ -109,6 +111,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 			case LicenseEnum.server:
 				return (
 					<CartItemLicense
+						data-testid={'itemLicense'}
 						type={LicenseEnum.server}>
 						Server License
 					</CartItemLicense>
@@ -126,7 +129,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	}
 
 	return (
-		<CartItemContainer>
+		<CartItemContainer data-testid={`cartItem`}>
 			<CartItemBorder className={props.itemIndex === 0 ? 'top' : ''}>
 				<svg viewBox='0 0 709 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
 					<path fillRule='evenodd' clipRule='evenodd'
@@ -168,7 +171,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 					{/*License Qty*/}
 					<CartItemDetail>
 						<span>License Qty</span>
-						<p>{cart.items[cartIndex].qty}</p>
+						<p data-testid='itemQty'>{cart.items[cartIndex].qty}</p>
 					</CartItemDetail>
 
 					{/*Discount*/}
@@ -176,16 +179,16 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
           <>
             <CartItemDiscount>
               <span>Original Total</span>
-              <p>{displayOriginalTotal()}</p>
+              <p data-testid={'originalTotal'}>{displayOriginalTotal()}</p>
             </CartItemDiscount>
             <CartItemDiscount>
-              <span className={'discountLabel'}>{displayPercent(CartPricingConfig.bulkDiscount)}% Savings</span>
+              <span className={'discountLabel'} >{displayPercent(CartPricingConfig.bulkDiscount)}% Savings</span>
               <div className={'discountPin'}>
                 <VolumeDiscountPin>
                   Volume Discount
                 </VolumeDiscountPin>
               </div>
-              <div className={'discount'}>-{displaySavings()}</div>
+              <div className={'discount'} data-testid={'discountSavings'}>-{displaySavings()}</div>
             </CartItemDiscount>
           </>
 					}
@@ -193,7 +196,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 					{/*Total*/}
 					<CartItemDetail total={true}>
 						<span className={'totalLabel'}>total</span>
-						<div className={'total'}>{displayCurrency(total)}</div>
+						<div className={'total'} data-testid={'itemTotal'}>{displayCurrency(total)}</div>
 					</CartItemDetail>
 				</CartItemDetails>
 

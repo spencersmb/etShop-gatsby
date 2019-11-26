@@ -1,4 +1,5 @@
 import SideBar from '@components/products/modules/productDetailsSidebar'
+import { ProductKey, testProducts } from '@redux/reduxTestUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {
@@ -21,7 +22,8 @@ const propsDefault = {
 		},
 	fontPreview: false,
 	onChange: jest.fn(),
-	isExtLicenseSelected: false
+	isStandardLicense: true,
+	licenses: testProducts[ProductKey.WatercolorStd].product_licenses
 }
 
 const webfontDefault = {
@@ -36,7 +38,8 @@ const webfontDefault = {
 		},
 	fontPreview: true,
 	onChange: jest.fn(),
-	isExtLicenseSelected: false
+	isStandardLicense: true,
+	licenses: testProducts[ProductKey.WatercolorStd].product_licenses
 }
 const webfontExt = {
 	details:
@@ -50,7 +53,8 @@ const webfontExt = {
 		},
 	fontPreview: true,
 	onChange: jest.fn(),
-	isExtLicenseSelected: true
+	isStandardLicense: false,
+	licenses: testProducts[ProductKey.WatercolorStd].product_licenses
 }
 describe('Product Description', () => {
 	it('renders correctly', () => {

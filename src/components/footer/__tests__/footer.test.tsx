@@ -11,24 +11,6 @@ afterEach(cleanup)
 
 describe('Footer Tests', () => {
 
-	it('Should render correct header', () => {
-		const modalRender = render(<Footer productPage={false}/>)
-		const element = modalRender.getByText('Get notified')
-		expect(element.innerHTML).toEqual('Get notified')
-	})
-
-	it('Should render correct sub-head', () => {
-		const modalRender = render(<Footer productPage={false}/>)
-		const element = modalRender.getByText('when I release new products, send out promos or freebies.')
-		expect(element).toBeTruthy()
-	})
-
-	it('Should render correct email component', () => {
-		const modalRender = render(<Footer productPage={false}/>)
-		const element = modalRender.getByTestId('emailBox')
-		expect(element).toBeTruthy()
-	})
-
 	it('Should render Logo', () => {
 		const modalRender = render(<Footer productPage={false}/>)
 		const element = modalRender.getByTestId('footer-logo')

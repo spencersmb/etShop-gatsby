@@ -187,60 +187,6 @@ export const updateCartItemQty = ({ key, cartItem, bulkDiscount, regularPrice }:
 
 /*
 * * Tested!
-Dispatch event to changeLicenseType
-After - dispatch Price
-*/
-export const changeLicenseType = ({ cartItemIndex, extended, products, currentCartItem, bulkDiscount }: IChangeLicenseData) =>
-	(dispatch: Dispatch<Action>, getState: () => IState) => {
-
-		// take item slug
-		// find the item in our products list
-		// if extended get the extended Item details
-		// if standard get the standard Item details
-		// update cart with new object (price slug, id, qty)
-		// then update cart price
-
-		const product = products[cartItemIndex]
-		const standardItem: IProduct = products[cartItemIndex]
-		const extendedItem: boolean | IProduct = product.license.extendedItem ? products[product.license.extendedItem.slug] : false
-		// look up price of extended item based off its slug
-
-		const standardPriceLookup = bulkDiscount
-			? calcBulkPriceDiscount(bulkDiscount, products[cartItemIndex].price)
-			: products[cartItemIndex].price
-
-		const extendedItemPriceLookup = (bulkDiscount && extendedItem)
-			? calcBulkPriceDiscount(bulkDiscount, products[extendedItem.slug].price)
-			: (extendedItem ? products[extendedItem.slug].price : standardItem.price)
-
-		dispatch(
-			{
-				payload: {
-					item: {
-						[cartItemIndex]: {
-							extended,
-							id: (extended && extendedItem) ? extendedItem.product_id : standardItem.product_id,
-							name: (extended && extendedItem) ? extendedItem.name : standardItem.name,
-							price: (extended && extendedItem) ? extendedItemPriceLookup : standardPriceLookup,
-							qty: currentCartItem.qty,
-							slug: (extended && extendedItem) ? extendedItem.slug : cartItemIndex
-						}
-					}
-				},
-				type: CartActionTypes.UPDATE_CART_LICENSE
-			}
-		)
-
-		// then update price
-		dispatch(updateCartPrice())
-
-		const newState: IState = getState()
-		updateLocalStorageCart(newState.cart)
-
-	}
-
-/*
-* * Tested!
 */
 export const changeCheckoutType = (type: string): Actions => {
 	return {

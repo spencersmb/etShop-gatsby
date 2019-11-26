@@ -1,6 +1,7 @@
 import Login, { LoginModal } from '@components/modals/login'
 import CheckoutNavBar from '@components/products/modules/checkoutNavBar'
 import ProductDescription from '@components/products/modules/productDesc'
+import { LicenseEnum } from '@et/types/Cart'
 import { IModalState } from '@et/types/Modal'
 import { addProductToCart, cartToggle as cartToggleAction } from '@redux/actions/cartActions'
 import { cartReducer } from '@redux/reducers/cartReducer'
@@ -19,21 +20,23 @@ import { bindActionCreators } from 'redux'
 afterEach(cleanup)
 
 const propsDefault = {
+	featuredImage: testProducts[ProductKey.WatercolorStd].featuredImage,
 	handleDialChange: jest.fn(),
 	handleAddToCartState: jest.fn(),
 	handleLicenseChange: jest.fn(),
-	onPwywChange: jest.fn(),
+	licenses: testProducts[ProductKey.WatercolorStd].product_licenses,
 	payWhatYouWant: false,
+	onPwywChange: jest.fn(),
 	inView: false,
+	bulkDiscount: false,
 	numberOfLicenses: 1,
 	selectedProduct: testProducts[ProductKey.WatercolorStd],
 	slug: testProducts[ProductKey.WatercolorStd].slug,
 	inCart: false,
-	selectedLicense: 'standard',
+	selectedLicense: LicenseEnum.standard,
 	title: testProducts[ProductKey.WatercolorStd].name,
 	price: testProducts[ProductKey.WatercolorStd].price,
-	total: '$12.00',
-	featuredImage: testProducts[ProductKey.WatercolorStd].featuredImage
+	total: '$12.00'
 }
 const redux = {
 	cart: {
