@@ -25,7 +25,10 @@ export const ButtonSmall = styled.div<IButtonProps>`
 
 	}
 `
-
+export const CenterButton = styled.div`
+ width: 100%;
+ text-align: center;
+`
 export const ButtonReg = styled.button<IButtonProps>`
 	background: ${props => props.outline ? 'transparent' : (props.color ? props.color : '#000000')};
 	color: ${props => props.textColor ? props.textColor : 'white'};

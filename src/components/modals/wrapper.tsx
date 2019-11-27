@@ -83,7 +83,11 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 
 		// on close - render body before modal closes to stop safari from blinking text
 		if (!show && target.current && !cartIsOpen) {
-			bodyScrollBar.remove(target.current)
+
+			// delay by 300 to allow modal to animate out with scrollbar issue
+			setTimeout(() => {
+				bodyScrollBar.remove(target.current)
+			}, 300)
 
 			document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 		}
@@ -155,6 +159,9 @@ const ModalPose = posed.div({
 	exit: {
 		opacity: 1,
 		position: 'relative',
+		transition: {
+			default: { delay: 1200 }
+		},
 		zIndex: 7
 	},
 	enter: {

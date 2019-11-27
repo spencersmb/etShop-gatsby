@@ -5,7 +5,7 @@ import { cartLoadedComplete as cartLoaded, cartToggle, updateCartState } from '@
 import { CartSliderTransition } from '@styles/modules/cart'
 import { getLocalStorageCart } from '@utils/cartUtils'
 import { bodyScrollBar } from '@utils/windowUtils'
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
@@ -48,6 +48,12 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 		}
 
 	}, [])
+	useEffect(() => {
+		if (cartIsOpen && target.current) {
+			bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+			bodyScrollBar.show(target.current, bodyScrollPos.current)
+		}
+	}, [cartIsOpen])
 
 	return (
 		<CartStyled id='cart-Container' style={{ position: 'relative', zIndex: 4 }}>
@@ -57,9 +63,9 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 
 					const overlayOpen = document.querySelector('#overlay')
 					if (type === 'enter' && !overlayOpen && target.current) {
-						// MOVED TO NAV so happen faster
-						bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-						bodyScrollBar.show(target.current, bodyScrollPos.current)
+						// MOVED TO USEEFFECT ABOVE
+						// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+						// bodyScrollBar.show(target.current, bodyScrollPos.current)
 					}
 
 					if (type === 'exit' && !overlayOpen && target.current) {

@@ -25,7 +25,7 @@ import { checkCartForProduct, getIndexFromLicenseType } from '@utils/cartUtils'
 import { calcBulkPriceDiscount, calcTotalQtyPrice } from '@utils/priceUtils'
 import { useSetState } from '@utils/stateUtils'
 import { renderSvg } from '@utils/styleUtils'
-import { Width } from '@utils/windowUtils'
+import { Width, windowHasScrollbar } from '@utils/windowUtils'
 import { Link } from 'gatsby'
 import _ from 'lodash'
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
@@ -66,7 +66,8 @@ interface INewState {
 	price?: string,
 	payWhatYouWant?: boolean
 }
-export type ISelectProduct = ({license, slug}: {license: string, slug: string}) => void
+
+export type ISelectProduct = ({ license, slug }: { license: string, slug: string }) => void
 
 // TODO: Dont show related if none are present,
 // switch off of has ext license data point instead if needed
@@ -130,7 +131,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		previousCart.current = cart
 	})
 
-	function updatePage(){
+	function updatePage () {
 		// 1. Get the item in the cart
 		const cartItem: ICartItem = cart.items[product.slug]
 
@@ -152,8 +153,8 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		})
 	}
 
-	function onSelectChange({license, slug}: {license: string, slug: string}){
-		if(license === 'standard'){
+	function onSelectChange ({ license, slug }: { license: string, slug: string }) {
+		if (license === 'standard') {
 			setState({
 				selectedLicense: license,
 				selectedProduct: standardItem.current,
@@ -161,7 +162,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					? standardItem.current.sale_price
 					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price, state.numberOfLicenses)
 			})
-		}else{
+		} else {
 			const selectedProduct = products[slug]
 			setState({
 				selectedLicense: license,
@@ -171,7 +172,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					: calcBulkPriceDiscount(state.bulkDiscount, selectedProduct.price, state.numberOfLicenses)
 			})
 		}
-
 
 	}
 
@@ -277,7 +277,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
                 className={`numberDial__outline`}
                 label='Pay what you want'
                 qty={state.price}
-								disableInput={inCart}
+                disableInput={inCart}
                 inputOnChange={onPwywChange}/>
             </InputWrapper>
           </PWYWWrapper>

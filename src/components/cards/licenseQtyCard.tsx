@@ -1,4 +1,5 @@
 import NumberDial from '@components/forms/inputs/numberDial'
+import UserPerDeviceModal from '@components/modals/userPerDevice'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
@@ -24,7 +25,7 @@ function LicenseQtyCard (props: IProps) {
 
 	useEffect(() => {
 		showModal({
-			modal: () => (<div>License</div>),
+			modal: UserPerDeviceModal,
 			options: {
 				closeModal: true,
 				hasBackground: true,
@@ -38,7 +39,7 @@ function LicenseQtyCard (props: IProps) {
 	function triggerViewLicense (e: any) {
 		e.preventDefault()
 		showModal({
-			modal: () => (<div>License</div>),
+			modal: UserPerDeviceModal,
 			options: {
 				closeModal: true,
 				hasBackground: true,

@@ -17,6 +17,14 @@ if (typeof window !== `undefined`) {
 		document.body.clientHeight
 }
 export const Width = thisWidth
+export const windowHasScrollbar = () => {
+	const body = document.getElementsByTagName('body')
+	if (body.length > 0) {
+		return (window.innerWidth - body[0].clientWidth) !== 0
+	} else {
+		return false
+	}
+}
 
 // export const checkDevice
 export function getWidth (): number {
@@ -58,19 +66,19 @@ export const bodyScrollBar = {
 		el.style.removeProperty('top')
 		el.style.removeProperty('bottom')
 
-		// if(window.innerWidth > 1024){
-		// 	el.style.removeProperty('padding')
-		// }
+		if (window.innerWidth > 1024 && windowHasScrollbar()) {
+			el.style.removeProperty('padding')
+		}
 	},
 	show: (el: HTMLElement, scrollPos: number) => {
+		if (window.innerWidth > 1024 && windowHasScrollbar()) {
+			el.style.padding = '0 15px 0 0'
+		}
 		el.style.width = `100%`
 		el.style.top = `-${scrollPos}px`
 		el.style.bottom = `0`
 		el.style.position = 'fixed'
 
-		// if( window.innerWidth > 1024){
-		// 	el.style.padding = '0 15px 0 0'
-		// }
 	}
 }
 

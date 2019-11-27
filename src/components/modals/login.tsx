@@ -136,6 +136,7 @@ export const LoginModal = (props: MixedFormProps) => {
 		<ModalPose
 			animateOnMount={true}
 			key='loginmodal'
+			modal={name}
 			device={getWindowSize()}
 		>
 			<LoginModalWrapper>
@@ -186,8 +187,7 @@ export const LoginModal = (props: MixedFormProps) => {
 					</ContentContainer>
 				</LoginModalContent>
 
-				<CloseBtn data-testid='close-btn' className='jestCartToggle'
-									onClick={closeModal}>{renderSvg(svgs.HamburgerClose)}</CloseBtn>
+
 			</LoginModalWrapper>
 		</ModalPose>
 	)
@@ -229,6 +229,7 @@ const ModalStyled = styled.div`
 			border-radius: 15px;
 			box-shadow: 0 20px 45px -6px rgba(0,0,0,.2);
 			width: 710px;
+			height: auto;
 		}
 `
 const ModalPose = posed(ModalStyled)({
@@ -240,7 +241,7 @@ const ModalPose = posed(ModalStyled)({
 			y: { ease: 'easeOut' }
 		},
 		// width: 0,
-		height: 0,
+		// height: 0,
 		x: `-50%`,
 		y: `-60%`
 	},
@@ -258,9 +259,17 @@ const ModalPose = posed(ModalStyled)({
 			y: { type: 'spring', stiffness: 1500, damping: 35 }
 		},
 		x: `-50%`,
-		y: `-50%`,
+		y: `-50%`
 		// width: `100%`,
-		height: (props: any) => props.device === 'desktop' ? 697 : '100%'
+		// height: (props: any) => {
+		// 	console.log('props', props)
+		//
+		// 	if (props.modal === 'signin') {
+		// 		return props.device === 'mobile' ? '100%' : 697
+		// 	} else {
+		// 		return props.device === 'mobile' ? '100%' : 617
+		// 	}
+		// }
 	}
 })
 const LoginModalWrapper = styled.div`
@@ -287,17 +296,18 @@ const ContentContainer = styled.div<any>`
 	width: 100%;
 	transition: height .2s;
 	//transition-delay: .3s;
-	//height: ${(props) => props.modalHeight === 'signup' ? `500px` : `280px`};
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: ${(props) => props.modalHeight === 'signup' ? `flex-start` : `center`};
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 	
-	@media ${device.laptop} {
+	@media ${device.tablet} {
 		justify-content: center;
 		overflow: hidden;	
+		height: ${(props) => props.modalHeight === 'signup' ? `617px` : `617px`};
 	}
 		
 `

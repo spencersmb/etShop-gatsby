@@ -6,7 +6,7 @@ import { IFacebookUserCreate } from '@et/types/User'
 import { navigate } from '@reach/router'
 import { colors } from '@styles/global/colors'
 import {
-	Arrow,
+	Arrow, CloseBtn,
 	FacebookWrapper,
 	ForgotPassword, FormContent,
 	FormGroup,
@@ -23,6 +23,7 @@ import ReduxFieldExt from '@components/forms/inputs/reduxFieldExt'
 import RenderField from '@components/forms/inputs/renderField'
 // @ts-ignore
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import styled from 'styled-components'
 
 interface IPropsPublic {
 	handleUserSubmit: (props: any) => void
@@ -59,6 +60,8 @@ export const SignInForm = (props: any) => {
 		<FormWrapper
 			data-testid='signIn-form'
 			ref={poseRef}>
+			<CloseBtn data-testid='close-btn' className='jestCartToggle'
+								onClick={closeModal}>{renderSvg(svgs.HamburgerClose)}</CloseBtn>
 			<FormContent>
 				<FormHeader1>
 					<div className='FormHeader1__icon'>{renderSvg(svgs.User)}</div>
@@ -67,7 +70,7 @@ export const SignInForm = (props: any) => {
 						 onClick={props.changeForm}>Save 10% with a new account and Sign
 						up! <Arrow>{renderSvg(svgs.ChevronLeft)}</Arrow></p>
 				</FormHeader1>
-				<form onSubmit={handleSubmit(handleUserSubmit)}>
+				<form onSubmit={handleSubmit(handleUserSubmit)} style={{display: 'flex', flexDirection: 'column'}}>
 					<FormGroup data-testid={'formGroup'} column={true}>
 						<FormInput fullWidth={true}>
 							<ReduxFieldExt
@@ -145,5 +148,3 @@ export const RegisterLoginForm = reduxForm<{}, IPropsPublic>({
 })(SignInForm)
 
 export default RegisterLoginForm
-
-

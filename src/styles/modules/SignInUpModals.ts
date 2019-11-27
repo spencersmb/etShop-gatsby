@@ -3,14 +3,33 @@ import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import styled, { keyframes } from 'styled-components'
 
+export const CloseBtn = styled.div`
+	width: 45px;
+	height: 45px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: flex;
+	cursor:pointer;
+	z-index: 4;
+	svg{
+		width: 100%
+	}
+	path{
+		fill: ${colors.grey.i800};
+	}
+
+		
+`
 export const FormWrapper = styled.div`
 	position: absolute;
 	width: 100%;
 	padding: 20px 20px 20px;
 	display: flex;
 	flex-direction: column;
+	height: 100%;
+	
 	@media ${device.tablet} {
-		height: 100%;
 		padding: 20px 40px 20px;
 		flex-direction: row;
 		align-items: center;
@@ -21,6 +40,7 @@ export const FormContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	flex: 1;
+	justify-content: center;
 	@media ${device.tablet} {
 		margin-right: 40%;
 	}
@@ -36,9 +56,9 @@ export const FormImg = styled.div<{ type?: string }>`
 		top: 50px;
 		
 		${props => props.type === '1' ? `
-			width: 503px;
-			right: -190px;
-			top: 50px;
+			width: 243px;
+			right: 0px;
+			top: 40px;
 		` : ``};
 		.gatsby-image-wrapper{
 			width: 100%;
@@ -60,6 +80,7 @@ export const FormHeader1 = styled.div`
 		color: ${colors.grey.i800};
 		line-height: 24px;
 		margin: 0 0 10px;
+		max-width: 400px;
 		
 		&.signUp{
 			font-size: 21px;
@@ -87,7 +108,7 @@ export const FormHeader1 = styled.div`
 	.FormHeader1__icon{
 		width: 45px;
 		display: flex;
-		margin: 0 auto;
+		margin: 0 auto 10px;
 		justify-content: center;
 		align-items: center;
 		svg{
@@ -97,6 +118,10 @@ export const FormHeader1 = styled.div`
 			fill: ${colors.grey.i800};
 		}
 			
+	}
+	
+	&.FormHeader1__signup{
+		margin-top: 70px;
 	}
 	
 	@media ${device.mobileX} {
@@ -110,18 +135,21 @@ export const FormHeader1 = styled.div`
 	@media ${device.tablet} {
 		padding: 0;
 		text-align: left;
+		&.FormHeader1__signup{
+			margin-top: 0;
+		}
 		h3{
 			font-size: 43px;
-			line-height: 48px;
+			line-height: 43px;
 		}
 		.FormHeader1__icon{
-			margin: 0;
+			margin: 0 0 10px;
 		}
 		.signup__subhead{
 		}
 	}
 `
-export const FormGroup = styled.div<{column?: boolean}>`
+export const FormGroup = styled.div<{ column?: boolean }>`
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 10px;
