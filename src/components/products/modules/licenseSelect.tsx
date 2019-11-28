@@ -1,10 +1,11 @@
+import ViewLicenseModal from '@components/modals/viewLicense/viewLicense'
 import { ILicenseType } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { calcBulkPriceDiscount, displayCurrency } from '@utils/priceUtils'
-import React from 'react'
+import React, { useEffect } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
 
@@ -23,6 +24,21 @@ const highLights = {
 }
 const LicenseSelect = (props: IProps) => {
 	const { licenses, onChange, bulkDiscount, licenceQty, selectedLicense, showModal } = props
+	useEffect(() => {
+		console.log('show modal', selectedLicense)
+
+		showModal({
+			modal: ViewLicenseModal,
+			options: {
+				closeModal: true,
+				hasBackground: true,
+				data: {
+					licenses,
+					selectedLicense
+				}
+			}
+		})
+	}, [])
 	const handleClick = (index: number) => (e: any) => {
 		onChange({
 			license: licenses[index].type.value,
@@ -32,16 +48,19 @@ const LicenseSelect = (props: IProps) => {
 	const triggerViewLicense = (e: any) => {
 		e.preventDefault()
 		showModal({
-			modal: () => (<div>License</div>),
+			modal: ViewLicenseModal,
 			options: {
 				closeModal: true,
 				hasBackground: true,
 				data: {
-					test: 'spencer'
+					licenses,
+					selectedLicense
 				}
 			}
 		})
 	}
+
+	// set min-heights for the container based on how many license choices there are
 	const licensesHeight = () => {
 		switch (licenses.length) {
 			case 3:

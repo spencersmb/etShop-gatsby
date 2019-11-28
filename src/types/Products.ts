@@ -1,3 +1,5 @@
+import { LicenseEnum } from '@et/types/Cart'
+
 interface ICat {
 	id: number,
 	name: string,
@@ -100,7 +102,7 @@ export interface IProductLicenseType {
 }
 export interface ILicenseType {
 	type: {
-		value: string,
+		value: LicenseEnum,
 		name: string
 	},
 	item: {

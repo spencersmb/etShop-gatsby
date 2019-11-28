@@ -23,19 +23,6 @@ function LicenseQtyCard (props: IProps) {
 	const { bulkDiscount, numberOfLicenses, inCart, onDialChange, showModal } = props
 	const disabled = (numberOfLicenses === 0) || (typeof numberOfLicenses === 'string')
 
-	useEffect(() => {
-		showModal({
-			modal: UserPerDeviceModal,
-			options: {
-				closeModal: true,
-				hasBackground: true,
-				data: {
-					test: 'spencer s'
-				}
-			}
-		})
-	}, [])
-
 	function triggerViewLicense (e: any) {
 		e.preventDefault()
 		showModal({

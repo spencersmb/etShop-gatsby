@@ -159,9 +159,6 @@ const ModalPose = posed.div({
 	exit: {
 		opacity: 1,
 		position: 'relative',
-		transition: {
-			default: { delay: 1200 }
-		},
 		zIndex: 7
 	},
 	enter: {
