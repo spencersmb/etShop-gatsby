@@ -18,12 +18,16 @@ export const ButtonSmall = styled.div<IButtonProps>`
 	padding: 8px 18px;
 	font-weight: 500;
 	transition: .3s;
-	&:hover{
-		cursor: pointer;
-		color: ${props => props.hoverTextColor ? props.hoverTextColor : 'white'};
-		background: ${props => props.hoverColor ? props.hoverColor : '#000000'};
-
+	
+	@media ${device.laptop} {
+		&:hover{
+			cursor: pointer;
+			color: ${props => props.hoverTextColor ? props.hoverTextColor : 'white'};
+			background: ${props => props.hoverColor ? props.hoverColor : '#000000'};
+	
+		}
 	}
+	
 `
 export const CenterButton = styled.div`
  width: 100%;

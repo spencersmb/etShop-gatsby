@@ -44,6 +44,13 @@ export default createGlobalStyle`
   
   #___gatsby{
   	min-height: 100vh;
+  	display: flex;
+  	flex-direction: column;
+  }
+  #gatsby-focus-wrapper, #app{
+    display: flex;
+  	flex-direction: column;
+  	flex: 1;
   }
   
   svg{

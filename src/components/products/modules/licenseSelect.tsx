@@ -24,21 +24,6 @@ const highLights = {
 }
 const LicenseSelect = (props: IProps) => {
 	const { licenses, onChange, bulkDiscount, licenceQty, selectedLicense, showModal } = props
-	useEffect(() => {
-		console.log('show modal', selectedLicense)
-
-		showModal({
-			modal: ViewLicenseModal,
-			options: {
-				closeModal: true,
-				hasBackground: true,
-				data: {
-					licenses,
-					selectedLicense
-				}
-			}
-		})
-	}, [])
 	const handleClick = (index: number) => (e: any) => {
 		onChange({
 			license: licenses[index].type.value,

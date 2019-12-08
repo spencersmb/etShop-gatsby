@@ -115,6 +115,7 @@ const IndexPage = ({ data }: any) => {
 const PageContainer = styled.div`
 	background: ${colors.grey.i200};
 	padding-bottom: 30px;
+
 	@media ${device.laptop} {
 		padding-bottom: 70px;
 	}
@@ -124,21 +125,21 @@ const PageContainer = styled.div`
 export default IndexPage
 
 export const query = graphql`
-	query HomePageQuery {
-		site {
-			siteMetadata {
-				title
-				siteUrl
-				description
-				authorUrl
-			}
-		}
-		featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
-			childImageSharp {
-				fluid(maxWidth: 1024) {
-					...GatsbyImageSharpFluid
-				}
-			}
-		}
-	}
+    query HomePageQuery {
+        site {
+            siteMetadata {
+                title
+                siteUrl
+                description
+                authorUrl
+            }
+        }
+        featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
+            childImageSharp {
+                fluid(maxWidth: 1024) {
+                    ...GatsbyImageSharpFluid
+                }
+            }
+        }
+    }
 `

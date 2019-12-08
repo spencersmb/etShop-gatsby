@@ -13,6 +13,7 @@ export default ({ element }: { element: ReactNode }) => {
 	const store = createStore()
 	store.dispatch(loadProducts())
 
+	// USER CHECK
 	// check localstorage for user
 	// decode jwt and check if expired - if expired throw error and logout
 	// if no user found do nothing

@@ -10,12 +10,15 @@ import { INavAction, toggleNav as toggleNavAction } from '@redux/actions/navActi
 import { clearPagination } from '@redux/actions/paginationActions'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
+import { toastrOptions } from '@utils/apiUtils'
+import { isUserValid } from '@utils/authUtils'
 import { getUserImage } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { getWindowSize } from '@utils/windowUtils'
 import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react'
 import { Link, navigate } from 'gatsby'
 import { connect } from 'react-redux'
+import { toastr } from 'react-redux-toastr'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import Login from '@components/modals/login'
@@ -35,7 +38,7 @@ import {
 	SignOutBtn,
 	CartWrapper,
 	CartSvg,
-	CartCount, MobileCartWrapper, NavItem
+	CartCount, MobileCartWrapper, NavItem, SignOut
 } from '@styles/modules/nav'
 
 interface IPropsState {
@@ -56,6 +59,14 @@ function Navbar (props: IPropsActions & IPropsState) {
 	const { user, logout, toggleNav, nav } = props
 	// const {src, alt} = getUserImage(user)
 	const target = useRef<HTMLElement | null>(null)
+
+	useEffect(() => {
+		// USER EXPIRED CHECK
+		if (user && !isUserValid(user.token)) {
+			toastr.error('User Expired:', 'Please login again.', toastrOptions.noHover)
+			signOut()
+		}
+	}, [])
 
 	function openSignInModal (name: string) {
 		return () => [
@@ -100,9 +111,11 @@ function Navbar (props: IPropsActions & IPropsState) {
 	}
 
 	function signOut () {
-		navigate('/')
 		setTimeout(() => {
 			logout()
+			if (nav.isOpen) {
+				toggleNav()
+			}
 		}, 100)
 	}
 
@@ -225,13 +238,16 @@ function Navbar (props: IPropsActions & IPropsState) {
                   onClick={changePage('/account')}>
                   <img src={getUserImage(user).src} alt={getUserImage(user).alt}/>
                   <span>
-									My account
+									Account
 								</span>
                 </a>
               </MyAccount>
             </NavItem>
             <NavItem>
-              <button className={'signOut'} onClick={signOut}>Sign Out</button>
+              <SignOut onClick={signOut}>
+                Sign Out
+              </SignOut>
+							{/*<button className={'signOut'} onClick={signOut}>Sign Out</button>*/}
             </NavItem>
 
           </LoginStatus>

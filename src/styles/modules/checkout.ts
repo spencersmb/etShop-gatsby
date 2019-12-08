@@ -1,9 +1,10 @@
 import { device } from '@styles/global/breakpoints'
+import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import posed from 'react-pose'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const CartInner = styled.div`
  margin:0;
@@ -57,7 +58,6 @@ export const CheckoutTabs = styled.ul`
 			
  	}
 `
-
 export const PaymentTab = styled.li<{ selected: boolean }>`
 	flex: 1;
 	list-style: none;
@@ -128,7 +128,6 @@ export const PaymentTab = styled.li<{ selected: boolean }>`
 	}
 		
 `
-
 export const OrderSummery = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -153,8 +152,7 @@ export const OrderSummery = styled.div`
 	}
 		
 `
-
-export const TotalSummery = styled.div<{hasDiscount: boolean}>`
+export const TotalSummery = styled.div<{ hasDiscount: boolean }>`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -266,7 +264,6 @@ export const CouponButton = styled.div`
 	}
 		
 `
-
 const CouponContainerPosed = posed.div({
 	show: {
 		height: 'auto',
@@ -281,10 +278,26 @@ const CouponContainerPosed = posed.div({
 		}
 	}
 })
+
+const fadeInOut = keyframes`
+  0% {
+    background: rgba(70, 208, 209, 0);
+  }
+	50% {
+    background: rgba(70, 208, 209, 1);
+  }
+  100% {
+    background: rgba(70, 208, 209, 0);
+  }
+`
 export const CouponWrapper = styled(CouponContainerPosed)`
 	overflow: hidden;
 	position: relative;
 	width: 100%;
+	
+	&.couponOpen{
+		animation: 600ms 200ms ${fadeInOut} ;
+	}
 	
 	@media (max-width: 767px){
 		height: auto !important;
@@ -307,7 +320,6 @@ export const CouponContainer = styled.div`
 		color: ${colors.grey.i800};
 	}
 `
-
 export const InputSpinner = styled.div<{ submitting: boolean, spinnerColor: string }>`
 	opacity: ${props => props.submitting ? 1 : 0};
 	width: 25px;
@@ -327,7 +339,6 @@ export const InputSpinner = styled.div<{ submitting: boolean, spinnerColor: stri
     animation: dash 1.5s ease-in-out infinite;
   }
 `
-
 export const DiscountSummary = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -339,7 +350,6 @@ export const DiscountSummary = styled.div`
 	}
 		
 `
-
 export const CartLoginAd = styled.div`
 	background: #46d0d1;
 	display: flex;
@@ -350,7 +360,7 @@ export const CartLoginAd = styled.div`
 	
 	@media ${device.laptop} {
 		grid-row: 2;
-		grid-column: 9 /14;
+		grid-column: 10 /14;
 		border-radius: 15px;
 		flex-direction: column;
 		box-shadow: ${shadowStyles.shadow2};
@@ -358,14 +368,6 @@ export const CartLoginAd = styled.div`
 		margin: 25px auto 0 0;
 		overflow: hidden;
  	}
- 	
- 	@media ${device.laptop} {
-		grid-column: 10 /14;
- 	} 	
- 	// @media ${device.laptopL} {
-		// grid-column: 11 /14;
-		// margin-right: -30px;
- 	// }
 `
 export const LoginAdLeft = styled.div`
 	display: none;
@@ -455,10 +457,10 @@ export const LoginRight = styled.div`
 	}
 	
 	@media ${device.laptop} {
-		margin-top: 80px;
+		margin-top: 50px;
+		padding-bottom: 25px;
 	}
 `
-
 export const LoginAdButtons = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -475,14 +477,12 @@ export const LoginAdButtons = styled.div`
 		}
 	}
 `
-
 export const GuestBillingContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 0 20px;
 	flex:1;
 `
-
 export const CheckoutFormLabel = styled.div`
 	font-size: 13px;
 	text-transform: uppercase;
@@ -490,7 +490,6 @@ export const CheckoutFormLabel = styled.div`
 	padding: 30px 0 20px;
 	font-weight: bold;
 `
-
 export const StripeCardWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -499,7 +498,6 @@ export const StripeCardWrapper = styled.div`
 	height: 100%;
 	justify-content: flex-start;
 `
-
 export const CreditCardFormWrapper = styled.div`
  margin-bottom: 30px;
 `
@@ -522,7 +520,6 @@ export const PaypalSpinner = styled.div`
 		transform: translate(-50%,-50%);
 	}
 `
-
 export const PaypalButtonPoseWrapper = posed.div({
 	show: {
 		marginTop: 20,
@@ -537,3 +534,72 @@ export const PaypalButtonPoseWrapper = posed.div({
 		overflow: 'hidden'
 	}
 })
+
+export const ProfileCardContainer = styled.div<{ desktop: boolean }>`
+	background: #fff;
+	flex-direction: column;
+	position: relative;
+	z-index: 1;
+	grid-column: 1 / -1;
+	padding: ${props => props.desktop ? '0 25px 25px' : '0 25px 0'};
+	display: ${props => props.desktop ? 'none' : 'flex'};
+	
+	@media ${device.laptop} {
+		display: ${props => props.desktop ? 'flex' : 'none'};
+		grid-row: 2;
+		grid-column: 9 /14;
+		border-radius: 15px;
+		flex-direction: column;
+		box-shadow: ${shadowStyles.shadow2};
+		max-width: 343px;
+		overflow: hidden;
+		margin: 25px auto;
+		width: 100%;
+		box-shadow: ${shadowStyles.shadow2};
+ 	}
+ 	
+ 	@media ${device.laptop} {
+		grid-column: 10 /14;
+ 	} 	
+`
+export const LoginUserWrapper = styled.div<{ desktop: boolean }>`
+	display: flex;
+	flex-direction: ${props => props.desktop ? 'column' : 'row'};
+	justify-content: ${props => props.desktop ? 'center' : 'left'};
+	position: relative;
+	align-items: center;
+	img{
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		border: 4px solid ${colors.purple.i500};
+		margin-bottom: 15px;
+	}
+`
+export const UserContent = styled.div<{ desktop: boolean }>`
+	display: flex;
+	flex-direction: column;
+	align-items: ${props => props.desktop ? 'center' : 'flex-start'};
+	padding-left: ${props => props.desktop ? '0' : '20px'};
+	
+`
+export const UserName = styled.div`
+	${Sentinel.semiboldItalic};
+	font-size: 20px;
+	line-height: 20px;
+	margin-bottom: 5px;
+	color: ${colors.purple.i700};
+`
+export const UserEmail = styled.div`
+ font-size: 14px;
+ color: ${colors.purple.i700};
+ margin-bottom: 15px;
+`
+export const SignOutBtn = styled(ButtonSmall)<{ desktop: boolean }>`
+	border: 3px solid ${colors.grey.i600};
+	
+	${props => !props.desktop ? `
+		right: 0;
+		position: absolute;
+	` : ''}
+`

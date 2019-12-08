@@ -87,6 +87,10 @@ export const LoginModal = (props: MixedFormProps) => {
 			if (!cart.isOpen) {
 				navigate(`/account/`)
 			}
+			// if mobile nav open close it
+			if (nav.isOpen) {
+				navToggle()
+			}
 		} catch (e) {
 			console.error('user login fail:', e)
 		}

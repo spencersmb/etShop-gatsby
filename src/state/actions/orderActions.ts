@@ -1,3 +1,4 @@
+import AuthApi from '@api/authApi'
 import { CheckoutApi } from '@api/checkoutApi'
 import { OrderActionTypes, PaginationTypes } from '@et/types/Enums'
 import { IPaypalSuccessOrder } from '@et/types/Paypal'
@@ -67,4 +68,27 @@ export const processPaypalOrder = (paypalOrderData: IPaypalSuccessOrder) => asyn
 
 	// return order
 	return json
+}
+
+export type ISearchOrderAction = (orderId: string) => Promise<IOrderResponse>
+export const searchOrderById = (orderId: string) => async (dispatch: Dispatch<Action>, getState: any): Promise<IOrderResponse> => {
+	const request: Response = await AuthApi.getOrder(orderId)
+	await statusCheck(request, dispatch)
+
+	// return order
+	return request.json()
+}
+
+export type IResetDownloadLinksAction = (orderId: string) => Promise<any>
+export const resetDownloadLinks = (orderId: string, page: number) => async (dispatch: Dispatch<Action>, getState: any): Promise<any> => {
+
+	const request: Response = await AuthApi.resetLinks(orderId)
+	await statusCheck(request, dispatch)
+	const json: any = await request.json()
+	
+	console.log('json', json)
+
+	// dispatch({
+	// 	type: OrderActionTypes.COMPLETE_PAYPAL_ORDER_SUCCESS
+	// })
 }

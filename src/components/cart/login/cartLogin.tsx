@@ -1,9 +1,20 @@
+import ProfileCard from '@components/account/profileCard'
 import Login from '@components/modals/login'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
-import { ButtonReg } from '@styles/global/buttons'
+import { device } from '@styles/global/breakpoints'
+import { ButtonReg, ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
-import { CartLoginAd, LoginAdButtons, LoginAdLeft, LoginRight } from '@styles/modules/checkout'
+import { shadowStyles } from '@styles/global/shadows'
+import {
+	CartLoginAd,
+	CheckoutFormLabel,
+	CheckoutTabs,
+	LoginAdButtons,
+	LoginAdLeft, ProfileCardContainer,
+	LoginRight, LoginUserWrapper, SignOutBtn, UserContent, UserEmail, UserName
+} from '@styles/modules/checkout'
+import { getUserImage } from '@utils/genUtils'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
@@ -36,13 +47,7 @@ export function CartLogin (props: IReduxState & IReduxActions) {
 	}
 
 	return user
-		? (
-			<>
-				<hr/>
-				Users {user.firstName}
-				<hr/>
-			</>
-		)
+		? (<ProfileCard desktop={true}/>)
 		: (
 			<CartLoginAd>
 				<LoginAdLeft>

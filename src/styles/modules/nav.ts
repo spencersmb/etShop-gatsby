@@ -206,14 +206,14 @@ export const LoginStatus = styled.ul`
 		padding: 0 0 15px;
 	}
 	
-	.signOut{
-		padding: 15px 0 0;
-		font-size: 16px;
-		font-weight: 700;
-		margin: 0;
-		color: #fff;
-		text-transform: uppercase;
-	}
+	//.signOut{
+	//	padding: 15px 0 0;
+	//	font-size: 16px;
+	//	font-weight: 700;
+	//	margin: 0;
+	//	color: #fff;
+	//	text-transform: uppercase;
+	//}
 	
 	@media ${device.laptop} {
 		align-items: center;
@@ -225,10 +225,10 @@ export const LoginStatus = styled.ul`
 			transform: translateX(0) !important;
 			padding: 0;
 		}
-		.signOut{
-			padding: 0;
-			color: ${colors.primary.text};
-		}
+		// .signOut{
+		// 	padding: 0;
+		// 	color: ${colors.primary.text};
+		// }
 	}
 		
 `
@@ -273,16 +273,18 @@ export const MyAccount = styled.div`
 	}
 	span{
 		text-transform: uppercase;
-		font-weight: 700;
+		font-weight: 600;
 		font-size: 16px;
 	}
 	a{
 		color: #fff;
-		font-weight: 500;
 	}
 	
 	@media ${device.laptop} {
 		margin: 0 20px 0 0;
+		span{
+			font-size: 14px;
+		}
 		a{
 			color: ${colors.primary.text};
 			font-weight: 500;
@@ -291,8 +293,14 @@ export const MyAccount = styled.div`
 		
 `
 export const SignOutBtn = styled(ButtonSmall)`
-	padding: 8px 0;
-	margin: 0 15px 0 0;
+	font-size: 16px;
+	margin: 15px 0 0 0;
+	@media ${device.laptop} {
+		font-size: 14px;
+		margin: 0 15px 0 0;
+		padding: 5px 12px;
+	}
+		
 `
 export const CartWrapper = styled(FlexRow)`
 	display: none;
@@ -361,4 +369,30 @@ export const MobileCartWrapper = styled(FlexRow)`
 	@media ${device.laptop} {
 		display: none;
 	}
+`
+
+export const SignOut = styled.button`
+	background: transparent;
+	color: #fff;
+	outline: none;
+	border: none;
+	text-transform: uppercase;
+	font-weight: 800;
+	padding: 15px 0 0;
+	
+	&:hover{
+		cursor: pointer;
+	}
+	
+	&:focus{
+		outline: none;
+	}
+	
+	@media ${device.laptop} {
+	font-size: 14px;
+		padding: 0 20px 0 5px;
+		color: ${colors.primary.text};
+	}
+		
+	
 `

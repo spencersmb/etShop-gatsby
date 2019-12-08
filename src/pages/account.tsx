@@ -7,7 +7,6 @@ import { facebookDefaultMeta, socialUtils, twitterDefaultMeta } from '@utils/gen
 import { graphql } from 'gatsby'
 import React from 'react'
 import { Router } from '@reach/router'
-import Profile from '@components/account/profile'
 import UserHoc from '@components/account/userHoc' // passes user data as prop
 
 const Account = ({ data }: any) => {
@@ -121,21 +120,21 @@ const Account = ({ data }: any) => {
 export default Account
 
 export const query = graphql`
-	query AccountPageQuery {
-		site {
-			siteMetadata {
-				title
-				siteUrl
-				description
-				authorUrl
-			}
-		}
-		featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
-			childImageSharp {
-				fluid(maxWidth: 1024) {
-					...GatsbyImageSharpFluid
-				}
-			}
-		}
-	}
+    query AccountPageQuery {
+        site {
+            siteMetadata {
+                title
+                siteUrl
+                description
+                authorUrl
+            }
+        }
+        featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
+            childImageSharp {
+                fluid(maxWidth: 1024) {
+                    ...GatsbyImageSharpFluid
+                }
+            }
+        }
+    }
 `

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 interface IProps {
 	itemIndex: number
-	selectedOrder: number
+	selectedOrder: any
 	handleClick: (item: any) => void
 }
 
@@ -13,6 +13,7 @@ function OrderItem (props: IProps & IReceipt) {
 	// console.log('selectedOrder === id', selectedOrder)
 
 	const orderClick = () => {
+		// console.log('id', id)
 		return handleClick(id)
 	}
 
@@ -24,7 +25,7 @@ function OrderItem (props: IProps & IReceipt) {
 			onClick={orderClick}>
 			<SelectedItem
 				data-testid='orderItem-wrapper'
-				selected={selectedOrder === id}>
+				selected={selectedOrder && selectedOrder.id === id}>
 				<div data-testid='orderItem-id'>order# {id}</div>
 				<div data-testid='orderItem-date'>date: {date}</div>
 				<div data-testid='orderItem-total'>total {total}</div>

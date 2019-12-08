@@ -12,24 +12,22 @@ Kick off your project with this default boilerplate. This starter ships with the
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.org/docs/gatsby-starters/)._
 
-## 🚀 Quick start
+## 🚀 Quick Links
 
-1.  **Create a Gatsby site.**
+-  **USER EXPIRED CHECK**
 
-    Use the Gatsby CLI to create a new site, specifying the default starter.
+    Check for user on every page render if present for exp.
 
     ```sh
-    # create a new Gatsby site using the default starter
-    npx gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
+    Component: navbar.tsx
     ```
 
-1.  **Start developing.**
+-  **USER CHECK**
 
-    Navigate into your new site’s directory and start it up.
+    Check for user on page load
 
     ```sh
-    cd my-default-starter/
-    gatsby develop
+    Component: wrap-with-provider.tsx
     ```
 
 1.  **Open the source code and start editing!**

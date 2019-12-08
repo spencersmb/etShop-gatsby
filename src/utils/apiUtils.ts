@@ -13,7 +13,7 @@ import { navigate } from 'gatsby'
  * @returns {Function} actionType dispatch( logUserOut )
  * @returns {Error}
  */
-export const statusCheck = async (response: any, dispatch: any) => {
+export const 	statusCheck = async (response: any, dispatch: any) => {
 	// console.log('response.status', response)
 	// console.log('errors?', await response.json())
 

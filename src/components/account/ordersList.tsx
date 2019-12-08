@@ -8,7 +8,7 @@ interface IProps {
 	page: number;
 	pagination: IPaginateState
 	handleClick: (item: any) => void,
-	selectedOrder: number
+	selectedOrder: any
 }
 
 const OrdersList = (props: IProps) => {
@@ -17,7 +17,6 @@ const OrdersList = (props: IProps) => {
 
 	return (
 		<div>
-			<h3>Orders:</h3>
 			<div data-testid='orderList'>
 				{pagination.pages[page] && Object.keys(pagination.pages[page]).map((key: any, index) => {
 						const pageItem: IReceipt = pagination.pages[page][key]
@@ -33,11 +32,6 @@ const OrdersList = (props: IProps) => {
 					}
 				).reverse()}
 			</div>
-			{!pagination.loading && pagination.totalPages > 0 &&
-      <PaginationBar
-        currentPage={page}
-        total={pagination.totalPages}
-      />}
 		</div>
 	)
 }

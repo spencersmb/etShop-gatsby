@@ -1,11 +1,11 @@
 import CartList from '@components/cart/cartList'
-import { useScrollEvent } from '@components/products/productFilter'
 import StripeCheckout from '@components/stripe/stripeCheckout'
 import StripeProviderWrapper from '@components/stripe/stripeProvider'
 import CheckoutPage from '@components/tabs/checkoutTabs'
 import { IModalState, OnPoseComplete } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
+import { IUserState } from '@et/types/User'
 import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
 import { device } from '@styles/global/breakpoints'
 import { ButtonReg } from '@styles/global/buttons'
@@ -17,7 +17,7 @@ import { svgs } from '@svg'
 import { isPWYWItemInCart } from '@utils/cartUtils'
 import { displayCurrency } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
-import { getWindowSize } from '@utils/windowUtils'
+import { bodyScrollBar, getWindowSize, windowHasScrollbar } from '@utils/windowUtils'
 import posed, { PoseGroup } from 'react-pose'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -33,6 +33,7 @@ interface IPropsPublic {
 }
 
 interface IReduxState {
+	user: IUserState,
 	cart: ICartState,
 	modal: IModalState
 	products: IProducts,
@@ -138,11 +139,10 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	const bodyScrollPos = useRef(0)
 	const CheckoutSliderRef: any = useRef(null)
 
-
 	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
 	// to flip to the free checkout form
 	const toggleCheckout = () => {
-		if(checkoutOpen){
+		if (checkoutOpen) {
 			CheckoutSliderRef.current.style.overflowY = `hidden`
 			// if(window.innerWidth > 1024){
 			// 	CheckoutSliderRef.current.style.padding = `0 15px 0 0`
@@ -150,6 +150,12 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		}
 		setCheckoutOpen(!checkoutOpen)
 	}
+
+	useEffect(() => {
+		if (checkoutOpen && windowHasScrollbar()) {
+			CheckoutSliderRef.current.style.padding = `0 15px 0 0`
+		}
+	})
 
 	useEffect(() => {
 		target.current = document.querySelector('#___gatsby')
@@ -218,21 +224,12 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			<CheckoutSlide
 				ref={CheckoutSliderRef}
 				pose={checkoutOpen ? 'open' : 'closed'}
-				onPoseComplete={(type: OnPoseComplete) => {
-						if (type === 'open') {
-							CheckoutSliderRef.current.style.overflowY = `scroll`
-							// check width for laptop or larger to do the padding issue
-							if(window.innerWidth > 1024){
-								CheckoutSliderRef.current.style.padding = `0px`
-							}
-						}
-					}
-				}
 			>
 				<CheckoutPage
 					initialLoad='stripe'
 					toggleCheckout={toggleCheckout}
 					handleChangeType={props.changeCheckout}
+					user={props.user}
 					freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
 				>
 					<div data-payment='stripe'>
@@ -251,6 +248,25 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		</CartWrapper>
 	)
 }
+
+const mapStateToProps = (state: IState): any => {
+	return {
+		cart: state.cart,
+		products: state.products,
+		modal: state.modal,
+		user: state.user
+	}
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+	return {
+		cartToggle: bindActionCreators(cartToggle, dispatch),
+		changeCheckout: bindActionCreators(changeCheckoutType, dispatch),
+		emptyCart: bindActionCreators(emptyCart, dispatch)
+	}
+}
+
+export default connect<IReduxState, IReduxActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(CartLayout)
 
 const ButtonStyled = styled(ButtonReg)`
 	display: flex;
@@ -371,7 +387,7 @@ const CheckoutSlide = styled(CheckoutPose)`
 	
 	@media ${device.laptopL} {
 		background: ${colors.grey.i200};
-		padding-right: 15px;
+		//padding-right: 15px;
 	}
 		
 `
@@ -467,20 +483,3 @@ const CartWrapper = styled.div`
 	//transition: all 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
 `
 
-const mapStateToProps = (state: IState): any => {
-	return {
-		cart: state.cart,
-		products: state.products,
-		modal: state.modal
-	}
-}
-
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
-	return {
-		cartToggle: bindActionCreators(cartToggle, dispatch),
-		changeCheckout: bindActionCreators(changeCheckoutType, dispatch),
-		emptyCart: bindActionCreators(emptyCart, dispatch)
-	}
-}
-
-export default connect<IReduxState, IReduxActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(CartLayout)

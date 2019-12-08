@@ -1,20 +1,20 @@
+import ProfileCard from '@components/account/profileCard'
 import CheckoutTotal from '@components/cart/checkout/checkoutTotal'
 import CartLogin from '@components/cart/login/cartLogin'
 import FreeCheckoutForm from '@components/forms/freeItem-checkout'
 import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
+import { OnPoseComplete } from '@et/types/Modal'
+import { IUserState } from '@et/types/User'
 import { device } from '@styles/global/breakpoints'
 import { GridFluid } from '@styles/global/cssGrid'
 import { CartHeader, CartHeaderTitle } from '@styles/modules/cart'
 import { CartInner, CheckoutFormLabel, CheckoutTabs, CouponWrapper } from '@styles/modules/checkout'
 import { svgs } from '@svg'
 import { reduceChildrenByDataType } from '@utils/genUtils'
-import { displayCurrency } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
-// import styled from 'styled-components'
 
 /**
  * TabsList properties.
@@ -26,6 +26,7 @@ export interface IProps {
 	initialLoad?: string;
 	handleChangeType: (type: string) => void
 	toggleCheckout: () => void
+	user: IUserState
 }
 
 /**
@@ -85,22 +86,22 @@ export const CheckoutPage = (props: IProps) => {
 				</CartHeaderTitle>
 				<div className='spacer' style={{ width: '56px' }}/>
 			</CartHeader>
-      <CheckOutContainer>
+			<CheckOutContainer>
 
-        <CartLogin/>
+				<CartLogin/>
 
-        <CartInner>
+				<CartInner>
 
-          <CheckoutTotal
-            showCouponInput={showCouponInput}
-            setShowCouponInput={setShowCouponInput}
-          />
+					<CheckoutTotal
+						showCouponInput={showCouponInput}
+						setShowCouponInput={setShowCouponInput}
+					/>
 
-          <CheckoutTabs data-testid='tabs__Nav'>
-            <CheckoutFormLabel>
-              SELECT PAYMENT
-            </CheckoutFormLabel>
-            <div className='inner'>
+					<CheckoutTabs data-testid='tabs__Nav'>
+						<CheckoutFormLabel>
+							SELECT PAYMENT
+						</CheckoutFormLabel>
+						<div className='inner'>
 							{React.Children.toArray(props.children)
 								.map((child: any, index: number) =>
 									<CheckoutTab
@@ -110,16 +111,34 @@ export const CheckoutPage = (props: IProps) => {
 										handleClick={onTabClick}
 									/>
 								)}
-            </div>
-          </CheckoutTabs>
+						</div>
+					</CheckoutTabs>
 
-          <CouponWrapper pose={showCouponInput ? 'show' : 'hide'}>
-            <CouponInput/>
-          </CouponWrapper>
+					<CouponWrapper
+						pose={showCouponInput ? 'show' : 'hide'}
+						className={showCouponInput ? 'couponOpen' : 'couponhide'}
+						onPoseComplete={(type: OnPoseComplete) => {
+							if (type === 'open') {
+								console.log('test')
+
+								// check width for laptop or larger to do the padding issue
+								// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+								// bodyScrollBar.show(CheckoutSliderRef.current, bodyScrollPos.current)
+								// if (window.innerWidth > 1024) {
+								// 	// CheckoutSliderRef.current.style.padding = `0px`
+								// }
+							}
+						}
+						}>
+						<CouponInput/>
+					</CouponWrapper>
+
+					{props.user && <ProfileCard/>}
+
 
 					{/*Render Matching Payment Form Content*/}
 					{!props.freeCheckout &&
-          <div data-testid='tabs__Content' style={{flex: 1}}>
+          <div data-testid='tabs__Content' style={{ flex: 1 }}>
 						{React.Children.toArray(props.children)
 							.map((child: any) => {
 									return child.props['data-payment'] === key ? child.props.children : null
@@ -128,9 +147,11 @@ export const CheckoutPage = (props: IProps) => {
           </div>
 					}
 					{props.freeCheckout && <FreeCheckoutForm/>}
-        </CartInner>
 
-      </CheckOutContainer>
+
+				</CartInner>
+
+			</CheckOutContainer>
 		</div>
 
 	)
