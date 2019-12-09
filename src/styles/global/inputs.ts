@@ -1,7 +1,6 @@
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
-import styled from 'styled-components'
-import { css } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const InputOutline = styled.div<{ disableInput: boolean }>`
 	input{

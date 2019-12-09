@@ -1,9 +1,9 @@
 export const colors = {
 	disabled: '#b5b5b5',
 	green: '#7ACC28',
-	red:{
+	red: {
 		warning: '#FF6363',
-		i500:'#963753',
+		i500: '#963753',
 		i800: `#541829`
 	},
 	primary: {
@@ -11,7 +11,7 @@ export const colors = {
 		pink: `#F95A86`,
 		headline: `#35546D`
 	},
-	secondary:{
+	secondary: {
 		text: `#6A7E90`
 	},
 	text: '#95989A',
@@ -26,13 +26,17 @@ export const colors = {
 		i400: `#B09AE3`,
 		i500: `#A182E9`,
 		i600: `#755FA7`,
-		i700: `#6A539F`,
+		i700: `#6A539F`
 	},
-	teal:{
+	teal: {
 		i200: `#E5FCFF`,
 		i300: `#98E8F1`,
 		i500: `#18C3C3`,
 		i600: `#147590`,
-		i800: `#147590`,
+		i800: `#147590`
+	},
+	db: {
+		primary: `#5A44E2`,
+		mid: `#DADBF1`
 	}
 }

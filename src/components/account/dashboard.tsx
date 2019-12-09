@@ -13,9 +13,14 @@ import {
 } from '@redux/actions/orderActions'
 import { fetchOrders } from '@redux/actions/paginationActions'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
+import { Sentinel } from '@styles/global/fonts'
+import { CartSliderTransition } from '@styles/modules/cart'
+import { SearchFilledContainer } from '@styles/modules/searchInputPill'
 import { useSetState } from '@utils/stateUtils'
 import { Width } from '@utils/windowUtils'
 import React, { useEffect, useRef } from 'react'
+import posed, { PoseGroup } from 'react-pose'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
@@ -67,8 +72,6 @@ export function Dashboard (props: AllProps) {
 		selectedOrder: null
 	})
 
-	console.log('dashboard render', state)
-
 	useEffect(() => {
 		console.log('useEffect page check')
 
@@ -114,7 +117,9 @@ export function Dashboard (props: AllProps) {
 		} else {
 			try {
 				const { order } = await props.searchOrderById(orderId)
-				setState({ searching: false, selectedSearchOrder: order })
+				setState({ searching: false })
+
+				// setState({ searching: false, selectedSearchOrder: order })
 			} catch (e) {
 				setState({ searching: false })
 			}
@@ -131,32 +136,24 @@ export function Dashboard (props: AllProps) {
 			console.error('e', e)
 		}
 
-		// send ID to backend
-		// get the same downloads array back and replace it in redux pagination.pages[1][orderId]
-		// if state.selected Order is selected we'll need to replace it there
-		// ill need order id + downloads
 	}
 
-	// Things to do:
-	// place in data for receipt order component
-	// begin refresh links flow
-
 	return (
-		<div style={{ display: 'flex' }}>
+		<PageContainer>
 
-			<div>
-				<h1>My orders</h1>
+			<PageHeader>
+				<h1>My Orders</h1>
 
-				<div>
+				<SearchFilledContainer>
 					<SearchInput
 						state={state}
 						handleSubmit={submitSearch}
 						handleState={setState}
 					/>
-				</div>
-			</div>
+				</SearchFilledContainer>
+			</PageHeader>
 
-			<div>
+			<OrderDisplayContainer>
 				{pagination.loading && <div>Loading Orders</div>}
 
 				{/* order list for mobile */}
@@ -169,17 +166,6 @@ export function Dashboard (props: AllProps) {
             handleClick={orderClick}
           />
         </OrderListWrapper>
-				}
-
-				{/*detail order item for mobile*/}
-				{state.selectedOrder &&
-        <DetailOrderMobile>
-          <OrderDisplay
-            handleLinkRefresh={resetOrderLinks}
-            selectedOrder={state.selectedOrder}
-            handleState={setState}
-          />
-        </DetailOrderMobile>
 				}
 
 				{/*detail order list for desktop */}
@@ -200,10 +186,9 @@ export function Dashboard (props: AllProps) {
 							)
 						})}
 
-
           </OrderListWrapper>
 
-				), [state.selectedSearchOrder, pagination.loading])}
+				), [state.selectedSearchOrder, pagination.loading, pagination.pages, page])}
 
 				{state.selectedSearchOrder &&
         <div>
@@ -217,14 +202,28 @@ export function Dashboard (props: AllProps) {
         </div>
 				}
 
-			</div>
+			</OrderDisplayContainer>
 
-			{pagination.pages[page] && pagination.totalPages > 0 &&
+			{pagination.totalPages > 0 &&
       <PaginationBar
         currentPage={page}
         total={pagination.totalPages}
       />}
-		</div>
+
+			{/*detail order item for mobile*/}
+			<PoseGroup>
+				{!!state.selectedOrder &&
+        <DetailOrderMobile
+          key={`mobileOrderDisplay`}>
+          <OrderDisplay
+            handleLinkRefresh={resetOrderLinks}
+            selectedOrder={state.selectedOrder}
+            handleState={setState}
+          />
+        </DetailOrderMobile>
+				}
+			</PoseGroup>
+		</PageContainer>
 	)
 }
 
@@ -242,7 +241,35 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 }
 
 export default connect<IReduxState, IReduxActions, IProps, IState>(mapStateToProps, mapDispatchToProps)(Dashboard)
-
+const PageContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+`
+const PageHeader = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0 25px;
+	padding: 0 20px;
+	
+	h1{
+		color: ${colors.primary.headline};
+		${Sentinel.semiboldItalic};
+		text-align: center;
+		font-weight: 300;
+		margin-bottom: 15px;
+	}
+	
+	@media ${device.tablet} {
+		flex-direction: row;
+	}
+		
+`
+const OrderDisplayContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px;
+	position: relative;
+`
 const OrderListWrapper = styled.div<{ desktop?: boolean }>`
 	${props => props.desktop ? `
 		display: none;
@@ -262,8 +289,25 @@ const OrderListWrapper = styled.div<{ desktop?: boolean }>`
 		
 `
 
-const DetailOrderMobile = styled.div`
-	display: flex;
+const DetailOrderMobilePose = posed.div({
+	enter: {
+		x: '0%',
+		transition: CartSliderTransition.enter
+	},
+	exit: {
+		x: '-100%',
+		transition: CartSliderTransition.exit
+	}
+})
+const DetailOrderMobile = styled(DetailOrderMobilePose)`
+	position: fixed;
+	top: 0;
+	transform: translateX(-100%);
+	background: #FFF;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	-webkit-overflow-scrolling: touch;
 	
 	@media ${device.tablet} {
 		display: none;

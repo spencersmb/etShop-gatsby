@@ -1,5 +1,5 @@
 import { ICartItem, ICouponRaw, ILocalStorageCart } from '@et/types/Cart'
-import { ILoadPaginationSuccess } from '@et/types/Pagination'
+import { ILoadPaginationSuccess, IResetDownloadActionResponse } from '@et/types/Pagination'
 import { IProducts } from '@et/types/Products'
 import { IOrderResponse } from '@et/types/WC_Order'
 import {
@@ -154,6 +154,11 @@ export interface IClearPagination {
 	type: PaginationTypes.CLEAR_ALL_PAGES
 }
 
+export interface IResetDownloadLinks {
+	payload: IResetDownloadActionResponse,
+	type: PaginationTypes.REFRESH_DOWNLOAD_LINKS
+}
+
 export interface INavToggle {
 	type: NavActionTypes.TOGGLE_NAV
 }
@@ -198,6 +203,7 @@ type PaginationActions =
 	| IGetAllOrdersSuccess
 	| IUpdatePaginationAfterOrder
 	| IClearPagination
+	| IResetDownloadLinks
 
 type NavActions =
 	| INavToggle

@@ -3,8 +3,8 @@ import { CheckoutApi } from '@api/checkoutApi'
 import { OrderActionTypes, PaginationTypes } from '@et/types/Enums'
 import { IPaypalSuccessOrder } from '@et/types/Paypal'
 import { IState } from '@et/types/State'
-import { IOrderDetails, IOrderResponse } from '@et/types/WC_Order'
-import { addItemAfterOrder, clearPagination } from '@redux/actions/paginationActions'
+import { IOrderDetails, IOrderDownload, IOrderResponse } from '@et/types/WC_Order'
+import { addItemAfterOrder, clearPagination, updateDownloadLinks } from '@redux/actions/paginationActions'
 import { statusCheck } from '@utils/apiUtils'
 import { Action, Dispatch } from 'redux'
 
@@ -84,11 +84,17 @@ export const resetDownloadLinks = (orderId: string, page: number) => async (disp
 
 	const request: Response = await AuthApi.resetLinks(orderId)
 	await statusCheck(request, dispatch)
-	const json: any = await request.json()
-	
-	console.log('json', json)
+	const json: { code: string, message: string, order: { order_id: string, downloads: IOrderDownload } } = await request.json()
 
-	// dispatch({
-	// 	type: OrderActionTypes.COMPLETE_PAYPAL_ORDER_SUCCESS
-	// })
+	console.log('json', json)
+	const item = json.order.downloads.exp_date * 1000
+	const today = new Date()
+	const exp = new Date(json.order.downloads.exp_date * 1000)
+	console.log('exp', exp)
+	console.log('valid? ', exp.getTime() >= today.getTime())
+
+	dispatch(updateDownloadLinks({
+		order: json.order,
+		page
+	}))
 }

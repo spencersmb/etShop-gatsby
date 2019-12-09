@@ -144,7 +144,7 @@ const SubmitBtn = styled(PosedButton)`
 		}
 		
 		&:disabled{
-		 background: ${colors.grey.i400} !important;
+		 background: ${props => props.submitting ? 'transparent' : `${colors.grey.i400} !important`};
 		}
 `
 const ButtonWrapper = styled.div<IButtonProps>`
@@ -167,6 +167,7 @@ const ButtonWrapper = styled.div<IButtonProps>`
 	
 	.submit__spinner{
 		opacity: ${props => props.submitting ? 1 : 0};
+		background: #fff;
 	}
 	
 	.spinner {

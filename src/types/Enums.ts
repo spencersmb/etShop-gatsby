@@ -51,7 +51,8 @@ export enum PaginationTypes {
   FETCHING_ORDERS = '@@paginate/FETCHING_ORDERS',
   LOAD_ORDERS_SUCCESS = '@@paginate/LOAD_ORDERS_SUCCESS',
   UPDATE_PAGINATION_AFTER_ORDER = '@@paginate/UPDATE_PAGINATION_AFTER_ORDER',
-  CLEAR_ALL_PAGES = '@@paginate/CLEAR_ALL_PAGES'
+  CLEAR_ALL_PAGES = '@@paginate/CLEAR_ALL_PAGES',
+  REFRESH_DOWNLOAD_LINKS = '@@paginate/REFRESH_DOWNLOAD_LINKS'
 }
 
 export enum NavActionTypes {

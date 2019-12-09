@@ -16,23 +16,21 @@ const OrdersList = (props: IProps) => {
 	// console.log('Order list render page defined?', props)
 
 	return (
-		<div>
-			<div data-testid='orderList'>
-				{pagination.pages[page] && Object.keys(pagination.pages[page]).map((key: any, index) => {
-						const pageItem: IReceipt = pagination.pages[page][key]
-						return (
-							<OrderItem
-								key={pageItem.id}
-								itemIndex={index}
-								selectedOrder={selectedOrder}
-								handleClick={handleClick}
-								{...pageItem}
-							/>
-						)
-					}
-				).reverse()}
-			</div>
-		</div>
+		<>
+			{pagination.pages[page] && Object.keys(pagination.pages[page]).map((key: any, index) => {
+					const pageItem: IReceipt = pagination.pages[page][key]
+					return (
+						<OrderItem
+							key={pageItem.id}
+							itemIndex={index}
+							selectedOrder={selectedOrder}
+							handleClick={handleClick}
+							{...pageItem}
+						/>
+					)
+				}
+			).reverse()}
+		</>
 	)
 }
 

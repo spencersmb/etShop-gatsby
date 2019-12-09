@@ -1,5 +1,10 @@
 import { IReceipt } from '@et/types/WC_Order'
+import { colors } from '@styles/global/colors'
+import { Pill, PillPose, SearchInputSpinner } from '@styles/modules/searchInputPill'
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import React, { useState } from 'react'
+import { PoseGroup } from 'react-pose'
 
 interface IProps {
 	state: {
@@ -9,8 +14,8 @@ interface IProps {
 	handleSubmit: any
 	handleState: any
 }
-
 const SearchInput = (props: IProps) => {
+	const { state } = props
 	const [input, setInput] = useState('')
 
 	async function submit (e: any) {
@@ -30,17 +35,32 @@ const SearchInput = (props: IProps) => {
 
 	return (
 		<form onSubmit={submit}>
-			<div>
-				<input type='text' placeholder={`Search by Order Number`} onChange={handleChange}/>
-				{props.state.selectedSearchOrder && <div>Result Item Pill:
-          <div>
-						{props.state.selectedSearchOrder.id}
-          </div>
-          <div>
-            <button onClick={clearSearch}>Clear Search</button>
-          </div>
-        </div>}
-				{props.state.searching && <div>Searching...</div>}
+			<div className={`search__wrapper`}>
+				<input
+					className={!!props.state.selectedSearchOrder ? 'searchInput__selected' : ''}
+					type='text'
+					placeholder={`Search by Order Number`}
+					onChange={handleChange}
+					disabled={state.searching || !!props.state.selectedSearchOrder}
+				/>
+				<PoseGroup>
+					{!!props.state.selectedSearchOrder &&
+          <PillPose key={'pill'}>
+            <Pill>
+							{props.state.selectedSearchOrder.id}
+              <span onClick={clearSearch}>{renderSvg(svgs.HamburgerClose)}</span>
+            </Pill>
+          </PillPose>
+					}
+				</PoseGroup>
+
+				{state.searching &&
+        <SearchInputSpinner submitting={state.searching} spinnerColor={colors.db.primary} data-testid='spinner'
+                            className='submit__spinner'>
+          <svg className='spinner' viewBox='0 0 50 50'>
+            <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
+          </svg>
+        </SearchInputSpinner>}
 			</div>
 		</form>
 	)

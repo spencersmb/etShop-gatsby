@@ -6,6 +6,26 @@ import initialState from './initialState'
 
 export const paginationReducer = (state: IPaginateState = initialState.pagination, action: Actions): IPaginateState => {
 	switch (action.type) {
+
+		case PaginationTypes.REFRESH_DOWNLOAD_LINKS:
+			const selectedPage = state.pages[action.payload.page]
+			const selectedItem = selectedPage[action.payload.order.order_id]
+			selectedItem.downloads = action.payload.order.downloads
+			return {
+				...state,
+				pages: {
+					...state.pages,
+					[action.payload.page]: {
+						// add whats currently in state back in
+						...state.pages[action.payload.page],
+
+						// overwrite the item we have targeted
+						[action.payload.order.order_id]: {
+							...selectedItem
+						}
+					}
+				}
+			}
 		case PaginationTypes.FETCHING_ORDERS:
 			return {
 				...state,
@@ -61,7 +81,7 @@ export const paginationReducer = (state: IPaginateState = initialState.paginatio
 				// id: action.payload.order.order_id,
 				// total: action.payload.order.total,
 			})
-			console.log('allItems', allItems)
+			// console.log('allItems', allItems)
 
 			// 3. Flatten both arrays
 			// 4. Then Reduce everything into an object
@@ -85,7 +105,7 @@ export const paginationReducer = (state: IPaginateState = initialState.paginatio
 					return prev
 				}, {})
 
-			console.log('flattened', flattened)
+			// console.log('flattened', flattened)
 
 			const totalOrders = parseInt(state.totalOrders, 10) + 1
 			const totalPages = _.round(totalOrders / itemsByPage)

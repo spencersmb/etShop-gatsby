@@ -1,5 +1,7 @@
 import { IOrderResponse, IReceipt } from '@et/types/WC_Order'
+import { device } from '@styles/global/breakpoints'
 import React from 'react'
+import styled from 'styled-components'
 
 interface IProps {
 	searchResult?: boolean,
@@ -60,18 +62,23 @@ function OrderDisplay (props: IProps) {
 					{selectedOrder.downloads.products.map(download => (
 						<li key={download.name}>
 							{downloadBtn(selectedOrder.downloads.exp_date, download)}
-
 						</li>
 					))}
         </ul>
       </div>
 			}
 
-			<div>
+			<CloseBtnWrapper>
 				{createCloseBtn()}
-			</div>
+			</CloseBtnWrapper>
 		</div>
 	)
 }
 
 export default OrderDisplay
+const CloseBtnWrapper = styled.div`
+	@media ${device.tablet} {
+		display: none;
+	}
+		
+`

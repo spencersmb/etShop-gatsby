@@ -2,7 +2,7 @@ import AuthApi from '@api/authApi'
 import { PaginationTypes } from '@et/types/Enums'
 import { IGetAllPaginationsResponse, ILoadPaginationSuccess, IRawPage } from '@et/types/Pagination'
 import { IState } from '@et/types/State'
-import { IOrderResponse } from '@et/types/WC_Order'
+import { IOrderDownload, IOrderResponse } from '@et/types/WC_Order'
 import { statusCheck } from '@utils/apiUtils'
 import { Action, Dispatch } from 'redux'
 
@@ -64,5 +64,13 @@ export const addItemAfterOrder = (order: IOrderResponse) => {
 export const clearPagination = () => {
 	return {
 		type: PaginationTypes.CLEAR_ALL_PAGES
+	}
+}
+
+
+export const updateDownloadLinks = (data: {order: {order_id: string, downloads: IOrderDownload}, page: number}) => {
+	return {
+		payload: data,
+		type: PaginationTypes.REFRESH_DOWNLOAD_LINKS
 	}
 }

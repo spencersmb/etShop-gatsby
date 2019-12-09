@@ -1,4 +1,4 @@
-import { IReceipt } from '@et/types/WC_Order'
+import { IOrderDownload, IReceipt } from '@et/types/WC_Order'
 
 export interface IPaginateState {
 	loading: boolean,
@@ -27,4 +27,10 @@ export interface ILoadPaginationSuccess {
 export interface IGetAllPaginationsResponse {
 	code: number,
 	data: ILoadPaginationSuccess
+}
+export interface IResetDownloadActionResponse {
+	order: {
+		order_id: string, downloads: IOrderDownload
+	},
+	page: number
 }
