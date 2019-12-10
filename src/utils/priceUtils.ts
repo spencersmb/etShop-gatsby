@@ -75,9 +75,14 @@ export function calcBulkPriceDiscount (bulkDiscount: boolean, price: string, tot
  *
  *
  * @param {string | number} price
+ * @param {boolean} doubleZeros
  * @return {string} Convert the result to readable USD string with dollar sign
  */
-export const displayCurrency = (price: string | number): string => {
+export const displayCurrency = (price: string | number, doubleZeros: boolean = false): string => {
+	if (!price) {
+		return '0'
+	}
+
 	let hasDecimal = 0
 	let newPrice = '$0.00'
 	if (typeof price === 'number') {
@@ -100,7 +105,7 @@ export const displayCurrency = (price: string | number): string => {
 		})
 	}
 
-	if (hasDecimal > 0) {
+	if (hasDecimal > 0 || doubleZeros) {
 		return newPrice
 	} else {
 		return newPrice.slice(0, -3)

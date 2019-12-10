@@ -224,6 +224,13 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			<CheckoutSlide
 				ref={CheckoutSliderRef}
 				pose={checkoutOpen ? 'open' : 'closed'}
+				onPoseComplete={(type: OnPoseComplete) => {
+					console.log('type', type)
+
+					if (type === 'open') {
+						CheckoutSliderRef.current.style.overflowY = `scroll`
+					}
+				}}
 			>
 				<CheckoutPage
 					initialLoad='stripe'
@@ -381,9 +388,15 @@ const CheckoutSlide = styled(CheckoutPose)`
 	width: 100%;
 	height: 100%;
 	z-index: 3;
-	overflow-y: hidden;
+	overflow-y: scroll;
 	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
+	
+	@media ${device.laptop} {
+		background: ${colors.grey.i200};
+		overflow-y: hidden;
+		//padding-right: 15px;
+	}
 	
 	@media ${device.laptopL} {
 		background: ${colors.grey.i200};

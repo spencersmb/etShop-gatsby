@@ -79,19 +79,11 @@ export const searchOrderById = (orderId: string) => async (dispatch: Dispatch<Ac
 	return request.json()
 }
 
-export type IResetDownloadLinksAction = (orderId: string) => Promise<any>
-export const resetDownloadLinks = (orderId: string, page: number) => async (dispatch: Dispatch<Action>, getState: any): Promise<any> => {
+export const resetDownloadLinks = (orderId: string, page: number) => async (dispatch: Dispatch<Action>): Promise<any> => {
 
 	const request: Response = await AuthApi.resetLinks(orderId)
 	await statusCheck(request, dispatch)
 	const json: { code: string, message: string, order: { order_id: string, downloads: IOrderDownload } } = await request.json()
-
-	console.log('json', json)
-	const item = json.order.downloads.exp_date * 1000
-	const today = new Date()
-	const exp = new Date(json.order.downloads.exp_date * 1000)
-	console.log('exp', exp)
-	console.log('valid? ', exp.getTime() >= today.getTime())
 
 	dispatch(updateDownloadLinks({
 		order: json.order,

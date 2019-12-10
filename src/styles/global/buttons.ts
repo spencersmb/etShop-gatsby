@@ -19,6 +19,11 @@ export const ButtonSmall = styled.div<IButtonProps>`
 	font-weight: 500;
 	transition: .3s;
 	
+	${props => !props.outline ? '' : `
+		border: 3px solid ${props.textColor};
+		background: #fff;
+	`}
+	
 	@media ${device.laptop} {
 		&:hover{
 			cursor: pointer;

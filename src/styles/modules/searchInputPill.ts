@@ -1,3 +1,4 @@
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -25,6 +26,11 @@ export const SearchFilledContainer = styled.div`
 			outline: none;
 			border-color: ${colors.db.primary};
 		}
+		
+		@media ${device.tablet} {
+			width: 385px;
+			}
+			
 	}
 	
 `

@@ -5,6 +5,7 @@ const Pinterest = require('./svg-icons/Pinterest.svg')
 const CardSmall = require('./svg-icons/Card-small.svg')
 const CardTop = require('./svg-icons/Card-top.svg')
 const Cart = require('./svg-icons/Cart.svg')
+const CCVisa = require('./svg-icons/cc-visa.svg')
 const Checkmark = require('./svg-icons/Checkmark.svg')
 const ChevronLeft = require('./svg-icons/chevron-left.svg')
 const Close = require('./svg-icons/Close.svg')
@@ -50,6 +51,7 @@ export const svgs = {
 	CardSmall,
 	CardTop,
 	Cart,
+	CCVisa,
 	Checkmark,
 	ChevronLeft,
 	Close,

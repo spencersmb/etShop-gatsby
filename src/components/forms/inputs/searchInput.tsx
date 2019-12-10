@@ -10,26 +10,30 @@ interface IProps {
 	state: {
 		searching: boolean,
 		selectedSearchOrder: IReceipt | null,
+		searchInput: string
 	}
 	handleSubmit: any
 	handleState: any
 }
+
 const SearchInput = (props: IProps) => {
-	const { state } = props
-	const [input, setInput] = useState('')
+	const { state, handleState } = props
 
 	async function submit (e: any) {
 		e.preventDefault()
-		await props.handleSubmit(input)
+		await props.handleSubmit(state.searchInput)
 	}
 
 	function handleChange (e: any) {
-		setInput(e.target.value)
+		handleState({
+			searchInput: e.target.value
+		})
 	}
 
 	function clearSearch () {
-		props.handleState({
-			selectedSearchOrder: null
+		handleState({
+			selectedSearchOrder: null,
+			searchInput: ''
 		})
 	}
 
@@ -41,6 +45,7 @@ const SearchInput = (props: IProps) => {
 					type='text'
 					placeholder={`Search by Order Number`}
 					onChange={handleChange}
+					value={state.searchInput}
 					disabled={state.searching || !!props.state.selectedSearchOrder}
 				/>
 				<PoseGroup>

@@ -54,6 +54,7 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 			bodyScrollBar.show(target.current, bodyScrollPos.current)
 		}
 	}, [cartIsOpen])
+	console.log('cart render')
 
 	return (
 		<CartStyled id='cart-Container' style={{ position: 'relative', zIndex: 4 }}>
