@@ -4,6 +4,7 @@ import PoseHoc, { IPoseHoc } from '@components/animations/poseHoc'
 import Cart from '@components/cart/cartLayout'
 import SearchInput from '@components/forms/inputs/searchInput'
 import PaginationBar from '@components/nav/paginationBar'
+import DefaultSpinner from '@components/spinners/defaultSpinner'
 import { OnPoseComplete } from '@et/types/Modal'
 import { IPaginateState } from '@et/types/Pagination'
 import { IState } from '@et/types/State'
@@ -102,6 +103,7 @@ export function Dashboard (props: AllProps) {
 	}
 
 	async function submitSearch (orderId: any) {
+
 		setState({ searching: true })
 
 		// serach all local orders first
@@ -122,11 +124,11 @@ export function Dashboard (props: AllProps) {
 		if (itemFound.length > 0) {
 			setState({ searching: false, selectedSearchOrder: itemFound[0] })
 		} else {
+
 			try {
 				const { order } = await props.searchOrderById(orderId)
 				setState({ searching: false })
-
-				// setState({ searching: false, selectedSearchOrder: order })
+				setState({ searching: false, selectedSearchOrder: order })
 			} catch (e) {
 				setState({ searching: false })
 			}
@@ -142,8 +144,6 @@ export function Dashboard (props: AllProps) {
 			console.error('e', e)
 		}
 	}
-
-	console.log('dashbaord state', state)
 
 	return (
 		<PageContainer>
@@ -161,7 +161,12 @@ export function Dashboard (props: AllProps) {
 			</PageHeader>
 
 			<OrderDisplayContainer>
-				{pagination.loading && <div>Loading Orders</div>}
+				{pagination.loading && <LoadingContainer>
+          <h2>Loading Orders</h2>
+          <SpinnerWrapper>
+            <DefaultSpinner submitting={pagination.loading} color={colors.db.primary} size={'50px'}/>
+          </SpinnerWrapper>
+        </LoadingContainer>}
 
 				{/*
 					MOBILE:
@@ -218,42 +223,6 @@ export function Dashboard (props: AllProps) {
 
           </OrderListWrapper>
 				}
-				{/*{React.useMemo(() => (*/}
-				{/*	Width >= 768 &&*/}
-				{/*  <OrderListWrapper desktop={true}>*/}
-				{/*		{pagination.pages[page] && !pagination.loading && !state.selectedSearchOrder && Object.keys(pagination.pages[page]).reverse().map(item => {*/}
-				{/*			const order = pagination.pages[page][item]*/}
-				{/*			console.log('orderList Desk‘top Render', order)*/}
-
-				{/*			return (*/}
-				{/*				<OrderDisplay*/}
-				{/*					key={order.id}*/}
-				{/*					page={page}*/}
-				{/*					resetDownloadLinks={resetDownloadLinks}*/}
-				{/*					handleLinkRefresh={resetOrderLinks}*/}
-				{/*					selectedOrder={order}*/}
-				{/*					handleState={setState}*/}
-				{/*				/>*/}
-				{/*			)*/}
-				{/*		})}*/}
-
-				{/*		{state.selectedSearchOrder &&*/}
-				{/*    <div>*/}
-				{/*      <OrderDisplay*/}
-				{/*        key={state.selectedSearchOrder.id}*/}
-				{/*        page={page}*/}
-				{/*        resetDownloadLinks={resetDownloadLinks}*/}
-				{/*        handleLinkRefresh={resetOrderLinks}*/}
-				{/*        selectedOrder={state.selectedSearchOrder}*/}
-				{/*        handleState={setState}*/}
-				{/*        searchResult={true}*/}
-				{/*      />*/}
-				{/*    </div>*/}
-				{/*		}*/}
-
-				{/*  </OrderListWrapper>*/}
-
-				{/*), [state.selectedSearchOrder, pagination.loading, pagination.pages, page])}*/}
 
 				{/*
 				PAGINATION
@@ -271,21 +240,6 @@ export function Dashboard (props: AllProps) {
 				MOBILE:
 				SELECTED ORDER POP-OUT
 			*/}
-			{/*<DetailOrderMobilePose pose={state.orderModalOpen ? 'enter' : 'exit'} onPoseComplete={(type: any) => {*/}
-			{/*	console.log('type', type)*/}
-			{/*	if (type === 'exit') {*/}
-			{/*		setState({*/}
-			{/*			selectedOrder: null*/}
-			{/*		})*/}
-			{/*	}*/}
-
-			{/*}}>*/}
-			{/*	<OrderDisplay*/}
-			{/*		handleLinkRefresh={resetOrderLinks}*/}
-			{/*		selectedOrder={state.selectedOrder}*/}
-			{/*		handleState={setState}*/}
-			{/*	/>*/}
-			{/*</DetailOrderMobilePose>*/}
 			<PoseGroup>
 
 				{!!state.selectedOrder &&
@@ -306,23 +260,12 @@ export function Dashboard (props: AllProps) {
         </DetailOrderMobilePoseHOC>
 				}
 
-				{/*{!!state.selectedOrder &&*/}
-				{/*<DetailOrderMobile*/}
-				{/*  key={`mobileOrderDisplay`}>*/}
-				{/*  <OrderDisplay*/}
-				{/*    handleLinkRefresh={resetOrderLinks}*/}
-				{/*    selectedOrder={state.selectedOrder}*/}
-				{/*    handleState={setState}*/}
-				{/*  />*/}
-				{/*</DetailOrderMobile>*/}
-				{/*}*/}
 
 				{/*
 					MOBILE:
 					SELECTED SEARCH POP-OUT
 				*/}
-
-				{!!state.selectedSearchOrder &&
+				{!!state.selectedSearchOrder && innerWidth < 768 &&
         <DetailOrderMobilePoseHOC
           key={`mobileOrderDisplay`}>
 					{({ ref }: IPoseHoc) => (
@@ -343,6 +286,10 @@ export function Dashboard (props: AllProps) {
 
 
 			</PoseGroup>
+
+			<SecureLinkInfoWrapper>
+				<p>Secure download links last 7 days.</p>
+			</SecureLinkInfoWrapper>
 		</PageContainer>
 	)
 }
@@ -361,10 +308,42 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 }
 
 export default connect<IReduxState, IReduxActions, IProps, IState>(mapStateToProps, mapDispatchToProps)(Dashboard)
+
+const SecureLinkInfoWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	p{
+		color: ${colors.grey.i800};
+	}
+`
 const PageContainer = styled(GridFluid)`
 	display: flex;
 	flex-direction: column;
 	padding: 0;
+`
+const LoadingContainer = styled.div`
+	width: 100;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	
+	h2{
+		${Sentinel.semiboldItalic};
+		font-size: 14px;
+		font-weight: 400;
+		color: ${colors.db.primary};
+	}
+`
+const SpinnerWrapper = styled.div`
+	position: relative;
+	width: 50px;
+	height: 50px;
+	display: flex;
+
 `
 const PageHeader = styled.div`
 	display: flex;

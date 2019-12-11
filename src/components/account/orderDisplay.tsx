@@ -1,3 +1,4 @@
+import DefaultSpinner from '@components/spinners/defaultSpinner'
 import { IOrderResponse, IReceipt } from '@et/types/WC_Order'
 import { device } from '@styles/global/breakpoints'
 import { ButtonSmall } from '@styles/global/buttons'
@@ -56,24 +57,35 @@ function OrderDisplay (props: IProps) {
 	}
 
 	function downloadBtn (expDate: number, download: any) {
-		if (!isExpired(expDate)) {
-			return (
-				<>
-					<RefreshTitle>DOWNLOAD EXPIRED</RefreshTitle>
+		const expired = !isExpired(expDate)
+		return (
+			<>
+				{
+					expired ? <RefreshTitle>DOWNLOAD EXPIRED</RefreshTitle> : <MobileTitle>Download</MobileTitle>
+				}
+
+				{!expired ? <a href={download.url}>
 					<RefreshBtn
 						color={'#fff'}
+						submitting={submitting}
 						textColor={colors.db.primary}
 						hoverColor={colors.db.primary}
 						hoverTextColor={'#fff'}
-						outline={true}
-						onClick={resetOrderLinks}>Refresh</RefreshBtn>
-				</>
-			)
-		}
-		return (
-			<>
-				<MobileTitle>Download</MobileTitle>
-				<a href={download.url}>Download</a>
+						outline={true}>
+						Download
+					</RefreshBtn>
+				</a> : <RefreshBtn
+					color={'#fff'}
+					submitting={submitting}
+					textColor={colors.teal.i500}
+					hoverColor={colors.teal.i500}
+					hoverTextColor={'#fff'}
+					outline={true}
+					onClick={resetOrderLinks}>
+					<span>Refresh</span>
+					<DefaultSpinner submitting={submitting} color={colors.teal.i500} size={'25px;'}/>
+				</RefreshBtn>
+				}
 			</>
 		)
 	}
@@ -111,8 +123,6 @@ function OrderDisplay (props: IProps) {
 			console.error('e', e)
 		}
 	}
-
-	console.log('order display props', props)
 
 	if (!props.selectedOrder) {
 		return null
@@ -164,7 +174,7 @@ function OrderDisplay (props: IProps) {
               <label>Product</label>
               <label>sku</label>
               <label>price</label>
-              <label>download</label>
+              <label>file</label>
             </GridHeader>
             <GridHeaderMobile>
               Products
@@ -177,21 +187,20 @@ function OrderDisplay (props: IProps) {
 								</ProductName>
 								<ProductListItem>
 									<MobileTitle>Sku</MobileTitle>
-									<p>
+									<p className={'sku'}>
 										{download.sku}
 									</p>
 								</ProductListItem>
 								<ProductListItem>
 									<MobileTitle>Price</MobileTitle>
-									<p>
+									<p className={'price'}>
 										{displayCurrency(download.price, true)}
 									</p>
 								</ProductListItem>
 								<ProductListItem>
 
-									<DownloadBtnWrapper>
-										{submitting && <div>Spinner</div>}
-										{!submitting && downloadBtn(selectedOrder.downloads.exp_date, download)}
+									<DownloadBtnWrapper submitting={submitting} spinnerColor={colors.db.primary}>
+										{downloadBtn(selectedOrder.downloads.exp_date, download)}
 									</DownloadBtnWrapper>
 
 								</ProductListItem>
@@ -203,7 +212,6 @@ function OrderDisplay (props: IProps) {
           </>
 					}
 				</DisplayProducts>
-
 
 				<CloseBtnWrapper>
 					{createCloseBtn()}
@@ -217,27 +225,50 @@ export default React.memo(OrderDisplay, (prev: any, next: any): boolean => {
 	return !(prev.exp !== next.exp)
 })
 
-const RefreshBtn = styled(ButtonSmall)`
-text-transform: uppercase;
-background: transparent;
+const RefreshBtn = styled(ButtonSmall)<{ submitting: boolean }>`
+	
+	text-transform: uppercase;
+	background: transparent;
+	z-index: 2;
+	position: relative;
+	span{
+		opacity: ${props => props.submitting ? 0 : 1};
+	}
+	
+	@media ${device.tablet} {
+		width: 100%;
+		text-align: center;
+	}
+
+	${props => !props.submitting ? '' : `
+			&:hover{
+				background: #fff;
+			}
+	`}
 `
-const DownloadBtnWrapper = styled.div`
+const DownloadBtnWrapper = styled.div<{ submitting: boolean, spinnerColor: string }>`
 	margin-top: 15px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
-		
+	align-items: center;
+
 	@media ${device.tablet} {
 		margin-top: 0;
+		justify-content: center;
   }
+
+  
+
+}
 `
 const RefreshTitle = styled.div`
 	color: ${colors.db.primary};
 	font-size: 14px;
 	text-transform: uppercase;
 	${Sentinel.semiboldItalic};
-	
+
 	@media ${device.tablet} {
 		display: none;
   }
@@ -250,27 +281,43 @@ const ProductName = styled.div`
 	flex-direction: column;
 	margin-bottom: 10px;
 	justify-self: flex-start;
-	
+
 	@media ${device.tablet} {
 		margin: 0;
 	}
-		
+
 `
 const Name = styled.div`
 	${Sentinel.semiboldItalic};
 	font-size: 20px;
 `
 const SubTitle = styled.div`
-
+	font-size: 14px;
 `
 const ProductListItem = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	position: relative;
+
 	p{
 		margin: 0;
-		font-weight: 600;
+		&.price{
+			font-weight: 600;
+		}
+		&.sku{
+			font-size: 14px;
+		}
 	}
+
+	@media ${device.tablet} {
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+
+	}
+
 `
 const MobileTitle = styled.div`
 	font-size: 13px;
@@ -288,15 +335,20 @@ const ProductGrid = styled.div`
   color: #222;
   border-bottom: 1px solid #ddd;
   padding: 1em 0;
-   grid-auto-rows: minmax(min-content, max-content);
-  
+  grid-auto-rows: minmax(min-content, max-content);
+
   @media ${device.tablet} {
-		grid-template-columns: 4fr 1fr 1fr 1fr;
-		grid-gap: 2em;
+		grid-template-columns: 4fr 1fr .5fr 1fr;
+		grid-gap: 10px;
 		align-items: center;
 		justify-items: center;
+
+		&:last-child{
+			border-bottom: none;
+			padding-bottom: 0;
+		}
   }
-  	
+
 `
 
 const GridHeader = styled(ProductGrid)`
@@ -306,21 +358,21 @@ const GridHeader = styled(ProductGrid)`
 		text-transform: uppercase;
 		margin-bottom: 0;
 		text-align: center;
-		
+
 		&:first-child{
 			text-align: left;
 			justify-self: flex-start;
 		}
 	}
 	@media ${device.tablet} {
-		display: grid;	    
-	}	
+		display: grid;
+	}
 `
 const GridHeaderMobile = styled(GridHeader)`
 	display: grid;
 	@media ${device.tablet} {
-		display: none;	    
-	}	
+		display: none;
+	}
 `
 const Desc = styled.div`
 	font-size: 16px;
@@ -343,16 +395,20 @@ const OrderDetails = styled.div`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	
+
 	@media ${device.tablet} {
 		flex-wrap: nowrap;
+		margin-left: 35px;
+		flex: 1;
+		flex-flow: row-reverse;
+		justify-content: flex-end;
 	}
 `
 const OrderNumber = styled.div`
 	${Sentinel.semiboldItalic};
 	font-size: 28px;
 	line-height: 28px;
-	color: ${colors.purple.i500};
+	color: ${colors.db.primary};
 `
 const OrderNumberWrapper = styled.div`
 	display: flex;
@@ -361,6 +417,11 @@ const OrderNumberWrapper = styled.div`
 	 ${Title}{
 		margin-bottom: 5px;
 	 }
+
+ @media ${device.tablet} {
+	margin:0;
+ }
+
 `
 const OrderDetailItem = styled.div`
 	flex: 1 0 50%;
@@ -368,19 +429,32 @@ const OrderDetailItem = styled.div`
 	 ${Title}{
 		margin-bottom: 5px;
 	 }
-	 
+
 	@media ${device.tablet} {
 		flex: 0;
+		margin: 0 35px 0 0;
+		min-width: 60px;
+		&:nth-child(2){
+			flex: 1;
+		}
+		&:nth-child(1){
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			margin: 0;
+		}
 	}
 `
 const DisplayHeader = styled.div`
 	display: flex;
 	flex-direction: column;
-	
+
 	@media ${device.tablet} {
 		flex-direction: row;
+		margin-bottom: 50px;
 	}
-		
+
 `
 const CloseBtnWrapper = styled.div`
 	@media ${device.tablet} {
@@ -395,7 +469,7 @@ const CloseBtn = styled.div`
 	position: absolute;
 	top:15px;
 	right: 15px;
-	
+
 	svg{
 		width: 100%;
 	}
@@ -408,11 +482,16 @@ const DisplayWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 35px 20px;
+
+	@media ${device.tablet} {
+		padding: 35px 35px;
+	}
+
 `
 
 const DisplayPoseRef = styled.div<{ mobile: boolean }>`
 	background: #FFF;
-	
+
 	${props => !props.mobile ? `
 		border-radius: 10px;
 		box-shadow: ${shadowStyles.shadow1};

@@ -144,9 +144,10 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	const toggleCheckout = () => {
 		if (checkoutOpen) {
 			CheckoutSliderRef.current.style.overflowY = `hidden`
-			// if(window.innerWidth > 1024){
-			// 	CheckoutSliderRef.current.style.padding = `0 15px 0 0`
-			// }
+			if (window.innerWidth > 1024) {
+				CheckoutSliderRef.current.style.overflowY = `scroll`
+				// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
+			}
 		}
 		setCheckoutOpen(!checkoutOpen)
 	}
@@ -228,7 +229,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 					console.log('type', type)
 
 					if (type === 'open') {
-						CheckoutSliderRef.current.style.overflowY = `scroll`
+						// CheckoutSliderRef.current.style.overflowY = `scroll`
 					}
 				}}
 			>
