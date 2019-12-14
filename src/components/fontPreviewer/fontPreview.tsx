@@ -45,6 +45,7 @@ const FontPreviewer = (props: IProps) => {
 		customText: 'When zombies arrive, quickly fax judge Pat',
 		calt: false,
 		liga: true,
+		dlig: false,
 		salt: false,
 		isOpen: false
 	})
@@ -355,7 +356,7 @@ const Font = styled.div<{ state: IState }>`
 		${props.state.dlig ? '"dlig"' : '"dlig" 0'},
 		${props.state.salt ? '"salt"' : '"salt" 0'}
 	`
-	};
+};
 	span{
 		color: #85878b;
 		font-size: 16px !important;

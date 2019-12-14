@@ -9,6 +9,7 @@ module.exports = {
     author: `@Teelac`,
     authorUrl: "https://every-tuesday.com/about/#teela",
     siteUrl: `${process.env.GATSBY_DB}`,
+    frontEndUrl: `${process.env.GATSBY_FRONTEND_URL}`,
     siteName: `Every-Tuesday Shop`
   },
   plugins: [

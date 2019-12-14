@@ -141,6 +141,19 @@ class AuthApi {
 		)
 	}
 
+	static getGuestOrder ({ orderId, email }: { orderId: string, email: string }): Promise<Response> {
+		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/order/getGuestOrder/?id=${orderId}?email=${email}`
+		const options: any = {
+			headers: createHeaders(),
+			method: 'GET',
+			mode: 'cors'
+		}
+		return fetched(
+			url,
+			options
+		)
+	}
+
 	static resetLinks (orderId: string): Promise<Response> {
 		const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/v1/order/resetDownloads/?id=${orderId}`
 		const options: any = {

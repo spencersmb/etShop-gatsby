@@ -70,9 +70,11 @@ export interface IOrderDownloadItem {
 	id: number
 	name: string
 	filename: string
-	price: string
+	total: string
+	cost: string
 	sku: string
 	subtitle: string
+	qty: string
 }
 
 export interface IRefund {

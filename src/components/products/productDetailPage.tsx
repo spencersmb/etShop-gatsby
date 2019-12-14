@@ -7,7 +7,7 @@ import { facebookDefaultMeta, jsonldImages, socialUtils, twitterDefaultMeta } fr
 import { graphql } from 'gatsby'
 import React, { Component } from 'react'
 
-type Response = IGatsbyConfig & { wcProduct: IProduct }
+type Response = IGatsbyConfig & { wcProduct: IProduct, featureSiteImage: any }
 
 interface IProductQuery {
 	data: Response
@@ -23,7 +23,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 
 	constructor (props: IProductQuery) {
 		super(props)
-		const { data: { wcProduct, site: { siteMetadata } } } = this.props
+		const { data: { wcProduct, site: { siteMetadata }, featureSiteImage } } = this.props
 		this.ogArticles = wcProduct.tags.map(tag => tag.name).map(article => ({
 			property: 'article:tag',
 			content: `${article}`
@@ -133,6 +133,8 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		this.jsonld = {
 			['@context']: 'http://schema.org/',
 			[`@type`]: 'Product',
+			['logo']: `${siteMetadata.siteUrl}/${featureSiteImage.childImageSharp.fluid.src}`,
+			['url']: 'shop.every-tuesday.com',
 			name: wcProduct.name,
 			image: [
 				...jsonldImages(wcProduct.images)
@@ -221,121 +223,128 @@ export class ProductDetailPage extends Component<IProductQuery> {
 export default ProductDetailPage
 
 export const productQuery = graphql`
-	query SingleProductQuery($slug: String!){
-		site {
-			siteMetadata {
-				title
-				siteUrl
-				description
-				authorUrl
-			}
-		}
-		wcProduct(
-			slug:{
-				eq: $slug
-			}
-		){
-			name
-			sub_header
-			id
-			intro_title
-			intro_description
-			font_preview{
-				enabled
-				styles{
-					font_family
-					type
-					font_files{
-						type
-						localFile{
-							relativePath
-							absolutePath
-							publicURL
-						}
-					}
-				}
-			}
-			details{
-				file_types
-				dpi
-				file_size
-				programs
-			}
-			featuredImage{
-				alt
-				localFile{
-					childImageSharp {
-						fluid(maxWidth: 835) {
-							...GatsbyImageSharpFluid
-						}
-						thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
-							src
-						}
-					}
-				}
-			}
-			images{
-				alt
-				localFile{
-					childImageSharp {
-						#						fluid(maxWidth: 1404, maxHeight: 936) {
-						fluid(maxWidth: 702, maxHeight: 470) {
-							...GatsbyImageSharpFluid
-						}
-						thumbnail_mobile: fluid(maxWidth: 305, maxHeight: 203) {
-							src
-						}
-						thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
-							src
-						}
-						thumbnail_2x: fluid(maxWidth: 1404, maxHeight: 936) {
-							src
-						}
-						fullWidth: fluid(maxWidth: 1820) {
-							src
-						}
-					}
-				}
-			}
-			categories{
-				name
-			}
-			product_licenses{
-					item{
-							id
-							name
-							onSale
-							price
-							slug
-					}
-					type{
-							name
-							value
-					}
-			}
-			features{
-				description
-				icon
-				title
-			}
-			date_created_gmt
-			date_modified_gmt
-			price
-			product_id
-			regular_price
-			related_products
-			pwyw
-			sale_price
-			seo{
-				desc
-				title
-			}
-			slug
-			tags{
-				name
-				slug
-			}
-			type
-		}
-	}
+    query SingleProductQuery($slug: String!){
+        site {
+            siteMetadata {
+                title
+                siteUrl
+                description
+                authorUrl
+            }
+        }
+        featureSiteImage: file(relativePath: { eq: "color-palette.jpg" }) {
+            childImageSharp {
+                fluid(maxWidth: 1024) {
+                    ...GatsbyImageSharpFluid
+                }
+            }
+        }
+        wcProduct(
+            slug:{
+                eq: $slug
+            }
+        ){
+            name
+            sub_header
+            id
+            intro_title
+            intro_description
+            font_preview{
+                enabled
+                styles{
+                    font_family
+                    type
+                    font_files{
+                        type
+                        localFile{
+                            relativePath
+                            absolutePath
+                            publicURL
+                        }
+                    }
+                }
+            }
+            details{
+                file_types
+                dpi
+                file_size
+                programs
+            }
+            featuredImage{
+                alt
+                localFile{
+                    childImageSharp {
+                        fluid(maxWidth: 835) {
+                            ...GatsbyImageSharpFluid
+                        }
+                        thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
+                            src
+                        }
+                    }
+                }
+            }
+            images{
+                alt
+                localFile{
+                    childImageSharp {
+                        #						fluid(maxWidth: 1404, maxHeight: 936) {
+                        fluid(maxWidth: 702, maxHeight: 470) {
+                            ...GatsbyImageSharpFluid
+                        }
+                        thumbnail_mobile: fluid(maxWidth: 305, maxHeight: 203) {
+                            src
+                        }
+                        thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
+                            src
+                        }
+                        thumbnail_2x: fluid(maxWidth: 1404, maxHeight: 936) {
+                            src
+                        }
+                        fullWidth: fluid(maxWidth: 1820) {
+                            src
+                        }
+                    }
+                }
+            }
+            categories{
+                name
+            }
+            product_licenses{
+                item{
+                    id
+                    name
+                    onSale
+                    price
+                    slug
+                }
+                type{
+                    name
+                    value
+                }
+            }
+            features{
+                description
+                icon
+                title
+            }
+            date_created_gmt
+            date_modified_gmt
+            price
+            product_id
+            regular_price
+            related_products
+            pwyw
+            sale_price
+            seo{
+                desc
+                title
+            }
+            slug
+            tags{
+                name
+                slug
+            }
+            type
+        }
+    }
 `

@@ -23,6 +23,7 @@ export const colors = {
 		i200: `#F7F8FC`
 	},
 	purple: {
+		i200: `#E4D8FD`,
 		i400: `#B09AE3`,
 		i500: `#A182E9`,
 		i600: `#755FA7`,

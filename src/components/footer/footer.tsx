@@ -13,12 +13,12 @@ import React from 'react'
 import styled from 'styled-components'
 import fetched from 'isomorphic-unfetch'
 
-const Footer = ({ productPage }: { productPage: boolean }) => {
+const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFooter: boolean }) => {
 
 	// const scroll = useScrollToElement()
 
 	return (
-		<FooterContainer id={'my-div'}>
+		<FooterContainer id={'my-div'} whiteFooter={whiteFooter}>
 			{/*<FooterHeader>*/}
 			{/*	<h4>Get notified</h4>*/}
 			{/*	<p>when I release new products, send out promos or freebies.</p>*/}
@@ -97,8 +97,8 @@ const Footer = ({ productPage }: { productPage: boolean }) => {
 	)
 }
 
-const FooterContainer = styled.footer`
-	background: #f7f8fc;
+const FooterContainer = styled.footer<{ whiteFooter: boolean }>`
+	background: ${props => props.whiteFooter ? '#fff' : '#f7f8fc'};
 	display: flex;
 	flex-direction: column;
 	//overflow: hidden;

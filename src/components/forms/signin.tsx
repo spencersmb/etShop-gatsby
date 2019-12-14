@@ -70,7 +70,7 @@ export const SignInForm = (props: any) => {
 						 onClick={props.changeForm}>Save 10% with a new account and Sign
 						up! <Arrow>{renderSvg(svgs.ChevronLeft)}</Arrow></p>
 				</FormHeader1>
-				<form onSubmit={handleSubmit(handleUserSubmit)} style={{display: 'flex', flexDirection: 'column'}}>
+				<form onSubmit={handleSubmit(handleUserSubmit)} style={{ display: 'flex', flexDirection: 'column' }}>
 					<FormGroup data-testid={'formGroup'} column={true}>
 						<FormInput fullWidth={true}>
 							<ReduxFieldExt

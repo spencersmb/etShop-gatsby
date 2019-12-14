@@ -100,13 +100,13 @@ function OrderDisplay (props: IProps) {
 				case 'visa':
 					return renderSvg(svgs.CCVisa)
 				case 'discover':
-					return 'discover'
+					return renderSvg(svgs.CCDiscover)
 				case 'mastercard':
-					return 'mastercard'
-				case 'amex':
-					return 'amex'
+					return renderSvg(svgs.CCMaster)
+				case 'american express':
+					return renderSvg(svgs.CCAmex)
 				default:
-					return 'creditcard'
+					return renderSvg(svgs.CreditCard)
 			}
 		}
 
@@ -124,14 +124,23 @@ function OrderDisplay (props: IProps) {
 		}
 	}
 
+	function calcItemTotal (total: string, qty: string) {
+		const totalNumber = parseFloat(total)
+		const qtyNumber = parseInt(qty, 10)
+
+		return displayCurrency(totalNumber / qtyNumber, true)
+	}
+
 	if (!props.selectedOrder) {
 		return null
 	}
+
 	return (
 		<DisplayPoseRef
 			mobile={!!props.mobile}
 			ref={props.poseRef ? props.poseRef : null}>
 			<DisplayWrapper data-testid='display-orderId'>
+
 				<DisplayHeader>
 					<OrderNumberWrapper>
 						<Title>Order Number</Title>
@@ -143,7 +152,7 @@ function OrderDisplay (props: IProps) {
 							<Desc>{selectedOrder.date_completed}</Desc>
 						</OrderDetailItem>
 						<OrderDetailItem>
-							<Title>Payment</Title>
+							<Title>Payment Type</Title>
 							<Desc className={'payment_svg'}>
 								<PaymentSvg>
 									{displayPaymentIcon(selectedOrder.payment_type, selectedOrder.cardType)}
@@ -154,7 +163,7 @@ function OrderDisplay (props: IProps) {
 						{selectedOrder.discounts !== '0' &&
             <OrderDetailItem>
               <Title>Discount</Title>
-              <Desc>{selectedOrder.discounts}</Desc>
+              <Desc className={'discount'}>-{displayCurrency(selectedOrder.discounts)}</Desc>
             </OrderDetailItem>
 						}
 						<OrderDetailItem>
@@ -173,6 +182,7 @@ function OrderDisplay (props: IProps) {
             <GridHeader className='term-grid grid-header'>
               <label>Product</label>
               <label>sku</label>
+              <label>qty</label>
               <label>price</label>
               <label>file</label>
             </GridHeader>
@@ -192,9 +202,15 @@ function OrderDisplay (props: IProps) {
 									</p>
 								</ProductListItem>
 								<ProductListItem>
+									<MobileTitle>Qty</MobileTitle>
+									<p className={'price'}>
+										{download.qty}
+									</p>
+								</ProductListItem>
+								<ProductListItem>
 									<MobileTitle>Price</MobileTitle>
 									<p className={'price'}>
-										{displayCurrency(download.price, true)}
+										{calcItemTotal(download.total, download.qty)}
 									</p>
 								</ProductListItem>
 								<ProductListItem>
@@ -204,9 +220,6 @@ function OrderDisplay (props: IProps) {
 									</DownloadBtnWrapper>
 
 								</ProductListItem>
-								{/*<li key={download.name}>*/}
-								{/*	{downloadBtn(selectedOrder.downloads.exp_date, download)}*/}
-								{/*</li>*/}
 							</ProductGrid>
 						))}
           </>
@@ -216,6 +229,23 @@ function OrderDisplay (props: IProps) {
 				<CloseBtnWrapper>
 					{createCloseBtn()}
 				</CloseBtnWrapper>
+
+				<OrderDisplayFooter>
+					{selectedOrder.coupon_used && selectedOrder.coupon_used.length > 0 &&
+          <OrderDisplayCoupon>
+            <span>Coupon Used</span>
+						{selectedOrder.coupon_used.map(coupon => (
+							<CouponItem key={coupon}>
+								{coupon}
+							</CouponItem>
+						))}
+          </OrderDisplayCoupon>
+					}
+					<SecureLinkInfoWrapper>
+						<p>{selectedOrder.transactionId}</p>
+					</SecureLinkInfoWrapper>
+				</OrderDisplayFooter>
+
 			</DisplayWrapper>
 		</DisplayPoseRef>
 	)
@@ -225,8 +255,64 @@ export default React.memo(OrderDisplay, (prev: any, next: any): boolean => {
 	return !(prev.exp !== next.exp)
 })
 
-const RefreshBtn = styled(ButtonSmall)<{ submitting: boolean }>`
+const CouponItem = styled.div`
+	background: ${colors.purple.i200};
+	padding: 8px 15px;
+	border-radius: 25px;
+	text-transform: uppercase;
+	color: ${colors.purple.i700};
+`
+const OrderDisplayCoupon = styled.div`
+ display: flex;;
+ flex-direction: row;
+ border-bottom: 1px solid #ddd;
+ align-items: center;
+ padding-bottom: 30px;
+ 
+ @media ${device.tablet} {
+ 	border-bottom: none;
+ 	padding-bottom: 0;
+ }
+ 	
+`
+const OrderDisplayFooter = styled.div`
+	display: flex;
+	flex-direction: column;
+
+	margin-top: 30px;
+	font-size: 14px;
+	text-transform: uppercase;
+	color: ${colors.primary.headline};
 	
+	span{
+		margin-right: 15px;
+	}
+	
+	@media ${device.tablet} {
+		flex-direction: row;
+		align-items: center;
+	}
+		
+`
+const SecureLinkInfoWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	text-align: center;
+	margin-top: 20px;
+	p{
+		font-style: italic;
+		color: ${colors.grey.i800};
+		font-size: 12px;
+		margin: 0;
+	}
+	
+	@media ${device.tablet} {
+		text-align: right;
+	}
+		
+`
+const RefreshBtn = styled(ButtonSmall)<{ submitting: boolean }>`
 	text-transform: uppercase;
 	background: transparent;
 	z-index: 2;
@@ -258,8 +344,6 @@ const DownloadBtnWrapper = styled.div<{ submitting: boolean, spinnerColor: strin
 		margin-top: 0;
 		justify-content: center;
   }
-
-  
 
 }
 `
@@ -338,14 +422,14 @@ const ProductGrid = styled.div`
   grid-auto-rows: minmax(min-content, max-content);
 
   @media ${device.tablet} {
-		grid-template-columns: 4fr 1fr .5fr 1fr;
+		grid-template-columns: 4fr .7fr .5fr .7fr 1fr;
 		grid-gap: 10px;
 		align-items: center;
 		justify-items: center;
 
 		&:last-child{
-			border-bottom: none;
-			padding-bottom: 0;
+			//border-bottom: none;
+			//padding-bottom: 0;
 		}
   }
 
@@ -378,6 +462,10 @@ const Desc = styled.div`
 	font-size: 16px;
 	color: ${colors.primary.text};
 	font-weight: 500;
+	
+	&.discount{
+		color: ${colors.red.warning};
+	}
 `
 
 const Title = styled.div`
@@ -433,7 +521,6 @@ const OrderDetailItem = styled.div`
 	@media ${device.tablet} {
 		flex: 0;
 		margin: 0 35px 0 0;
-		min-width: 60px;
 		&:nth-child(2){
 			flex: 1;
 		}

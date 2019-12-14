@@ -6,6 +6,9 @@ const CardSmall = require('./svg-icons/Card-small.svg')
 const CardTop = require('./svg-icons/Card-top.svg')
 const Cart = require('./svg-icons/Cart.svg')
 const CCVisa = require('./svg-icons/cc-visa.svg')
+const CCMaster = require('./svg-icons/cc-mc.svg')
+const CCAmex = require('./svg-icons/cc-amex.svg')
+const CCDiscover = require('./svg-icons/cc-discover.svg')
 const Checkmark = require('./svg-icons/Checkmark.svg')
 const ChevronLeft = require('./svg-icons/chevron-left.svg')
 const Close = require('./svg-icons/Close.svg')
@@ -40,6 +43,7 @@ const PaypalPPLogo = require('./svg-icons/paypal-pp-logo.svg')
 const PaypalPPLogoDisabled = require('./svg-icons/paypal-pp-logo-disabled.svg')
 const Photoshop = require('./svg-icons/photoshop.svg')
 const Programs = require('./svg-icons/programs.svg')
+const Tag = require('./svg-icons/Tag.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
 const Twitter = require('./svg-icons/Twitter.svg')
@@ -52,6 +56,9 @@ export const svgs = {
 	CardTop,
 	Cart,
 	CCVisa,
+	CCMaster,
+	CCAmex,
+	CCDiscover,
 	Checkmark,
 	ChevronLeft,
 	Close,
@@ -88,6 +95,7 @@ export const svgs = {
 	Photoshop,
 	Programs,
 	Pinterest,
+	Tag,
 	Templates,
 	Textures,
 	Twitter,

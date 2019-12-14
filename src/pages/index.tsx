@@ -16,7 +16,7 @@ const IndexPage = ({ data }: any) => {
 		['@context']: 'http://schema.org',
 		['@type']: 'Organization',
 		['name']: 'Every Tuesday',
-		['logo']: '[logo image url]',
+		['logo']: `${site.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
 		['url']: 'shop.every-tuesday.com',
 		'sameAs': [
 			`${socialUtils.twitter.url}`,
@@ -132,6 +132,7 @@ export const query = graphql`
                 siteUrl
                 description
                 authorUrl
+                frontEndUrl
             }
         }
         featureImage: file(relativePath: { eq: "color-palette.jpg" }) {

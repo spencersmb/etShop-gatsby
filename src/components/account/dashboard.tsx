@@ -287,9 +287,6 @@ export function Dashboard (props: AllProps) {
 
 			</PoseGroup>
 
-			<SecureLinkInfoWrapper>
-				<p>Secure download links last 7 days.</p>
-			</SecureLinkInfoWrapper>
 		</PageContainer>
 	)
 }
@@ -309,14 +306,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 
 export default connect<IReduxState, IReduxActions, IProps, IState>(mapStateToProps, mapDispatchToProps)(Dashboard)
 
-const SecureLinkInfoWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	p{
-		color: ${colors.grey.i800};
-	}
-`
+
 const PageContainer = styled(GridFluid)`
 	display: flex;
 	flex-direction: column;

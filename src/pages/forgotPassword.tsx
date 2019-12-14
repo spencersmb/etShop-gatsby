@@ -15,7 +15,7 @@ const ForgotPasswordPage = ({ data }: any) => {
 		['@context']: 'http://schema.org',
 		['@type']: 'Organization',
 		['name']: 'Every Tuesday',
-		['logo']: '[logo image url]',
+		['logo']: `${site.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
 		['url']: 'shop.every-tuesday.com',
 		'sameAs': [
 			`${socialUtils.twitter.url}`,
@@ -122,21 +122,22 @@ const PageContainer = styled.div`
 export default ForgotPasswordPage
 
 export const query = graphql`
-	query ForgotPasswordPageQuery {
-		site {
-			siteMetadata {
-				title
-				siteUrl
-				description
-				authorUrl
-			}
-		}
-		featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
-			childImageSharp {
-				fluid(maxWidth: 1024) {
-					...GatsbyImageSharpFluid
-				}
-			}
-		}
-	}
+    query ForgotPasswordPageQuery {
+        site {
+            siteMetadata {
+                title
+                siteUrl
+                description
+                authorUrl
+                frontEndUrl
+            }
+        }
+        featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
+            childImageSharp {
+                fluid(maxWidth: 1024) {
+                    ...GatsbyImageSharpFluid
+                }
+            }
+        }
+    }
 `

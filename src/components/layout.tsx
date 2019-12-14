@@ -11,9 +11,10 @@ import { PageContainer } from '@styles/global/pages'
 interface IlayoutProps {
 	children: ReactNode,
 	productPage?: boolean
+	whiteFooter?: boolean
 }
 
-const Layout = ({ children, productPage = false }: IlayoutProps) => {
+const Layout = ({ children, productPage = false, whiteFooter = false }: IlayoutProps) => {
 
   return (
 		<StaticQuery
@@ -34,7 +35,7 @@ const Layout = ({ children, productPage = false }: IlayoutProps) => {
 						<Header siteTitle={data.site.siteMetadata.title}/>
 						<PageContainer>
 							<main>{children}</main>
-							<Footer productPage={productPage}/>
+							<Footer productPage={productPage} whiteFooter={whiteFooter}/>
 							<ReduxToastr
 								key='toastr'
 								timeOut={3000}

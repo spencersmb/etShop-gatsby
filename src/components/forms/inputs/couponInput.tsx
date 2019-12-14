@@ -79,8 +79,25 @@ export function CouponInput (props: IProps & IReduxActions) {
 
 				const newCoupon: ICouponRaw = x.data.coupon
 
+				console.log('newCoupon', newCoupon)
+				if (!newCoupon) {
+					toastr.error('Invalid', 'Invalid Coupon', toastrOptions.noHover)
+					invalidCoupon()
+					// Sync up total and and prevTotal Ref locally
+					if (total !== prevTotal.current) {
+						updatePrice()
+					}
+
+					// focus back into the input
+					if (inputRef.current) {
+						inputRef.current.focus()
+					}
+					return
+				}
+
 				// check if valid server response but no coupon found or expired or invalid types fall into this category
 				if (newCoupon.error) {
+
 					toastr.error('Invalid', newCoupon.error.message, toastrOptions.noHover)
 					invalidCoupon()
 					// Sync up total and and prevTotal Ref locally

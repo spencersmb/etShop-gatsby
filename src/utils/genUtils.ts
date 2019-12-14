@@ -10,20 +10,19 @@ export const socialUtils = {
 		url: 'https://twitter.com/teelacunningham',
 		defaultImage: 'https://twitter.com/teelacunningham'
 	},
-	facebook:{
+	facebook: {
 		url: `http://facebook.com/everytues`
 	},
-	youtube:{
+	youtube: {
 		url: `http://youtube.com/everytues`
 	},
-	instagram:{
+	instagram: {
 		url: `http://instagram.com/everytuesday`
 	},
-	pinterest:{
+	pinterest: {
 		url: `https://www.pinterest.com/teelac/`
 	}
 }
-
 
 /**
  * * Tested
@@ -50,20 +49,20 @@ export const facebookDefaultMeta = (additionalProps: IOGType[] = []): IOGType[] 
 	const facebook: any = [
 		{
 			property: `og:title`,
-			content: `${process.env.GATSBY_TITLE}`,
+			content: `${process.env.GATSBY_TITLE}`
 		},
 		{
 			property: `og:description`,
-			content: `${process.env.GATSBY_DESCRIPTION}`,
+			content: `${process.env.GATSBY_DESCRIPTION}`
 		},
 		{
 			property: 'og:site_name',
-			content: `Every-Tuesday Shop`,
+			content: `Every-Tuesday Shop`
 		},
 		{
 			property: `og:url`,
-			content: `${process.env.GATSBY_DB}`,
-		},
+			content: `${process.env.GATSBY_FRONTEND_URL}`
+		}
 	]
 	return _.unionBy(additionalProps, facebook, 'property')
 }
@@ -144,16 +143,16 @@ export function getCurrentPage (path: string) {
 	return 1
 }
 
-export function getUserImage (currentUser: IUser): {src: string, alt: string} {
+export function getUserImage (currentUser: IUser): { src: string, alt: string } {
 	if (currentUser.fbProfilePic) {
 		return {
-			src:currentUser.fbProfilePic,
-			alt:'facebook image'
+			src: currentUser.fbProfilePic,
+			alt: 'facebook image'
 		}
-	}else{
-		return{
-			src:`https://www.gravatar.com/avatar/${currentUser.gravatar}`,
-			alt:'user image'
+	} else {
+		return {
+			src: `https://www.gravatar.com/avatar/${currentUser.gravatar}`,
+			alt: 'user image'
 		}
 	}
 }
