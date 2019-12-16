@@ -34,7 +34,6 @@ export const HeaderLayout = styled.div`
 	}
 	@media ${device.tablet} {
 		padding: 25px;
-	    
 	}
 		
 `

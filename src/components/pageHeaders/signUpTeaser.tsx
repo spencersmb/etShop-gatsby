@@ -1,16 +1,32 @@
 import GatsbyImgMedium from '@components/images/gatsbyImgMedium'
+import Login from '@components/modals/login'
+import { IState } from '@et/types/State'
+import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { ButtonReg, ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
-import GatsbyImage from 'gatsby-image'
 import React from 'react'
+import { connect } from 'react-redux'
+import { Action, bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
 
-const SignUpTeaser = () => {
-	const openModal = () => {
+interface IPropsActions {
+	showModal: IShowModalAction
+}
 
+const SignUpTeaser = (props: IPropsActions) => {
+	const openModal = () => {
+		props.showModal({
+			modal: Login,
+			// modal: Receipt,
+			options: {
+				closeModal: true,
+				hasBackground: true,
+				name: 'signup'
+			}
+		})
 	}
 	return (
 		<TeaserContainer>
@@ -51,7 +67,13 @@ const SignUpTeaser = () => {
 	)
 }
 
-export default React.memo(SignUpTeaser)
+const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
+	return {
+		showModal: bindActionCreators(showModal, dispatch)
+	}
+}
+export default React.memo(connect<null, IPropsActions, any, IState>(null, mapDispatchToProps)(SignUpTeaser))
+
 const SignUpBtnWrapper = styled.div`
 `
 const SignUpBtn = styled(ButtonReg)`
@@ -116,7 +138,7 @@ const LaptopImage = styled.div`
 	
 	@media ${device.laptop} {
 		.gatsby-image-wrapper{
-			top: 70%;
+			top: 63%;
 			right: -260px;
 			width: 1270px;
 		}
@@ -124,8 +146,7 @@ const LaptopImage = styled.div`
 	
 	@media ${device.laptopL} {
 		.gatsby-image-wrapper{
-			top: 80%;
-    	right: -260px;
+			//top: 80%;
     	width: 1340px;
 		}
 	}
@@ -159,7 +180,7 @@ const SignUpContainer = styled.div`
 	}
 	@media ${device.laptop} {
 		grid-column: 8 / 14;
-		margin: 120px auto;
+		margin: 60px auto 180px;
 	}
 	@media ${device.laptopL} {
 		h2{

@@ -1,0 +1,74 @@
+<mjml>
+  <mj-head>
+    <mj-preview>Welcome to the EveryTuesday Shop</mj-preview>
+    <mj-title>Welcome to the EveryTuesday Shop</mj-title>
+    <mj-style>.text-lrg{ font-size: 45px; } .spacerLrg{ padding: 0 80px; }
+      .mainHeader__spacing{
+      	padding:60px 60px 60px;
+      } 
+      .et-container{
+      	padding:0 60px 0px 60px;
+      }
+      .coupon-container{
+      	padding: 0 120px;
+      }
+      
+      @media only screen and (max-width:600px) { 
+       .text-lrg{ font-size: 24px; } 
+       .spacerLrg{ padding: 0 20px; } 
+       .mainHeader__spacing{
+      	 padding: 30px 30px 30px;
+       }  
+      .et-container{
+      	padding:0px 30px 0px 30px ;
+       } 
+      .coupon-container{
+      	padding: 0 20px;
+      }
+      
+      } </mj-style>
+    <mj-style inline="inline"> </mj-style>
+  </mj-head>
+  <mj-body background-color="#F7F8FC">
+    <mj-include path="../components/header.mjml" />
+    <mj-wrapper background-color="#fff" padding="0">
+      <!-- Headline -->
+        <mj-section padding="0" css-class="mainHeader__spacing">
+        <mj-column>
+          <mj-text padding="0" align="left">
+            <p class="text-lrg" style="color: #333F4F; line-height: 1.1em; margin: 0; padding: 0; font-weight:400;">Welcome to the tribe!</p>
+            <p class="text-lrg" style="color: #5A44E2;	 line-height: 1.1em; margin: 0; padding: 0; font-weight:400;">Save 10% on your first purchase with us:</p>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      
+    </mj-wrapper>
+      
+      <!-- Coupon padding="0 60px" -->
+      <mj-wrapper background-color="#fff" padding="0">
+        <mj-section padding="0" css-class="coupon-container">
+          <mj-column background-color="#F0F2FA">
+            <mj-text padding="30px 0 15px" align="center">Coupon code</mj-text>
+            <mj-text padding="0 0 30px" align="center" color="#5A44E2" font-size="25px" line-height="25px" padding="0" align="left">
+            <p style="margin: 0;">ASIDJSADLKJJAS</p>
+          </mj-text>
+          </mj-column>
+        </mj-section>
+          
+      </mj-wrapper>
+      
+      <!-- Description -->
+			<mj-wrapper background-color="#fff" padding="0">
+       <mj-section css-class="et-container">
+          <mj-column>
+         	<mj-text padding="0" font-size="16px" line-height="21px" color="#35546D">
+            <p>Thank you for joining the Tuesday Tribe. As our way of saying thanks, you have a 10% coupon you can use on your entire purchase. This coupon does not expire and con only be used once.</p>
+          </mj-text>
+         </mj-column>
+       </mj-section>
+      </mj-wrapper>
+      
+    </mj-wrapper>
+    <mj-include path="../components/footer.mjml" /> 
+  </mj-body>
+</mjml>

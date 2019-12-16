@@ -69,7 +69,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 	}, [])
 
 	function openSignInModal (name: string) {
-		return () => [
+		return () => {
 			props.showModal({
 				modal: Login,
 				// modal: Receipt,
@@ -79,7 +79,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 					name
 				}
 			})
-		]
+		}
 	}
 
 	function receipt () {

@@ -22,7 +22,7 @@ const ViewLicenseModal = (props: IModal) => {
 				{renderSvg(svgs.HamburgerClose)}
 			</ModalCloseSvg>
 			<HeaderLayout>
-				<h2 style={{ textAlign: 'left' }}>
+				<h2>
 					Licenses
 				</h2>
 			</HeaderLayout>

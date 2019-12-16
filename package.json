@@ -77,7 +77,8 @@
     "storybook": "start-storybook -p 6006 -c .storybook",
     "build:storybook": "build-storybook",
     "dev": "run-p storybook nextDev",
-    "clean": "node cleanDir"
+    "clean": "node cleanDir",
+    "email": "mjml --watch welcome.mjml -o welcome.html"
   },
   "repository": {
     "type": "git",
@@ -125,6 +126,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
     "jest-dom": "^3.0.2",
+    "mjml": "^4.5.1",
     "nock": "^10.0.6",
     "react-docgen-typescript-loader": "^3.0.1",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",

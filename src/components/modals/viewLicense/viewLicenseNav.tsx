@@ -27,6 +27,7 @@ export default ViewLicenseNav
 const ItemContainer = styled.ul`
  display: flex;
  flex-direction: row;
+ justify-content: center;
  margin: 0;
  padding: 0;
  background: ${colors.grey.i400};

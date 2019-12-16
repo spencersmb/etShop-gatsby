@@ -1,0 +1,10 @@
+<mj-wrapper padding="0">
+  <mj-section padding="30px 80px 30px" background-color="#5A44E2">
+  <mj-column width="60%" padding="0">
+    <mj-text vertical-align="middle" color="#fff" align="left"	font-weight="bold" padding="0 0 20px 0" font-size="16px" color="#626262">EVERY-TUESDAY</mj-text>
+  </mj-column>
+  <mj-column width="40%" padding="0">
+    <mj-text vertical-align="middle" color="#fff" padding="0" font-style="italic" font-size="13px" color="#626262">Design Resources for your creative projects</mj-text>
+  </mj-column>
+</mj-section>
+</mj-wrapper>
