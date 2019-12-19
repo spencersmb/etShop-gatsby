@@ -4,6 +4,7 @@ import { ICartState } from '@et/types/Cart'
 import { INavState } from '@et/types/Modal'
 import { IState } from '@et/types/State'
 import { IUser } from '@et/types/User'
+import { IReceipt, IRefund } from '@et/types/WC_Order'
 import { ILogoutAction, logout as logoutAction } from '@redux/actions/authActions'
 import { cartToggle } from '@redux/actions/cartActions'
 import { INavAction, toggleNav as toggleNavAction } from '@redux/actions/navActions'
@@ -55,6 +56,42 @@ interface IPropsActions {
 	toggleNav: INavAction
 }
 
+const fakeData: IReceipt = {
+	id: 962,
+	total: '179.09',
+	date: '12-16-2019',
+	status: 'completed',
+	transactionId: 'ch_1FqVX9I4y1PxdHL7vI00d1s9',
+	refund: null,
+	payment_type: 'Credit Card',
+	order_id: '962',
+	email: 'teelacunningham@gmail.com',
+	date_completed: 'December 16, 2019',
+	totals: '179.09',
+	subtotal: '267.3',
+	cardType: 'Visa',
+	discounts: '88.21',
+	discount_reverse: 88.21,
+	coupon_used: [
+		'percentage-test'
+	],
+	downloads: {
+		exp_date: 1576634862,
+		products: [
+			{
+				id: 799,
+				name: 'Skinny Jeans Extended',
+				subtitle: 'Font Trio: Script, Caps + Symbols',
+				sku: '',
+				total: '179.09',
+				qty: 33,
+				filename: 'Skinny-Jeans-Ext.zip',
+				url: 'https://wc-products.s3.amazonaws.com/Skinny-Jeans-Ext.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJFVJM7XVRJPMVXBA%2F20191218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191218T020442Z&X-Amz-SignedHeaders=host&X-Amz-Expires=120&X-Amz-Signature=99bb37ab7b7ce1d5d26ab7533f4bb2164ad5f08577bc048de024bdd2311ed76d'
+			}
+		]
+	}
+}
+
 function Navbar (props: IPropsActions & IPropsState) {
 	const { user, logout, toggleNav, nav } = props
 	// const {src, alt} = getUserImage(user)
@@ -88,24 +125,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 			options: {
 				closeModal: true,
 				hasBackground: false,
-				data: {
-					total: '16',
-					orderId: '430',
-					email: 'spencer@gmail.com',
-					type: 'Stripe',
-					date: '1551315228792',
-					downloads: [
-						{
-							download_url: 'http://shopeverytuesday.local/?download_file=222&order=wc_order_WACJ4jqOmzcx5&uid=48005c9bfbb9cc0aa69d683a821861fbfa5929e61e7bb4d52aa9268db9893836&key=831ced27-6944-4747-a419-99c292de9c0c',
-							product_id: 222,
-							product_name: 'Watercolor texture kit Vol. 1',
-							product_url: 'http://shopeverytuesday.local/product/watercolor-texture-kit-vol-1/',
-							order_id: 430,
-							downloads_remaining: '',
-							access_expires: null
-						}
-					]
-				}
+				data: fakeData
 			}
 		})
 	}
@@ -177,6 +197,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 			>
 
 				<NavCenter data-testid='nav-center' user={user}>
+					<a onClick={receipt}>Receipt</a>
 					{user && <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>
               <a

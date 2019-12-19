@@ -1,4 +1,4 @@
-import ForgotPasswordForm from '@components/forms/fogotPassword'
+import AuthApi from '@api/authApi'
 import FindMyOrderBar from '@components/forms/inputs/findMyOrderBar'
 import GatsbyImgMedium from '@components/images/gatsbyImgMedium'
 import SignUpTeaser from '@components/pageHeaders/signUpTeaser'
@@ -110,13 +110,22 @@ const ForgotPasswordPage = ({ data }: any) => {
 		completed: false
 	})
 
+	const getOrder = async () => {
+		const call = await AuthApi.getGuestOrder(state)
+
+		if (call.status !== 200) {
+			throw await call.json()
+		}
+
+		return call.json()
+	}
+
 	const handleSubmit = async () => {
 		setState({
 			submitting: true
 		})
 		try {
-			// await AuthApi.getGuestOrder(state)
-			await fakeApiCall()
+			await getOrder()
 			setState({
 				submitting: false,
 				completed: true
@@ -127,7 +136,7 @@ const ForgotPasswordPage = ({ data }: any) => {
 			setState({
 				submitting: false
 			})
-			toastr.success('Order Not Found.', 'Please check your email, or your order number', toastrOptions.standard)
+			toastr.error('Error', e.message, toastrOptions.noHover)
 		}
 
 	}

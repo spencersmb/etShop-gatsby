@@ -109,14 +109,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			options: {
 				closeModal: true,
 				hasBackground: false,
-				data: {
-					type: 'Stripe',
-					orderId: order.order_id,
-					date: order.date,
-					email: order.email,
-					downloads: order.downloads,
-					total: order.total
-				}
+				data: order
 			}
 		})
 		props.emptyCart()

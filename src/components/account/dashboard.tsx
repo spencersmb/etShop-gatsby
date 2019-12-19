@@ -306,7 +306,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 
 export default connect<IReduxState, IReduxActions, IProps, IState>(mapStateToProps, mapDispatchToProps)(Dashboard)
 
-
 const PageContainer = styled(GridFluid)`
 	display: flex;
 	flex-direction: column;
@@ -353,12 +352,16 @@ const PageHeader = styled.div`
 	
 	@media ${device.tablet} {
 		flex-direction: row;
-		grid-column: 3/ 13;
+		grid-column: 2/ 14;
 		margin: 30px 0 0;
 		h1{
 			text-align: left;
 			margin:0;
 		}
+	}
+	
+	@media ${device.laptop} {
+		grid-column: 3/ 13;
 	}
 		
 `
@@ -370,6 +373,9 @@ const OrderDisplayContainer = styled.div`
 	grid-column: 2/ 4;
 	
 	@media ${device.tablet} {
+		grid-column: 2/ 14;
+	}	
+	@media ${device.laptop} {
 		grid-column: 3/ 13;
 	}
 		

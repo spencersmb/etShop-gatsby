@@ -6,7 +6,7 @@ import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
-import { displayCurrency } from '@utils/priceUtils'
+import { calcItemTotal, displayCurrency } from '@utils/priceUtils'
 import { renderSvg } from '@utils/styleUtils'
 import React, { RefObject, useState } from 'react'
 import styled from 'styled-components'
@@ -113,7 +113,6 @@ function OrderDisplay (props: IProps) {
 	}
 
 	async function resetOrderLinks () {
-		console.log('reset orderId', selectedOrder.order_id)
 		setSubmitting(true)
 		try {
 			await props.resetDownloadLinks(selectedOrder.order_id, page)
@@ -122,13 +121,6 @@ function OrderDisplay (props: IProps) {
 			setSubmitting(false)
 			console.error('e', e)
 		}
-	}
-
-	function calcItemTotal (total: string, qty: string) {
-		const totalNumber = parseFloat(total)
-		const qtyNumber = parseInt(qty, 10)
-
-		return displayCurrency(totalNumber / qtyNumber, true)
 	}
 
 	if (!props.selectedOrder) {
@@ -210,7 +202,7 @@ function OrderDisplay (props: IProps) {
 								<ProductListItem>
 									<MobileTitle>Price</MobileTitle>
 									<p className={'price'}>
-										{calcItemTotal(download.total, download.qty)}
+										{calcItemTotal(download.total, download.qty.toString(10))}
 									</p>
 								</ProductListItem>
 								<ProductListItem>

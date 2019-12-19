@@ -1,0 +1,53 @@
+<mjml>
+  <mj-head>
+    <mj-preview>Reset Password</mj-preview>
+    <mj-title>Reset Password</mj-title>
+    <mj-include path="../components/mainStyles.mjml" />
+    <mj-style>
+      
+      .text-med{
+      	font-size: 18px;
+      }
+      
+      @media only screen and (max-width:600px) { 
+      
+      .text-med{
+      	font-size: 16px;
+      }
+      
+      } </mj-style>
+    <mj-style inline="inline"> </mj-style>
+  </mj-head>
+  <mj-body background-color="#F7F8FC">
+    <mj-include path="../components/header_no_bg.mjml" />
+    <mj-wrapper background-color="#fff" padding="0">
+      <!-- Headline -->
+        <mj-section padding="0" css-class="body_primary">
+        <mj-column>
+          <mj-text padding="0" align="left">
+            <p class="text-lrg" style="color: #5A44E2; line-height: 1.1em; margin: 0; padding: 0 0; font-weight:400;">Password reset</p>
+            <p class="text-med" style="color: #333F4F; line-height: 1.1em; padding: 0; font-weight:400;">The password for the following account has been requested to be reset:</p>
+            <p class="text-med" style="color: #5A44E2; line-height: 1.1em; padding: 0 0 20px;font-weight:400;">spencer.bigum@gmail.com</p>
+            
+          </mj-text>
+          <mj-button font-size="16px" align="left" background-color="#5A44E2" color="#fff" border-radius="24px" href="https://mjml.io" font-family="Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif" padding="0 0 20px" >RESET PASSWORD</mj-button>
+        </mj-column>
+      </mj-section>
+      
+    </mj-wrapper>
+      
+      <!-- details -->
+			<mj-wrapper background-color="#fff" padding="0">
+       <mj-section css-class="et-container" padding="0 0 30px">
+          <mj-column>
+         	<mj-text padding="0" font-size="14px" line-height="21px" color="#35546D">
+            <p>Reset links last 1 hour. If this message was sent in error, please ignore this email. If your link has expired, please visit this <a href="" target="_blank">page</a> 	again to reset it.</p>
+          </mj-text>
+         </mj-column>
+       </mj-section>
+      </mj-wrapper>
+      <!-- ./details -->
+    </mj-wrapper>
+    <mj-include path="../components/footer.mjml" /> 
+  </mj-body>
+</mjml>

@@ -140,14 +140,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 						options: {
 							closeModal: true,
 							hasBackground: false,
-							data: {
-								type: 'Stripe',
-								orderId: order.order_id,
-								date: order.date,
-								email: order.email,
-								downloads: order.downloads,
-								total: order.total
-							}
+							data: order
 						}
 					})
 					props.emptyCart()
@@ -226,8 +219,8 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
         <CheckoutFormLabel>
           Billing
         </CheckoutFormLabel>
-				<GuestBilling/>
-			</GuestBillingContainer>}
+        <GuestBilling/>
+      </GuestBillingContainer>}
 			{manualSubmitting && <PaypalSpinner>
         <InputSpinner submitting={true} spinnerColor={'#009cde'}>
           <svg className='spinner' viewBox='0 0 50 50'>
@@ -267,5 +260,5 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 
 // export default connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm)
 export default React.memo(connect<IReduxState, IReduxActions, IPublicProps, IState>(mapStateToProps, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
-	return !(prev.cart.totalPrice !== next.cart.totalPrice || prev.cart.coupon.valid !== prev.cart.coupon.valid)
+	return !(prev.cart.totalPrice !== next.cart.totalPrice || prev.cart.coupon.valid !== prev.cart.coupon.valid || prev.user !== next.user)
 })

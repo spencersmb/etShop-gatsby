@@ -71,10 +71,9 @@ export interface IOrderDownloadItem {
 	name: string
 	filename: string
 	total: string
-	cost: string
 	sku: string
 	subtitle: string
-	qty: string
+	qty: number
 }
 
 export interface IRefund {
@@ -88,7 +87,7 @@ export interface IReceipt {
 	date: string
 	status: string
 	transactionId: string
-	refund?: IRefund
+	refund: null | IRefund
 	payment_type: string
 	order_id: string
 	email: string
@@ -97,7 +96,7 @@ export interface IReceipt {
 	subtotal: string
 	cardType: null | string
 	discounts: string // 0 if no discount
-	discounts_reverse: number; // 0 if no discount
+	discount_reverse: number; // 0 if no discount
 	coupon_used: string[] // will have one item if used
 	downloads: IOrderDownload
 }

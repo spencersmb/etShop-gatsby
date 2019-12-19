@@ -1,31 +1,29 @@
+<!-- FOOTER -->
 <mj-section padding="20px 0 0">	
 
   <mj-column>
 <mj-social font-size="15px" icon-size="30px" mode="horizontal" padding="0" align="center">
-            <mj-social-element name="youtube" href="https://mjml.io/" background-color="#A1A0A0">
+            <mj-social-element name="youtube" href="https://youtube.com/everytues" background-color="#A1A0A0">
             </mj-social-element>
-            <mj-social-element name="instagram" href="https://mjml.io/" background-color="#A1A0A0">
+            <mj-social-element name="instagram" href="https://instagram.com/everytuesday" background-color="#A1A0A0">
             </mj-social-element>
-            <mj-social-element name="facebook" href="https://mjml.io/" background-color="#A1A0A0">
+            <mj-social-element name="facebook" href="https://facebook.com/everytues" background-color="#A1A0A0">
             </mj-social-element>
-            <mj-social-element name="pinterest" href="https://mjml.io/" background-color="#A1A0A0">
+            <mj-social-element name="pinterest" href="https://www.pinterest.com/teelac/" background-color="#A1A0A0">
+            </mj-social-element>
+  <mj-social-element name="twitter" href="https://twitter.com/teelacunningham" background-color="#A1A0A0">
             </mj-social-element>
           </mj-social>
 
 </mj-section>
 
-<mj-section padding="20px 0 0">	
+<mj-section padding="15px 0 0">	
 
-  
-  <mj-column width="100%" padding="0">
-    <mj-text align="center" color="#9B9B9B" font-size="11px" padding="0 0 10px">
-      Icon made by Freepik from <a href="http://www.flaticon.com" target="_blank" style="color: #9B9B9B; text-decoration: none;">www.flaticon.com</a>
-    </mj-text>
-  </mj-column>
   <mj-column width="100%" padding="0 0 10px">
     <mj-text align="center" color="#9B9B9B" font-size="11px" padding="0 0 10px">
-      <a href="http://svenhaustein.de" style="color: #9B9B9B; text-decoration:none; margin-bottom: 10px;">Made by svenhaustein.de</a>
+      <a href="http://svenhaustein.de" style="color: #9B9B9B; text-decoration:none; margin-bottom: 10px;">Made by every-tuesday.com</a>
     </mj-text>
   </mj-column>
   
 </mj-section>
+  <!-- ./FOOTER -->

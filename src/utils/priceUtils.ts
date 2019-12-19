@@ -174,3 +174,11 @@ export function calcTotalQtyPrice (price: string, qty: number | string): string 
 	const productPrice: number = parseFloat(price)
 	return displayCurrency(_.round(productPrice * qty, 2))
 }
+
+export function calcItemTotal (total: string, qty: string) {
+
+	const totalNumber = parseFloat(total)
+	const qtyNumber = parseInt(qty, 10)
+
+	return displayCurrency(totalNumber / qtyNumber, true)
+}

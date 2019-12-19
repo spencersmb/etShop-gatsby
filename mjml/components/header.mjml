@@ -1,5 +1,6 @@
+<!-- HEADER -->
 <mj-wrapper padding="0">
-  <mj-section padding="30px 80px 30px" background-color="#5A44E2">
+<mj-section css-class="headerPrimary"padding="0" background-color="#5A44E2">
   <mj-column width="60%" padding="0">
     <mj-text vertical-align="middle" color="#fff" align="left"	font-weight="bold" padding="0 0 20px 0" font-size="16px" color="#626262">EVERY-TUESDAY</mj-text>
   </mj-column>
@@ -8,3 +9,4 @@
   </mj-column>
 </mj-section>
 </mj-wrapper>
+<!-- ./HEADER -->
