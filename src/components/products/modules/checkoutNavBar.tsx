@@ -84,6 +84,8 @@ const CheckoutNavBar = (props: IProps) => {
 
 	}
 
+	console.log('render')
+
 	return (
 		<CheckoutNavContainer
 			// pose={windowPos > 300 && !inView ? 'show' : 'hide'}

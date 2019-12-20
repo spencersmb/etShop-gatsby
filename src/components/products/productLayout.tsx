@@ -365,7 +365,7 @@ const mapDispatchToProps = (dispatch: ReduxDispatch<Action>) => {
 export default connect<IPropsPrivate, IPropsActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(ProductLayout)
 
 const productRowGap = styled.div`
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 `
 const ProductWrapper = styled.div`
 	padding: 20px 0 0;

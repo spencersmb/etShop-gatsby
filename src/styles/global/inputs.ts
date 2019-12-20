@@ -124,7 +124,9 @@ export const radioClass = css`
 				border: 2px solid ${colors.grey.i600};
 				border-radius: 100%;
 				background: transparent;
-				transition: all 0.2s ease;
+		}
+		[type="radio"]:checked + label:before{
+			border: 2px solid ${colors.primary.pink};
 		}
 
 		[type="radio"]:checked + label:after,
@@ -132,13 +134,13 @@ export const radioClass = css`
 				content: '';
 				width: 12px;
 				height: 12px;
-				background: ${colors.teal.i500};
+				background: ${colors.primary.pink};
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
 				left: 5px;
 				border-radius: 100%;
-				transition: all 0.2s ease;
+				transition: all 0.1s ease;
 				transform-origin: top;
 		}
 		[type="radio"]:not(:checked) + label:after {

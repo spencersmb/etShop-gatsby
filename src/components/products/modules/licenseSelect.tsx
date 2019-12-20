@@ -62,35 +62,45 @@ const LicenseSelect = (props: IProps) => {
 			<LicLabel>
 				CHOOSE LICENSE TYPE
 			</LicLabel>
+			<LicBtnWrapper>
+				<LicViewBtn
+					data-testid='viewLicBtn'
+					onClick={triggerViewLicense}
+					outline={false}>
+					View license
+				</LicViewBtn>
+			</LicBtnWrapper>
 			<ul>
 				{licenses && licenses.map((license: any, i: number) => {
 						return (
 							<LicItem
 								key={license.type.name}
-								onClick={handleClick(i)}
+
 								selected={selectedLicense === license.type.value}>
 						<span className={'licItem__radio'}>
-							<p className={'etRadioWrapper'}>
+							<Price
+								style={{ width: '100%' }}
+								color={colors.primary.pink}
+								selected={selectedLicense === license.type.value}
+								className={'etRadioWrapper'}>
 								<input
 									type='radio'
 									id={`${license.type.value}-radio`}
 									name='radio-group'
-									onChange={() => {}}
+									onClick={handleClick(i)}
 									checked={selectedLicense === license.type.value}
 								/>
-								<label htmlFor={`${license.type.value}-radio`}>{license.type.name}</label>
-							</p>
-						<p
-							className={'price'}>{displayCurrency(calcBulkPriceDiscount(bulkDiscount, license.item.price, licenceQty))}</p>
+								<label htmlFor={`${license.type.value}-radio`}>
+									<span>{license.type.name}</span>
+									{license.item.onSale && <Sale>Sale</Sale>}
+								</label>
+							</Price>
+						<Price
+							color={colors.primary.pink}
+							selected={selectedLicense === license.type.value}
+							className={'price'}>{displayCurrency(calcBulkPriceDiscount(bulkDiscount, license.item.price, licenceQty))}</Price>
 						</span>
-								<LicBtnWrapper pose={selectedLicense === license.type.value ? 'open' : 'closed'}>
-									<LicViewBtn
-										data-testid='viewLicBtn'
-										onClick={triggerViewLicense}
-										outline={false}>
-										View license
-									</LicViewBtn>
-								</LicBtnWrapper>
+
 							</LicItem>
 						)
 					}
@@ -100,16 +110,42 @@ const LicenseSelect = (props: IProps) => {
 	)
 }
 export default LicenseSelect
-
+const Sale = styled.span`
+	background: ${colors.purple.i500};
+	color: #fff;
+	font-size: 13px;
+	line-height: 13px;
+	text-transform: uppercase;
+	border-radius: 25px;
+	padding: 5px 8px;
+	margin: 0 0 0 10px;
+`
+const Price = styled.p<{ selected: boolean, color: string }>`
+	transition: color .2s;
+	color: ${props => props.selected ? props.color : 'inherit'};
+	label{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: ${props => props.selected ? props.color : 'inherit'} !important;
+	}
+`
 const LicContainer = styled.div<{ height: string }>`
 	position: relative;
 	border-top: 1px solid ${colors.grey.i600};
 	border-bottom: 1px solid ${colors.grey.i600};
-	padding: 25px 0;
+	padding: 15px 0 25px;
 	margin-bottom: 25px;
-	min-height: ${props => props.height}px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	//min-height: ${props => props.height}px;
+	align-items: flex-end;
+	
 	ul{
-		margin: 0;
+		flex: 1 0 100%;
+		margin: 30px 0 0;
 		padding: 0;
 	}
 `
@@ -117,27 +153,27 @@ const LicLabel = styled.div`
 	font-size: 13px;
 	font-weight: bold;
 	color: ${colors.primary.headline};
-	margin-bottom: 20px;
+	flex: 1;
 `
 const LicButtonPose = posed.li({
 	closed: {
 		height: 0,
 		transition: {
-			default: { duration: 300 }
+			default: { duration: 200 }
 		}
 	},
 	open: {
 		transition: {
-			default: { duration: 300 }
+			default: { duration: 200 }
 		},
 		height: 'auto'
 	}
 })
-const LicBtnWrapper = styled(LicButtonPose)`
+const LicBtnWrapper = styled.div`
 	overflow: hidden;
 	display: flex;
-	justify-content: flex-start;
-	padding-left: 31px;
+	justify-content: flex-end;
+	//padding-left: 31px;
 `
 const LicItem = styled.div<{ selected: boolean }>`
 	list-style: none;
@@ -180,7 +216,7 @@ const LicViewBtn = styled(ButtonSmall)`
 	font-size: 12px;
 	text-transform: uppercase;
 	font-weight: 600;
-	margin: 10px 0 10px;
+	margin: 0;
 	cursor: pointer;
 	color: ${highLights.color};
 	&:hover{

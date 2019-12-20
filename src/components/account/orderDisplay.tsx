@@ -543,7 +543,6 @@ const CloseBtnWrapper = styled.div`
 const CloseBtn = styled.div`
 	width: 50px;
 	height: 50px;
-	background: ${colors.purple.i400};
 	border-radius: 50%;
 	position: absolute;
 	top:15px;

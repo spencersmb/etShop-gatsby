@@ -87,6 +87,36 @@ const fakeData: IReceipt = {
 				qty: 33,
 				filename: 'Skinny-Jeans-Ext.zip',
 				url: 'https://wc-products.s3.amazonaws.com/Skinny-Jeans-Ext.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJFVJM7XVRJPMVXBA%2F20191218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191218T020442Z&X-Amz-SignedHeaders=host&X-Amz-Expires=120&X-Amz-Signature=99bb37ab7b7ce1d5d26ab7533f4bb2164ad5f08577bc048de024bdd2311ed76d'
+			},
+			{
+				id: 29,
+				name: 'Skinny Jeans Extended',
+				subtitle: 'Font Trio: Script, Caps + Symbols',
+				sku: '',
+				total: '179.09',
+				qty: 33,
+				filename: 'Skinny-Jeans-Ext.zip',
+				url: 'https://wc-products.s3.amazonaws.com/Skinny-Jeans-Ext.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJFVJM7XVRJPMVXBA%2F20191218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191218T020442Z&X-Amz-SignedHeaders=host&X-Amz-Expires=120&X-Amz-Signature=99bb37ab7b7ce1d5d26ab7533f4bb2164ad5f08577bc048de024bdd2311ed76d'
+			},
+			{
+				id: 99,
+				name: 'Skinny Jeans Extended',
+				subtitle: 'Font Trio: Script, Caps + Symbols',
+				sku: '',
+				total: '179.09',
+				qty: 33,
+				filename: 'Skinny-Jeans-Ext.zip',
+				url: 'https://wc-products.s3.amazonaws.com/Skinny-Jeans-Ext.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJFVJM7XVRJPMVXBA%2F20191218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191218T020442Z&X-Amz-SignedHeaders=host&X-Amz-Expires=120&X-Amz-Signature=99bb37ab7b7ce1d5d26ab7533f4bb2164ad5f08577bc048de024bdd2311ed76d'
+			},
+			{
+				id: 199,
+				name: 'Skinny Jeans Extended',
+				subtitle: 'Font Trio: Script, Caps + Symbols',
+				sku: '',
+				total: '179.09',
+				qty: 33,
+				filename: 'Skinny-Jeans-Ext.zip',
+				url: 'https://wc-products.s3.amazonaws.com/Skinny-Jeans-Ext.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJFVJM7XVRJPMVXBA%2F20191218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191218T020442Z&X-Amz-SignedHeaders=host&X-Amz-Expires=120&X-Amz-Signature=99bb37ab7b7ce1d5d26ab7533f4bb2164ad5f08577bc048de024bdd2311ed76d'
 			}
 		]
 	}

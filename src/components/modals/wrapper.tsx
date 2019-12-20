@@ -85,7 +85,9 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 		if (!show && target.current && !cartIsOpen) {
 
 			// delay by 300 to allow modal to animate out with scrollbar issue
-			bodyScrollBar.remove(target.current)
+			setTimeout(() => {
+				bodyScrollBar.remove(target.current)
+			}, 300)
 
 			document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 		}

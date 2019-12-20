@@ -62,40 +62,42 @@ const ReceiptCard = (props: IReceipt) => {
 					</Product>)
 				}
 			</div>
-			{coupon_used.length > 0 &&
-      <CouponWrapper>
-        <TotalLabel>Coupon Used</TotalLabel>
-				{
-					coupon_used.map(coupon => (
-						<CouponItem key={coupon}>
-							{coupon}
-						</CouponItem>
-					))
-				}
-      </CouponWrapper>
-			}
 
 			<TotalWrapper data-testid='receiptTotal'>
 				{coupon_used.length > 0 &&
-        <>
-          <SubTotal>
-            <TotalLabel>Subtotal</TotalLabel>
-            <TotalNumber>{displayCurrency(subtotal)}</TotalNumber>
-          </SubTotal>
-          <SubTotal>
-            <TotalLabel>Discount</TotalLabel>
-            <TotalNumber>-{displayCurrency(discounts)}</TotalNumber>
-          </SubTotal>
-        </>
+        <CouponWrapper>
+          <TotalLabel>Coupon Used</TotalLabel>
+					{
+						coupon_used.map(coupon => (
+							<CouponItem key={coupon}>
+								{coupon}
+							</CouponItem>
+						))
+					}
+        </CouponWrapper>
 				}
-				<Total>
-					<TotalLabel>
-						Total
-					</TotalLabel>
-					<FinalTotal>
-						{displayCurrency(total)}
-					</FinalTotal>
-				</Total>
+				<TotalNumbers>
+					{coupon_used.length > 0 &&
+          <>
+            <SubTotal>
+              <TotalLabel>Subtotal</TotalLabel>
+              <TotalNumber>{displayCurrency(subtotal)}</TotalNumber>
+            </SubTotal>
+            <SubTotal>
+              <TotalLabel>Discount</TotalLabel>
+              <TotalNumber>-{displayCurrency(discounts)}</TotalNumber>
+            </SubTotal>
+          </>
+					}
+					<Total>
+						<TotalLabel>
+							Total
+						</TotalLabel>
+						<FinalTotal>
+							{displayCurrency(total)}
+						</FinalTotal>
+					</Total>
+				</TotalNumbers>
 			</TotalWrapper>
 
 		</CardWrapper>
@@ -103,6 +105,13 @@ const ReceiptCard = (props: IReceipt) => {
 }
 export default ReceiptCard
 
+const TotalNumbers = styled.div`
+	flex:1;
+	align-items: flex-end;
+	display: flex;
+	flex-direction: column;	
+	text-align: right; 
+`
 const TotalNumber = styled.div`
  font-size: 16px;
  font-weight: 500;
@@ -125,11 +134,13 @@ const TotalWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	color: ${colors.secondary.text};
+	align-items: flex-end;
 	
 	@media ${device.tablet} {
-		align-items: flex-end;	
-		text-align: right;    
+		align-items: flex-start;
+		flex-direction: row;
 	}
+		
 `
 
 const CouponItem = styled.div`
@@ -138,22 +149,27 @@ const CouponItem = styled.div`
 	border-radius: 25px;
 	text-transform: uppercase;
 	color: ${colors.purple.i700};
+	align-self: flex-end;
 `
 
 const CouponWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	border-bottom: 1px solid #ddd;
 	color: ${colors.primary.text};
+	border-bottom: 1px solid #ddd;
+	width: 100%;
 	padding-bottom: 20px;
 	margin-bottom: 20px;
+	text-align: right;
 	${TotalLabel}{
 		padding: 0 0 10px;
 	}
 	@media ${device.tablet} {
+	border-bottom: none;
+		justify-content: flex-start;
+		text-align: left;
 		flex-direction: row;
 		align-items: center;
-		justify-content: flex-end;
 		${TotalLabel}{
 			padding: 0 10px 0 0;
 		}
@@ -201,16 +217,14 @@ const DetailItem = styled.div`
 const Details = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 15px 15px 15px 0;
+	padding: 15px 15px 20px 0;
 	
 	@media ${device.tablet} {
 		padding: 0 25px 0 0;
-	    	flex: 1;
-
+		flex: 1;
 	}
-		
-	
 `
+
 const Name = styled.div`
 	font-size: 16px;
 	color: ${colors.primary.text};
@@ -272,6 +286,12 @@ const EmailTo = styled.div`
 	font-size: 14px;
 	color: ${colors.db.primary};
 	${Sentinel.semiboldItalic};
+	padding: 30px 0 0;
+	
+	@media ${device.tablet} {
+		padding: 0;
+	}
+		
 `
 const CardWrapper = styled.div`
 	background: #fff;
@@ -292,7 +312,6 @@ const CardWrapper = styled.div`
 	
 	@media ${device.tablet} {
 		padding: 60px;
-		
 		h1{
 			font-size: 48px;
 		}

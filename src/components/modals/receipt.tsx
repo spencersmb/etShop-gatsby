@@ -5,7 +5,9 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { CartSliderTransition } from '@styles/modules/cart'
+import { svgs } from '@svg'
 import { displayCurrency } from '@utils/priceUtils'
+import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -24,14 +26,16 @@ export function Receipt (props: IReceiptProps) {
 	console.log('data', data)
 
 	return (
-		<Main>
-			<PoseMain>
-				<CloseBtn onClick={closeModal}><span>Close</span></CloseBtn>
+		<PoseMain>
+			<RightCol>
+				<CloseBtn onClick={closeModal}>
+					{renderSvg(svgs.HamburgerClose)}
+				</CloseBtn>
 				<CardWrapper>
 					<ReceiptCard {...data}/>
 				</CardWrapper>
-			</PoseMain>
-		</Main>
+			</RightCol>
+		</PoseMain>
 	)
 }
 
@@ -41,6 +45,34 @@ const CloseBtn = styled.div`
 	top: 20px;
 	color: #000;
 	right: 20px;
+	width: 50px;
+	height: 50px;
+	
+	svg{
+		width: 100%;
+	}
+	
+	path{
+		fill: ${colors.primary.text};
+	}
+	
+	@media ${device.tablet} {
+		top: 75px;
+		right: 80px;
+	}
+	
+	@media ${device.laptop} {
+		top: 45px;
+		right: 80px;
+	}
+	
+	@media ${device.laptopL} {
+		top: 20px;
+		right: 20px;
+	    
+	}
+		
+		
 `
 const CardWrapper = styled.div`
 	grid-column: 2 / 4;
@@ -68,11 +100,11 @@ const Main = styled.div`
 	width: 100%;
 	height: 100%;
 	top: 0;
-	left: 0;
+	left: ${startPos};
 	display: flex;
+	background: ${colors.grey.i200};
 	flex-direction: row;
 	overflow-x: hidden;
-	background: ${colors.grey.i200};
 	overflow-y: scroll;
 	z-index: 7;
 `
@@ -80,10 +112,10 @@ const RightCol = styled(GridFluid)`
 	width: 100%;
 	height: 100%;
 	padding: 0;
-	left: ${startPos};
+	// left: ${startPos};
 	position: relative;
 `
-const PoseMain = posed(RightCol)({
+const PoseMain = posed(Main)({
 	exit: {
 		transition: CartSliderTransition.exit,
 		left: `-100%`
