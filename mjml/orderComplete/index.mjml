@@ -3,104 +3,99 @@
     <mj-preview>Order Complete</mj-preview>
     <mj-title>Order Complete</mj-title>
     <mj-include path="../components/mainStyles.mjml" />
+    <!-- order styles -->
     <mj-style>
-      
-      .text-med{
-      	font-size: 18px;
-      }
-      
-      .product-container{
-      	padding:0 80px 0px 80px;
-      }
-      
-      .bold{
-      	font-weight: 500 !important;
-      }
-      
-      .item-container{
-      	padding:0 60px 0px 60px;
-      }
-      .download-btn{
-       &:hover{
-      	cursor: pointer;
-       }	
-      }
-      .bottom-divider{
-      	padding: 0 0 11px;
-      	height: 1px;
-      	width: 100%;
-      	border-bottom: 1px solid #ddd;
-      }
-      .total{
-        padding: 0 0 10px;		
-      	text-align: right;
-      }
-      
-      .price{
-      	font-size: 21px;
-      }	
-      .date{
-      	text-align: right;
-      }
-      .coupon-item{
-      	border: 3px solid #5A44E2;
-      	display:inline;
-      	color: #5A44E2;
-      	padding: 8px 17px 9px;
-      	border-radius: 25px;
-      	text-transform: uppercase;
-      }
-      .coupon-label{
-      	padding: 10px 0 0;
-      }
-      @media only screen and (max-width:600px) { 
-      
-      .text-med{
-      	font-size: 16px;
-      }
-      
-      .product-container{
-      	padding:0 30px 0px 30px;
-      }
-      
-      .item-container{
-      	padding:0 30px 0px 30px;
-      }
-      
-      .download-btn{
-				text-align: left;
-      }
-      .total{
-      	padding: 0 0 10px;
-      	text-align: left;
-      }
-      .price{
-        font-size: 21px;
-      }	
-      
-      .date{
-      	text-align: left;
-      }
-      .coupon-label{
-      	padding: 0
-      
-      } </mj-style>
+img {
+  margin: 0 !important;
+}
+
+.product-container {
+  padding: 0 30px 0px 30px;
+}
+
+.item-container {
+  padding: 0 30px 0px 30px;
+}
+
+.download-btn {
+  text-align: left;
+}
+
+.total {
+  padding: 0 0 10px;
+  text-align: left;
+}
+
+.price {
+  font-size: 21px;
+}
+
+.date {
+  text-align: left;
+}
+
+.coupon-label {
+  padding: 0
+}
+.coupon-item {
+    border: 3px solid #5A44E2;
+    display: inline;
+    color: #5A44E2;
+    padding: 4px 12px;
+    border-radius: 25px;
+    text-transform: uppercase;
+  }
+  .no-padding-top {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+@media only screen and (min-width:600px) {
+  .product-container {
+    padding: 0 80px 0px 80px !important;
+  }
+  .bold {
+    font-weight: 500 !important;
+  }
+  .item-container {
+    padding: 10px 60px 0px 60px !important;
+    margin: 0 !important;
+  }
+  .bottom-divider {
+    padding: 0 0 11px !important;
+    height: 1px !important;
+    width: 100% !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+  .total {
+    padding: 0 0 10px !important;
+    text-align: right !important;
+  }
+  .date {
+    text-align: right !important;
+  }
+  .coupon-label {
+    padding: 10px 0 0 !important;
+  }
+}
+</mj-style>
     <mj-style inline="inline"> </mj-style>
   </mj-head>
   <mj-body background-color="#F7F8FC">
     <mj-include path="../components/header_no_bg.mjml" />
     <mj-wrapper background-color="#fff" padding="0">
       <!-- Order Header -->
-      <mj-section padding="0" css-class="body_primary">
+      <mj-section padding="0" css-class="et-container">
         <mj-column>
           <mj-text padding="0" align="left">
             <p class="text-lrg" style="color: #5A44E2; line-height: 1.1em; margin: 0; padding: 0 0; font-weight:400;">Order Complete</p>
           </mj-text>
         </mj-column>
       </mj-section>
+      <!-- ./Order Header -->
       
       <!-- Order ID & Date -->
-      <mj-section padding="15px 0 15px" css-class="et-container">
+      <mj-section padding="5px 0 15px" css-class="et-container">
         <mj-column>
           <mj-text padding="0" align="left">
           <p class="text-med" style="color: #333F4F; line-height: 1.1em; padding: 5px 0 0; font-weight:400; margin:0;">Order #920</p>
@@ -112,29 +107,33 @@
           </mj-text>
         </mj-column>
       </mj-section>
+      <!-- Order ID & Date -->
       
-      <mj-section padding="0" css-class="et-container" border-bottom="1px solid #ddd">	
+      
+      <!-- Product Header -->
+      <mj-section padding="20px 0 0" css-class="et-container" border-bottom="1px solid #ddd">	
         <mj-column padding="0">
           <mj-text padding="0" align="left" font-size="16px">
-          <p style="color: #333F4F; line-height: 1.1em; padding: 0; font-weight:400;">Products</p>
+          <p style="color: #333F4F; line-height: 1.1em; padding: 0 0 5px; font-weight:400; margin: 0;">Products</p>
           </mj-text>
         </mj-column>
       </mj-section>
+     <!-- Product Header -->
        
     </mj-wrapper>
 
     <!-- Product Items -->
-    <mj-wrapper background-color="#fff" padding="10px 0 0">	
+    <mj-wrapper background-color="#fff" padding="0">	
 
       <!-- ET-Product -->
-      <mj-section css-class="item-container" padding="10px 0 10px">
-      	<mj-column padding="0" width="40%">
+      <mj-section padding="20px 0 0" css-class="et-container" >
+      	<mj-column width="50%">
         	<mj-text padding="0" align="left">	
           <p class="text-med bold" style="color: #333F4F; line-height: 1.1em; padding: 0 0 0; font-weight:400; margin:0;">Skinny Jeans</p>
             <p style="padding: 7px 0 10px;; margin: 0; color: #6A7E90;">Font Trio bla bla volume 1.</p>
           </mj-text>
         </mj-column>
-        <mj-column padding="0 0 0" width="30%">
+        <mj-column padding="0 0 0" width="20%">
           
         	<mj-text padding="0 0 10px" align="left">
           <p style="display: inline; color: #6A7E90; padding: 0; width: 50px;">Qty</p>
@@ -152,21 +151,22 @@
         <mj-column css-class="bottom-divider" width="100%"></mj-column>
       </mj-section>
       <!-- ./ET-Product -->
+      
     </mj-wrapper>
     <!-- ./Product Items -->
     
     <!-- Coupon -->
     <mj-wrapper background-color="#fff" padding="0 0 10px">	
 
-      <mj-section css-class="item-container" padding="5px 0 20px" border-bottom="1px solid #ddd" >
+      <mj-section padding="20px 0 0" css-class="et-container" border-bottom="1px solid #ddd" >
       	<mj-column padding="0" width="20%">
         	<mj-text  padding="1px" css-class="coupon-label">	
           <p class="bold" style="color: #333F4F; line-height: 1.1em; font-weight:400; margin:0; padding: 0 0 10px">Coupon used</p>
           </mj-text>
         </mj-column>
-        <mj-column padding="0" width="80%">
+        <mj-column padding="0 0 20px" width="80%">
         	<mj-text padding="10px 0 10px">	
-          <p class="coupon-item" style="line-height: 1.1em; font-weight:400; margin:0;">free-test</p>
+          <p class="coupon-item" style="font-size: 12px; line-height: 1.1em; font-weight:400; margin:0;">free-test</p>
           </mj-text>
         </mj-column>
       </mj-section>
@@ -177,7 +177,7 @@
     <!-- Total -->
     <mj-wrapper background-color="#fff" padding="0">	
 
-      <mj-section css-class="item-container" padding="0 0 10px" border-bottom="1px solid #ddd" >
+      <mj-section padding="0 0 10px" css-class="et-container" border-bottom="1px solid #ddd" >
       	<mj-column padding="0">
         	<mj-text padding="10px 10px 0">	
           <p class="bold total" style="color: #333F4F; line-height: 1.1em; font-weight:400; margin:0;">Total</p>
@@ -187,7 +187,7 @@
       </mj-section>
      
     </mj-wrapper>
-    <!-- ./Product Item -->
+    <!-- ./Total -->
       
       <!-- details -->
 			<mj-wrapper background-color="#fff" padding="0">

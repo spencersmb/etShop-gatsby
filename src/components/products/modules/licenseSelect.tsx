@@ -75,7 +75,6 @@ const LicenseSelect = (props: IProps) => {
 						return (
 							<LicItem
 								key={license.type.name}
-
 								selected={selectedLicense === license.type.value}>
 						<span className={'licItem__radio'}>
 							<Price
@@ -87,7 +86,7 @@ const LicenseSelect = (props: IProps) => {
 									type='radio'
 									id={`${license.type.value}-radio`}
 									name='radio-group'
-									onClick={handleClick(i)}
+									onChange={handleClick(i)}
 									checked={selectedLicense === license.type.value}
 								/>
 								<label htmlFor={`${license.type.value}-radio`}>

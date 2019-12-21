@@ -1,50 +1,73 @@
 <mj-style>
-  a{
-  	color: #5A44E2;
-  	text-decoration: none;
+a {
+  color: #5A44E2;
+  text-decoration: none !important;
+}
+
+.text-med {
+  font-size: 16px;
+}
+
+.headerPrimary {
+  padding: 30px 30px;
+}
+
+.headerSecondary {
+  padding: 50px 30px 20px;
+}
+
+.body_primary {
+  padding: 30px 30px 15px;
+}
+
+.text-lrg {
+  font-size: 24px;
+}
+
+.spacerLrg {
+  padding: 0 20px;
+}
+
+.mainHeader__spacing {
+  padding: 30px 30px 30px;
+}
+
+.et-container {
+  padding: 0px 30px 0px 30px;
+}
+
+.coupon-container {
+  padding: 0 20px;
+}
+
+@media only screen and (min-width:600px) {
+  .text-med {
+    font-size: 18px !important;
   }
-  .headerPrimary{
-  	padding: 50px 60px;
+  .headerPrimary {
+    padding: 50px 60px !important;
   }
-  .headerSecondary{
-  	padding: 70px 60px 0;
+  .headerSecondary {
+    padding: 30px 60px 30px !important;
   }
-  .text-lrg{ font-size: 45px; } 
-  .spacerLrg{ padding: 0 80px; }
-  .body_primary{
-    padding:60px 60px 15px;
-  } 
-  .mainHeader__spacing{
-    padding:60px 60px 30px;
-  } 
-      .et-container{
-      	padding:0 60px 0px 60px;
-      }
-      .coupon-container{
-      	padding: 0 120px;
-      }
-      
-  @media only screen and (max-width:600px) {
-  	.headerPrimary{
-  	  padding: 30px 30px;
-    }	
-    .headerSecondary{
-  	  padding: 50px 30px 20px;
-    }
-    .body_primary{
-      padding: 30px 30px 15px;
-    }  
-       .text-lrg{ font-size: 24px; } 
-       .spacerLrg{ padding: 0 20px; } 
-       .mainHeader__spacing{
-      	 padding: 30px 30px 30px;
-       }  
-      .et-container{
-      	padding:0px 30px 0px 30px ;
-       } 
-      .coupon-container{
-      	padding: 0 20px;
-      }
-      
-      } 
+  .text-lrg {
+    font-size: 45px !important;
+  }
+  .spacerLrg {
+    padding: 0 80px !important;
+  }
+  .body_primary {
+    padding: 30px 60px 15px !important;
+  }
+  .mainHeader__spacing {
+    padding: 60px 60px 30px !important;
+  }
+  .et-container {
+    padding: 0 60px 0px 60px !important;
+  }
+  .coupon-container {
+    padding: 0 120px !important;
+  }
+}
+
 </mj-style>

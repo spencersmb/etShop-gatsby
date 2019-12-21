@@ -3,7 +3,7 @@
 <mj-section css-class="headerSecondary" padding="0" background-color="#fff">
   <mj-column width="60%" padding="0">
     <mj-text vertical-align="middle" color="#333F4F" align="left"	font-weight="bold" padding="0 0 20px 0" font-size="16px" color="#626262">
-    <a href="https://shop.every-tuesday.com" target="_blank">EVERY-TUESDAY</a>
+    <a style="color:#5A44E2; text-decoration: none;" href="https://shop.every-tuesday.com" target="_blank">EVERY-TUESDAY</a>
     </mj-text>
   </mj-column>
   <mj-column width="40%" padding="0">

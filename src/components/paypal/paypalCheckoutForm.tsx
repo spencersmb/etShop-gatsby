@@ -200,8 +200,8 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 	const Button = useMemo(() => <PaypalButton
 		client={
 			{
-				production: process.env.PAYPAL_TEST_KEY || '',
-				sandbox: process.env.PAYPAL_TEST_KEY || ''
+				production: process.env.GATSBY_PAYPAL_KEY || '',
+				sandbox: process.env.GATSBY_PAYPAL_KEY || ''
 			}
 		}
 		submitting={manualSubmitting}
