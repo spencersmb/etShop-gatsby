@@ -39,7 +39,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			type: 'card',
 			amount: stripeCalcTotal,
 			currency: 'USD',
-			statement_descriptor: 'Every-Tuesday Shop Purchase',
+			statement_descriptor: 'ET Shop',
 			usage: 'single_use'
 		}
 		const sourceOrder = {

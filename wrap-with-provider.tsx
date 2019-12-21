@@ -53,7 +53,7 @@ export default ({ element }: { element: ReactNode }) => {
 	return <Provider store={store}>
 		<Helmet>
 			<script id='paypal-js'
-							src={`https://www.paypal.com/sdk/js?client-id=${process.env.GATSBY_PAYPAL_KEY}&disable-funding=credit,card&commit=true&locale=en_US&merchant-id=6Q52LNH4ART22&integration-date=2019-11-07`}/>
+							src={`https://www.paypal.com/sdk/js?client-id=${process.env.GATSBY_PAYPAL_KEY}&disable-funding=credit,card&commit=true&locale=en_US&integration-date=2019-11-07`}/>
 		</Helmet>
 		{element}
 	</Provider>
