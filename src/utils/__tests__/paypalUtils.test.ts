@@ -41,7 +41,6 @@ describe('Paypal Utils Tests', () => {
 		const discount = calcCartDiscountPerItem(testCartWithMultiples.totalPrice, testCartWithMultiples.totalItems, coupons.percentCart)
 		expect(discount).toEqual(4.29)
 	})
-
 	it('Should return correct paypal structured object', () => {
 		const items = getPaypalFormatItems(testCartWithMultiples, testProducts)
 		const item1 = testCartWithMultiples.items[ProductKey.WatercolorStd]
@@ -107,12 +106,16 @@ describe('Paypal Utils Tests', () => {
 		const items = getPaypalFormatItems(testCartWithMultiplesPercentCartCoupon, testProducts)
 		const item1 = testCartWithMultiplesPercentCartCoupon.items[ProductKey.WatercolorStd]
 		const item2 = testCartWithMultiplesPercentCartCoupon.items[ProductKey.Skinnyjeans]
+
+		// item1 price = 16
+		// item2 price = 13 on sale 9.99
+
 		const result = [
 			{
 				currency: 'USD',
 				name: item1.name,
 				unit_amount: {
-					value: displayCurrency(11.71).substring(1), // $4.00 example
+					value: displayCurrency(10.72).substring(1), // $4.00 example
 					currency_code: 'USD'
 				},
 				quantity: item1.qty,
@@ -123,7 +126,7 @@ describe('Paypal Utils Tests', () => {
 				currency: 'USD',
 				name: item2.name,
 				unit_amount: {
-					value: displayCurrency(5.7).substring(1), // $4.00 example
+					value: displayCurrency(6.69).substring(1), // $4.00 example
 					currency_code: 'USD'
 				},
 				quantity: item2.qty,

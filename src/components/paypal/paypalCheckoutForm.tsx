@@ -100,6 +100,8 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		try {
 			// 2b.
 			const myOrder = await createWcOrder()
+			console.log('myOrder', myOrder)
+
 			if (!myOrder || myOrder && myOrder.code !== 200) {
 				actions.restart()
 				setManualSubmitting(false)
@@ -201,7 +203,7 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 		client={
 			{
 				production: process.env.GATSBY_PAYPAL_KEY || '',
-				sandbox: process.env.GATSBY_PAYPAL_KEY || ''
+				sandbox: process.env.GATSBY_PAYPAL_TEST_KEY || ''
 			}
 		}
 		submitting={manualSubmitting}

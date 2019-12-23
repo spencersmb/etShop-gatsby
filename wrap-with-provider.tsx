@@ -12,7 +12,13 @@ import { loadUser, removeUserLocalStorage } from './src/utils/authUtils'
 export default ({ element }: { element: ReactNode }) => {
 	const store = createStore()
 	store.dispatch(loadProducts())
+	const PaypalKey = process.env.NODE_ENV === 'production'
+		? process.env.GATSBY_PAYPAL_KEY
+		: process.env.GATSBY_PAYPAL_TEST_KEY
 
+	const PaypalMerchantId = process.env.NODE_ENV === 'production'
+		? '39L6VSTBV6WFG'
+		: '6Q52LNH4ART22'
 	// USER CHECK
 	// check localstorage for user
 	// decode jwt and check if expired - if expired throw error and logout
@@ -50,10 +56,12 @@ export default ({ element }: { element: ReactNode }) => {
 		})
 	// TODO: merchant ID for ET PAypal shop not test shop
 
+	console.log('PaypalMerchantId', PaypalMerchantId)
+	// &merchant_id=${PaypalMerchantId}
 	return <Provider store={store}>
 		<Helmet>
 			<script id='paypal-js'
-							src={`https://www.paypal.com/sdk/js?client-id=${process.env.GATSBY_PAYPAL_KEY}&disable-funding=credit,card&commit=true&locale=en_US&integration-date=2019-11-07`}/>
+							src={`https://www.paypal.com/sdk/js?client-id=${PaypalKey}&disable-funding=credit,card&commit=true&merchant-id=${PaypalMerchantId}&locale=en_US&integration-date=2019-11-07`}/>
 		</Helmet>
 		{element}
 	</Provider>

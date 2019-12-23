@@ -182,7 +182,7 @@ export const singleProduct: IProduct = {
 	product_licenses: [
 		{
 			type: {
-				value: 'standard',
+				value: LicenseEnum.standard,
 				name: 'Standard'
 			},
 			item: {
@@ -254,7 +254,7 @@ export const testProducts: IProducts = {
 		product_licenses: [
 			{
 				type: {
-					value: 'standard',
+					value: LicenseEnum.standard,
 					name: 'Standard'
 				},
 				item: {
@@ -267,7 +267,7 @@ export const testProducts: IProducts = {
 			},
 			{
 				type: {
-					value: 'extended',
+					value: LicenseEnum.extended,
 					name: 'Extended'
 				},
 				item: {
@@ -376,7 +376,7 @@ export const testProducts: IProducts = {
 		product_licenses: [
 			{
 				type: {
-					value: 'standard',
+					value: LicenseEnum.standard,
 					name: 'Standard'
 				},
 				item: {
@@ -435,7 +435,7 @@ export const testProducts: IProducts = {
 		product_licenses: [
 			{
 				type: {
-					value: 'standard',
+					value: LicenseEnum.standard,
 					name: 'Standard'
 				},
 				item: {
@@ -802,19 +802,24 @@ export const testReceipt: IReceipt = {
 	subtotal: '16',
 	cardType: 'Visa',
 	discounts: '0', // 0 if no discount
-	discounts_reverse: 0, // 0 if no discount
+	discount_reverse: 0, // 0 if no discount
 	coupon_used: [], // will have one item if used
 	downloads: {
 		exp_date: 15252525,
 		products: [
 			{
 				url: 'http://google.com',
+				total: '16',
+				sku: '01230',
+				subtitle: 'Version 2.0',
+				qty: 1,
 				id: 222,
 				name: 'Watercolor kit',
 				filename: 'watercolor.zip'
 			}
 		]
-	}
+	},
+	refund: null
 }
 
 export const testPaginationEmpty: IPaginateState = {

@@ -86,7 +86,7 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): ITo
 		let discountedPrice: number = parseFloat(product.price)
 		// Ts check because we told interfaces it could be string or number,
 		// but coded it so that qty should never get to this point as a string
-		const qty: number = typeof product.qty === 'string' ? 0 : product.qty
+		const qty: number = product.qty
 
 		// 2.b
 		// check if coupon applies to a product

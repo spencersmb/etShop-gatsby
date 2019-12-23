@@ -28,11 +28,8 @@ export function Receipt (props: IReceiptProps) {
 	return (
 		<PoseMain>
 			<RightCol>
-				<CloseBtn onClick={closeModal}>
-					{renderSvg(svgs.HamburgerClose)}
-				</CloseBtn>
 				<CardWrapper>
-					<ReceiptCard {...data}/>
+					<ReceiptCard {...data} handleClose={closeModal}/>
 				</CardWrapper>
 			</RightCol>
 		</PoseMain>
@@ -40,40 +37,6 @@ export function Receipt (props: IReceiptProps) {
 }
 
 export default Receipt
-const CloseBtn = styled.div`
-	position: absolute;
-	top: 20px;
-	color: #000;
-	right: 20px;
-	width: 50px;
-	height: 50px;
-	
-	svg{
-		width: 100%;
-	}
-	
-	path{
-		fill: ${colors.primary.text};
-	}
-	
-	@media ${device.tablet} {
-		top: 75px;
-		right: 80px;
-	}
-	
-	@media ${device.laptop} {
-		top: 45px;
-		right: 80px;
-	}
-	
-	@media ${device.laptopL} {
-		top: 20px;
-		right: 20px;
-	    
-	}
-		
-		
-`
 const CardWrapper = styled.div`
 	grid-column: 2 / 4;
 	display: flex;

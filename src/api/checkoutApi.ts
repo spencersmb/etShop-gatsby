@@ -44,7 +44,7 @@ export class CheckoutApi {
 	}
 
 	static submitStripeOrder (orderData: IFinalOrder): Promise<Response> {
-		// console.log('order submitted', orderData)
+		console.log('order submitted', orderData)
 
 		// TODO: secret addon from .env
 		// const url: string = `${process.env.GATSBY_DB}/wp-json/${process.env.GATSBY_ROUTE}/orders`

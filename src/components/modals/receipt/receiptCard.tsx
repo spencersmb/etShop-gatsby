@@ -4,16 +4,24 @@ import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
+import { svgs } from '@svg'
 import { calcItemTotal, displayCurrency } from '@utils/priceUtils'
+import { renderSvg } from '@utils/styleUtils'
 import React from 'react'
 import styled from 'styled-components'
 
-const ReceiptCard = (props: IReceipt) => {
-	const { email, total, order_id, date_completed, downloads, coupon_used, discounts, subtotal } = props
-	console.log('coupon_used.length > 0', coupon_used.length > 0)
+interface IClose {
+	handleClose: any
+}
+
+const ReceiptCard = (props: IReceipt & IClose) => {
+	const { email, total, order_id, date_completed, downloads, coupon_used, discounts, subtotal, handleClose } = props
 
 	return (
 		<CardWrapper>
+			<CloseBtn onClick={handleClose}>
+				{renderSvg(svgs.HamburgerClose)}
+			</CloseBtn>
 			<EmailTo>
 				Copy sent to {email}
 			</EmailTo>
@@ -104,6 +112,27 @@ const ReceiptCard = (props: IReceipt) => {
 	)
 }
 export default ReceiptCard
+const CloseBtn = styled.div`
+	position: absolute;
+	top: 20px;
+	color: #000;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	
+	svg{
+		width: 100%;
+	}
+	
+	path{
+		fill: ${colors.primary.text};
+	}
+
+	@media ${device.laptopL} {
+		top: 20px;
+		right: 20px;
+	}
+`
 
 const TotalNumbers = styled.div`
 	flex:1;
@@ -301,6 +330,7 @@ const CardWrapper = styled.div`
 	padding: 30px;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	
 	h1{
 		${Sentinel.semiboldItalic};

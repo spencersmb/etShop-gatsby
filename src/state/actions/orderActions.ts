@@ -16,6 +16,7 @@ export const createOrder = (orderData: IOrderDetails, stripeSourceToken?: string
 	dispatch({
 		type: OrderActionTypes.SUBMIT_ORDER
 	})
+	console.log('orderData', orderData)
 
 	let completeOrder
 	if (orderData.payment_method === 'stripe' && stripeSourceToken) {

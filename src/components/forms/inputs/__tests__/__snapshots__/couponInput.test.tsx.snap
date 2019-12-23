@@ -2,20 +2,20 @@
 
 exports[`Coupon Input renders correctly 1`] = `
 <div
-  className="sc-htoDjs kZkykA"
+  className="sc-gZMcBi fHqZxQ"
 >
   <div
-    className="sc-jzJRlG gBiMFt"
+    className="sc-chPdSV iAlVpG"
   >
     COUPON
   </div>
   <form>
     <div
-      className="formGroup__Container sc-eNQAEJ CbWlr"
+      className="formGroup__Container sc-cMljjf fDUKou"
       data-testid="formGroup"
     >
       <div
-        className="formInput sc-hMqMXs jwjJTg"
+        className="formInput sc-jAaTju eaMTrC"
       >
         <div
           className="formGroup noFocus invalid undefined"
@@ -39,7 +39,7 @@ exports[`Coupon Input renders correctly 1`] = `
             type="text"
           />
           <div
-            className="submit__spinner sc-dnqmqq iKaPWV"
+            className="submit__spinner sc-gqjmRU djwAyn"
             data-testid="spinner"
           >
             <svg

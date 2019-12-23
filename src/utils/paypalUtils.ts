@@ -27,11 +27,74 @@ import _ from 'lodash'
  * @param {IProducts} products All products in Redux State.
  * @return {IPaypalItem[] | []} The result of all items in the cart
  */
+
 export const getPaypalFormatItems = (cart: ICartState, products: IProducts): IPaypalItem[] => {
+	const cartItemKeys = Object.keys(cart.items)
+	const cartWide = cart.coupon.product_ids.length === 0
+
+	// no products found
+	if (cartItemKeys.length < 1) {
+		return []
+	}
+
+	// 1. subtract free items from paid items so we calculate discount to paid items evenly
+	const cartItemsMinusFreeItems: number = cart.totalItems - numberOfFreeItemsInCart(cart.items)
+
+	// 2. Calc discount per item that we need to subtract when we loop through each product
+	const fixedDiscount = calcCartDiscountPerItem(cart.originalPrice, cartItemsMinusFreeItems, cart.coupon)
+
+	return cartItemKeys.map((item: string, index: number) => {
+		const cartItem: ICartItem = cart.items[item]
+		const price = cart.coupon.valid
+			? calcItemPrice(cartItem, cart, cartWide, index, cart.coupon.type, fixedDiscount)
+			: parseFloat(cartItem.price)
+		return {
+			currency: 'USD',
+			name: cartItem.name,
+			unit_amount: {
+				value: displayCurrency(price).substring(1), // $4.00 example
+				currency_code: 'USD'
+			},
+			quantity: cartItem.qty,
+			sku: products[item].id.toString(),
+			category: 'DIGITAL_GOODS'
+		}
+	})
+}
+
+function calcItemPrice (item: ICartItem, cart: ICartState, cartWide: boolean, itemIndex: number, type: string, fixedDiscount: number) {
+	// Check if coupon is for the item
+	const couponMatch = !cartWide ? checkForCoupon(cart.coupon.product_ids, item.id) : null
+	const price = parseFloat(item.price)
+	const freeItem = item.price === '0'
+
+	if (freeItem) {
+		return price
+	}
+
+	if (!cartWide && couponMatch && !freeItem) {
+		return price - calcCouponDiscount(cart.coupon, price)
+	}
+
+	// Fixed CartWide
+	if (cartWide && type !== 'percent') {
+		return price - (fixedDiscount / item.qty)
+	}
+
+	if (cartWide && type === 'percent') {
+		return price - (price * (parseInt(cart.coupon.discount, 10) / 100))
+	}
+
+	return price
+
+}
+
+export const getPaypalFormatItemsOld = (cart: ICartState, products: IProducts): IPaypalItem[] => {
 
 	const cartItems = cart.items
 	const cartItemKeys = Object.keys(cartItems)
 	const hasCoupon = cart.coupon.valid
+	const couponType = cart.coupon.type
 	const productOnlyCoupon = !!cart.coupon.product_ids.length
 	let couponDiscount: number = 0
 
@@ -57,20 +120,18 @@ export const getPaypalFormatItems = (cart: ICartState, products: IProducts): IPa
 	 * final discount of two items is $1 off each item
 	 */
 	if (!productOnlyCoupon && cart.totalPrice !== 0) {
-		// console.log('Cart Coupon')
 
 		// 1. subtract free items from paid items so we calculate discount to paid items evenly
 		const cartItemsMinusFreeItems: number = cart.totalItems - numberOfFreeItemsInCart(cart.items)
 
 		// 2. Calc discount per item that we need to subtract when we loop through each product
-		couponDiscount = calcCartDiscountPerItem(cart.totalPrice, cartItemsMinusFreeItems, cart.coupon)
-
+		couponDiscount = calcCartDiscountPerItem(cart.originalPrice, cartItemsMinusFreeItems, cart.coupon)
 	}
 
 	// map over each item to create the right price and structure for paypal
 	return cartItemKeys.map((item: string) => {
 		const cartItem: ICartItem = cartItems[item]
-		const qty: number = typeof cartItem.qty === 'string' ? 0 : cartItem.qty
+		const qty: number = cartItem.qty
 		// convert to number for calculations
 		let price: number = parseFloat(cartItem.price)
 		let discountedPrice: number = price
@@ -119,7 +180,12 @@ export const getPaypalFormatItems = (cart: ICartState, products: IProducts): IPa
 			// and if the items price is not zero so we dont add coupon to PWYW item
 		} else if (hasCoupon && couponDiscount && price !== 0) {
 			// console.log('Total discount off each item', couponDiscount)
-			price = price - couponDiscount
+			if (couponType === 'percent') {
+				const percentage = (parseInt(cart.coupon.discount, 10) / 100)
+				price = price - (price * percentage)
+			} else {
+				price = price - (couponDiscount / qty)
+			}
 		}
 		// console.log('price', price)
 
@@ -184,6 +250,11 @@ export const calcCartDiscountPerItem = (cartTotalPrice: number, totalItems: numb
 		case 'percent':
 
 			const percent = (parseInt(coupon.discount, 10) / 100)
+			// console.log('percent', percent)
+			// console.log('(percent * cartTotalPrice)', (percent * cartTotalPrice))
+			// console.log('totalItems', totalItems)
+			// console.log('resutls', (percent * cartTotalPrice) / totalItems)
+
 			return _.round((percent * cartTotalPrice) / totalItems, 2)
 
 		default :
