@@ -14,10 +14,17 @@ interface IProps {
 const OrdersList = (props: IProps) => {
 	const { pagination, page, handleClick, selectedOrder } = props
 	// console.log('Order list render page defined?', props)
+	const items = Object.keys(pagination.pages[page])
+
+	if (items.length === 0) {
+		return (
+			<div>Sorry no Items found</div>
+		)
+	}
 
 	return (
 		<>
-			{pagination.pages[page] && Object.keys(pagination.pages[page]).map((key: any, index) => {
+			{pagination.pages[page] && items.map((key: any, index) => {
 					const pageItem: IReceipt = pagination.pages[page][key]
 					return (
 						<OrderItem

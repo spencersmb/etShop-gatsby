@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 import SEO from '../../seo'
-import { ProductDetailPage } from '../productDetailPage'
+import { ProductDetailPage } from '../../../templates/productPage'
 import { StaticQuery } from 'gatsby'
 import { singleItemQuery } from '@redux/reduxTestUtils'
 import ProductLayout from '../productLayout'

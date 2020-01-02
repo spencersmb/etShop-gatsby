@@ -3,43 +3,71 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
-const path = require("path")
-const pageQuery = `
-    {
-      allWcProduct{
-        edges{
-          node{
-            slug
-            name
-          }
+const createWcProducts = require(`./gatsby/createWcProducts`)
+const createSupportPages = require(`./gatsby/createSupportPages`)
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+
+exports.createPages = async ({ graphql, actions }) => {
+
+  await createSupportPages({ actions, graphql })
+  await createWcProducts({ actions, graphql })
+
+}
+
+exports.createResolvers = ({
+                             actions,
+                             cache,
+                             createNodeId,
+                             createResolvers,
+                             store,
+                             reporter
+                           }) => {
+  const { createNode } = actions
+
+  createResolvers({
+    WPGraphQL_SupportQuestion: {
+      createdAt: {
+        type: `String`,
+        resolve (source, args, context, info) {
+          return "date manual"
+        }
+      }
+    },
+    // allWcProduct_MediaItem: {
+    //   imageFile: {
+    //     type: `File`,
+    //     resolve (source, args, context, info) {
+    //       console.log("wcProduct media item", source.sourceUrl)
+    //
+    //       return createRemoteFileNode({
+    //         url: source.sourceUrl,
+    //         store,
+    //         cache,
+    //         createNode,
+    //         createNodeId,
+    //         reporter
+    //       })
+    //     }
+    //   }
+    // },
+    WPGraphQL_MediaItem: {
+      imageFile: {
+        type: `File`,
+        resolve (source, args, context, info) {
+          console.log("created file", source.sourceUrl)
+
+          return createRemoteFileNode({
+            url: source.sourceUrl,
+            store,
+            cache,
+            createNode,
+            createNodeId,
+            reporter
+          })
         }
       }
     }
-    `
-// You can delete this file if you're not using it
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
-
-  return new Promise((resolve, reject) => {
-    graphql(pageQuery).then(results => {
-
-      if (results.errors) {
-        console.log(results.errors)
-        reject(results.errors)
-      }
-      results.data.allWcProduct.edges.forEach(({ node }) => {
-        createPage({
-          path: `/products/${node.slug}`,
-          component: path.resolve(`./src/components/products/productDetailPage.tsx`),
-          context: {
-            slug: node.slug
-          }
-        })
-      })
-    })
-    resolve()
   })
-
 }
 
 exports.onCreatePage = async ({ page, actions }) => {

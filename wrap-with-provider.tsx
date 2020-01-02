@@ -54,10 +54,8 @@ export default ({ element }: { element: ReactNode }) => {
 			// // redirect
 			// navigate(`/page-2`)
 		})
-	// TODO: merchant ID for ET PAypal shop not test shop
 
 	console.log('PaypalMerchantId', PaypalMerchantId)
-	// &merchant_id=${PaypalMerchantId}
 	return <Provider store={store}>
 		<Helmet>
 			<script id='paypal-js'

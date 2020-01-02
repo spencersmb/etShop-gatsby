@@ -29,6 +29,10 @@ declare module 'process' {
 
 declare module 'flickity-fullscreen' {
 	import Flickity from 'flickity'
-	
+
 	export default Flickity
+}
+declare module 'gatsby-wpgraphql-inline-images' {
+	const contentParser: any
+	export default contentParser
 }

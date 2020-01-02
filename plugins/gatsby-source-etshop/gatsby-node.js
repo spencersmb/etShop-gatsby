@@ -99,40 +99,6 @@ exports.sourceNodes = async (
       return feature
     }
   }
-  const processFeature = async (product, args) => {
-
-    // https://flaviocopes.com/javascript-async-await-array-map/
-    let fileNode
-
-    try {
-      fileNode = await createRemoteFileNode({
-        url: product.featuredImage.url,
-        ...args
-      })
-
-    } catch (e) {
-      console.log("e", e)
-
-    }
-    if (fileNode) {
-      product.featuredImage.localFile___NODE = fileNode.id
-    }
-
-    const nodeId = createNodeId(`wc-product-${product.id}`)
-    const nodeContent = JSON.stringify(product)
-
-    // Node info
-    return Object.assign({}, product, {
-      id: nodeId,
-      parent: null,
-      children: [],
-      internal: {
-        type: `wcProduct`,
-        content: nodeContent,
-        contentDigest: createContentDigest(product)
-      }
-    })
-  }
 
   const apiUrl = `${process.env.GATSBY_DB}/wp-json/et-shop/v1/products/getAll`
   const apiResponse = await fetch(apiUrl)

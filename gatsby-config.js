@@ -96,6 +96,26 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-playground`,
+    {
+      resolve: `gatsby-source-graphql`,
+      options: {
+        // This type will contain remote schema Query type
+        typeName: `WPGraphQL`,
+        // This is field under which it's accessible
+        fieldName: `wpgraphql`,
+        // Url to query from
+        url: `${process.env.GATSBY_DB}/graphql`
+      }
+    },
+    {
+      resolve: "gatsby-wpgraphql-inline-images",
+      options: {
+        wordPressUrl: `${process.env.GATSBY_DB}`,
+        uploadsUrl: `${process.env.GATSBY_DB}/wp-content/uploads/`,
+        processPostTypes: ["Page", "Post", "SupportQuestion"],
+        graphqlTypeName: "WPGraphQL"
+      }
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     "gatsby-plugin-offline",

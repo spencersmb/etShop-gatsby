@@ -67,7 +67,7 @@ const LicenseSelect = (props: IProps) => {
 					data-testid='viewLicBtn'
 					onClick={triggerViewLicense}
 					outline={false}>
-					View license
+					View licenses
 				</LicViewBtn>
 			</LicBtnWrapper>
 			<ul>

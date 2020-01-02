@@ -87,9 +87,9 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 			// delay by 300 to allow modal to animate out with scrollbar issue
 			setTimeout(() => {
 				bodyScrollBar.remove(target.current)
+				document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 			}, 300)
 
-			document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 		}
 
 	}, [show])

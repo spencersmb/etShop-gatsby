@@ -137,12 +137,39 @@ export function Dashboard (props: AllProps) {
 	}
 
 	async function resetOrderLinks (orderId: string) {
-		console.log('reset orderId', orderId)
 		try {
 			await resetDownloadLinks(orderId, page)
 		} catch (e) {
 			console.error('e', e)
 		}
+	}
+
+	function buildDesktopList () {
+		const items = Object.keys(pagination.pages[page])
+
+		if (items.length === 0) {
+			return (
+				<div>
+					No Items found
+				</div>
+			)
+		}
+
+		return items.map(item => {
+			const order: IReceipt = pagination.pages[page][item]
+
+			return (
+				<OrderDisplay
+					key={order.id}
+					page={page}
+					exp={order.downloads.exp_date}
+					resetDownloadLinks={resetDownloadLinks}
+					handleLinkRefresh={resetOrderLinks}
+					selectedOrder={order}
+					handleState={setState}
+				/>
+			)
+		}).reverse()
 	}
 
 	return (
@@ -190,21 +217,7 @@ export function Dashboard (props: AllProps) {
 				{
 					Width >= 768 &&
           <OrderListWrapper desktop={true}>
-						{pagination.pages[page] && !pagination.loading && !state.selectedSearchOrder && Object.keys(pagination.pages[page]).reverse().map(item => {
-							const order: IReceipt = pagination.pages[page][item]
-
-							return (
-								<OrderDisplay
-									key={order.id}
-									page={page}
-									exp={order.downloads.exp_date}
-									resetDownloadLinks={resetDownloadLinks}
-									handleLinkRefresh={resetOrderLinks}
-									selectedOrder={order}
-									handleState={setState}
-								/>
-							)
-						})}
+						{pagination.pages[page] && !pagination.loading && !state.selectedSearchOrder && buildDesktopList()}
 
 						{state.selectedSearchOrder &&
             <div>

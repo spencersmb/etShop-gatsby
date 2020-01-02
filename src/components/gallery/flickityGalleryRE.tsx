@@ -24,6 +24,18 @@ interface IProps {
 	subSelector?: boolean
 }
 
+interface IState {
+	selectedIndex: number,
+	subSelector: boolean,
+	loaded: boolean
+}
+
+interface INewState {
+	selectedIndex?: number,
+	subSelector?: boolean,
+	loaded?: boolean
+}
+
 const itemStyle = {
 	width: '100%',
 	margin: 0
@@ -31,7 +43,7 @@ const itemStyle = {
 
 const FlickityGalleryContext = (props: IProps) => {
 	const { items, subSelector } = props
-	const [state, setState] = useSetState({
+	const [state, setState] = useSetState<IState, INewState>({
 		selectedIndex: 0,
 		subSelector: false,
 		loaded: false

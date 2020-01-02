@@ -706,6 +706,9 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 			...testSiteMetaDataQuery
 		}
 	},
+	featureSiteImage: {
+		...featuredImage
+	},
 	wcProduct: {
 		...singleProduct
 	}

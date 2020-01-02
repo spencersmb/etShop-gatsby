@@ -7,7 +7,7 @@ import { facebookDefaultMeta, jsonldImages, socialUtils, twitterDefaultMeta } fr
 import { graphql } from 'gatsby'
 import React, { Component } from 'react'
 
-type Response = IGatsbyConfig & { wcProduct: IProduct, featureSiteImage: any }
+type Response = IGatsbyConfig & { wcProduct: IProduct }
 
 interface IProductQuery {
 	data: Response

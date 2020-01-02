@@ -34,6 +34,8 @@ function OrderDisplay (props: IProps) {
 	const { selectedOrder, page } = props
 	const [submitting, setSubmitting] = useState(false)
 
+	console.log('order Props', props)
+
 	function createCloseBtn () {
 		if (props.searchResult) {
 			return (
