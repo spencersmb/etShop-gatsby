@@ -73,7 +73,6 @@ export const useScrollEvent = (elementId: string, scrollElement?: any) => {
 		// let headerHeight = 0
 		// let windowDevice = getWindowSize()
 		// let size = windowDevice === 'desktop' ? headerHeight + getNavSize(windowDevice) : headerHeight - getNavSize(windowDevice)
-		console.log('elementId', elementId)
 
 		const reqAnim = () => {
 			requestAnimationFrame(watchNav)

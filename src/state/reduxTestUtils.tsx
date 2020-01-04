@@ -707,7 +707,7 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 		}
 	},
 	featureSiteImage: {
-		...featuredImage
+		...featuredImage.localFile
 	},
 	wcProduct: {
 		...singleProduct
@@ -798,7 +798,7 @@ export const testReceipt: IReceipt = {
 	status: 'completed',
 	transactionId: 'abc123',
 	payment_type: 'stripe',
-	order_id: '123',
+	order_id: '667',
 	email: 'spencer.bigum@gmail.com',
 	date_completed: '02-12-22',
 	totals: '16',

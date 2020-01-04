@@ -2,36 +2,44 @@
 
 exports[`Order Item Tests renders correctly 1`] = `
 <div
+  className="sc-ifAKCX lkpyhl"
   data-testid="orderItem"
   onClick={[Function]}
-  style={
-    Object {
-      "marginBottom": 20,
-    }
-  }
+  selected={false}
 >
   <div
-    className="sc-bdVaJa cudFOr"
+    className="sc-EHOje escwXD"
     data-testid="orderItem-wrapper"
-    selected={false}
   >
     <div
-      data-testid="orderItem-id"
+      className="sc-htpNat bvZytV"
     >
-      order# 
-      667
+      <div
+        className="sc-bdVaJa knVLoF"
+      >
+        order
+      </div>
+      <div
+        data-testid="orderItem-id"
+      >
+        667
+      </div>
     </div>
     <div
-      data-testid="orderItem-date"
+      className="sc-bxivhb byWfLn"
     >
-      date: 
-      02-12-22
-    </div>
-    <div
-      data-testid="orderItem-total"
-    >
-      total 
-      16
+      <div
+        className="sc-bdVaJa sc-bwzfXH ezRsHV"
+        data-testid="orderItem-date"
+      >
+        02/12/22
+      </div>
+      <div
+        data-testid="orderItem-total"
+      >
+        $
+        16
+      </div>
     </div>
   </div>
 </div>

@@ -49,7 +49,7 @@ const propsLoggedIn = {
 		email: 'spencer@gmail.com',
 		firstName: 'spencer',
 		lastName: 'bigum',
-		token: '12345',
+		token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zaG9wZXZlcnl0dWVzZGF5LmxvY2FsIiwiaWF0IjoxNTc4MTEyNTcwLCJuYmYiOjE1NzgxMTI1NzAsImV4cCI6MTU3ODExMzgzMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMTMifX19.jMm0a3Y-FQu0B6kF9fQbxujXB5ecdrEgZotEW8e6vqc',
 		gravatar: '23232323',
 		fbProfilePic: null
 	},
@@ -75,7 +75,6 @@ describe('Navbar Layout', () => {
 		const element = getByTestId('hamburger')
 		expect(element).toBeDefined()
 	})
-
 	it('Should call toggle nav onClick', () => {
 		const { getByTestId } = render(<Navbar {...props} />)
 		const element = getByTestId('hamburger')
@@ -146,7 +145,7 @@ describe('Navbar Layout', () => {
 		expect(getByText('My account')).toBeDefined()
 	})
 	it('Should have user sign out btn after login', () => {
-		const { getByText, getByTestId } = render(<Navbar {...propsLoggedIn} />)
+		const { getByText } = render(<Navbar {...propsLoggedIn} />)
 		expect(getByText('Sign Out')).toBeDefined()
 	})
 })

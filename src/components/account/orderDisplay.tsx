@@ -133,12 +133,11 @@ function OrderDisplay (props: IProps) {
 		<DisplayPoseRef
 			mobile={!!props.mobile}
 			ref={props.poseRef ? props.poseRef : null}>
-			<DisplayWrapper data-testid='display-orderId'>
-
+			<DisplayWrapper>
 				<DisplayHeader>
 					<OrderNumberWrapper>
 						<Title>Order Number</Title>
-						<OrderNumber>{selectedOrder.order_id}</OrderNumber>
+						<OrderNumber data-testid='display-orderId'>{selectedOrder.order_id}</OrderNumber>
 					</OrderNumberWrapper>
 					<OrderDetails>
 						<OrderDetailItem>

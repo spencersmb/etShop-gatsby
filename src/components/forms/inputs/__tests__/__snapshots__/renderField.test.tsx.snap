@@ -28,13 +28,13 @@ Array [
       value={Object {}}
     />
     <div
-      className="svgValidation svgValidation--inValid sc-dnqmqq bJYFqr"
+      className="sc-iwsKbI hprqOd svgValidation svgValidation--inValid"
     >
       <test-file-stub />
     </div>
   </div>,
   <div
-    className="jestError sc-gzVnrw cElRvp"
+    className="sc-htoDjs jKALBL jestError"
   />,
 ]
 `;

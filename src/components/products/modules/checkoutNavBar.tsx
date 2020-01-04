@@ -8,13 +8,11 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { InputWrapper, resetInput } from '@styles/global/inputs'
-import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { getLicenseColor, renderSvg } from '@utils/styleUtils'
 import { getWindowPosition } from '@utils/windowUtils'
 import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import posed from 'react-pose'
 import styled from 'styled-components'
 
 interface IProps {
@@ -83,8 +81,6 @@ const CheckoutNavBar = (props: IProps) => {
 		}
 
 	}
-
-	console.log('render')
 
 	return (
 		<CheckoutNavContainer

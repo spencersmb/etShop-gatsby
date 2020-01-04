@@ -51,7 +51,10 @@ export const CheckoutPage = (props: IProps) => {
 	const [showCouponInput, setShowCouponInput] = useState(false)
 	// onMount
 	useEffect(() => {
-		if (props.initialLoad && props.initialLoad !== 'stripe') {
+
+		if (!props.initialLoad) {
+			setKey('stripe')
+		} else {
 			setKey(props.initialLoad)
 		}
 
@@ -119,7 +122,6 @@ export const CheckoutPage = (props: IProps) => {
 						className={showCouponInput ? 'couponOpen' : 'couponhide'}
 						onPoseComplete={(type: OnPoseComplete) => {
 							if (type === 'open') {
-								console.log('test')
 
 								// check width for laptop or larger to do the padding issue
 								// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0

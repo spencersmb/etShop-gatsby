@@ -55,7 +55,6 @@ export default ({ element }: { element: ReactNode }) => {
 			// navigate(`/page-2`)
 		})
 
-	console.log('PaypalMerchantId', PaypalMerchantId)
 	return <Provider store={store}>
 		<Helmet>
 			<script id='paypal-js'

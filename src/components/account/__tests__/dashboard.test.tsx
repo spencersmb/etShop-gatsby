@@ -39,38 +39,30 @@ const props = {
 			},
 			668: {
 				...testReceipt,
-				id: 668
+				order_id: '668'
 			}
 		}
 	})),
-	selectedOrder: null
+	selectedOrder: null,
+	searchOrderById: jest.fn(),
+	resetDownloadLinks: jest.fn(),
+	user: null
 }
 describe('Dashboard test', () => {
 
 	it('Should call getOrders function', async () => {
 		const modalRender = render(<Dashboard {...props}/>)
-		expect(props.getOrders).toHaveBeenCalledTimes(1)
-		expect(props.getOrders).toHaveBeenCalledWith(1)
-	})
-
-	it('Should display the first item', async () => {
-		const modalRender = render(<Dashboard {...props}/>)
-		await wait(() => expect(modalRender.getByTestId('display-orderId').innerHTML).toBe('order #668'))
-	})
-
-	it('should show correct order after click', async (done) => {
-		const modalRender = render(<Dashboard {...props}/>)
 
 		await wait(() => {
-				const orderList = modalRender.getAllByTestId('orderItem')
-				const button = orderList[1]
-				button.click()
-				const orderDisplay = modalRender.getByTestId('display-orderId')
-				expect(orderDisplay.innerHTML).toEqual('order #667')
-				done()
+				expect(props.getOrders).toHaveBeenCalledTimes(1)
+				expect(props.getOrders).toHaveBeenCalledWith(1)
 			}
 		)
+	})
 
+	it('Should have correct order ID', async () => {
+		const modalRender = render(<Dashboard {...props}/>)
+		await wait(() => expect(modalRender.getByTestId('display-orderId').innerHTML).toBe('667'))
 	})
 
 })

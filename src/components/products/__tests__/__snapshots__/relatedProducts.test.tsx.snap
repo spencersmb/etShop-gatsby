@@ -12,7 +12,7 @@ exports[`Related Products Related Product renders correctly 1`] = `
       className="sc-bwzfXH djTlgz"
     >
       <div
-        className="ListItemTop sc-bxivhb cXSKfV"
+        className="sc-bxivhb cXSKfV ListItemTop"
       >
         <div
           className=" gatsby-image-wrapper"
@@ -32,8 +32,13 @@ exports[`Related Products Related Product renders correctly 1`] = `
             }
           />
           <picture>
+            <source
+              sizes=""
+              srcSet="srcSet"
+            />
             <img
               alt="Dreamy Ink Texture Pack"
+              loading="lazy"
               onLoad={[Function]}
               sizes=""
               src="/static/dreamy-textures-800x500.jpg"
@@ -47,7 +52,7 @@ exports[`Related Products Related Product renders correctly 1`] = `
                   "opacity": 0,
                   "position": "absolute",
                   "top": 0,
-                  "transition": "opacity 0.5s",
+                  "transition": "opacity 500ms",
                   "width": "100%",
                 }
               }
@@ -56,7 +61,7 @@ exports[`Related Products Related Product renders correctly 1`] = `
           <noscript
             dangerouslySetInnerHTML={
               Object {
-                "__html": "<picture><img srcset=\\"srcSet\\" src=\\"/static/dreamy-textures-800x500.jpg\\" alt=\\"Dreamy Ink Texture Pack\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
+                "__html": "<picture><source srcset=\\"srcSet\\" /><img loading=\\"lazy\\" srcset=\\"srcSet\\" src=\\"/static/dreamy-textures-800x500.jpg\\" alt=\\"Dreamy Ink Texture Pack\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
               }
             }
           />
@@ -73,7 +78,7 @@ exports[`Related Products Related Product renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="ListItemFooter sc-ifAKCX gYZfIE"
+        className="sc-ifAKCX gYZfIE ListItemFooter"
       >
         <span />
         <p>
@@ -120,7 +125,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
           className="sc-bwzfXH djTlgz"
         >
           <div
-            className="ListItemTop sc-bxivhb cXSKfV"
+            className="sc-bxivhb cXSKfV ListItemTop"
           >
             <div
               className=" gatsby-image-wrapper"
@@ -140,8 +145,13 @@ exports[`Related Products Related Products renders correctly 1`] = `
                 }
               />
               <picture>
+                <source
+                  sizes=""
+                  srcSet="srcSet"
+                />
                 <img
                   alt="Dreamy Ink Texture Pack"
+                  loading="lazy"
                   onLoad={[Function]}
                   sizes=""
                   src="/static/dreamy-textures-800x500.jpg"
@@ -155,7 +165,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
                       "opacity": 0,
                       "position": "absolute",
                       "top": 0,
-                      "transition": "opacity 0.5s",
+                      "transition": "opacity 500ms",
                       "width": "100%",
                     }
                   }
@@ -164,7 +174,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
               <noscript
                 dangerouslySetInnerHTML={
                   Object {
-                    "__html": "<picture><img srcset=\\"srcSet\\" src=\\"/static/dreamy-textures-800x500.jpg\\" alt=\\"Dreamy Ink Texture Pack\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
+                    "__html": "<picture><source srcset=\\"srcSet\\" /><img loading=\\"lazy\\" srcset=\\"srcSet\\" src=\\"/static/dreamy-textures-800x500.jpg\\" alt=\\"Dreamy Ink Texture Pack\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
                   }
                 }
               />
@@ -181,7 +191,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="ListItemFooter sc-ifAKCX gYZfIE"
+            className="sc-ifAKCX gYZfIE ListItemFooter"
           >
             <span />
             <p>
@@ -204,7 +214,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
           className="sc-bwzfXH djTlgz"
         >
           <div
-            className="ListItemTop sc-bxivhb cXSKfV"
+            className="sc-bxivhb cXSKfV ListItemTop"
           >
             <div
               className=" gatsby-image-wrapper"
@@ -224,8 +234,13 @@ exports[`Related Products Related Products renders correctly 1`] = `
                 }
               />
               <picture>
+                <source
+                  sizes=""
+                  srcSet="srcSet"
+                />
                 <img
                   alt="Dreamy Ink Texture Pack"
+                  loading="lazy"
                   onLoad={[Function]}
                   sizes=""
                   src="/static/dreamy-textures-800x500.jpg"
@@ -239,7 +254,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
                       "opacity": 0,
                       "position": "absolute",
                       "top": 0,
-                      "transition": "opacity 0.5s",
+                      "transition": "opacity 500ms",
                       "width": "100%",
                     }
                   }
@@ -248,7 +263,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
               <noscript
                 dangerouslySetInnerHTML={
                   Object {
-                    "__html": "<picture><img srcset=\\"srcSet\\" src=\\"/static/dreamy-textures-800x500.jpg\\" alt=\\"Dreamy Ink Texture Pack\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
+                    "__html": "<picture><source srcset=\\"srcSet\\" /><img loading=\\"lazy\\" srcset=\\"srcSet\\" src=\\"/static/dreamy-textures-800x500.jpg\\" alt=\\"Dreamy Ink Texture Pack\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture>",
                   }
                 }
               />
@@ -265,7 +280,7 @@ exports[`Related Products Related Products renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="ListItemFooter sc-ifAKCX gYZfIE"
+            className="sc-ifAKCX gYZfIE ListItemFooter"
           >
             <span />
             <p>

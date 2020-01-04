@@ -1,5 +1,6 @@
 import OrderItem from '@components/account/orderItem'
 import { testReceipt } from '@redux/reduxTestUtils'
+import { formatDate } from '@utils/orderUtils'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import {
@@ -30,24 +31,24 @@ describe('Order Item Tests', () => {
 
 	it('Should render correct order ID text', () => {
 		const modalRender = render(<OrderItem {...props}/>)
-		expect(modalRender.getByTestId('orderItem-id').innerHTML).toBe(`order# ${props.id}`)
+		expect(modalRender.getByTestId('orderItem-id').innerHTML).toBe(`${props.id}`)
 	})
 
 	it('Should render correct date', () => {
 		const modalRender = render(<OrderItem {...props}/>)
-		expect(modalRender.getByTestId('orderItem-date').innerHTML).toBe(`date: ${props.date}`)
+		expect(modalRender.getByTestId('orderItem-date').innerHTML).toBe(`${formatDate(props.date
+		)}`)
 	})
-
 	it('Should render correct total', () => {
 		const modalRender = render(<OrderItem {...props}/>)
 		const select = modalRender.getByTestId('orderItem-total').innerHTML
-		expect(select).toEqual(`total ${props.total}`)
+		expect(select).toEqual(`$${props.total}`)
 	})
 
 	it('Should render correct text color when selected', () => {
 		const modalRender = render(<OrderItem {...props}/>)
 		const wrapper = modalRender.getByTestId('orderItem-wrapper')
-		expect(wrapper).toHaveStyle(`color: black`)
+		expect(wrapper).toHaveStyle(`color: rgb(51, 63, 79)`)
 	})
 
 	it('Should render correct red text color when selected', () => {
@@ -56,7 +57,8 @@ describe('Order Item Tests', () => {
 		props.selectedOrder = 667
 		const modalRender = render(<OrderItem {...redProps}/>)
 		const wrapper = modalRender.getByTestId('orderItem-wrapper')
-		expect(wrapper).toHaveStyle(`color: red`)
+		expect(wrapper).toHaveStyle(`color: rgb(51, 63, 79);
+`)
 	})
 
 	it('Should call handleClick action', () => {

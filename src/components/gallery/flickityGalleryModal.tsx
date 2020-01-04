@@ -47,7 +47,7 @@ export default class GalleryModal extends Component<IProps> {
 
 	}
 
-	componentWillUnmount () {
+	UNSAFE_componentWillMount () {
 		if (this.flkty) {
 			this.flkty.destroy()
 		}

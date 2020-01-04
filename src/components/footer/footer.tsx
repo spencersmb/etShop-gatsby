@@ -1,5 +1,4 @@
 import PinkEmailForm from '@components/footer/emailForm'
-import FooterGallery from '@components/footer/footerGallery'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -30,7 +29,6 @@ const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFoote
 			{/*	submitting={state.submitting}*/}
 			{/*	invalid={state.error}*/}
 			{/*	handleTextInput={handleTextInput}/>*/}
-			{/*<FooterGallery/>*/}
 			<FooterNav>
 
 				<FooterNavWrapper productPage={productPage}>

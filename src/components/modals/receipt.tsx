@@ -22,9 +22,6 @@ type IReceiptProps = Merge<IModal, {
 
 export function Receipt (props: IReceiptProps) {
 	const { options: { data }, closeModal } = props
-
-	console.log('data', data)
-
 	return (
 		<PoseMain>
 			<RightCol>

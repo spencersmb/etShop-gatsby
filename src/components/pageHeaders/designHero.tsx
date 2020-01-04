@@ -147,7 +147,7 @@ const HeroImage = () => (
 				alt='Every-Tuesday Digital Shop'
 				fluid={data.desktopHero.childImageSharp.fluid}
 				fadeIn={false}
-				critical={true}
+				loading={'eager'}
 			/>
 		}
 		}

@@ -111,3 +111,8 @@ export const getTokenFromLocalStorage = (): string | null => {
 	}
 	return null
 }
+
+export function formatDate (dateString: string) {
+	// return dateString.replace('-', '/')
+	return dateString.split('-').join('/')
+}

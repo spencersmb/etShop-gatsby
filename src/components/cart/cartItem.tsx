@@ -93,7 +93,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 
 		switch (cart.items[cartIndex].licenseType) {
 			case LicenseEnum.standard:
-				return(
+				return (
 					<CartItemLicense
 						data-testid={'itemLicense'}
 						type={LicenseEnum.standard}>
@@ -182,7 +182,7 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
               <p data-testid={'originalTotal'}>{displayOriginalTotal()}</p>
             </CartItemDiscount>
             <CartItemDiscount>
-              <span className={'discountLabel'} >{displayPercent(CartPricingConfig.bulkDiscount)}% Savings</span>
+              <span className={'discountLabel'}>{displayPercent(CartPricingConfig.bulkDiscount)}% Savings</span>
               <div className={'discountPin'}>
                 <VolumeDiscountPin>
                   Volume Discount

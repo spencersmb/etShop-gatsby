@@ -56,10 +56,10 @@ function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) 
 
 						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}
 						{/*<link rel='dns-prefetch' href='//apis.google.com'/>*/}
-						<link rel='preload'
-									as='font'
-									type='font/woff2'
-									href={`/fonts/Sentinel-Black.woff2`}/>
+						{/*<link rel='preload'*/}
+						{/*			as='font'*/}
+						{/*			type='font/woff2'*/}
+						{/*			href={`/fonts/Sentinel-SemiboldItal.woff2`}/>*/}
 						<style type='text/css'>{`
 								@font-face {
 									font-family: "Sentinel Black";
@@ -97,13 +97,13 @@ function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) 
 export default SEO
 
 const detailsQuery = graphql`
-	query DefaultSEOQuery {
-		site {
-			siteMetadata {
-				title
-				description
-				author
-			}
-		}
-	}
+    query DefaultSEOQuery {
+        site {
+            siteMetadata {
+                title
+                description
+                author
+            }
+        }
+    }
 `

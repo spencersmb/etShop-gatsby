@@ -3,14 +3,16 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const createWcProducts = require(`./gatsby/createWcProducts`)
 const createSupportPages = require(`./gatsby/createSupportPages`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const createCatPages = require(`./gatsby/createCatsPages`)
 
 exports.createPages = async ({ graphql, actions }) => {
 
   await createSupportPages({ actions, graphql })
   await createWcProducts({ actions, graphql })
+  await createCatPages({ actions, graphql })
 
 }
 

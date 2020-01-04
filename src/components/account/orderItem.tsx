@@ -1,6 +1,7 @@
 import { IReceipt } from '@et/types/WC_Order'
 import { colors } from '@styles/global/colors'
 import { shadowStyles } from '@styles/global/shadows'
+import { formatDate } from '@utils/orderUtils'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -12,11 +13,6 @@ interface IProps {
 
 interface ISelected {
 	selected: boolean
-}
-
-function formatDate (dateString: string) {
-	// return dateString.replace('-', '/')
-	return dateString.split('-').join('/')
 }
 
 function OrderItem (props: IProps & IReceipt) {
@@ -38,8 +34,8 @@ function OrderItem (props: IProps & IReceipt) {
 				data-testid='orderItem-wrapper'
 			>
 				<Left>
-					<Title data-testid='orderItem-id'>order</Title>
-					<div>{id}</div>
+					<Title>order</Title>
+					<div data-testid='orderItem-id'>{id}</div>
 				</Left>
 				<Right>
 					<Date data-testid='orderItem-date'>{formatDate(date)}</Date>

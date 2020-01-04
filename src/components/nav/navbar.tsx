@@ -227,7 +227,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 			>
 
 				<NavCenter data-testid='nav-center' user={user}>
-					<a onClick={receipt}>Receipt</a>
+					{/*<a onClick={receipt}>Receipt</a>*/}
 					{user && <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>
               <a
@@ -285,7 +285,7 @@ function Navbar (props: IPropsActions & IPropsState) {
             <NavItem hideOnMobile={true}>
               <MyAccount>
                 <a
-                  href='javascript:void(0)'
+									// href='javascript:void(0)'
                   onClick={changePage('/account')}>
                   <img src={getUserImage(user).src} alt={getUserImage(user).alt}/>
                   <span>

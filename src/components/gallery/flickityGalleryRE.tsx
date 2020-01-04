@@ -198,7 +198,7 @@ const FlickityGalleryContext = (props: IProps) => {
 						{/*			 alt={item.alt}/>*/}
 						{/*</picture>*/}
 						<Img
-							critical={true}
+							loading={'eager'}
 							fadeIn={false}
 							fluid={item.localFile.childImageSharp.fluid}
 							alt={item.alt}/>

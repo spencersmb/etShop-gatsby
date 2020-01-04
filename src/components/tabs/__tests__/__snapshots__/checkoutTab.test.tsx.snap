@@ -2,7 +2,7 @@
 
 exports[`Checkout Tab renders correctly 1`] = `
 <li
-  className="sc-htpNat fwvtES"
+  className="sc-EHOje jkwlrH"
   data-testid="tab-stripe"
   onClick={[Function]}
   selected={true}

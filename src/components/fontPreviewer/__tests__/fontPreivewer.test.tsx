@@ -25,7 +25,6 @@ describe('Font Preview', () => {
 		const modalRender = render(<FontPreviewer {...defaultProps}/>)
 		expect(modalRender.getByTestId('slider')).toBeTruthy()
 	})
-
 	it('Should have default font size', () => {
 		const modalRender = render(<FontPreviewer {...defaultProps}/>)
 		expect(modalRender.getByTestId('fontSize').innerHTML).toEqual('25px')
@@ -34,9 +33,9 @@ describe('Font Preview', () => {
 		const modalRender = render(<FontPreviewer {...defaultProps}/>)
 		const button = modalRender.getByTestId('featuresToggle')
 		button.click()
-
 		const container = modalRender.getByTestId('checkboxContainer')
-		expect(container.classList[0]).toEqual('open')
+		const classArray = Object.keys(container.classList).map(key => container.classList[key])
+		expect(classArray.indexOf('open') > 0).toEqual(true)
 	})
 	it('Should have correct number of checkboxes and onClick works', () => {
 		const modalRender = render(<FontPreviewer {...defaultProps}/>)
@@ -52,7 +51,6 @@ describe('Font Preview', () => {
 		expect(checkbox3).toBeDefined()
 		expect(checkbox4).toBeDefined()
 	})
-
 	it('Should have correct number of fonts listed', () => {
 		const modalRender = render(<FontPreviewer {...defaultProps}/>)
 		const list = modalRender.getByTestId('fontsList')

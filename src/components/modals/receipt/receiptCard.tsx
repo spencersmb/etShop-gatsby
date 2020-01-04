@@ -22,7 +22,7 @@ const ReceiptCard = (props: IReceipt & IClose) => {
 			<CloseBtn onClick={handleClose}>
 				{renderSvg(svgs.HamburgerClose)}
 			</CloseBtn>
-			<EmailTo>
+			<EmailTo data-testid={`emailCopy`}>
 				Copy sent to {email}
 			</EmailTo>
 			<h1>Order Complete</h1>
@@ -37,8 +37,8 @@ const ReceiptCard = (props: IReceipt & IClose) => {
 			</ProductsHeader>
 			<div data-testid='orderDownloads'>
 				{downloads.products && downloads.products.map(product =>
-					<Product key={product.id} data-testid={`download-${product.id}`}>
-						<Name className={'name'}>
+					<Product key={product.id} data-testid={`download`}>
+						<Name className={'name'} data-testid={`download-name`}>
 							{product.name}
 							<span>
 								{product.subtitle}
@@ -55,7 +55,7 @@ const ReceiptCard = (props: IReceipt & IClose) => {
 							</DetailItem>
 						</Details>
 						<DownloadBtnWrapper>
-							<a href={product.url}>
+							<a href={product.url} data-testid={`download-url`}>
 								<DownloadBtn
 									color={'#fff'}
 									submitting={false}
@@ -71,7 +71,7 @@ const ReceiptCard = (props: IReceipt & IClose) => {
 				}
 			</div>
 
-			<TotalWrapper data-testid='receiptTotal'>
+			<TotalWrapper>
 				{coupon_used.length > 0 &&
         <CouponWrapper>
           <TotalLabel>Coupon Used</TotalLabel>
@@ -101,7 +101,7 @@ const ReceiptCard = (props: IReceipt & IClose) => {
 						<TotalLabel>
 							Total
 						</TotalLabel>
-						<FinalTotal>
+						<FinalTotal data-testid='receiptTotal'>
 							{displayCurrency(total)}
 						</FinalTotal>
 					</Total>

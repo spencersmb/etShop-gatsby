@@ -6,6 +6,7 @@ import renderer from 'react-test-renderer'
 import {
 	render,
 	cleanup,
+	wait,
 	fireEvent
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
@@ -52,16 +53,18 @@ describe('Cart Item tests', () => {
 		expect(select.innerHTML).toEqual('Standard License')
 	})
 
-	it('Should render correct discounted price and show discount content', () => {
+	it('Should render correct discounted price and show discount content', async () => {
 		const discountedProps = props
 		discountedProps.cart.items[ProductKey.WatercolorStd].qty = 12
 		discountedProps.cart.items[ProductKey.WatercolorStd].price = '11.7'
 		const modalRender = render(<CartItem {...discountedProps}/>)
-		const discount = modalRender.getByTestId('discountSavings')
-		const originalTotal = modalRender.getByTestId('originalTotal')
 
-		expect(discount.innerHTML).toBe('-$51.60')
-		expect(originalTotal.innerHTML).toBe('$192')
+		await wait(() => {
+			const discount = modalRender.getByTestId('discountSavings')
+			const originalTotal = modalRender.getByTestId('originalTotal')
+			expect(discount.innerHTML).toBe('-$51.60')
+			expect(originalTotal.innerHTML).toBe('$192')
+		})
 	})
 
 	it('Should call removeItem action with correct item index', () => {

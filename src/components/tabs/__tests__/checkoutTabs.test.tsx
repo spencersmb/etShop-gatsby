@@ -9,7 +9,8 @@ import { isPWYWItemInCart } from '@utils/cartUtils'
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-	cleanup
+	cleanup,
+	wait
 } from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import { combineReducers } from 'redux'
@@ -39,7 +40,10 @@ const propsFree = {
 
 const Connected = connect((state: IState) => {
 		return {
-			...state
+			...state,
+			cart: {
+				totalPrice: 15
+			}
 		}
 	}
 )(CheckoutTabs)
@@ -68,15 +72,18 @@ describe('Checkout Tabs', () => {
 		expect(modalRender.getByTestId('tabs__Nav').children.length).toEqual(2)
 	})
 
-	it('Should render correct total', () => {
-		const modalRender = renderWithRedux(<Connected {...props}>
+	it('Should render correct tab paypal content', async () => {
+		const modalRender = renderWithRedux(<ConnectedPaypal {...propsPaypal}>
 			<div data-payment='stripe'>Tab 1</div>
 			<div data-payment='paypal'>Tab 2</div>
-		</Connected>, combineReducers({
+		</ConnectedPaypal>, combineReducers({
 			products: productReducer,
 			cart: cartReducer
 		}))
-		expect(modalRender.getByTestId('orderTotal').innerHTML).toEqual('<span class="orderTotal__name">Total</span>$0')
+		await wait(() => {
+			expect(modalRender.getByTestId('tabs__Content').innerHTML).toEqual('Tab 2')
+
+		})
 	})
 
 	it('Should render correct tab stripe content', () => {
@@ -88,17 +95,6 @@ describe('Checkout Tabs', () => {
 			cart: cartReducer
 		}))
 		expect(modalRender.getByTestId('tabs__Content').innerHTML).toEqual('Tab 1')
-	})
-
-	it('Should render correct tab paypal content', () => {
-		const modalRender = renderWithRedux(<ConnectedPaypal {...propsPaypal}>
-			<div data-payment='stripe'>Tab 1</div>
-			<div data-payment='paypal'>Tab 2</div>
-		</ConnectedPaypal>, combineReducers({
-			products: productReducer,
-			cart: cartReducer
-		}))
-		expect(modalRender.getByTestId('tabs__Content').innerHTML).toEqual('Tab 2')
 	})
 
 	it('Should call handleChangeType action', () => {

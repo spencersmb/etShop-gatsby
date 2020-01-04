@@ -39,25 +39,4 @@ module.exports = async ({ actions, graphql }) => {
       })
     })
   })
-
-  // return new Promise((resolve, reject) => {
-  //   graphql(pageQuery).then(results => {
-  //
-  //     if (results.errors) {
-  //       console.log(results.errors)
-  //       reject(results.errors)
-  //     }
-  //     results.data.allWcProduct.edges.forEach(({ node }) => {
-  //       createPage({
-  //         path: `/products/${node.slug}`,
-  //         component: path.resolve(`./src/components/products/productDetailPage.tsx`),
-  //         context: {
-  //           slug: node.slug
-  //         }
-  //       })
-  //       console.log(`Created page: /products/${node.slug}`)
-  //     })
-  //   })
-  //   resolve()
-  // })
 }

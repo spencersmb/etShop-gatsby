@@ -67,11 +67,24 @@ function getCurrentPage (path: string) {
 }
 
 type AllProps = IProps & IReduxActions & IReduxState
-
+interface ILocalState {
+	searching: boolean,
+	selectedSearchOrder: any,
+	selectedOrder: any,
+	searchInput: string,
+	orderModalOpen: boolean
+}
+interface INewState {
+	searching?: boolean,
+	selectedSearchOrder?: any,
+	selectedOrder?: any,
+	searchInput?: string,
+	orderModalOpen?: boolean
+}
 export function Dashboard (props: AllProps) {
 	const { pagination, resetDownloadLinks } = props
 	const page = getCurrentPage(props.location.search)
-	const [state, setState] = useSetState({
+	const [state, setState] = useSetState<ILocalState, INewState>({
 		searching: false,
 		selectedSearchOrder: null,
 		selectedOrder: null,
