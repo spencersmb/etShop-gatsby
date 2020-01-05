@@ -6,7 +6,7 @@ import { renderSvg } from '../styleUtils'
 
 afterEach(cleanup)
 const Parent = () => {
-	return(
+	return (
 		<div data-testid='svg-test'>
 			{renderSvg(svgs.CreditCard)}
 		</div>

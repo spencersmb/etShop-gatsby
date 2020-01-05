@@ -24,13 +24,7 @@ describe('Product List Layout', () => {
 
 	it('Should render correct items', () => {
 		const modalRender = render(<OrdersList {...props}/>)
-		const list = modalRender.getByTestId('orderList')
-		expect(list.children.length).toEqual(2)
-	})
-
-	it('Should render pagination bar', () => {
-		const modalRender = render(<OrdersList {...props}/>)
-		const bar = modalRender.getByTestId('paginationBar')
-		expect(bar).toBeTruthy()
+		const list = modalRender.getAllByTestId('orderItem')
+		expect(list.length).toEqual(2)
 	})
 })

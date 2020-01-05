@@ -31,7 +31,10 @@ module.exports = {
     }
   },
   testURL: "http://localhost",
-  setupFiles: ["<rootDir>/loadershim.js"],
+  setupFiles: [
+    "<rootDir>/loadershim.js"
+  ],
+  setupFilesAfterEnv: ["<rootDir>/jest/testHelper.js"],
   collectCoverageFrom: [
     "src/**/**/*.{ts,tsx}",
     "!src/pages/**/*.{ts,tsx}",
