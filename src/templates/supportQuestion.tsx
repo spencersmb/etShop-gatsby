@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import contentParser from 'gatsby-wpgraphql-inline-images'
 
-const Post = (props: any) => {
+const SupportItem = (props: any) => {
 	const pluginOptions = {
 		wordPressUrl: `${process.env.GATSBY_DB}`,
 		uploadsUrl: `${process.env.GATSBY_DB}/wp-content/uploads/`
@@ -16,19 +16,19 @@ const Post = (props: any) => {
 			wpgraphql: { supportQuestion: { title } }
 		}
 	} = props
-	console.log('props', props)
+	console.log('support item props', props.data.wpgraphql.supportQuestion)
 
 	return (
 		<div>
-			<h1>{title}</h1>
-			<div>
+			<h1 data-testid={'title'}>{title}</h1>
+			<div data-testid={'content'}>
 				{contentParser({ content }, pluginOptions)}
 			</div>
 		</div>
 	)
 }
 
-export default Post
+export default SupportItem
 
 export const pageQuery = graphql`
     query GET_POST($id: ID!) {

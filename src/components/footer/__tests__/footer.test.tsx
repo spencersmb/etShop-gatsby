@@ -12,13 +12,13 @@ afterEach(cleanup)
 describe('Footer Tests', () => {
 
 	it('Should render Logo', () => {
-		const modalRender = render(<Footer productPage={false}/>)
+		const modalRender = render(<Footer productPage={false} whiteFooter={false}/>)
 		const element = modalRender.getByTestId('footer-logo')
 		expect(element).toBeTruthy()
 	})
 
 	it('Should render correct nav links', () => {
-		const modalRender = render(<Footer productPage={false}/>)
+		const modalRender = render(<Footer productPage={false} whiteFooter={false}/>)
 		const element = modalRender.getByTestId('footer-links')
 		expect(element).toBeTruthy()
 		expect(element.children.length).toEqual(4)
@@ -42,7 +42,7 @@ describe('Footer Tests', () => {
 	})
 
 	it('Should render correct social links', () => {
-		const modalRender = render(<Footer productPage={false}/>)
+		const modalRender = render(<Footer productPage={false} whiteFooter={false}/>)
 		const element = modalRender.getByTestId('social-links')
 		expect(element).toBeTruthy()
 		expect(element.children.length).toEqual(5)

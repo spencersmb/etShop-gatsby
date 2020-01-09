@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-import SEO from '../../seo'
-import { ProductDetailPage } from '../../../templates/productPage'
+import SEO from '@components/seo'
+import { ProductDetailPage } from '../productPage'
 import { StaticQuery } from 'gatsby'
 import { singleItemQuery } from '@redux/reduxTestUtils'
-import ProductLayout from '../productLayout'
+import ProductLayout from '@components/products/productLayout'
 
 const setup = () => {
 	return shallow(<ProductDetailPage

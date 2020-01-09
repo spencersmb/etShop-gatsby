@@ -8,13 +8,32 @@ import React from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
 
+interface ILocalState {
+	email: string,
+	submitting: boolean,
+	completed: boolean,
+	submitted: boolean,
+	error: null | boolean,
+	hasError: boolean
+}
+
+interface INewState {
+	email?: string,
+	submitting?: boolean,
+	completed?: boolean,
+	submitted?: boolean,
+	error?: null | boolean,
+	hasError?: boolean
+}
+
 const FooterForm = () => {
-	const [state, setState] = useSetState({
+	const [state, setState] = useSetState<ILocalState, INewState>({
 		email: '',
 		submitting: false,
 		completed: false,
 		submitted: false,
-		error: null
+		error: null,
+		hasError: false
 	})
 
 	async function handleSubmit (e: any) {

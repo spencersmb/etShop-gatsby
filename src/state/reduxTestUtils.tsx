@@ -3,6 +3,7 @@ import { ICartState, LicenseEnum } from '@et/types/Cart'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IPaginateState } from '@et/types/Pagination'
 import { IProduct, IProducts } from '@et/types/Products'
+import { ISupportCategory, ISupportCatQuery, ISupportQuestion, ISupportQuestionQuery } from '@et/types/Support'
 import { IUser } from '@et/types/User'
 import { IGuestFormData, IReceipt } from '@et/types/WC_Order'
 import initialState from '@redux/reducers/initialState'
@@ -711,6 +712,75 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 	},
 	wcProduct: {
 		...singleProduct
+	}
+}
+
+export const CatPageQuery: IGatsbyConfig & ISupportCatQuery = {
+	site: {
+		siteMetadata: {
+			...testSiteMetaDataQuery
+		}
+	},
+	featureSiteImage: {
+		...featuredImage.localFile
+	},
+	wpgraphql: {
+		categories: {
+			nodes: [
+				{
+					count: 3,
+					name: 'Getting Started',
+					slug: 'getting-started',
+					supportQuestions: {
+						nodes: [
+							{
+								slug: 'question-1',
+								title: 'Question 1',
+								excerpt: '<p>This is the excerpt</p>',
+								content: '<p>This is the content</p>'
+							},
+							{
+								slug: 'question-2',
+								title: 'Question 2',
+								excerpt: '<p>This is the excerpt</p>',
+								content: '<p>This is the content</p>'
+							},
+							{
+								slug: 'question-3',
+								title: 'Question 3',
+								excerpt: '<p>This is the excerpt</p>',
+								content: '<p>This is the content</p>'
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+}
+
+export const SupportQuestionOne = {
+	slug: 'question-1',
+	title: 'Question 1',
+	excerpt: '<p>This is the excerpt</p>',
+	content: '<p>This is the content</p>'
+}
+export const SupportQuestionPageQuery: IGatsbyConfig & ISupportQuestionQuery = {
+	site: {
+		siteMetadata: {
+			...testSiteMetaDataQuery
+		}
+	},
+	featureSiteImage: {
+		...featuredImage.localFile
+	},
+	pageContext: {
+		content: SupportQuestionOne.content
+	},
+	wpgraphql: {
+		supportQuestion: {
+			...SupportQuestionOne
+		},
 	}
 }
 

@@ -6,7 +6,6 @@ const dotEnvPath = path.resolve(`./.env.${process.env.NODE_ENV}`)
 require("dotenv").config({
   path: dotEnvPath
 })
-
 configure({ adapter: new Adapter() })
 
 global.___loader = {

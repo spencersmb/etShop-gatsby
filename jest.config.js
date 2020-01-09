@@ -23,7 +23,9 @@ module.exports = {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testPathIgnorePatterns: ["node_modules", ".cache"],
-  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  transformIgnorePatterns: [
+    "node_modules/(?!(gatsby-wpgraphql-inline-images))"
+  ],
   globals: {
     __PATH_PREFIX__: "",
     "ts-jest": {
@@ -42,6 +44,8 @@ module.exports = {
     "!src/state/reduxTestUtils.tsx",
     "!src/components/stripe/**/*.{ts,tsx}",
     "!src/utils/apiUtils.ts",
+    "!src/utils/stateUtils.ts",
+    "!src/utils/windowUtils.ts",
     "!src/styles/**/*.{ts,tsx}",
     "!src/Button/**/*.{ts,tsx}",
     "!/node_modules/",
