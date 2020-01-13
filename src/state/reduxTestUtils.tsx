@@ -707,21 +707,49 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 			...testSiteMetaDataQuery
 		}
 	},
-	featureSiteImage: {
+	featureImage: {
 		...featuredImage.localFile
 	},
 	wcProduct: {
 		...singleProduct
 	}
 }
-
+export const supportQuestionsTesting = [
+	{
+		slug: 'question-1',
+		title: 'Question 1',
+		excerpt: '<p>This is the excerpt</p>',
+		content: '<p>This is the content</p>',
+		acfSupportQuestions: {
+			popularity: 1
+		}
+	},
+	{
+		slug: 'question-2',
+		title: 'Question 2',
+		excerpt: '<p>This is the excerpt</p>',
+		content: '<p>This is the content</p>',
+		acfSupportQuestions: {
+			popularity: 2
+		}
+	},
+	{
+		slug: 'question-3',
+		title: 'Question 3',
+		excerpt: '<p>This is the excerpt</p>',
+		content: '<p>This is the content</p>',
+		acfSupportQuestions: {
+			popularity: 7
+		}
+	}
+]
 export const CatPageQuery: IGatsbyConfig & ISupportCatQuery = {
 	site: {
 		siteMetadata: {
 			...testSiteMetaDataQuery
 		}
 	},
-	featureSiteImage: {
+	featureImage: {
 		...featuredImage.localFile
 	},
 	wpgraphql: {
@@ -732,26 +760,7 @@ export const CatPageQuery: IGatsbyConfig & ISupportCatQuery = {
 					name: 'Getting Started',
 					slug: 'getting-started',
 					supportQuestions: {
-						nodes: [
-							{
-								slug: 'question-1',
-								title: 'Question 1',
-								excerpt: '<p>This is the excerpt</p>',
-								content: '<p>This is the content</p>'
-							},
-							{
-								slug: 'question-2',
-								title: 'Question 2',
-								excerpt: '<p>This is the excerpt</p>',
-								content: '<p>This is the content</p>'
-							},
-							{
-								slug: 'question-3',
-								title: 'Question 3',
-								excerpt: '<p>This is the excerpt</p>',
-								content: '<p>This is the content</p>'
-							}
-						]
+						nodes: supportQuestionsTesting
 					}
 				}
 			]
@@ -763,7 +772,10 @@ export const SupportQuestionOne = {
 	slug: 'question-1',
 	title: 'Question 1',
 	excerpt: '<p>This is the excerpt</p>',
-	content: '<p>This is the content</p>'
+	content: '<p>This is the content</p>',
+	acfSupportQuestions: {
+		popularity: 1
+	}
 }
 export const SupportQuestionPageQuery: IGatsbyConfig & ISupportQuestionQuery = {
 	site: {
@@ -771,7 +783,7 @@ export const SupportQuestionPageQuery: IGatsbyConfig & ISupportQuestionQuery = {
 			...testSiteMetaDataQuery
 		}
 	},
-	featureSiteImage: {
+	featureImage: {
 		...featuredImage.localFile
 	},
 	pageContext: {
@@ -780,7 +792,7 @@ export const SupportQuestionPageQuery: IGatsbyConfig & ISupportQuestionQuery = {
 	wpgraphql: {
 		supportQuestion: {
 			...SupportQuestionOne
-		},
+		}
 	}
 }
 

@@ -16,7 +16,7 @@ const IndexPage = ({ data }: any) => {
 		['@context']: 'http://schema.org',
 		['@type']: 'Organization',
 		['name']: 'Every Tuesday',
-		['logo']: `${site.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
+		['logo']: `${site.siteMetadata.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
 		['url']: 'shop.every-tuesday.com',
 		'sameAs': [
 			`${socialUtils.twitter.url}`,
@@ -105,7 +105,7 @@ const IndexPage = ({ data }: any) => {
 				<link rel='canonical' href={process.env.GATSBY_DB}/>
 				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
 			</SEO>
-			<PageContainer>
+			<PageContainer >
 				<DesignHero/>
 				<ProductsDisplay/>
 			</PageContainer>

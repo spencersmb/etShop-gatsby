@@ -1,5 +1,6 @@
 import { Image } from '@et/types/Products'
 import { IMeta, IOGType } from '@et/types/SEO'
+import { ISupportQuestion } from '@et/types/Support'
 import { IUser } from '@et/types/User'
 import React, { ReactChild } from 'react'
 import _ from 'lodash'
@@ -155,6 +156,30 @@ export function getUserImage (currentUser: IUser): { src: string, alt: string } 
 			alt: 'user image'
 		}
 	}
+}
+
+export function reArrangeItems (items: any[]) {
+	const initialValue: any = []
+	return items.reduce((total: any, item: any) => {
+		// first run through put getting started at top
+		if (item.slug === 'getting-started') {
+			total.unshift(item)
+		} else if (item.slug === 'fonts') {
+			total.splice(1, 0, item)
+		} else if (item.slug === 'procreate') {
+			total.splice(2, 0, item)
+		} else if (item.slug === 'uncategorized') {
+			return total
+		} else {
+			total.push(item)
+		}
+		return total
+
+	}, initialValue)
+}
+
+export function orderByPopularity (items: ISupportQuestion[]) {
+	return items.sort((a, b) => (a.acfSupportQuestions.popularity < b.acfSupportQuestions.popularity) ? 1 : -1)
 }
 
 

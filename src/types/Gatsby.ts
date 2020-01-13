@@ -15,7 +15,7 @@ export interface IGatsbyConfig {
 			twitterDefaultImage: string
 		},
 	}
-	featureSiteImage?:any
+	featureImage?:any
 }
 
 export const gatsbyImageSharpFluid = graphql`

@@ -23,7 +23,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 
 	constructor (props: IProductQuery) {
 		super(props)
-		const { data: { wcProduct, site: { siteMetadata }, featureSiteImage } } = this.props
+		const { data: { wcProduct, site: { siteMetadata }, featureImage } } = this.props
 		this.ogArticles = wcProduct.tags.map(tag => tag.name).map(article => ({
 			property: 'article:tag',
 			content: `${article}`
@@ -133,7 +133,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		this.jsonld = {
 			['@context']: 'http://schema.org/',
 			[`@type`]: 'Product',
-			['logo']: `${siteMetadata.siteUrl}/${featureSiteImage.childImageSharp.fluid.src}`,
+			['logo']: `${siteMetadata.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
 			['url']: 'shop.every-tuesday.com',
 			name: wcProduct.name,
 			image: [
@@ -232,7 +232,7 @@ export const productQuery = graphql`
                 authorUrl
             }
         }
-        featureSiteImage: file(relativePath: { eq: "color-palette.jpg" }) {
+        featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
             childImageSharp {
                 fluid(maxWidth: 1024) {
                     ...GatsbyImageSharpFluid

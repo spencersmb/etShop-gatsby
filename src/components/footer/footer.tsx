@@ -18,20 +18,9 @@ const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFoote
 
 	return (
 		<FooterContainer id={'my-div'} whiteFooter={whiteFooter}>
-			{/*<FooterHeader>*/}
-			{/*	<h4>Get notified</h4>*/}
-			{/*	<p>when I release new products, send out promos or freebies.</p>*/}
-			{/*</FooterHeader>*/}
-			{/*<PinkEmailForm*/}
-			{/*	handleSubmit={handleSubmit}*/}
-			{/*	completed={state.completed}*/}
-			{/*	hasError={state.hasError}*/}
-			{/*	submitting={state.submitting}*/}
-			{/*	invalid={state.error}*/}
-			{/*	handleTextInput={handleTextInput}/>*/}
 			<FooterNav>
 
-				<FooterNavWrapper productPage={productPage}>
+				<FooterNavWrapper productPage={productPage} whiteFooter={whiteFooter}>
 					<FooterNavInner>
 						<SvgCircle>
 							{renderSvg(svgs.FooterCircle)}
@@ -99,9 +88,7 @@ const FooterContainer = styled.footer<{ whiteFooter: boolean }>`
 	background: ${props => props.whiteFooter ? '#fff' : '#f7f8fc'};
 	display: flex;
 	flex-direction: column;
-	//overflow: hidden;
-	
-	overflow-x: hidden;
+	overflow: hidden;
 `
 const FooterHeader = styled.div`
 	text-align: center;
@@ -156,7 +143,7 @@ const FooterNav = styled.nav`
 	position: relative;
 	z-index: 0;
 `
-const FooterNavWrapper = styled.div<{ productPage: boolean }>`
+const FooterNavWrapper = styled.div<{ productPage: boolean, whiteFooter: boolean }>`
 	display: flex;
 	flex-direction: column;
 	background: #fff;
@@ -164,16 +151,16 @@ const FooterNavWrapper = styled.div<{ productPage: boolean }>`
 	z-index: 1;
 	position: relative;
 	padding: 0 0 45px;
-	margin-top: 100px;
+	margin-top: ${props => props.whiteFooter ? '0px' : '100px'};
 	
 	@media ${device.tablet}{
-		padding: 0 0 ${props => props.productPage ? '130px' : '45px'};
+		padding: 0 0 ${props => props.productPage ? '130px' : '35px'};
 	}
 	
 	@media ${device.laptop}{
 		flex-direction: row;
 		align-items: baseline;
-		padding: 0 0 ${props => props.productPage ? '145px' : '65px'};
+		padding: 0 0 ${props => props.productPage ? '145px' : '25px'};
 	}
 
 `
@@ -188,7 +175,7 @@ const FooterNavInner = styled.div`
 	
 	@media ${device.laptop}{
 		flex-direction: row;
-		align-items: baseline;
+		align-items: center;
 	}
 `
 const Logo = styled.div`

@@ -587,6 +587,7 @@ type SitePageConnection {
 }
 
 type SitePageContext {
+    cat: String
     content: String
     date: Date
     featuredImage: SitePageContextFeaturedImage
@@ -2925,7 +2926,8 @@ type WPGraphQL_SupportQuestionToSupportTagConnectionEdge {
 "Field Group"
 type WPGraphQL_SupportQuestion_Acfsupportquestions {
     fieldGroupName: String
-    type: String
+    "short desc of post"
+    popularity: Float
 }
 
 "The SupportTag type"
@@ -4421,6 +4423,7 @@ enum SitePageFieldsEnum {
     component
     componentChunkName
     componentPath
+    context___cat
     context___content
     context___date
     context___featuredImage___altText
@@ -5610,6 +5613,7 @@ input SitePageContextFeaturedImageFilterInput {
 }
 
 input SitePageContextFilterInput {
+    cat: StringQueryOperatorInput
     content: StringQueryOperatorInput
     date: DateQueryOperatorInput
     featuredImage: SitePageContextFeaturedImageFilterInput

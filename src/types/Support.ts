@@ -3,6 +3,9 @@ export interface ISupportQuestion {
 	slug: string
 	excerpt: string
 	content: string
+	acfSupportQuestions: {
+		popularity: number
+	}
 }
 
 export interface ICategory {
