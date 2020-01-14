@@ -3,7 +3,7 @@ import Layout from '@components/layout'
 import Dashboard from '@components/account/dashboard'
 import SEO from '@components/seo'
 import { IUserState } from '@et/types/User'
-import { facebookDefaultMeta, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
+import { createStandardJSONLD, facebookDefaultMeta, twitterDefaultMeta } from '@utils/socialUtils'
 import { graphql } from 'gatsby'
 import React from 'react'
 import { Router } from '@reach/router'
@@ -11,21 +11,6 @@ import UserHoc from '@components/account/userHoc' // passes user data as prop
 
 const Account = ({ data }: any) => {
 	const { site, featureImage } = data
-
-	const jsonld = {
-		['@context']: 'http://schema.org',
-		['@type']: 'Organization',
-		['name']: 'Every Tuesday',
-		['logo']: `${site.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
-		['url']: 'shop.every-tuesday.com',
-		'sameAs': [
-			`${socialUtils.twitter.url}`,
-			`${socialUtils.facebook.url}`,
-			`${socialUtils.youtube.url}`,
-			`${socialUtils.instagram.url}`,
-			`${socialUtils.pinterest.url}`
-		]
-	}
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -102,7 +87,10 @@ const Account = ({ data }: any) => {
 				]}
 			>
 				<link rel='canonical' href={process.env.GATSBY_DB}/>
-				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
+				<script type='application/ld+json'>{JSON.stringify(createStandardJSONLD({
+					siteUrl: site.siteMetadata.siteUrl,
+					featureImgSrc: featureImage.childImageSharp.fluid.src
+				}))}</script>
 			</SEO>
 			<UserHoc>
 				{({ user }: { user: IUserState }) => (

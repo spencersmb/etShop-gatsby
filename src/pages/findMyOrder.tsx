@@ -6,7 +6,7 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { fakeApiCall, toastrOptions } from '@utils/apiUtils'
-import { facebookDefaultMeta, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
+import { createStandardJSONLD, facebookDefaultMeta, twitterDefaultMeta } from '@utils/socialUtils'
 import { useSetState } from '@utils/stateUtils'
 import { graphql } from 'gatsby'
 import React from 'react'
@@ -18,21 +18,6 @@ import SEO from '../components/seo'
 
 const ForgotPasswordPage = ({ data }: any) => {
 	const { site, featureImage } = data
-
-	const jsonld = {
-		['@context']: 'http://schema.org',
-		['@type']: 'Organization',
-		['name']: 'Every Tuesday',
-		['logo']: `${site.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
-		['url']: 'shop.every-tuesday.com',
-		'sameAs': [
-			`${socialUtils.twitter.url}`,
-			`${socialUtils.facebook.url}`,
-			`${socialUtils.youtube.url}`,
-			`${socialUtils.instagram.url}`,
-			`${socialUtils.pinterest.url}`
-		]
-	}
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -170,7 +155,10 @@ const ForgotPasswordPage = ({ data }: any) => {
 				]}
 			>
 				<link rel='canonical' href={process.env.GATSBY_DB}/>
-				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
+				<script type='application/ld+json'>{JSON.stringify(createStandardJSONLD({
+					siteUrl: site.siteMetadata.siteUrl,
+					featureImgSrc: featureImage.childImageSharp.fluid.src
+				}))}</script>
 			</SEO>
 			<PageContainer>
 				<HeaderOne pose={state.completed ? 'closed' : 'open'}>
