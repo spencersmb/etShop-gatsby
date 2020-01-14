@@ -18,8 +18,6 @@ export const CloseBtn = styled.div`
 	path{
 		fill: ${colors.grey.i800};
 	}
-
-		
 `
 export const FormWrapper = styled.div`
 	position: absolute;

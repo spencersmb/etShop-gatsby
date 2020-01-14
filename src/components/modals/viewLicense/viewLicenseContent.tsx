@@ -112,6 +112,7 @@ const RenderPosed = posed(RenderStart)({
 	open: {
 		height: 'auto',
 		opacity: 1,
+		overflow: 'hidden',
 		transition: {
 			opacity: {
 				delay: 200
@@ -121,6 +122,7 @@ const RenderPosed = posed(RenderStart)({
 	closed: {
 		height: 0,
 		opacity: 0,
+		overflow: 'hidden',
 		transition: {
 			default: {
 				duration: 200

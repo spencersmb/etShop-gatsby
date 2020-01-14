@@ -1,6 +1,7 @@
 import ViewLicenseModal from '@components/modals/viewLicense/viewLicense'
 import { ILicenseType } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
+import { device } from '@styles/global/breakpoints'
 import { ButtonSmall } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -218,7 +219,11 @@ const LicViewBtn = styled(ButtonSmall)`
 	margin: 0;
 	cursor: pointer;
 	color: ${highLights.color};
-	&:hover{
-		background: ${highLights.color};
+
+	@media ${device.laptop} {
+		&:hover{
+			background: ${highLights.color};
+		}
 	}
+		
 `

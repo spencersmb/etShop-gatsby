@@ -8,10 +8,10 @@ export const PageContainer = styled.div`
 	flex: 1;
 	
 	main{
-		flex: 1;
+		//flex: 1;
 		background: #f7f8fc;
-		display: flex;
-		flex-direction: column;
+		//display: flex;
+		//flex-direction: column;
 	}
 	
 	@media ${device.laptop} {

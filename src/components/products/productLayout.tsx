@@ -208,7 +208,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	const { name, sub_header, images } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
-
 	const [ref, inView, entry] = useInView({
 		/* Optional options */
 		threshold: 0
