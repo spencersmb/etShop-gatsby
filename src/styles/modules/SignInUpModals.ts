@@ -25,8 +25,8 @@ export const FormWrapper = styled.div`
 	padding: 20px 20px 20px;
 	display: flex;
 	flex-direction: column;
-	//height: 100%;
-	min-height: 100vh;
+	height: 100%;
+	//min-height: 100vh;
 	
 	@media ${device.tablet} {
 		padding: 20px 40px 20px;
