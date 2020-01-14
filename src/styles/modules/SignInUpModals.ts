@@ -19,14 +19,18 @@ export const CloseBtn = styled.div`
 		fill: ${colors.grey.i800};
 	}
 `
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.div<{ signup?: boolean }>`
 	position: absolute;
 	width: 100%;
 	padding: 20px 20px 20px;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
-	//min-height: 100vh;
+	
+	${props => !props.signup ? `
+		height: 100%;
+	` : `
+		min-height: 100vh;
+	`}
 	
 	@media ${device.tablet} {
 		padding: 20px 40px 20px;

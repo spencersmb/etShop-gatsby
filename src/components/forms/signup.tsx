@@ -56,7 +56,7 @@ export const SignUpForm = (props: any) => {
 	}
 
 	return (
-		<FormWrapper data-testid='signUp-form' ref={poseRef}>
+		<FormWrapper data-testid='signUp-form' ref={poseRef} signup={true}>
 			<CloseBtn data-testid='close-btn' className='jestCartToggle'
 								onClick={closeModal}>{renderSvg(svgs.HamburgerClose)}</CloseBtn>
 			<FormContentSignUp>

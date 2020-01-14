@@ -37,6 +37,7 @@ export const HeaderBlockContainer = styled.div`
 		text-transform: uppercase;
 		line-height: 14px;
 		font-weight: 400;
+		text-align: center;
 	}
 	
 	@media ${device.tablet} {
