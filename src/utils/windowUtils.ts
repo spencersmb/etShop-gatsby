@@ -74,10 +74,10 @@ export const bodyScrollBar = {
 		if (window.innerWidth > 1024 && windowHasScrollbar()) {
 			el.style.padding = '0 15px 0 0'
 		}
+		el.style.position = 'fixed'
 		el.style.width = `100%`
 		el.style.top = `-${scrollPos}px`
 		el.style.bottom = `0`
-		// el.style.position = 'fixed'
 
 	}
 }

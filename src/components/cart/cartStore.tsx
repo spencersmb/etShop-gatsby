@@ -71,7 +71,9 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 					if (type === 'exit' && !overlayOpen && target.current) {
 						bodyScrollBar.remove(target.current)
 
-						document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
+						if (window.innerWidth > 1024) {
+							document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
+						}
 					}
 
 				}}>
