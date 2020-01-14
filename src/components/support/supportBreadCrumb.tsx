@@ -18,7 +18,7 @@ const SupportBreadCrumb = (props: IProps) => {
 				</Link>
 			</div>
 			<div className={`divider`}>/</div>
-			<div>
+			<div data-testid={'title'}>
 				{title}
 			</div>
 		</BreadCrumbContainer>

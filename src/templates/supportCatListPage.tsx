@@ -2,7 +2,8 @@ import HeaderBlockOneBCrumb from '@components/headers/headerBlockOneBreadcrumb'
 import Layout from '@components/layout'
 import SEO from '@components/seo'
 import SupportCategoryList from '@components/support/supportCategoryItems'
-import { facebookDefaultMeta, orderByPopularity, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
+import { orderByPopularity } from '@utils/genUtils'
+import { createStandardJSONLD, facebookDefaultMeta, socialConfig, twitterDefaultMeta } from '@utils/socialUtils'
 import React from 'react'
 import { graphql, Link } from 'gatsby'
 import styled from 'styled-components'
@@ -11,80 +12,6 @@ import { SupportPageContainer } from '../pages/support'
 const SupportCategoryPage = (props: any) => {
 	const { data: { wpgraphql: { categories } } } = props
 	const { site, featureImage } = props.data
-	const jsonld = {
-		['@context']: 'http://schema.org',
-		['@type']: 'Organization',
-		['name']: 'Every Tuesday',
-		['logo']: `${site.siteMetadata.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
-		['url']: 'shop.every-tuesday.com',
-		'sameAs': [
-			`${socialUtils.twitter.url}`,
-			`${socialUtils.facebook.url}`,
-			`${socialUtils.youtube.url}`,
-			`${socialUtils.instagram.url}`,
-			`${socialUtils.pinterest.url}`
-		]
-	}
-	const twitterAddons = [
-		{
-			name: `twitter:card`,
-			content: `summary_large_image`
-		},
-		{
-			name: `twitter:title`,
-			content: `${site.siteMetadata.title}`
-		},
-		{
-			name: `twitter:description`,
-			content: `${site.siteMetadata.description}`
-		},
-		{
-			name: `twitter:image`,
-			content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
-		}
-	]
-	const facebookAddons = [
-		{
-			property: `og:title`,
-			content: site.siteMetadata.title
-		},
-		{
-			property: `og:description`,
-			content: site.siteMetadata.description
-		},
-		{
-			property: 'og:site_name',
-			content: site.siteMetadata.title
-		},
-		{
-			property: `og:url`,
-			content: `${site.siteMetadata.siteUrl}`
-		},
-		{
-			property: 'og:image',
-			content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
-		},
-		{
-			property: 'og:image:secure_url',
-			content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
-		},
-		{
-			property: 'og:image:alt',
-			content: `${site.siteMetadata.title}`
-		},
-		{
-			property: 'og:image:type',
-			content: ' image/jpeg'
-		},
-		{
-			property: 'og:image:width',
-			content: '1024'
-		},
-		{
-			property: 'og:image:height',
-			content: '648'
-		}
-	]
 	const category = categories.nodes[0]
 	// console.log('Category page props', props.data.wpgraphql.categories)
 
@@ -99,19 +26,80 @@ const SupportCategoryPage = (props: any) => {
 						property: `og:type`,
 						content: `website`
 					},
-					...facebookDefaultMeta(facebookAddons),
-					...twitterDefaultMeta(twitterAddons)
+					...facebookDefaultMeta([
+						{
+							property: `og:title`,
+							content: site.siteMetadata.title
+						},
+						{
+							property: `og:description`,
+							content: site.siteMetadata.description
+						},
+						{
+							property: 'og:site_name',
+							content: site.siteMetadata.title
+						},
+						{
+							property: `og:url`,
+							content: `${site.siteMetadata.siteUrl}`
+						},
+						{
+							property: 'og:image',
+							content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+						},
+						{
+							property: 'og:image:secure_url',
+							content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+						},
+						{
+							property: 'og:image:alt',
+							content: `${site.siteMetadata.title}`
+						},
+						{
+							property: 'og:image:type',
+							content: ' image/jpeg'
+						},
+						{
+							property: 'og:image:width',
+							content: '1024'
+						},
+						{
+							property: 'og:image:height',
+							content: '648'
+						}
+					]),
+					...twitterDefaultMeta([
+						{
+							name: `twitter:card`,
+							content: `summary_large_image`
+						},
+						{
+							name: `twitter:title`,
+							content: `${site.siteMetadata.title}`
+						},
+						{
+							name: `twitter:description`,
+							content: `${site.siteMetadata.description}`
+						},
+						{
+							name: `twitter:image`,
+							content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+						}
+					])
 				]}
 			>
 				<link rel='canonical' href={process.env.GATSBY_FRONTEND_URL}/>
-				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
+				<script type='application/ld+json'>{JSON.stringify(createStandardJSONLD({
+					siteUrl: site.siteMetadata.siteUrl,
+					featureImgSrc: featureImage.childImageSharp.fluid.src
+				}))}</script>
 			</SEO>
 			<Layout whiteFooter={true}>
 				<SupportPageContainer>
 					<BackgroundBar/>
 					<HeaderBlockOneBCrumb headline={category.name}/>
 					{category.supportQuestions &&
-					<SupportCategoryList
+          <SupportCategoryList
             supportQuestions={orderByPopularity(category.supportQuestions.nodes)}/>
 					}
 				</SupportPageContainer>

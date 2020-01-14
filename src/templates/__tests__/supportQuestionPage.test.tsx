@@ -1,12 +1,20 @@
+import SEO from '@components/seo'
+import SupportContent from '@components/support/supportPageContent'
+import { shallow } from 'enzyme'
 import React from 'react'
 import {
-	render,
 	cleanup
 } from 'react-testing-library'
-import SupportItem from '../supportQuestion'
+import SupportQuestion from '../supportQuestion'
 import { StaticQuery } from 'gatsby'
-import { SupportQuestionOne, SupportQuestionPageQuery } from '@redux/reduxTestUtils'
+import { SupportQuestionPageQuery } from '@redux/reduxTestUtils'
 
+const setup = () => {
+	return shallow(<SupportQuestion
+		data={SupportQuestionPageQuery}
+		pageContext={SupportQuestionPageQuery.pageContext}
+	/>)
+}
 beforeEach(() => {
 	// @ts-ignore
 	StaticQuery.mockImplementationOnce((mock) =>
@@ -15,18 +23,14 @@ beforeEach(() => {
 })
 afterEach(cleanup)
 describe('Support Question Page', () => {
-	it('Should render content block', () => {
-		const modalRender = render(<SupportItem
-			data={SupportQuestionPageQuery}
-			pageContext={{ content: SupportQuestionOne.content }}
-		/>)
-		expect(modalRender.getByTestId('content').innerHTML).toBe('<p>This is the content</p>')
+	it('Should render SEO component', () => {
+		const shallowRender = setup()
+		const component = shallowRender.find(SEO)
+		expect(component.length).toEqual(1)
 	})
-	it('Should render correct title', () => {
-		const modalRender = render(<SupportItem
-			data={SupportQuestionPageQuery}
-			pageContext={{ content: SupportQuestionOne.content }}
-		/>)
-		expect(modalRender.getByTestId('title').innerHTML).toBe(SupportQuestionOne.title)
+	it('Should render Category List Component', () => {
+		const shallowRender = setup()
+		const component = shallowRender.find(SupportContent)
+		expect(component.length).toEqual(1)
 	})
 })

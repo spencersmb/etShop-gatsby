@@ -3,7 +3,7 @@ import SEO from '@components/seo'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IFontPreviewFile, IFontPreviewStyles, IProduct } from '@et/types/Products'
 import { IMeta, IOGType } from '@et/types/SEO'
-import { facebookDefaultMeta, jsonldImages, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
+import { facebookDefaultMeta, jsonldImages, socialConfig, twitterDefaultMeta } from '@utils/socialUtils'
 import { graphql } from 'gatsby'
 import React, { Component } from 'react'
 
@@ -126,7 +126,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 				name: `twitter:image`,
 				content: `${siteMetadata.siteUrl}${wcProduct.featuredImage
 					? wcProduct.featuredImage.localFile.childImageSharp.fluid.src
-					: socialUtils.twitter.defaultImage}`
+					: socialConfig.twitter.defaultImage}`
 			}
 		]
 

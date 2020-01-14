@@ -1,5 +1,5 @@
 import SupportLink from '@components/support/supportLink'
-import { ICategory, ISupportQuestion } from '@et/types/Support'
+import { ICategory } from '@et/types/Support'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
@@ -9,14 +9,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 const SupportCategory = (props: ICategory) => {
-	const { name, supportQuestions, slug } = props
-
+	const { name, supportQuestions, slug, count } = props
 	const orderedByPopularity = orderByPopularity(supportQuestions.nodes)
 
 	return (
 		<CategoryContainer>
 			{/*HEADER*/}
-			<h2>
+			<h2 data-testid={`title`}>
 				{name}
 			</h2>
 
@@ -27,8 +26,8 @@ const SupportCategory = (props: ICategory) => {
 			</SupportLinksContainer>
 
 			{/*VIEW MORE*/}
-			{supportQuestions.nodes.length > 3 &&
-      <ViewAllBtn>
+			{count > 3 &&
+      <ViewAllBtn data-testid={`viewAll`}>
         <Link to={`/support/category/${slug}`}>
           View All
         </Link>

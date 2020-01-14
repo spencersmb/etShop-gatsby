@@ -1,41 +1,135 @@
+import Layout from '@components/layout'
+import SEO from '@components/seo'
+import SupportContent from '@components/support/supportPageContent'
+import { createStandardJSONLD, facebookDefaultMeta, twitterDefaultMeta } from '@utils/socialUtils'
 import React from 'react'
 import { graphql } from 'gatsby'
-import contentParser from 'gatsby-wpgraphql-inline-images'
 
-const SupportItem = (props: any) => {
-	const pluginOptions = {
-		wordPressUrl: `${process.env.GATSBY_DB}`,
-		uploadsUrl: `${process.env.GATSBY_DB}/wp-content/uploads/`
-	}
+const SupportQuestion = (props: any) => {
 	const {
-		// location,
 		pageContext: {
 			content
 		},
 		data: {
-			wpgraphql: { supportQuestion: { title } }
+			site,
+			featureImage,
+			wpgraphql: { supportQuestion: { title, slug } }
 		}
 	} = props
 	console.log('support item props', props.data.wpgraphql.supportQuestion)
 
 	return (
-		<div>
-			<h1 data-testid={'title'}>{title}</h1>
-			<div data-testid={'content'}>
-				{contentParser({ content }, pluginOptions)}
-			</div>
-		</div>
+		<>
+			<SEO
+				title={title}
+				description={`${site.siteMetadata.description}`}
+				keywords={[`gatsby`, `application`, `react`]}
+				meta={[
+					{
+						property: `og:type`,
+						content: `website`
+					},
+					...facebookDefaultMeta([
+						{
+							property: `og:title`,
+							content: site.siteMetadata.title
+						},
+						{
+							property: `og:description`,
+							content: site.siteMetadata.description
+						},
+						{
+							property: 'og:site_name',
+							content: site.siteMetadata.title
+						},
+						{
+							property: `og:url`,
+							content: `${site.siteMetadata.siteUrl}`
+						},
+						{
+							property: 'og:image',
+							content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+						},
+						{
+							property: 'og:image:secure_url',
+							content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+						},
+						{
+							property: 'og:image:alt',
+							content: `${site.siteMetadata.title}`
+						},
+						{
+							property: 'og:image:type',
+							content: ' image/jpeg'
+						},
+						{
+							property: 'og:image:width',
+							content: '1024'
+						},
+						{
+							property: 'og:image:height',
+							content: '648'
+						}
+					]),
+					...twitterDefaultMeta([
+						{
+							name: `twitter:card`,
+							content: `summary_large_image`
+						},
+						{
+							name: `twitter:title`,
+							content: `${site.siteMetadata.title}`
+						},
+						{
+							name: `twitter:description`,
+							content: `${site.siteMetadata.description}`
+						},
+						{
+							name: `twitter:image`,
+							content: `${site.siteMetadata.siteUrl}${featureImage.childImageSharp.fluid.src}`
+						}
+					])
+				]}
+			>
+				<link rel='canonical' href={`${site.siteMetadata.siteUrl}/${slug}`}/>
+				<script type='application/ld+json'>{JSON.stringify(createStandardJSONLD({
+					siteUrl: site.siteMetadata.siteUrl,
+					featureImgSrc: featureImage.childImageSharp.fluid.src
+				}))}
+				</script>
+			</SEO>
+			<Layout whiteFooter={true}>
+				<SupportContent content={content} title={title}/>
+			</Layout>
+		</>
 	)
 }
 
-export default SupportItem
+export default SupportQuestion
 
 export const pageQuery = graphql`
     query GET_POST($id: ID!) {
+        site {
+            siteMetadata {
+                title
+                siteUrl
+                description
+                authorUrl
+                frontEndUrl
+            }
+        }
+        featureImage: file(relativePath: { eq: "color-palette.jpg" }) {
+            childImageSharp {
+                fluid(maxWidth: 1024) {
+                    ...GatsbyImageSharpFluid
+                }
+            }
+        }
         wpgraphql {
             supportQuestion(id: $id) {
                 title
                 content
+                slug
             }
         }
     }

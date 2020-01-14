@@ -10,14 +10,22 @@ const props = {
 	item: {
 		title: 'title',
 		slug: 'slug',
-		excerpt: '<p>excerpt</p>'
+		excerpt: '<p>excerpt</p>',
+		content: '<p>Content</p>',
+		acfSupportQuestions:{
+			popularity: 1
+		}
 	}
 }
 const propsShowExcerpt = {
 	item: {
 		title: 'title',
 		slug: 'slug',
-		excerpt: '<p>excerpt</p>'
+		excerpt: '<p>excerpt</p>',
+		content: '<p>Content</p>',
+		acfSupportQuestions:{
+			popularity: 1
+		}
 	},
 	showExcerpt: true
 }

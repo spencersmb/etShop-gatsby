@@ -1,18 +1,14 @@
 import HeaderBlockOne from '@components/headers/headerBlockOne'
 import Layout from '@components/layout'
-import DesignHero from '@components/pageHeaders/designHero'
-import ProductsDisplay from '@components/products/productsDisplay'
 import SEO from '@components/seo'
 import SupportCategory from '@components/support/supportCategory'
-import SupportLink from '@components/support/supportLink'
 import { IGatsbyConfig } from '@et/types/Gatsby'
-import { Image, IProductFeaturedImage } from '@et/types/Products'
 import { ICategory } from '@et/types/Support'
 import { device } from '@styles/global/breakpoints'
-import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
-import { facebookDefaultMeta, reArrangeItems, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
-import { graphql, Link } from 'gatsby'
+import { reArrangeItems } from '@utils/genUtils'
+import { createStandardJSONLD, facebookDefaultMeta, twitterDefaultMeta } from '@utils/socialUtils'
+import { graphql } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -30,21 +26,6 @@ interface IProps {
 
 const SupportPage = (props: IProps) => {
 	const { data: { wpgraphql: { categories: { nodes } }, site, featureImage } } = props
-	console.log('props', props)
-	const jsonld = {
-		['@context']: 'http://schema.org',
-		['@type']: 'Organization',
-		['name']: 'Every Tuesday',
-		['logo']: `${site.siteMetadata.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
-		['url']: 'shop.every-tuesday.com',
-		'sameAs': [
-			`${socialUtils.twitter.url}`,
-			`${socialUtils.facebook.url}`,
-			`${socialUtils.youtube.url}`,
-			`${socialUtils.instagram.url}`,
-			`${socialUtils.pinterest.url}`
-		]
-	}
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -122,7 +103,10 @@ const SupportPage = (props: IProps) => {
 				]}
 			>
 				<link rel='canonical' href={process.env.GATSBY_FRONTEND_URL}/>
-				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
+				<script type='application/ld+json'>{JSON.stringify(createStandardJSONLD({
+					siteUrl: site.siteMetadata.siteUrl,
+					featureImgSrc: featureImage.childImageSharp.fluid.src
+				}))}</script>
 			</SEO>
 			<SupportPageContainer>
 				<div className={'headerContainer'}>
@@ -191,6 +175,7 @@ export const query = graphql`
         wpgraphql{
             categories{
                 nodes{
+                    count
                     name
                     slug
                     supportQuestions{

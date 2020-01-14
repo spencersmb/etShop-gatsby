@@ -77,7 +77,7 @@ export const bodyScrollBar = {
 		el.style.width = `100%`
 		el.style.top = `-${scrollPos}px`
 		el.style.bottom = `0`
-		el.style.position = 'fixed'
+		// el.style.position = 'fixed'
 
 	}
 }

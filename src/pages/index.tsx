@@ -2,7 +2,7 @@ import DesignHero from '@components/pageHeaders/designHero'
 import ProductsDisplay from '@components/products/productsDisplay'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import { facebookDefaultMeta, socialUtils, twitterDefaultMeta } from '@utils/genUtils'
+import { createStandardJSONLD, facebookDefaultMeta, socialConfig, twitterDefaultMeta } from '@utils/socialUtils'
 import { graphql } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
@@ -12,20 +12,10 @@ import SEO from '../components/seo'
 const IndexPage = ({ data }: any) => {
 	const { site, featureImage } = data
 
-	const jsonld = {
-		['@context']: 'http://schema.org',
-		['@type']: 'Organization',
-		['name']: 'Every Tuesday',
-		['logo']: `${site.siteMetadata.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
-		['url']: 'shop.every-tuesday.com',
-		'sameAs': [
-			`${socialUtils.twitter.url}`,
-			`${socialUtils.facebook.url}`,
-			`${socialUtils.youtube.url}`,
-			`${socialUtils.instagram.url}`,
-			`${socialUtils.pinterest.url}`
-		]
-	}
+	const jsonld = createStandardJSONLD({
+		siteUrl: site.siteMetadata.siteUrl,
+		featureImgSrc: featureImage.childImageSharp.fluid.src
+	})
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -105,7 +95,7 @@ const IndexPage = ({ data }: any) => {
 				<link rel='canonical' href={process.env.GATSBY_DB}/>
 				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
 			</SEO>
-			<PageContainer >
+			<PageContainer>
 				<DesignHero/>
 				<ProductsDisplay/>
 			</PageContainer>

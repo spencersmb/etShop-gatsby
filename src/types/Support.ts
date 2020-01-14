@@ -9,9 +9,9 @@ export interface ISupportQuestion {
 }
 
 export interface ICategory {
+	count: number
 	name: string
 	slug: string
-	excerpt: string
 	supportQuestions: {
 		nodes: ISupportQuestion[]
 	}
