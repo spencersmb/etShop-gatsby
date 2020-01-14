@@ -274,10 +274,8 @@ const CheckoutNavContainer = styled.div<{ showNav: boolean }>`
 	transition: .3s;
 	background: #fff;
 	box-shadow: 0px -10px 60px rgba(0,0,0,0.13);
-	// transform:  ${props => props.showNav ? 'translateY(0)' : 'translateY(100px)'};	
 	bottom:  ${props => props.showNav ? '0' : '-100px'};
 	display: none;
-	//display: block;
 	@media ${device.tablet} {
 		display: block;
 	}

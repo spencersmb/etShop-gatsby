@@ -24,8 +24,6 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 
-// import styled from 'styled-components'
-
 /**
  * CartItem properties.
  */

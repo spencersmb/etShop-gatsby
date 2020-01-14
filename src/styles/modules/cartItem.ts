@@ -19,6 +19,14 @@ export const CartItemContainer = styled.div`
 	
 	@media ${device.tablet} {
 		background: transparent;
+		max-width: 708px;
+		margin: 0 auto 30px;
+	}
+	@media ${device.laptop} {
+		max-width: 638px;
+	}
+		@media ${device.laptopL} {
+		max-width: 708px;
 	}
 		
 `
@@ -232,6 +240,7 @@ export const CartItemBorder = styled.div<{ bottom?: boolean }>`
 	
 	@media ${device.tablet} {
 		display: flex;
+		flex-direction: column;
 	}
 		
 `

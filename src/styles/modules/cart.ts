@@ -1,18 +1,25 @@
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import { GridFluid } from '@styles/global/cssGrid'
+import { col, GridFluid } from '@styles/global/cssGrid'
 import { Sentinel } from '@styles/global/fonts'
 import styled from 'styled-components'
 
-export const CartPageContainer = styled(GridFluid)`
+export const CartPageContainer = styled.div`
 	width: 100%;
-	padding: 20px 0 0;
+	padding: 20px;
 	position: relative;
 	@media ${device.tablet} {
 	}
 	@media ${device.laptop} {
-	align-items: flex-start;
-		
+		display: grid;
+		grid-template-columns:
+			minmax(0, 1fr)
+			repeat(12, minmax(30px, ${col}))
+			minmax(0, 1fr)
+		;
+		grid-gap: 30px;
+		align-items: flex-start;
+		padding: 20px 0 0;
 	}
 `
 export const CartSliderTransition = {

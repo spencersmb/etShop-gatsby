@@ -37,6 +37,8 @@ export const FormWrapper = styled.div<{ signup?: boolean }>`
 		flex-direction: row;
 		align-items: center;
 		overflow: hidden;
+		min-height: 0;
+		height: 100%;
 	}
 `
 export const FormContent = styled.div`

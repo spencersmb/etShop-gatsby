@@ -340,11 +340,13 @@ const CartCheckoutNav = styled.div<{ width: number, fixed: boolean, offsetLeft: 
 	width: 100%;
 	left: 0;
 	border-top: 1px solid ${colors.grey.i300};
+	display: flex;
 	
 	.inner{
 		padding: 15px 20px;
 		display: flex;
 		flex-direction: row;
+		width: 100%;
 	}
 	
 	h3{
