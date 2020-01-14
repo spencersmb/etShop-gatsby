@@ -187,6 +187,7 @@ cursor: pointer;
 display: flex;
 justify-content: center;
 align-items: center;
+padding: 0;
 &:focus{
 	outline: none;
 }
@@ -198,9 +199,9 @@ align-items: center;
 	}
 }
 svg{
-	width: 50px;
-	height: 50px;
-	padding: 7px;
+	height: 30px;
+	width: 100%;
+	max-width: 30px;
 	path{
 		transition: .3s;
 		fill: ${colors.primary.text};
