@@ -4,25 +4,26 @@ import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
 import { orderByPopularity } from '@utils/genUtils'
-import { graphql, StaticQuery } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
 
 interface IProps {
-	// data: any
+	selectedId: string
 	supportQuestions: ISupportQuestion[]
 }
 
 const RelatedSupportArticles = (props: IProps) => {
-	console.log('props', props)
-	const { supportQuestions } = props
-	const questionsRearrangedByPopularity = orderByPopularity(supportQuestions).slice(0, 3)
+	const { supportQuestions, selectedId } = props
+	const filterOutDuplicateCourse = supportQuestions
+		.filter(question => (question.id !== selectedId))
+		.sort(orderByPopularity)
+		.slice(0, 3)
 
 	return (
 		<Container>
 			<RelatedItemsList>
-				<h2>Related Articles</h2>
-				{questionsRearrangedByPopularity.map(question =>
+				<h2 data-testid={'header'}>Related Articles</h2>
+				{filterOutDuplicateCourse.map(question =>
 					<RelatedArticle key={question.id} {...question}/>
 				)}
 			</RelatedItemsList>

@@ -23,12 +23,14 @@ const propsViewBtn = {
 		nodes: [
 			...supportQuestionsTesting,
 			{
+				id: '12345678',
 				slug: 'question-4',
 				title: 'Question 4',
 				excerpt: '<p>This is the excerpt</p>',
 				content: '<p>This is the content</p>',
 				acfSupportQuestions: {
-					popularity: 2
+					popularity: 2,
+					subtitle: 'subtitle-4'
 				}
 			}
 		]

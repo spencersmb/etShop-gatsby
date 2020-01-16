@@ -71,8 +71,8 @@ export function reArrangeItems (items: any[]) {
 	}, initialValue)
 }
 
-export function orderByPopularity (items: ISupportQuestion[]) {
-	return items.sort((a, b) => (a.acfSupportQuestions.popularity < b.acfSupportQuestions.popularity) ? 1 : -1)
+export function orderByPopularity (a: ISupportQuestion, b: ISupportQuestion) {
+	return a.acfSupportQuestions.popularity < b.acfSupportQuestions.popularity ? 1 : -1
 }
 
 

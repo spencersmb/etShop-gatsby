@@ -9,12 +9,12 @@ import styled from 'styled-components'
 const RelatedArticle = (props: ISupportQuestion) => {
 	const { title, acfSupportQuestions: { subtitle }, slug } = props
 	return (
-		<Link to={`support/${slug}`}>
-			<Container>
-				<h4 className='title'>{title}</h4>
-				<p className='excerpt'>{subtitle}</p>
-			</Container>
-		</Link>
+		<Container data-testid={'articleItem'}>
+			<Link to={`/support/${slug}`}>
+				<h4 className='title' data-testid={'title'}>{title}</h4>
+				<p className='excerpt' data-testid={'subtitle'}>{subtitle}</p>
+			</Link>
+		</Container>
 	)
 }
 const Container = styled.div`

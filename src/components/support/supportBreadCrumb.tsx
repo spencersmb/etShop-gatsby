@@ -11,7 +11,7 @@ interface IProps {
 const SupportBreadCrumb = (props: IProps) => {
 	const { title } = props
 	return (
-		<BreadCrumbContainer className={`breadcrumb`}>
+		<BreadCrumbContainer className={`breadcrumb`} data-testid={'breadcrumb'}>
 			<div>
 				<Link to={'/'}>
 					Home

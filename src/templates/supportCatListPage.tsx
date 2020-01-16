@@ -100,7 +100,7 @@ const SupportCategoryPage = (props: any) => {
 					<HeaderBlockOneBCrumb headline={category.name}/>
 					{category.supportQuestions &&
           <SupportCategoryList
-            supportQuestions={orderByPopularity(category.supportQuestions.nodes)}/>
+            supportQuestions={category.supportQuestions.nodes.sort(orderByPopularity)}/>
 					}
 				</SupportPageContainer>
 			</Layout>

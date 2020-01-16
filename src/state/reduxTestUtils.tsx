@@ -716,30 +716,36 @@ export const singleItemQuery: IGatsbyConfig & { wcProduct: IProduct } = {
 }
 export const supportQuestionsTesting = [
 	{
+		id: '12345',
 		slug: 'question-1',
 		title: 'Question 1',
 		excerpt: '<p>This is the excerpt</p>',
 		content: '<p>This is the content</p>',
 		acfSupportQuestions: {
-			popularity: 1
+			popularity: 1,
+			subtitle: 'subtitle-1'
 		}
 	},
 	{
+		id: '123456',
 		slug: 'question-2',
 		title: 'Question 2',
 		excerpt: '<p>This is the excerpt</p>',
 		content: '<p>This is the content</p>',
 		acfSupportQuestions: {
-			popularity: 2
+			popularity: 2,
+			subtitle: 'subtitle-2'
 		}
 	},
 	{
+		id: '1234567',
 		slug: 'question-3',
 		title: 'Question 3',
 		excerpt: '<p>This is the excerpt</p>',
 		content: '<p>This is the content</p>',
 		acfSupportQuestions: {
-			popularity: 7
+			popularity: 7,
+			subtitle: 'subtitle-3'
 		}
 	}
 ]
@@ -770,12 +776,26 @@ export const CatPageQuery: IGatsbyConfig & ISupportCatQuery = {
 }
 
 export const SupportQuestionOne = {
+	id: '1234567890',
 	slug: 'question-1',
 	title: 'Question 1',
 	excerpt: '<p>This is the excerpt</p>',
 	content: '<p>This is the content</p>',
+	categories: {
+		nodes: [
+			{
+				count: 3,
+				name: 'Getting Started',
+				slug: 'getting-started',
+				supportQuestions: {
+					nodes: supportQuestionsTesting
+				}
+			}
+		]
+	},
 	acfSupportQuestions: {
-		popularity: 1
+		popularity: 1,
+		subtitle: 'subtitle'
 	}
 }
 export const SupportQuestionPageQuery: IGatsbyConfig & ISupportQuestionQuery = {

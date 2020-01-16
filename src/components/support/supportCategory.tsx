@@ -10,7 +10,7 @@ import styled from 'styled-components'
 
 const SupportCategory = (props: ICategory) => {
 	const { name, supportQuestions, slug, count } = props
-	const orderedByPopularity = orderByPopularity(supportQuestions.nodes)
+	const orderedByPopularity = supportQuestions.nodes.sort(orderByPopularity)
 
 	return (
 		<CategoryContainer>

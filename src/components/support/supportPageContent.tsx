@@ -26,7 +26,7 @@ const SupportPageContent = (props: IProps) => {
 	console.log('question content props', props)
 	const category = props.categories[0]
 
-	const { content, title } = props
+	const { content, title, id } = props
 	return (
 		<PageContainer>
 			<article>
@@ -39,19 +39,21 @@ const SupportPageContent = (props: IProps) => {
 				</Content>
 			</article>
 			<RelatedSupportArticles
+				selectedId={id}
 				supportQuestions={category.supportQuestions.nodes}
 			/>
 			<Container>
-				<h3>Not finding what you are looking for?</h3>
-				<Link to={`/`}>
+				<h3 data-testid={'contact-title'}>Not finding what you are looking for?</h3>
+				<a href='https://every-tuesday.com/contact/' target='_blank'>
 					<ButtonReg
+						data-testid={`contactBtn`}
 						color={colors.teal.i500}
 						textColor={`#fff`}
 						hoverColor={colors.teal.i800}
 						hoverTextColor={'#fff'}
 						outline={false}
 					>CONTACT US</ButtonReg>
-				</Link>
+				</a>
 			</Container>
 		</PageContainer>
 	)
