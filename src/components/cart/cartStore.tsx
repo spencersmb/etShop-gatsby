@@ -56,7 +56,7 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 	}, [cartIsOpen])
 
 	return (
-		<CartStyled id='cart-Container' style={{ position: 'relative', zIndex: 4 }}>
+		<CartStyled id='cart-Container' style={{ position: 'relative', zIndex: 5 }}>
 			<PoseGroup>
 				{cartIsOpen &&
         <CartPose key='cart' onPoseComplete={(type: OnPoseComplete) => {

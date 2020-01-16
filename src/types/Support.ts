@@ -3,8 +3,10 @@ export interface ISupportQuestion {
 	slug: string
 	excerpt: string
 	content: string
+	id: string
 	acfSupportQuestions: {
 		popularity: number
+		subtitle: string
 	}
 }
 

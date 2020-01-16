@@ -357,6 +357,7 @@ export const CartLoginAd = styled.div`
 	position: relative;
 	z-index: 1;
 	grid-column: 1 / -1;
+	overflow: hidden;
 	
 	@media ${device.laptop} {
 		grid-row: 2;

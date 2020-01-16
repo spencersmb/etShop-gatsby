@@ -18,7 +18,9 @@ export const Nav = styled.nav`
 	display: grid;
 	align-items: center;
 	grid-template-columns: minmax(50px,1fr) minmax(50px,auto) minmax(50px,auto);
-	
+	@media ${device.tablet} {
+		margin: 5px 50px;
+	}
 	@media ${device.laptop} {
 		margin: 0 15px;
 		grid-template-columns: repeat(3,minmax(auto,1fr));
@@ -53,7 +55,7 @@ export const Logo = styled.div`
 export const LogoContainer = styled.div`
 		max-width: 140px;
 	@media ${device.laptop}{
-		max-width: 234px;
+		max-width: 200px;
 	}
 `
 

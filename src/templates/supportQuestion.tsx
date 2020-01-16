@@ -13,10 +13,10 @@ const SupportQuestion = (props: any) => {
 		data: {
 			site,
 			featureImage,
-			wpgraphql: { supportQuestion: { title, slug } }
+			wpgraphql: { supportQuestion: { title, slug, categories, id } }
 		}
 	} = props
-	console.log('support item props', props.data.wpgraphql.supportQuestion)
+	// console.log('support Question PAGE props', props.data.wpgraphql.supportQuestion)
 
 	return (
 		<>
@@ -99,7 +99,12 @@ const SupportQuestion = (props: any) => {
 				</script>
 			</SEO>
 			<Layout whiteFooter={true}>
-				<SupportContent content={content} title={title}/>
+				<SupportContent {...{
+					id,
+					content,
+					title,
+					categories: categories.nodes
+				}}/>
 			</Layout>
 		</>
 	)
@@ -130,6 +135,25 @@ export const pageQuery = graphql`
                 title
                 content
                 slug
+                id
+                categories{
+                    nodes{
+                        name
+                        slug
+                        supportQuestions{
+                            nodes{
+                                title
+                                id
+                                slug
+                                excerpt
+                                acfSupportQuestions{
+                                    popularity
+                                    subtitle
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

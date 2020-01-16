@@ -174,39 +174,39 @@ export default class GalleryModal extends Component<IProps> {
 }
 
 const CloseBtn = styled.button`
-position: absolute;
-top: 15px;
-right: 15px;
-width: 50px;
-height: 50px;
-z-index: 5;
-background: #fff;
-border-radius: 50%;
-border: none;
-cursor: pointer;
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 0;
-&:focus{
-	outline: none;
-}
-&:hover{
-	svg{
-		path{
-			fill: ${colors.primary.pink};
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	width: 50px;
+	height: 50px;
+	z-index: 5;
+	background: #fff;
+	border-radius: 50%;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	&:focus{
+		outline: none;
+	}
+	&:hover{
+		svg{
+			path{
+				fill: ${colors.primary.pink};
+			}
 		}
 	}
-}
-svg{
-	height: 30px;
-	width: 100%;
-	max-width: 30px;
-	path{
-		transition: .3s;
-		fill: ${colors.primary.text};
+	svg{
+		height: 30px;
+		width: 100%;
+		max-width: 20px;
+		path{
+			transition: .3s;
+			fill: ${colors.primary.text};
+		}
 	}
-}
 `
 const Container = styled.div`
 	width: 100%;

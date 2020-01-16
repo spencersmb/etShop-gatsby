@@ -13,6 +13,12 @@ const SupportBreadCrumb = (props: IProps) => {
 	return (
 		<BreadCrumbContainer className={`breadcrumb`}>
 			<div>
+				<Link to={'/'}>
+					Home
+				</Link>
+			</div>
+			<div className={`divider`}>/</div>
+			<div>
 				<Link to={'/support'}>
 					Support
 				</Link>
@@ -29,13 +35,13 @@ const BreadCrumbContainer = styled.div`
 	flex-direction: row;
 	text-transform: uppercase;
 	font-size: 14px;
-	color: ${colors.purple.i500};
+	color: ${colors.db.primary};
 	justify-content: center;
 	.divider{
 		margin: 0 5px;
 	}
 	a{
-		color: ${colors.purple.i500};
+		color: ${colors.db.primary};
 		&:hover{
 			color: ${colors.teal.i500};
 		}

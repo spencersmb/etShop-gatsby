@@ -2928,6 +2928,8 @@ type WPGraphQL_SupportQuestion_Acfsupportquestions {
     fieldGroupName: String
     "short desc of post"
     popularity: Float
+    "Limited to one sentence or 140 characters."
+    subtitle: String
 }
 
 "The SupportTag type"

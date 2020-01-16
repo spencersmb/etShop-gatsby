@@ -38,6 +38,7 @@ export const colors = {
 	},
 	db: {
 		primary: `#5A44E2`,
-		mid: `#DADBF1`
+		mid: `#DADBF1`,
+		tertiary: '#6A4CCC'
 	}
 }

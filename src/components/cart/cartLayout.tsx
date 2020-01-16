@@ -495,7 +495,7 @@ const CartWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	//transform:translateY(0) translateX(0);
-	z-index: 4;
+	z-index: 5;
 	//transition: all 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
 `
 

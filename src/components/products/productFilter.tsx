@@ -422,8 +422,13 @@ const FilterHeader = styled.div`
 		fill: ${colors.primary.headline};
 	}
 	
+	@media ${device.tablet} {
+		margin: 13px 0 10px;
+		padding: 0 50px;    
+	}
+	
 	@media ${device.laptop} {
-		margin: 0;    
+		padding: 0 20px 0 20px;  
 	}
 		
 `
