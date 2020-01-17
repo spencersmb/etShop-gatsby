@@ -124,7 +124,6 @@ const NavItemPose = posed.li({
 	open: { opacity: 1, x: 0 },
 	closed: { opacity: 0, x: -20 }
 })
-
 export const NavItem = styled(NavItemPose)`
 	${props => props.hideOnDesktop ? `
 		@media ${device.laptop} {
@@ -138,12 +137,12 @@ export const NavItem = styled(NavItemPose)`
 		}
 	` : ''};
 `
-export const NavItemMobile = styled(NavItemPose)`
+export const NavItemMobile = styled.li`
 	@media ${device.laptop} {
 		display: none;
 	}
 `
-export const NavItemDesktop = styled(NavItemPose)`
+export const NavItemDesktop = styled.li`
 	display: none;
 	@media ${device.laptop} {
 		display: block;
