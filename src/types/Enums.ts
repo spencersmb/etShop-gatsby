@@ -59,3 +59,9 @@ export enum NavActionTypes {
   TOGGLE_NAV = '@@nav/TOGGLE'
 }
 
+export enum CK_Tag_Enums {
+  FONTS = 'fonts',
+  TEXTURES = 'textures',
+  GRAPHICS = 'graphics',
+  PROCREATE = 'procreate'
+}

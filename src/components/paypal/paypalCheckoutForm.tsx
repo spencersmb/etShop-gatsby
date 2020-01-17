@@ -23,7 +23,7 @@ import {
 	PaypalFormContainer,
 	PaypalSpinner
 } from '@styles/modules/checkout'
-import { wc_createBilling, wcCreateOrderLineItems } from '@utils/orderUtils'
+import { tagUserInConvertKit, wc_createBilling, wcCreateOrderLineItems } from '@utils/orderUtils'
 import { getPaypalFormatItems } from '@utils/paypalUtils'
 import { displayCurrency } from '@utils/priceUtils'
 import React, { useMemo, useState } from 'react'
@@ -149,6 +149,10 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					props.reset()
 					props.closeCart()
 					setManualSubmitting(false)
+					await tagUserInConvertKit({
+						email: order.email,
+						firstName: order.first_name
+					}, order.downloads.products)
 
 				} else {
 					actions.restart()

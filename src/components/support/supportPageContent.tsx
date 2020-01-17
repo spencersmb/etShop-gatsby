@@ -5,7 +5,6 @@ import { device } from '@styles/global/breakpoints'
 import { ButtonReg } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
-import { Link } from 'gatsby'
 import React from 'react'
 import contentParser from 'gatsby-wpgraphql-inline-images'
 import styled from 'styled-components'
@@ -23,9 +22,7 @@ const SupportPageContent = (props: IProps) => {
 		wordPressUrl: `${process.env.GATSBY_DB}`,
 		uploadsUrl: `${process.env.GATSBY_DB}/wp-content/uploads/`
 	}
-	console.log('question content props', props)
 	const category = props.categories[0]
-
 	const { content, title, id } = props
 	return (
 		<PageContainer>
@@ -44,7 +41,9 @@ const SupportPageContent = (props: IProps) => {
 			/>
 			<Container>
 				<h3 data-testid={'contact-title'}>Not finding what you are looking for?</h3>
-				<a href='https://every-tuesday.com/contact/' target='_blank'>
+				<a
+					href='https://every-tuesday.com/contact/'
+					target='_blank' rel='noreferrer'>
 					<ButtonReg
 						data-testid={`contactBtn`}
 						color={colors.teal.i500}

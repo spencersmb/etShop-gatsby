@@ -1,7 +1,9 @@
+import { CheckoutApi } from '@api/checkoutApi'
 import { ICartItemWithKey, ICartState } from '@et/types/Cart'
+import { CK_Tag_Enums } from '@et/types/Enums'
 import { IProducts } from '@et/types/Products'
 import { IAuthResponse, IUserState } from '@et/types/User'
-import { IBillingWc, IOrderDetails, IGuestFormData, IWcOrderItem } from '@et/types/WC_Order'
+import { IBillingWc, IGuestFormData, IOrderDetails, IOrderDownloadItem, IWcOrderItem } from '@et/types/WC_Order'
 import { displayCurrency } from '@utils/priceUtils'
 
 /**
@@ -115,4 +117,51 @@ export const getTokenFromLocalStorage = (): string | null => {
 export function formatDate (dateString: string) {
 	// return dateString.replace('-', '/')
 	return dateString.split('-').join('/')
+}
+
+function getCKTagId (tag: CK_Tag_Enums) {
+	// enter switch statement
+	switch (tag) {
+		case CK_Tag_Enums.FONTS:
+			return '1266176'
+		case CK_Tag_Enums.GRAPHICS:
+			return '1266185'
+		case CK_Tag_Enums.PROCREATE:
+			return '1266182'
+		case CK_Tag_Enums.TEXTURES:
+			return '1266179'
+	}
+}
+
+function getCKTagName (tag: CK_Tag_Enums) {
+	// enter switch statement
+	switch (tag) {
+		case CK_Tag_Enums.FONTS:
+			return 'Shop Purchase: Font'
+		case CK_Tag_Enums.GRAPHICS:
+			return 'Shop Purchase: Graphic'
+		case CK_Tag_Enums.PROCREATE:
+			return 'Shop Purchase: Procreate'
+		case CK_Tag_Enums.TEXTURES:
+			return 'Shop Purchase: Texture'
+	}
+}
+
+// Set as Enum type instead of string
+export async function tagUserInConvertKit (user: { email: string, firstName: string }, products: IOrderDownloadItem[]) {
+
+	const allTags = products.map(product => {
+		return getCKTagId(product.ck_tag)
+	})
+	const firstTagId = allTags.shift() || getCKTagId(CK_Tag_Enums.GRAPHICS)
+	const url = `https://api.convertkit.com/v3/tags/${firstTagId}/subscribe`
+	const formData = new FormData()
+	const ckApiKey = process.env.GATSBY_CK_API_KEY || ''
+
+	formData.append('api_key', ckApiKey)
+	formData.append('email', user.email.toString())
+	formData.append('first_name', user.firstName.toString())
+	formData.append('tags', allTags.toString())
+
+	await CheckoutApi.submitConvertKitUser(url, formData)
 }

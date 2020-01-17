@@ -81,4 +81,14 @@ export class CheckoutApi {
 			options
 		)
 	}
+
+	static submitConvertKitUser (url: string, formData: any): Promise<any> {
+		return fetched(
+			url,
+			{
+				body: formData,
+				method: 'POST'
+			}
+		)
+	}
 }

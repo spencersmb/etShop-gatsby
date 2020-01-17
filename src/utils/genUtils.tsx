@@ -1,5 +1,7 @@
 import { ISupportQuestion } from '@et/types/Support'
 import { IUser } from '@et/types/User'
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import React, { ReactChild } from 'react'
 
 /**
@@ -37,17 +39,17 @@ export function getCurrentPage (path: string) {
 	return 1
 }
 
-export function getUserImage (currentUser: IUser): { src: string, alt: string } {
+export function getUserImage (currentUser: IUser) {
 	if (currentUser.fbProfilePic) {
-		return {
-			src: currentUser.fbProfilePic,
-			alt: 'facebook image'
-		}
+		return (
+			<img src={currentUser.fbProfilePic} alt={currentUser.firstName}/>
+		)
 	} else {
-		return {
-			src: `https://www.gravatar.com/avatar/${currentUser.gravatar}`,
-			alt: 'user image'
-		}
+		return (
+			<div className={`userSvg__profile`}>
+				{renderSvg(svgs.User)}
+			</div>
+		)
 	}
 }
 

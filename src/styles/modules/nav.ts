@@ -137,9 +137,18 @@ export const NavItem = styled(NavItemPose)`
 			display: block;
 		}
 	` : ''};
-	
 `
-
+export const NavItemMobile = styled(NavItemPose)`
+	@media ${device.laptop} {
+		display: none;
+	}
+`
+export const NavItemDesktop = styled(NavItemPose)`
+	display: none;
+	@media ${device.laptop} {
+		display: block;
+	}
+`
 export const NavCenter = styled.ul<{ user: IUser | null }>`
 	display: flex;
 	flex-direction: column;
@@ -277,20 +286,52 @@ export const MyAccount = styled.div`
 		text-transform: uppercase;
 		font-weight: 600;
 		font-size: 16px;
+		color: #fff;
 	}
 	a{
 		color: #fff;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		&:hover{
+			cursor: pointer;
+		}
+	}
+	.userSvg__profile{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: transparent;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		margin-right: 10px;
+		svg{
+			flex: 1;
+			max-width: 50px;
+			width: 100%;
+		}
+		path{
+			fill: #fff;
+		}
 	}
 	
 	@media ${device.laptop} {
 		margin: 0 20px 0 0;
 		span{
 			font-size: 14px;
+			color: ${colors.primary.pink};
 		}
 		a{
 			color: ${colors.primary.text};
 			font-weight: 500;
 		}
+		.userSvg__profile{
+			path{
+				fill: ${colors.primary.pink};
+			}
+		}
+		
 	}
 		
 `

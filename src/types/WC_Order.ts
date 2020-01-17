@@ -1,3 +1,5 @@
+import { CK_Tag_Enums } from '@et/types/Enums'
+
 export interface IStripeGuestForm {
 	email: string,
 	firstName: string,
@@ -74,6 +76,8 @@ export interface IOrderDownloadItem {
 	sku: string
 	subtitle: string
 	qty: number
+	slug: string
+	ck_tag: CK_Tag_Enums
 }
 
 export interface IRefund {
@@ -86,6 +90,7 @@ export interface IReceipt {
 	total: string
 	date: string
 	status: string
+	first_name: string
 	transactionId: string
 	refund: null | IRefund
 	payment_type: string

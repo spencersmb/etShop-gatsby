@@ -1,46 +1,47 @@
+import Login from '@components/modals/login'
 import Receipt from '@components/modals/receipt'
-import { INavToggle } from '@et/types/Actions'
 import { ICartState } from '@et/types/Cart'
+import { CK_Tag_Enums } from '@et/types/Enums'
 import { INavState } from '@et/types/Modal'
 import { IState } from '@et/types/State'
 import { IUser } from '@et/types/User'
-import { IReceipt, IRefund } from '@et/types/WC_Order'
+import { IReceipt } from '@et/types/WC_Order'
 import { ILogoutAction, logout as logoutAction } from '@redux/actions/authActions'
 import { cartToggle } from '@redux/actions/cartActions'
+import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { INavAction, toggleNav as toggleNavAction } from '@redux/actions/navActions'
 import { clearPagination } from '@redux/actions/paginationActions'
 import { colors } from '@styles/global/colors'
+import {
+	CartCount,
+	CartSvg,
+	CartWrapper,
+	Hamburger,
+	JoinButton,
+	LoginStatus,
+	Logo,
+	LogoContainer,
+	MobileCartWrapper,
+	MyAccount,
+	Nav,
+	NavCenter,
+	NavItem, NavItemDesktop, NavItemMobile,
+	NavLinks,
+	NavRight,
+	SignInButton,
+	SignOut
+} from '@styles/modules/nav'
 import { svgs } from '@svg'
 import { toastrOptions } from '@utils/apiUtils'
 import { isUserValid } from '@utils/authUtils'
 import { getUserImage } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { getWindowSize } from '@utils/windowUtils'
-import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react'
-import { Link, navigate } from 'gatsby'
+import { navigate } from 'gatsby'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
 import { Action, bindActionCreators, Dispatch } from 'redux'
-import { IShowModalAction, showModal } from '@redux/actions/modalActions'
-import Login from '@components/modals/login'
-import {
-	Nav,
-	Hamburger,
-	Logo,
-	LogoContainer,
-	NavLinks,
-	CloseButton,
-	NavCenter,
-	NavRight,
-	LoginStatus,
-	JoinButton,
-	SignInButton,
-	MyAccount,
-	SignOutBtn,
-	CartWrapper,
-	CartSvg,
-	CartCount, MobileCartWrapper, NavItem, SignOut
-} from '@styles/modules/nav'
 
 interface IPropsState {
 	user: IUser | null,
@@ -60,6 +61,7 @@ const fakeData: IReceipt = {
 	id: 962,
 	total: '179.09',
 	date: '12-16-2019',
+	first_name: 'Spencer',
 	status: 'completed',
 	transactionId: 'ch_1FqVX9I4y1PxdHL7vI00d1s9',
 	refund: null,
@@ -81,6 +83,8 @@ const fakeData: IReceipt = {
 			{
 				id: 799,
 				name: 'Skinny Jeans Extended',
+				slug: 'skinny-jeans-ext',
+				ck_tag: CK_Tag_Enums.FONTS,
 				subtitle: 'Font Trio: Script, Caps + Symbols',
 				sku: '',
 				total: '179.09',
@@ -91,6 +95,8 @@ const fakeData: IReceipt = {
 			{
 				id: 29,
 				name: 'Skinny Jeans Extended',
+				slug: 'skinny-jeans-ext',
+				ck_tag: CK_Tag_Enums.FONTS,
 				subtitle: 'Font Trio: Script, Caps + Symbols',
 				sku: '',
 				total: '179.09',
@@ -101,6 +107,8 @@ const fakeData: IReceipt = {
 			{
 				id: 99,
 				name: 'Skinny Jeans Extended',
+				slug: 'skinny-jeans-ext',
+				ck_tag: CK_Tag_Enums.FONTS,
 				subtitle: 'Font Trio: Script, Caps + Symbols',
 				sku: '',
 				total: '179.09',
@@ -111,6 +119,8 @@ const fakeData: IReceipt = {
 			{
 				id: 199,
 				name: 'Skinny Jeans Extended',
+				slug: 'skinny-jeans-ext',
+				ck_tag: CK_Tag_Enums.FONTS,
 				subtitle: 'Font Trio: Script, Caps + Symbols',
 				sku: '',
 				total: '179.09',
@@ -228,18 +238,18 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 				<NavCenter data-testid='nav-center' user={user}>
 					{/*<a onClick={receipt}>Receipt</a>*/}
-					{user && <NavItem hideOnDesktop={true} className={`accountTop`}>
+					{user && <NavItemMobile className={`accountTop`}>
             <MyAccount>
               <a
                 href='/account'
                 onClick={changePage('/account')}>
-                <img src={getUserImage(user).src} alt={getUserImage(user).alt}/>
+								{getUserImage(user)}
                 <span>
 									My account
 								</span>
               </a>
             </MyAccount>
-          </NavItem>}
+          </NavItemMobile>}
 					<NavItem>
 						<a
 							href='/'
@@ -282,18 +292,17 @@ function Navbar (props: IPropsActions & IPropsState) {
 					}
 					{user &&
           <LoginStatus>
-            <NavItem hideOnMobile={true}>
+            <NavItemDesktop>
               <MyAccount>
                 <a
-									// href='javascript:void(0)'
                   onClick={changePage('/account')}>
-                  <img src={getUserImage(user).src} alt={getUserImage(user).alt}/>
+									{getUserImage(user)}
                   <span>
 									Account
 								</span>
                 </a>
               </MyAccount>
-            </NavItem>
+            </NavItemDesktop>
             <NavItem>
               <SignOut onClick={signOut}>
                 Sign Out

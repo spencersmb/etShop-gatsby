@@ -1,10 +1,11 @@
 import Receipt from '@components/modals/receipt'
 import RegisterStripeForm from '@components/stripe/checkoutForm'
+import { CK_Tag_Enums } from '@et/types/Enums'
 import { IOrderDetails, IOrderResponse } from '@et/types/WC_Order'
 import { cartToggle, emptyCart } from '@redux/actions/cartActions'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { createOrder, ICreateOrderAction } from '@redux/actions/orderActions'
-import { displayCurrency } from '@utils/priceUtils'
+import { tagUserInConvertKit } from '@utils/orderUtils'
 import React from 'react'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
@@ -100,8 +101,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 		}
 	}
 
-	function onSuccess (completedOrder: IOrderResponse) {
-		// toastr.success('Enjoy', 'Purchase successful')
+	async function onSuccess (completedOrder: IOrderResponse) {
 		console.log('completedOrder', completedOrder)
 		const { order } = completedOrder
 		props.showModal({
@@ -113,10 +113,13 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			}
 		})
 		props.emptyCart()
-
 		setTimeout(() => {
 			props.closeCart()
 		}, 1000)
+		await tagUserInConvertKit({
+			email: order.email,
+			firstName: order.first_name
+		}, order.downloads.products)
 
 	}
 
