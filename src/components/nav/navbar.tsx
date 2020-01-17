@@ -36,7 +36,7 @@ import { toastrOptions } from '@utils/apiUtils'
 import { isUserValid } from '@utils/authUtils'
 import { getUserImage } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
-import { getWindowSize } from '@utils/windowUtils'
+import { getWindowSize, Width } from '@utils/windowUtils'
 import { navigate } from 'gatsby'
 import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
@@ -238,7 +238,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 				<NavCenter data-testid='nav-center' user={user}>
 					{/*<a onClick={receipt}>Receipt</a>*/}
-					{user &&
+					{user && Width < 1024 &&
           <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>
               <a
@@ -292,7 +292,7 @@ function Navbar (props: IPropsActions & IPropsState) {
             </NavItem>
           </LoginStatus>
 					}
-					{user &&
+					{user && Width > 1024 &&
           <LoginStatus>
             <NavItem hideOnMobile={true}>
               <MyAccount>
