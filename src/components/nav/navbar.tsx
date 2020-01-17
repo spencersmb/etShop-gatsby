@@ -238,18 +238,20 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 				<NavCenter data-testid='nav-center' user={user}>
 					{/*<a onClick={receipt}>Receipt</a>*/}
-					{user && <NavItemMobile className={`accountTop`}>
+					{user &&
+          <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>
               <a
                 href='/account'
                 onClick={changePage('/account')}>
 								{getUserImage(user)}
                 <span>
-									My account
-								</span>
+										My account
+									</span>
               </a>
             </MyAccount>
-          </NavItemMobile>}
+          </NavItem>
+					}
 					<NavItem>
 						<a
 							href='/'
@@ -292,7 +294,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 					}
 					{user &&
           <LoginStatus>
-            <NavItemDesktop>
+            <NavItem hideOnMobile={true}>
               <MyAccount>
                 <a
                   onClick={changePage('/account')}>
@@ -302,14 +304,13 @@ function Navbar (props: IPropsActions & IPropsState) {
 								</span>
                 </a>
               </MyAccount>
-            </NavItemDesktop>
+            </NavItem>
             <NavItem>
               <SignOut onClick={signOut}>
                 Sign Out
               </SignOut>
 							{/*<button className={'signOut'} onClick={signOut}>Sign Out</button>*/}
             </NavItem>
-
           </LoginStatus>
 					}
 					<CartWrapper onClick={cartToggleEvent}>

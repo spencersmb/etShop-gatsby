@@ -124,7 +124,7 @@ const NavItemPose = posed.li({
 	open: { opacity: 1, x: 0 },
 	closed: { opacity: 0, x: -20 }
 })
-export const NavItem = styled(NavItemPose)`
+export const NavItem = styled.li`
 	${props => props.hideOnDesktop ? `
 		@media ${device.laptop} {
 			display: none;
@@ -216,15 +216,6 @@ export const LoginStatus = styled.ul`
 		padding: 0 0 15px;
 	}
 	
-	//.signOut{
-	//	padding: 15px 0 0;
-	//	font-size: 16px;
-	//	font-weight: 700;
-	//	margin: 0;
-	//	color: #fff;
-	//	text-transform: uppercase;
-	//}
-	
 	@media ${device.laptop} {
 		align-items: center;
 		flex-direction: row;
@@ -235,10 +226,6 @@ export const LoginStatus = styled.ul`
 			transform: translateX(0) !important;
 			padding: 0;
 		}
-		// .signOut{
-		// 	padding: 0;
-		// 	color: ${colors.primary.text};
-		// }
 	}
 		
 `
