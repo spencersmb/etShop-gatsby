@@ -261,7 +261,7 @@ export const SignInButton = styled(ButtonSmall)`
 		color: ${colors.purple.i500};
 	}
 `
-export const UserProfileSvg = styled.div`
+export const UserProfileSvg = styled.span`
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
@@ -284,7 +284,7 @@ export const UserProfileSvg = styled.div`
 			}
 		}
 `
-export const MyAccount = styled.div`
+export const MyAccount = styled.span`
 	margin: 0;
 	img{
 		width: 50px;
@@ -292,7 +292,7 @@ export const MyAccount = styled.div`
 		border-radius: 50%;
 		margin: 0 10px 0 0;
 	}
-	span{
+	.text{
 		text-transform: uppercase;
 		font-weight: 600;
 		font-size: 16px;
@@ -310,7 +310,7 @@ export const MyAccount = styled.div`
 	
 	@media ${device.laptop} {
 		margin: 0 20px 0 0;
-		span{
+		.text{
 			font-size: 14px;
 			color: ${colors.primary.pink};
 		}

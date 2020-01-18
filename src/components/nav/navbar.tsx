@@ -238,7 +238,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 				<NavCenter data-testid='nav-center' user={user}>
 					{/*<a onClick={receipt}>Receipt</a>*/}
-					{user && Width < 1024 &&
+					{user &&
           <NavItemMobile className={`accountTop`}>
             <MyAccount>
 							{getUserImage(user)}
@@ -296,12 +296,12 @@ function Navbar (props: IPropsActions & IPropsState) {
             </NavItem>
           </LoginStatus>
 					}
-					{user && Width > 1024 &&
+					{user &&
           <LoginStatus>
             <NavItemDesktop>
               <MyAccount>
 								{getUserImage(user)}
-                <span>
+                <span className={'text'}>
 									Account
 								</span>
 								{/*<a*/}
