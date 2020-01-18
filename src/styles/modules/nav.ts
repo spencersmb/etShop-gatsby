@@ -149,6 +149,13 @@ export const NavItemDesktop = styled.li`
 		display: block;
 	}
 `
+
+export const SpencerItem = styled.li`
+	display: none;
+	@media ${device.laptop} {
+		display: block;
+	}
+`
 export const NavCenter = styled.ul<{ user: IUser | null }>`
 	display: flex;
 	flex-direction: column;
@@ -223,8 +230,8 @@ export const LoginStatus = styled.ul`
 		padding: 0;
 		border-right: 1px solid ${colors.grey.i600};
 		li{
-			opacity: 1 !important;
-			transform: translateX(0) !important;
+			//opacity: 1 !important;
+			//transform: translateX(0) !important;
 			padding: 0;
 		}
 	}
@@ -286,6 +293,9 @@ export const UserProfileSvg = styled.span`
 `
 export const MyAccount = styled.span`
 	margin: 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 	img{
 		width: 50px;
 		height: 50px;

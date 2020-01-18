@@ -29,7 +29,7 @@ import {
 	NavLinks,
 	NavRight,
 	SignInButton,
-	SignOut
+	SignOut, SpencerItem
 } from '@styles/modules/nav'
 import { svgs } from '@svg'
 import { toastrOptions } from '@utils/apiUtils'
@@ -298,7 +298,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 					}
 					{user &&
           <LoginStatus>
-            <NavItemDesktop>
+            <SpencerItem>
               <MyAccount>
 								{getUserImage(user)}
                 <span className={'text'}>
@@ -312,7 +312,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 								{/*</span>*/}
 								{/*</a>*/}
               </MyAccount>
-            </NavItemDesktop>
+            </SpencerItem>
             <NavItem>
               <SignOut onClick={signOut}>
                 Sign Out
