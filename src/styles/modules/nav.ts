@@ -124,7 +124,8 @@ const NavItemPose = posed.li({
 	open: { opacity: 1, x: 0 },
 	closed: { opacity: 0, x: -20 }
 })
-export const NavItem = styled.li`
+
+export const NavItem = styled(NavItemPose)`
 	${props => props.hideOnDesktop ? `
 		@media ${device.laptop} {
 			display: none;
@@ -137,20 +138,12 @@ export const NavItem = styled.li`
 		}
 	` : ''};
 `
-export const NavItemMobile = styled.li`
-	opacity: 1;
+export const NavItemMobile = styled(NavItemPose)`
 	@media ${device.laptop} {
 		display: none;
 	}
 `
-export const NavItemDesktop = styled.li`
-	display: none;
-	@media ${device.laptop} {
-		display: block;
-	}
-`
-
-export const SpencerItem = styled.li`
+export const NavItemDesktop = styled(NavItemPose)`
 	display: none;
 	@media ${device.laptop} {
 		display: block;
@@ -224,9 +217,14 @@ export const LoginStatus = styled.ul`
 		padding: 0 0 15px;
 	}
 	
-	.navItem__desktop{
-		display: none;
-	}
+	//.signOut{
+	//	padding: 15px 0 0;
+	//	font-size: 16px;
+	//	font-weight: 700;
+	//	margin: 0;
+	//	color: #fff;
+	//	text-transform: uppercase;
+	//}
 	
 	@media ${device.laptop} {
 		align-items: center;
@@ -234,13 +232,14 @@ export const LoginStatus = styled.ul`
 		padding: 0;
 		border-right: 1px solid ${colors.grey.i600};
 		li{
-			//opacity: 1 !important;
-			//transform: translateX(0) !important;
+			opacity: 1 !important;
+			transform: translateX(0) !important;
 			padding: 0;
 		}
-		.navItem__desktop{
-			display: block;
-		}
+		// .signOut{
+		// 	padding: 0;
+		// 	color: ${colors.primary.text};
+		// }
 	}
 		
 `
@@ -275,7 +274,30 @@ export const SignInButton = styled(ButtonSmall)`
 		color: ${colors.purple.i500};
 	}
 `
-export const UserProfileSvg = styled.span`
+export const MyAccount = styled.div`
+	margin: 0;
+	img{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin: 0 10px 0 0;
+	}
+	span{
+		text-transform: uppercase;
+		font-weight: 600;
+		font-size: 16px;
+		color: #fff;
+	}
+	a{
+		color: #fff;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		&:hover{
+			cursor: pointer;
+		}
+	}
+	.userSvg__profile{
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
@@ -292,42 +314,11 @@ export const UserProfileSvg = styled.span`
 		path{
 			fill: #fff;
 		}
-		@media ${device.laptop} {
-			path{
-				fill: ${colors.primary.pink};
-			}
-		}
-`
-export const MyAccount = styled.span`
-	margin: 0;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	img{
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		margin: 0 10px 0 0;
-	}
-	.text{
-		text-transform: uppercase;
-		font-weight: 600;
-		font-size: 16px;
-		color: #fff;
-	}
-	a{
-		color: #fff;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		&:hover{
-			cursor: pointer;
-		}
 	}
 	
 	@media ${device.laptop} {
 		margin: 0 20px 0 0;
-		.text{
+		span{
 			font-size: 14px;
 			color: ${colors.primary.pink};
 		}
@@ -335,6 +326,12 @@ export const MyAccount = styled.span`
 			color: ${colors.primary.text};
 			font-weight: 500;
 		}
+		.userSvg__profile{
+			path{
+				fill: ${colors.primary.pink};
+			}
+		}
+		
 	}
 		
 `

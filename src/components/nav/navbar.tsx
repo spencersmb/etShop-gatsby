@@ -25,11 +25,11 @@ import {
 	MyAccount,
 	Nav,
 	NavCenter,
-	NavItem, NavItemDesktop, NavItemMobile,
+	NavItem,
 	NavLinks,
 	NavRight,
 	SignInButton,
-	SignOut, SpencerItem
+	SignOut
 } from '@styles/modules/nav'
 import { svgs } from '@svg'
 import { toastrOptions } from '@utils/apiUtils'
@@ -239,7 +239,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 				<NavCenter data-testid='nav-center' user={user}>
 					{/*<a onClick={receipt}>Receipt</a>*/}
 					{user &&
-          <NavItemMobile className={`accountTop`}>
+          <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>
               <a
                 href='/account'
@@ -250,7 +250,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 									</span>
               </a>
             </MyAccount>
-          </NavItemMobile>
+          </NavItem>
 					}
 					<NavItem>
 						<a
@@ -294,7 +294,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 					}
 					{user &&
           <LoginStatus>
-            <li className={'navItem__desktop'}>
+            <NavItem hideOnMobile={true}>
               <MyAccount>
                 <a
                   onClick={changePage('/account')}>
@@ -304,7 +304,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 								</span>
                 </a>
               </MyAccount>
-            </li>
+            </NavItem>
             <NavItem>
               <SignOut onClick={signOut}>
                 Sign Out
