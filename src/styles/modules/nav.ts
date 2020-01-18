@@ -138,17 +138,7 @@ export const NavItem = styled(NavItemPose)`
 		}
 	` : ''};
 `
-export const NavItemMobile = styled(NavItemPose)`
-	@media ${device.laptop} {
-		display: none;
-	}
-`
-export const NavItemDesktop = styled(NavItemPose)`
-	display: none;
-	@media ${device.laptop} {
-		display: block;
-	}
-`
+
 export const NavCenter = styled.ul<{ user: IUser | null }>`
 	display: flex;
 	flex-direction: column;
@@ -438,4 +428,28 @@ export const SignOut = styled.button`
 	}
 		
 	
+`
+
+export const UserProfileSvg = styled.span`
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: transparent;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		margin-right: 10px;
+		svg{
+			flex: 1;
+			max-width: 50px;
+			width: 100%;
+		}
+		path{
+			fill: #fff;
+		}
+		@media ${device.laptop} {
+			path{
+				fill: ${colors.primary.pink};
+			}
+		}
 `
