@@ -224,6 +224,10 @@ export const LoginStatus = styled.ul`
 		padding: 0 0 15px;
 	}
 	
+	.navItem__desktop{
+		display: none;
+	}
+	
 	@media ${device.laptop} {
 		align-items: center;
 		flex-direction: row;
@@ -233,6 +237,9 @@ export const LoginStatus = styled.ul`
 			//opacity: 1 !important;
 			//transform: translateX(0) !important;
 			padding: 0;
+		}
+		.navItem__desktop{
+			display: block;
 		}
 	}
 		

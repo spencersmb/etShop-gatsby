@@ -298,7 +298,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 					}
 					{user &&
           <LoginStatus>
-            <SpencerItem>
+            <li className={'navItem__desktop'}>
               <MyAccount>
 								{getUserImage(user)}
                 <span className={'text'}>
@@ -312,7 +312,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 								{/*</span>*/}
 								{/*</a>*/}
               </MyAccount>
-            </SpencerItem>
+            </li>
             <NavItem>
               <SignOut onClick={signOut}>
                 Sign Out
