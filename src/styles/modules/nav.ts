@@ -260,6 +260,29 @@ export const SignInButton = styled(ButtonSmall)`
 		color: ${colors.purple.i500};
 	}
 `
+export const UserProfileSvg = styled.div`
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: transparent;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		margin-right: 10px;
+		svg{
+			flex: 1;
+			max-width: 50px;
+			width: 100%;
+		}
+		path{
+			fill: #fff;
+		}
+		@media ${device.laptop} {
+			path{
+				fill: ${colors.primary.pink};
+			}
+		}
+`
 export const MyAccount = styled.div`
 	margin: 0;
 	img{
@@ -283,24 +306,7 @@ export const MyAccount = styled.div`
 			cursor: pointer;
 		}
 	}
-	.userSvg__profile{
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		background: transparent;
-		justify-content: center;
-		align-items: center;
-		display: flex;
-		margin-right: 10px;
-		svg{
-			flex: 1;
-			max-width: 50px;
-			width: 100%;
-		}
-		path{
-			fill: #fff;
-		}
-	}
+	
 	
 	@media ${device.laptop} {
 		margin: 0 20px 0 0;
@@ -313,9 +319,7 @@ export const MyAccount = styled.div`
 			font-weight: 500;
 		}
 		.userSvg__profile{
-			path{
-				fill: ${colors.primary.pink};
-			}
+		
 		}
 		
 	}

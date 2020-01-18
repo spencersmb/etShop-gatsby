@@ -1,5 +1,6 @@
 import { ISupportQuestion } from '@et/types/Support'
 import { IUser } from '@et/types/User'
+import { UserProfileSvg } from '@styles/modules/nav'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React, { ReactChild } from 'react'
@@ -46,9 +47,9 @@ export function getUserImage (currentUser: IUser) {
 		)
 	} else {
 		return (
-			<div className={`userSvg__profile`}>
+			<UserProfileSvg>
 				{renderSvg(svgs.User)}
-			</div>
+			</UserProfileSvg>
 		)
 	}
 }
