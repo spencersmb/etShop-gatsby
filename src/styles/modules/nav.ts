@@ -426,10 +426,7 @@ export const SignOut = styled.button`
 		padding: 0 20px 0 5px;
 		color: ${colors.primary.text};
 	}
-		
-	
 `
-
 export const UserProfileSvg = styled.span`
 		width: 50px;
 		height: 50px;

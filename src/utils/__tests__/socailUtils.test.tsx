@@ -1,7 +1,11 @@
 import { testFacebookUser, testUser } from '@redux/reduxTestUtils'
+import { UserProfileSvg } from '@styles/modules/nav'
+import { svgs } from '@svg'
 import { getUserImage } from '@utils/genUtils'
 import { jsonldImages, socialConfig, twitterDefaultMeta } from '@utils/socialUtils'
+import { renderSvg } from '@utils/styleUtils'
 import { cleanup } from 'react-testing-library'
+import React from 'react'
 
 afterEach(cleanup)
 
@@ -142,12 +146,12 @@ describe('General Utils', () => {
 
 	it('Should return fb pic for user', () => {
 		const userImg = getUserImage(testFacebookUser)
-		expect(userImg.src).toEqual('fb.com')
-		expect(userImg.alt).toEqual('facebook image')
+		expect(userImg).toEqual(<img src='fb.com' alt={testFacebookUser.firstName}/>)
 	})
 	it('Should return gravatar pic for user', () => {
 		const userImg = getUserImage(testUser)
-		expect(userImg.src).toEqual(`https://www.gravatar.com/avatar/${testUser.gravatar}`)
-		expect(userImg.alt).toEqual('user image')
+		expect(userImg).toEqual(<UserProfileSvg>
+			{renderSvg(svgs.User)}
+		</UserProfileSvg>)
 	})
 })
