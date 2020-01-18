@@ -241,18 +241,14 @@ function Navbar (props: IPropsActions & IPropsState) {
 					{user &&
           <NavItemMobile className={`accountTop`}>
             <MyAccount>
-							{getUserImage(user)}
-              <span>
-								Account
-							</span>
-							{/*<a*/}
-							{/*  href='/account'*/}
-							{/*  onClick={changePage('/account')}>*/}
-							{/*	{getUserImage(user)}*/}
-							{/*  <span>*/}
-							{/*			My account*/}
-							{/*		</span>*/}
-							{/*</a>*/}
+              <a
+                href='/account'
+                onClick={changePage('/account')}>
+								{getUserImage(user)}
+                <span>
+										My account
+									</span>
+              </a>
             </MyAccount>
           </NavItemMobile>
 					}
@@ -300,17 +296,13 @@ function Navbar (props: IPropsActions & IPropsState) {
           <LoginStatus>
             <li className={'navItem__desktop'}>
               <MyAccount>
-								{getUserImage(user)}
-                <span className={'text'}>
+                <a
+                  onClick={changePage('/account')}>
+									{getUserImage(user)}
+                  <span>
 									Account
 								</span>
-								{/*<a*/}
-								{/*  onClick={changePage('/account')}>*/}
-								{/*	{getUserImage(user)}*/}
-								{/*  <span>*/}
-								{/*	Account*/}
-								{/*</span>*/}
-								{/*</a>*/}
+                </a>
               </MyAccount>
             </li>
             <NavItem>
