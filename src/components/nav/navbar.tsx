@@ -239,18 +239,22 @@ function Navbar (props: IPropsActions & IPropsState) {
 				<NavCenter data-testid='nav-center' user={user}>
 					{/*<a onClick={receipt}>Receipt</a>*/}
 					{user && Width < 1024 &&
-          <NavItem hideOnDesktop={true} className={`accountTop`}>
+          <NavItemMobile className={`accountTop`}>
             <MyAccount>
-              <a
-                href='/account'
-                onClick={changePage('/account')}>
-								{getUserImage(user)}
-                <span>
-										My account
-									</span>
-              </a>
+							{getUserImage(user)}
+              <span>
+								Account
+							</span>
+							{/*<a*/}
+							{/*  href='/account'*/}
+							{/*  onClick={changePage('/account')}>*/}
+							{/*	{getUserImage(user)}*/}
+							{/*  <span>*/}
+							{/*			My account*/}
+							{/*		</span>*/}
+							{/*</a>*/}
             </MyAccount>
-          </NavItem>
+          </NavItemMobile>
 					}
 					<NavItem>
 						<a
@@ -294,17 +298,21 @@ function Navbar (props: IPropsActions & IPropsState) {
 					}
 					{user && Width > 1024 &&
           <LoginStatus>
-            <NavItem hideOnMobile={true}>
+            <NavItemDesktop>
               <MyAccount>
-                <a
-                  onClick={changePage('/account')}>
-									{getUserImage(user)}
-                  <span>
+								{getUserImage(user)}
+                <span>
 									Account
 								</span>
-                </a>
+								{/*<a*/}
+								{/*  onClick={changePage('/account')}>*/}
+								{/*	{getUserImage(user)}*/}
+								{/*  <span>*/}
+								{/*	Account*/}
+								{/*</span>*/}
+								{/*</a>*/}
               </MyAccount>
-            </NavItem>
+            </NavItemDesktop>
             <NavItem>
               <SignOut onClick={signOut}>
                 Sign Out

@@ -138,6 +138,7 @@ export const NavItem = styled.li`
 	` : ''};
 `
 export const NavItemMobile = styled.li`
+	opacity: 1;
 	@media ${device.laptop} {
 		display: none;
 	}
@@ -307,7 +308,6 @@ export const MyAccount = styled.div`
 		}
 	}
 	
-	
 	@media ${device.laptop} {
 		margin: 0 20px 0 0;
 		span{
@@ -318,10 +318,6 @@ export const MyAccount = styled.div`
 			color: ${colors.primary.text};
 			font-weight: 500;
 		}
-		.userSvg__profile{
-		
-		}
-		
 	}
 		
 `
