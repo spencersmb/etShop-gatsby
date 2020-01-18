@@ -68,61 +68,77 @@ export function CouponInput (props: IProps & IReduxActions) {
 				distinctUntilChanged(),
 				switchMap((target: string) => {
 					if (target.length < 4) {
-						return 'undefined'
+						console.log('no target')
+						return {
+							data: {
+								error: true
+							}
+						}.toString()
 					}
+					console.log('submiting', target)
+
 					submitCoupon()
 					toastr.clean()
 					return from(CheckoutApi.checkCoupon(target))
 				})
 			)
-			inputSubscribe = inputPipe.subscribe((x: ICouponApiResponse) => {
+			inputSubscribe = inputPipe
+			// .subscribe((x: any) => {
+			// 	console.log('x', x)
+			// })
+				.subscribe((x: ICouponApiResponse | string) => {
 
-				const newCoupon: ICouponRaw = x.data.coupon
-
-				console.log('newCoupon', newCoupon)
-				if (!newCoupon) {
-					toastr.error('Invalid', 'Invalid Coupon', toastrOptions.noHover)
-					invalidCoupon()
-					// Sync up total and and prevTotal Ref locally
-					if (total !== prevTotal.current) {
-						updatePrice()
+					if (typeof x === 'string') {
+						console.log('empty input')
+						return
 					}
 
-					// focus back into the input
-					if (inputRef.current) {
-						inputRef.current.focus()
+					const newCoupon: ICouponRaw = x.data.coupon
+
+					console.log('newCoupon', newCoupon)
+					if (!newCoupon) {
+						toastr.error('Invalid', 'Invalid Coupon', toastrOptions.noHover)
+						invalidCoupon()
+						// Sync up total and and prevTotal Ref locally
+						if (total !== prevTotal.current) {
+							updatePrice()
+						}
+
+						// focus back into the input
+						if (inputRef.current) {
+							inputRef.current.focus()
+						}
+						return
 					}
-					return
-				}
 
-				// check if valid server response but no coupon found or expired or invalid types fall into this category
-				if (newCoupon.error) {
+					// check if valid server response but no coupon found or expired or invalid types fall into this category
+					if (newCoupon.error) {
 
-					toastr.error('Invalid', newCoupon.error.message, toastrOptions.noHover)
-					invalidCoupon()
-					// Sync up total and and prevTotal Ref locally
-					if (total !== prevTotal.current) {
-						updatePrice()
+						toastr.error('Invalid', newCoupon.error.message, toastrOptions.noHover)
+						invalidCoupon()
+						// Sync up total and and prevTotal Ref locally
+						if (total !== prevTotal.current) {
+							updatePrice()
+						}
+
+						// focus back into the input
+						if (inputRef.current) {
+							inputRef.current.focus()
+						}
+						return
 					}
 
-					// focus back into the input
-					if (inputRef.current) {
-						inputRef.current.focus()
+					// if there is no error check if a coupon applies to a product in the cart and add it in if found, or reject if not found
+					if (newCoupon.discount_type === 'fixed_product') {
+						const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
+						if (!isFound) {
+							toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
+						}
 					}
-					return
-				}
 
-				// if there is no error check if a coupon applies to a product in the cart and add it in if found, or reject if not found
-				if (newCoupon.discount_type === 'fixed_product') {
-					const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
-					if (!isFound) {
-						toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
-					}
-				}
-
-				loadCoupon(newCoupon)
-				updatePrice()
-			})
+					loadCoupon(newCoupon)
+					updatePrice()
+				})
 		}
 
 		if (coupon.valid) {
@@ -171,9 +187,6 @@ export function CouponInput (props: IProps & IReduxActions) {
 				COUPON
 			</CheckoutFormLabel>
 			<form>
-				{/*{coupon.valid && <span data-testid='valid-notice'>Valid code!</span>}*/}
-				{/*{!coupon.valid && coupon.submitted && <span data-testid='invalid-notice'>Invalid code!</span>}*/}
-				{/*<div>{JSON.stringify(coupon.loading)}</div>*/}
 				<FormGroup data-testid={'formGroup'} className={'formGroup__Container'}>
 					<FormInput className={`formInput`}>
 						<div data-testid={'formGroupTest'}

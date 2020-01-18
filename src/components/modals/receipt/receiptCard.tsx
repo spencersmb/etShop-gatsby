@@ -16,6 +16,7 @@ interface IClose {
 
 const ReceiptCard = (props: IReceipt & IClose) => {
 	const { email, total, order_id, date_completed, downloads, coupon_used, discounts, subtotal, handleClose } = props
+	console.log('props', props)
 
 	return (
 		<CardWrapper>
@@ -72,7 +73,7 @@ const ReceiptCard = (props: IReceipt & IClose) => {
 			</div>
 
 			<TotalWrapper>
-				{coupon_used.length > 0 &&
+				{coupon_used && coupon_used.length > 0 &&
         <CouponWrapper>
           <TotalLabel>Coupon Used</TotalLabel>
 					{
@@ -85,7 +86,7 @@ const ReceiptCard = (props: IReceipt & IClose) => {
         </CouponWrapper>
 				}
 				<TotalNumbers>
-					{coupon_used.length > 0 &&
+					{coupon_used && coupon_used.length > 0 &&
           <>
             <SubTotal>
               <TotalLabel>Subtotal</TotalLabel>

@@ -195,11 +195,10 @@ export class ProductDetailPage extends Component<IProductQuery> {
 				<SEO
 					title={wcProduct.seo.title}
 					description={wcProduct.seo.desc}
+					keywords={wcProduct.tags.map(tag => tag.name)} // change to tags from WP backend
 					meta={[
-						// facebook
 						...this.ogArticles,
 						...facebookDefaultMeta(this.facebookAddons),
-						// Twitter
 						...twitterDefaultMeta(this.twitterAddons)
 					]}
 				>
@@ -248,6 +247,9 @@ export const productQuery = graphql`
             sub_header
             id
             intro_title
+            tags{
+                name
+            }
             intro_description
             font_preview{
                 enabled

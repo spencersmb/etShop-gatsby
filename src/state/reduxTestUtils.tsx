@@ -1,9 +1,10 @@
 // this is a handy function that I normally make available for all my tests
 import { ICartState, LicenseEnum } from '@et/types/Cart'
+import { CK_Tag_Enums } from '@et/types/Enums'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { IPaginateState } from '@et/types/Pagination'
 import { IProduct, IProducts } from '@et/types/Products'
-import { ISupportCategory, ISupportCatQuery, ISupportQuestion, ISupportQuestionQuery } from '@et/types/Support'
+import { ISupportCatQuery, ISupportQuestionQuery } from '@et/types/Support'
 import { IUser } from '@et/types/User'
 import { IGuestFormData, IReceipt } from '@et/types/WC_Order'
 import initialState from '@redux/reducers/initialState'
@@ -901,6 +902,7 @@ export const testReceipt: IReceipt = {
 	status: 'completed',
 	transactionId: 'abc123',
 	payment_type: 'stripe',
+	first_name: 'spencer',
 	order_id: '667',
 	email: 'spencer.bigum@gmail.com',
 	date_completed: '02-12-22',
@@ -921,7 +923,9 @@ export const testReceipt: IReceipt = {
 				qty: 1,
 				id: 222,
 				name: 'Watercolor kit',
-				filename: 'watercolor.zip'
+				filename: 'watercolor.zip',
+				slug: 'watercolor-kit',
+				ck_tag: CK_Tag_Enums.TEXTURES
 			}
 		]
 	},

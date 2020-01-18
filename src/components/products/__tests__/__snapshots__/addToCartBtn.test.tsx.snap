@@ -11,7 +11,7 @@ exports[`AddToCart Button renders correctly 1`] = `
       className="sc-EHOje gyVRIK addToCart__total"
       data-testid="total"
     >
-      0
+      $0
     </div>
     <button
       className="sc-htpNat sc-bZQynM dgJtvg"

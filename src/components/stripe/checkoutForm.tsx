@@ -104,6 +104,7 @@ export function StripeCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					</CheckoutFormLabel>
 					<CreditCardFormWrapper>
 						<CardElement
+							// @ts-ignore
 							onReady={(element: any) => stripeElement.current = element}
 							onChange={onCreditCardChange}
 						/>

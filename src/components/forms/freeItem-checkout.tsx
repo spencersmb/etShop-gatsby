@@ -1,3 +1,4 @@
+import SubmitButton from '@components/buttons/submitButton'
 import Receipt from '@components/modals/receipt'
 import GuestBilling from '@components/stripe/guestBilling'
 import { ICartState } from '@et/types/Cart'
@@ -8,12 +9,15 @@ import { IBillingWc, IOrderDetails, IOrderResponse } from '@et/types/WC_Order'
 import { cartToggle, emptyCart } from '@redux/actions/cartActions'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { createOrder, ICreateOrderAction } from '@redux/actions/orderActions'
-import { wc_createBilling, wc_createOrder } from '@utils/orderUtils'
+import { colors } from '@styles/global/colors'
+import { CheckoutFormLabel, GuestBillingContainer, StripeCardWrapper } from '@styles/modules/checkout'
+import { tagUserInConvertKit, wc_createBilling, wc_createOrder } from '@utils/orderUtils'
 import React, { useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { reduxForm, InjectedFormProps, reset } from 'redux-form'
+import styled from 'styled-components'
 
 interface IPropsPublic {
 	stripCheckoutSubmit: (formData: any) => Promise<IOrderResponse | null>
@@ -62,22 +66,19 @@ export function FreeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllPro
 				options: {
 					closeModal: true,
 					hasBackground: false,
-					data: {
-						type: 'Pay What you Want',
-						orderId: order.order_id,
-						date: order.date,
-						email: order.email,
-						downloads: order.downloads,
-						total: order.total
-					}
+					data: order
 				}
 			})
 			props.emptyCart()
 			props.reset() // clear form
+
 			setTimeout(() => {
 				props.closeCart()
 			}, 500)
-
+			await tagUserInConvertKit({
+				email: order.email,
+				firstName: order.first_name
+			}, order.downloads.products)
 		} catch (e) {
 			console.error('DB error', e)
 			return null
@@ -87,19 +88,36 @@ export function FreeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllPro
 
 	return (
 		<div data-testid='freeCheckout'>
-			<form onSubmit={handleSubmit(submit)}>
-				{!user && <GuestBilling/>}
-				<div>
-					{submitting && <div data-testid='checkoutSpinner'>Spinner</div>}
-					{!submitting && <button data-testid='checkoutBtn'
-            disabled={invalid || valid && pristine}
-          >Purchase</button>}
-				</div>
+			<form onSubmit={handleSubmit(submit)} style={{
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'column',
+				paddingBottom: '20px'
+			}}>
+				{!user && <GuestBillingContainer>
+          <CheckoutFormLabel>
+            Billing
+          </CheckoutFormLabel>
+          <GuestBilling/>
+        </GuestBillingContainer>}
+				<ButtonWrapper>
+					<SubmitButton
+						textColor={'#fff'}
+						buttonText={'Purchase'}
+						backgroundColor={colors.teal.i500}
+						spinnerColor={colors.teal.i500}
+						submitting={submitting}
+						invalid={invalid || valid && pristine}
+					/>
+				</ButtonWrapper>
 			</form>
 		</div>
 	)
 }
 
+const ButtonWrapper = styled(StripeCardWrapper)`
+	padding-top: 30px;
+`
 export const RegisterFreeCheckoutForm = reduxForm<{}, AllProps>({
 	destroyOnUnmount: false, // <------ preserve form data
 	forceUnregisterOnUnmount: true, // <------ unregister fields on unmount

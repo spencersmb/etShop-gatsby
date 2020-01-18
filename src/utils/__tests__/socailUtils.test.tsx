@@ -143,7 +143,6 @@ describe('General Utils', () => {
 			'image-url'
 		])
 	})
-
 	it('Should return fb pic for user', () => {
 		const userImg = getUserImage(testFacebookUser)
 		expect(userImg).toEqual(<img src='fb.com' alt={testFacebookUser.firstName}/>)

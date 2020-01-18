@@ -510,7 +510,7 @@ type Query {
     site(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, host: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, pathPrefix: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, port: IntQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput): Site
     sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, componentPath: StringQueryOperatorInput, context: SitePageContextFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, isCreatedByStatefulCreatePages: BooleanQueryOperatorInput, matchPath: StringQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput, pluginCreatorId: StringQueryOperatorInput): SitePage
     sitePlugin(browserAPIs: StringQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, name: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, packageJson: SitePluginPackageJsonFilterInput, parent: NodeFilterInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: SitePluginPluginOptionsFilterInput, resolve: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, version: StringQueryOperatorInput): SitePlugin
-    wcProduct(aws_download: wcProductAws_downloadFilterInput, bullet_point: StringQueryOperatorInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, intro_title: StringQueryOperatorInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, product_licenses: wcProductProduct_licensesFilterListInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
+    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, intro_title: StringQueryOperatorInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, product_licenses: wcProductProduct_licensesFilterListInput, product_type: StringQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
     wpgraphql: WPGraphQL!
 }
 
@@ -3505,7 +3505,6 @@ type WPGraphQL_WritingSettings {
 
 type wcProduct implements Node {
     aws_download: wcProductAws_download
-    bullet_point: String
     categories: [wcProductCategories]
     children: [Node!]!
     date_created_gmt(
@@ -3544,6 +3543,7 @@ type wcProduct implements Node {
     price: String
     product_id: Int
     product_licenses: [wcProductProduct_licenses]
+    product_type: String
     pwyw: Boolean
     regular_price: String
     related_products: [String]
@@ -5067,7 +5067,6 @@ enum WPGraphQL_UsersConnectionOrderbyEnum {
 enum wcProductFieldsEnum {
     aws_download___filename
     aws_download___name
-    bullet_point
     categories
     categories___id
     categories___name
@@ -5303,6 +5302,7 @@ enum wcProductFieldsEnum {
     product_licenses___item___slug
     product_licenses___type___name
     product_licenses___type___value
+    product_type
     pwyw
     regular_price
     related_products
@@ -9482,7 +9482,6 @@ input wcProductFeaturesFilterListInput {
 
 input wcProductFilterInput {
     aws_download: wcProductAws_downloadFilterInput
-    bullet_point: StringQueryOperatorInput
     categories: wcProductCategoriesFilterListInput
     children: NodeFilterListInput
     date_created_gmt: DateQueryOperatorInput
@@ -9503,6 +9502,7 @@ input wcProductFilterInput {
     price: StringQueryOperatorInput
     product_id: IntQueryOperatorInput
     product_licenses: wcProductProduct_licensesFilterListInput
+    product_type: StringQueryOperatorInput
     pwyw: BooleanQueryOperatorInput
     regular_price: StringQueryOperatorInput
     related_products: StringQueryOperatorInput

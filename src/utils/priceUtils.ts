@@ -80,7 +80,7 @@ export function calcBulkPriceDiscount (bulkDiscount: boolean, price: string, tot
  */
 export const displayCurrency = (price: string | number, doubleZeros: boolean = false): string => {
 	if (!price) {
-		return '0'
+		return '$0'
 	}
 
 	let hasDecimal = 0

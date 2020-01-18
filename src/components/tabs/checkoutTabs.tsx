@@ -49,6 +49,8 @@ export interface IProps {
 export const CheckoutPage = (props: IProps) => {
 	const [key, setKey] = useState('stripe')
 	const [showCouponInput, setShowCouponInput] = useState(false)
+	console.log('checkout page', props)
+
 	// onMount
 	useEffect(() => {
 
@@ -100,11 +102,12 @@ export const CheckoutPage = (props: IProps) => {
 						setShowCouponInput={setShowCouponInput}
 					/>
 
-					<CheckoutTabs data-testid='tabs__Nav'>
-						<CheckoutFormLabel>
-							SELECT PAYMENT
-						</CheckoutFormLabel>
-						<div className='inner'>
+					{!props.freeCheckout &&
+          <CheckoutTabs data-testid='tabs__Nav'>
+            <CheckoutFormLabel>
+              SELECT PAYMENT
+            </CheckoutFormLabel>
+            <div className='inner'>
 							{React.Children.toArray(props.children)
 								.map((child: any, index: number) =>
 									<CheckoutTab
@@ -114,8 +117,9 @@ export const CheckoutPage = (props: IProps) => {
 										handleClick={onTabClick}
 									/>
 								)}
-						</div>
-					</CheckoutTabs>
+            </div>
+          </CheckoutTabs>
+					}
 
 					<CouponWrapper
 						pose={showCouponInput ? 'show' : 'hide'}

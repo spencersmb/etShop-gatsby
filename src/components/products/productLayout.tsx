@@ -269,7 +269,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					}
 
 					{payWhatYouWant &&
-          <PWYWWrapper>
+          <LicenseQtyWrapper>
             <InputWrapper disableInput={state.inCart}>
               <div className={`label`}>Pay What You Want</div>
               <NumberDial
@@ -279,7 +279,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
                 disableInput={inCart}
                 inputOnChange={onPwywChange}/>
             </InputWrapper>
-          </PWYWWrapper>
+          </LicenseQtyWrapper>
 					}
 
 					<BuyNowWrapper>

@@ -14,7 +14,7 @@ const ResetPassword = (props: any) => {
 	const searchString = props.location.search || ''
 	const urlParams = new URLSearchParams(searchString)
 	const rpKey = urlParams.get('key')
-	
+
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -79,7 +79,7 @@ const ResetPassword = (props: any) => {
 	return (
 		<Layout>
 			<SEO
-				title='Forgot Password'
+				title='Reset Password'
 				description={`${site.siteMetadata.description}`}
 				keywords={[`gatsby`, `application`, `react`]}
 				meta={[
