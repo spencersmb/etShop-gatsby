@@ -18,7 +18,7 @@ interface IProps {
 
 const itemStyle = {
 	width: `100%`,
-	background: '#8C8'
+	background: '#FFF'
 }
 
 export default class SubSelector extends Component<IProps> {

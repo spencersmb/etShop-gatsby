@@ -31,10 +31,6 @@ export default css`
 		}
 	}
 	.carousel-modal{
-	//	position: relative;
-    //justify-content: center;
-    //align-items: center;
-    
 		.flickity-page-dots{
 			.dot{
 				background: #fff;
@@ -46,16 +42,14 @@ export default css`
 	}
 	.carousel{
 			display: flex;
-		flex-direction: column;
-		position: relative;
+			flex-direction: column;
+			position: relative;
 		.flickity-page-dots{
 			
 			@media ${device.tablet} {
 				display: none;
 			}
-				
 		}
-				
 		.previous, .next{
 			display: none;
 		}

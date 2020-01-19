@@ -30,7 +30,7 @@ const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFoote
 						</Logo>
 						<Links data-testid='footer-links'>
 							<li>
-								<Link to={'/products'}>
+								<Link to={'/'}>
 									Products
 								</Link>
 							</li>

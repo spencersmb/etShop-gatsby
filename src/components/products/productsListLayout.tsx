@@ -17,7 +17,7 @@ interface ICat {
 	slug: string
 }
 
-class ProductsListLayout extends Component<IProps> {
+class 	ProductsListLayout extends Component<IProps> {
 
 	filter: any
 

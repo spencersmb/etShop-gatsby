@@ -43,7 +43,7 @@ export default class GalleryModal extends Component<IProps> {
 
 		this.scrollAt = 1 / (this.props.options.data.items.length)
 
-		setTimeout(this.initFlickity, 0)
+		setTimeout(this.initFlickity, 300)
 
 	}
 
