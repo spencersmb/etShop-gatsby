@@ -45,7 +45,7 @@ const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFoote
 								</Link>
 							</li>
 							<li>
-								<Link to={'/privacy'}>
+								<Link to={'/privacy-policy'}>
 									Privacy Policy
 								</Link>
 							</li>

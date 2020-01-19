@@ -81,10 +81,10 @@ export const NavLinks = styled(NavLinksPose)<INavLinkProps>`
 	grid-column: 1 / -1;
 	position: absolute;
 	left: 0;
-	//top: ${props => props.isMobile ? '75px' : '0px'};
 	top: 75px;
 	height: 100vh;
 	width: 100%;
+	transform: translateX(-100%);
 	background: ${colors.primary.headline};	
 	
 	a{

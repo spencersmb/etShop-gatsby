@@ -126,6 +126,7 @@ const GallerySubNav = styled(ContainerPose)`
 		display: block;	
 		height: 100%;
 		max-height: 136px;
+		min-height: 136.44px;
 	}
 `
 // const ThumbnailGallery = (props: IProps) => {
