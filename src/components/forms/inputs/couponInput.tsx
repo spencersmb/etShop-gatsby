@@ -68,34 +68,27 @@ export function CouponInput (props: IProps & IReduxActions) {
 				distinctUntilChanged(),
 				switchMap((target: string) => {
 					if (target.length < 4) {
-						console.log('no target')
 						return {
 							data: {
 								error: true
 							}
 						}.toString()
 					}
-					console.log('submiting', target)
-
 					submitCoupon()
 					toastr.clean()
 					return from(CheckoutApi.checkCoupon(target))
 				})
 			)
 			inputSubscribe = inputPipe
-			// .subscribe((x: any) => {
-			// 	console.log('x', x)
-			// })
 				.subscribe((x: ICouponApiResponse | string) => {
 
 					if (typeof x === 'string') {
-						console.log('empty input')
 						return
 					}
 
 					const newCoupon: ICouponRaw = x.data.coupon
 
-					console.log('newCoupon', newCoupon)
+					// console.log('newCoupon', newCoupon)
 					if (!newCoupon) {
 						toastr.error('Invalid', 'Invalid Coupon', toastrOptions.noHover)
 						invalidCoupon()

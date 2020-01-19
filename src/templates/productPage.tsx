@@ -134,7 +134,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 			['@context']: 'http://schema.org/',
 			[`@type`]: 'Product',
 			['logo']: `${siteMetadata.siteUrl}/${featureImage.childImageSharp.fluid.src}`,
-			['url']: 'shop.every-tuesday.com',
+			['url']: `${process.env.GATSBY_FRONTEND_URL}/products/${wcProduct.slug}`,
 			name: wcProduct.name,
 			image: [
 				...jsonldImages(wcProduct.images)
@@ -202,7 +202,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 						...twitterDefaultMeta(this.twitterAddons)
 					]}
 				>
-					<link rel='canonical' href={`${process.env.GATSBY_DB}/products/${wcProduct.slug}`}/>
+					<link rel='canonical' href={`${process.env.GATSBY_FRONTEND_URL}/products/${wcProduct.slug}`}/>
 
 					{/*Load fonts for the font previewer*/}
 					{wcProduct.font_preview.enabled && wcProduct.font_preview.styles &&

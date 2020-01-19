@@ -1,11 +1,11 @@
 const path = require("path")
 const GET_PAGES = `
   query GET_WC_PAGES{
-      allWcProduct{
-        edges{
-          node{
-            slug
+      allWcProduct(filter: {product_licenses: {elemMatch: {type: {name: {eq: "Standard"}}}}}) {
+        edges {
+          node {
             name
+            slug
           }
         }
       }

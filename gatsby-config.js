@@ -8,7 +8,7 @@ module.exports = {
     description: `${process.env.GATSBY_DESCRIPTION}`,
     author: `@Teelac`,
     authorUrl: "https://every-tuesday.com/about/#teela",
-    siteUrl: `${process.env.GATSBY_DB}`,
+    siteUrl: `${process.env.GATSBY_FRONTEND_URL}`,
     frontEndUrl: `${process.env.GATSBY_FRONTEND_URL}`,
     siteName: `Every-Tuesday Shop`
   },
