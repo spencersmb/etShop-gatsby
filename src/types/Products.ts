@@ -34,6 +34,10 @@ export interface Image {
 			},
 			fullWidth: {
 				src: string
+				aspectRatio: number
+				base64: string
+				sizes: string
+				srcSet: string
 			},
 			thumbnail_mobile: {
 				src: string
@@ -67,26 +71,30 @@ export interface IProductDetails {
 
 export interface IFontPreviewFile {
 	type: string
-	localFile:{
+	localFile: {
 		absolutePath: string
 		publicURL: string
 		relativePath: string
 	}
 }
+
 export interface IFontPreviewStyles {
 	font_family: string,
 	font_files: IFontPreviewFile[]
 	type: string
 }
+
 export interface IFontPreview {
 	enabled: boolean,
 	styles: IFontPreviewStyles[]
 }
+
 export interface IFeatureItem {
 	description: string
 	icon: string
 	title: string
 }
+
 export interface IProductLicenseType {
 	type: string,
 	// may not need this if we are testing the extendedItem itself
@@ -100,6 +108,7 @@ export interface IProductLicenseType {
 		desc: string
 	}
 }
+
 export interface ILicenseType {
 	type: {
 		value: LicenseEnum,
@@ -113,6 +122,7 @@ export interface ILicenseType {
 		onSale: boolean
 	}
 }
+
 export interface IProductFeaturedImage {
 	alt: string
 	localFile: {
@@ -146,6 +156,7 @@ export interface IProductFeaturedImage {
 		}
 	}
 }
+
 export interface IProduct {
 	product_id: number,
 	id: string,

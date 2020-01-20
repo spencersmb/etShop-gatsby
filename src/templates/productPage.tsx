@@ -303,7 +303,7 @@ export const productQuery = graphql`
                             src
                         }
                         fullWidth: fluid(maxWidth: 1820) {
-                            src
+                            ...GatsbyImageSharpFluid
                         }
                     }
                 }

@@ -23,19 +23,24 @@ const itemStyle = {
 
 export default class SubSelector extends Component<IProps> {
 	state = {
-		selectedIndex: 0
+		selectedIndex: 0,
+		totalImages: this.props.items.length,
+		allImagesLoaded: false,
+		galleryLoaded: false
 	}
 	flkty: Flickity | null = null
 	scrollAt = 0
 	dragStarted = false
 	wrapper: Element | null = null
+	imagesLoaded = 0
 
 	componentDidMount () {
+		// this.imagesLoaded.current = 0
 		const { items } = this.props
 		this.scrollAt = 1 / (items.length)
-
 		if (Flickity) {
-			setTimeout(this.initFlickity, 550)
+			// setTimeout(this.initFlickity, 550)
+			this.initFlickity()
 		}
 	}
 
@@ -48,7 +53,15 @@ export default class SubSelector extends Component<IProps> {
 			pageDots: false,
 			setGallerySize: true,
 			prevNextButtons: false,
-			percentPosition: false
+			percentPosition: false,
+			imagesLoaded: true,
+			on: {
+				ready: () => {
+					this.setState({
+						galleryLoaded: true
+					})
+				}
+			}
 		}
 
 		if (this.wrapper) {
@@ -61,6 +74,13 @@ export default class SubSelector extends Component<IProps> {
 			}
 		}
 
+	}
+
+	checkSize (element: Element, gallery: any) {
+		const containerHeight = element.children[0].getBoundingClientRect().height
+		if (containerHeight < 136) {
+			gallery.resize()
+		}
 	}
 
 	componentWillReceiveProps (nextProps: IProps) {
@@ -87,15 +107,28 @@ export default class SubSelector extends Component<IProps> {
 		this.dragStarted = false
 	}
 
+	loadImage = () => {
+		this.imagesLoaded = this.imagesLoaded + 1
+
+		if (this.imagesLoaded === this.state.totalImages) {
+			if (this.wrapper) {
+				this.checkSize(this.wrapper, this.flkty)
+			}
+			this.setState({
+				allImagesLoaded: true
+			})
+		}
+	}
+
 	render () {
 		const { items } = this.props
 
 		return (
-			<GallerySubNav initialPose='exit' pose='enter'>
+			<GallerySubNav pose={this.state.galleryLoaded && this.state.allImagesLoaded ? 'open' : 'close'}>
 				<div ref={c => this.wrapper = c}>
 					{items.map((item: Image, index: number) =>
 						<div key={index} style={itemStyle} className='carousel-cell-nav'>
-							<img src={item.localFile.childImageSharp.thumbnail_mobile.src} alt={item.alt}/>
+							<img src={item.localFile.childImageSharp.thumbnail_mobile.src} alt={item.alt} onLoad={this.loadImage}/>
 						</div>
 					)}
 				</div>
@@ -104,13 +137,13 @@ export default class SubSelector extends Component<IProps> {
 	}
 }
 const ContainerPose = posed.div({
-	exit: {
+	close: {
 		opacity: 0,
 		transition: {
 			default: { duration: 150, ease: 'easeOut' }
 		}
 	},
-	enter: {
+	open: {
 		opacity: 1,
 		delay: 300,
 		transition: {
@@ -127,6 +160,7 @@ const GallerySubNav = styled(ContainerPose)`
 		height: 100%;
 		max-height: 136px;
 		min-height: 136.44px;
+		opacity: 0;
 	}
 `
 // const ThumbnailGallery = (props: IProps) => {

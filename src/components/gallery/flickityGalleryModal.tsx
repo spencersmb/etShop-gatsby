@@ -31,15 +31,20 @@ export default class GalleryModal extends Component<IProps> {
 
 	state = {
 		selectedIndex: this.props.options.data.selectedIndex,
-		overSized: false
+		overSized: false,
+		totalImages: this.props.options.data.items.length,
+		allImagesLoaded: false,
+		galleryLoaded: false
 	}
 
 	flkty: Flickity | null = null
 	scrollAt = 1
 	wrapper: Element | null = null
 	dragStarted = false
+	imagesLoaded = 0
 
 	componentDidMount () {
+		console.log('this.props.options.data.items', this.props.options.data.items)
 
 		this.scrollAt = 1 / (this.props.options.data.items.length)
 
@@ -64,7 +69,18 @@ export default class GalleryModal extends Component<IProps> {
 			setGallerySize: true,
 			prevNextButtons: true,
 			percentPosition: false,
-			adaptiveHeight: true
+			adaptiveHeight: true,
+			imagesLoaded: true,
+			lazyLoad: 2,
+			on: {
+				ready: () => {
+					console.log('Flickity is ready', this.state)
+					this.setState({
+						galleryLoaded: true
+					})
+
+				}
+			}
 			// fullscreen: true
 		}
 
@@ -75,12 +91,17 @@ export default class GalleryModal extends Component<IProps> {
 				this.flkty.on('dragEnd', this.dragEnd)
 				this.flkty.on('settle', this.onSettle)
 				this.flkty.on('scroll', this.onChange)
-				setTimeout(() => {
-					if (this.flkty) {
-						this.flkty.resize()
-						this.checkOverSizedImage()
-					}
-				}, 300)
+				// this.flkty.on('lazyLoad', (event: any, cellElement: any) => {
+				// 	const img = event.target
+				// 	console.log(event.type, img.src)
+				// })
+				this.checkOverSizedImage()
+
+				// run if all the images load before flickity finishes loading
+				if (this.state.allImagesLoaded && this.flkty) {
+					this.flkty.reloadCells()
+				}
+
 			}
 		}
 	}
@@ -119,6 +140,15 @@ export default class GalleryModal extends Component<IProps> {
 
 	}
 
+	checkHeight (el: Element, gallery: any) {
+		console.log('checkHeigth')
+		const containerHeight = el.children[0].getBoundingClientRect().height
+		if (containerHeight < 136) {
+			gallery.resize()
+			// console.log('resize')
+		}
+	}
+
 	checkOverSizedImage = () => {
 		const selectedImage = document.getElementsByClassName('item-fullscreen is-selected')
 		const image = selectedImage[0].firstElementChild
@@ -148,20 +178,42 @@ export default class GalleryModal extends Component<IProps> {
 		this.dragStarted = false
 	}
 
+	loadImg = () => {
+		// this.imagesLoaded = this.imagesLoaded + 1
+		// // console.log('this.imagesLoaded', this.imagesLoaded)
+		//
+		// if (this.imagesLoaded === this.state.totalImages) {
+		//
+		// 	console.log('all images loaded')
+		// 	this.setState({
+		// 		allImagesLoaded: true
+		// 	})
+		// 	if (this.wrapper && this.flkty) {
+		// 		console.log('reload')
+		// 		this.flkty.reloadCells()
+		// 	}
+		// }
+	}
+
 	render () {
 		const overSizedStyles = {
 			height: '100%',
-			overflow: 'scroll'
+			overflowY: 'scroll'
 		}
 		return (
 			<Main>
-				<Container>
+				<Container isLoaded={this.state.galleryLoaded}>
 					<div ref={c => this.wrapper = c} className={'carousel-modal'}
+						// @ts-ignore
 							 style={this.state.overSized ? overSizedStyles : {}}>
 						{this.props.options.data.items.map((item: Image, index: number) =>
 							<div key={index} style={itemStyle} className='item-fullscreen'>
-								<img src={item.localFile.childImageSharp.fullWidth.src}
-										 alt={item.alt}/>
+								<img
+									src={item.localFile.childImageSharp.fullWidth.base64}
+									data-flickity-lazyload-srcset={item.localFile.childImageSharp.fullWidth.srcSet}
+									sizes={item.localFile.childImageSharp.fullWidth.sizes}
+									onLoad={this.loadImg}
+									alt={item.alt}/>
 							</div>
 						)}
 
@@ -208,13 +260,15 @@ const CloseBtn = styled.button`
 		}
 	}
 `
-const Container = styled.div`
+const Container = styled.div<{ isLoaded: boolean }>`
 	width: 100%;
  height: 100%;
  position: relative;
  display: flex;
  flex-direction: column;
  justify-content: center;
+ transition: opacity .3s;
+ opacity: ${props => props.isLoaded ? 1 : 0};
 `
 const ModalPose = posed.div({
 	exit: {

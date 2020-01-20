@@ -105,6 +105,9 @@ const Desc = styled.div`
 		color: ${colors.primary.headline};
 		margin-bottom: 5px;
 	}
+	a{
+		color: ${colors.db.primary};
+	}
 	
 	@media ${device.tablet} {
 				grid-column: 3 /13;

@@ -100,7 +100,7 @@ const SideBar = ({
 	const updateFileTypes = updatePills(file_types, isStandardLicense)
 
 	function changeLicense () {
-		onChange({license:'extended', slug:licenses[1].item.slug})
+		onChange({ license: 'extended', slug: licenses[1].item.slug })
 	}
 
 	return (
@@ -139,7 +139,8 @@ const SideBar = ({
 				<Section>
 					<SectionIcon>{renderSvg(svgs.Download)}</SectionIcon>
 					<SectionTitle>File Size</SectionTitle>
-					<SectionText data-testid={'fileSize'} dangerouslySetInnerHTML={{ __html: createFileSizeResponse(file_size) }}/>
+					<SectionText data-testid={'fileSize'}
+											 dangerouslySetInnerHTML={{ __html: createFileSizeResponse(file_size) }}/>
 				</Section>
 
 				{/*Programs*/}
@@ -190,6 +191,9 @@ const ExtLicMsg = styled.div`
 		line-height: 14px;
 		color: rgb(255, 99, 99);
 		font-weight: 600;
+		&:hover{
+			cursor: pointer;
+		}
 	}
 `
 const Pill = styled.div`

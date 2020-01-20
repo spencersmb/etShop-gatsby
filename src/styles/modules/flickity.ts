@@ -31,6 +31,11 @@ export default css`
 		}
 	}
 	.carousel-modal{
+		.flickity-viewport{
+			//height: 220px !important;
+			//height: 520px;
+			transition: none;
+		}
 		.flickity-page-dots{
 			.dot{
 				background: #fff;

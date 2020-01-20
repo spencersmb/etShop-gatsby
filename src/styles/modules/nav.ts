@@ -89,6 +89,9 @@ export const NavLinks = styled(NavLinksPose)<INavLinkProps>`
 	
 	a{
 		color: #fff;
+		&:hover{
+			color: #fff;
+		}
 	}
 	
 	@media ${device.laptop} {
@@ -126,6 +129,7 @@ const NavItemPose = posed.li({
 })
 
 export const NavItem = styled(NavItemPose)`
+	
 	${props => props.hideOnDesktop ? `
 		@media ${device.laptop} {
 			display: none;

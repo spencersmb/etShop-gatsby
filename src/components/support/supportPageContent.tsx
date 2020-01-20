@@ -108,7 +108,7 @@ const Content = styled.div`
 	}
 	
 	a{
-		color: ${colors.teal.i500};
+		color: ${colors.db.primary};
 	}
 	
 	p{

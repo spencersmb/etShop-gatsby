@@ -96,6 +96,9 @@ const FlickityGalleryContext = (props: IProps) => {
 			setTimeout(() => {
 				if (flkty.current) {
 					flkty.current.resize()
+					setState({
+						loaded: true
+					})
 				}
 			}, 300)
 		}
@@ -166,8 +169,10 @@ const FlickityGalleryContext = (props: IProps) => {
 		}
 	}
 
+	{/*<FlickityWrapper initialPose='exit' pose='enter'>*/}
+
 	return (
-		<FlickityWrapper initialPose='exit' pose='enter'>
+		<FlickityWrapper pose={state.loaded ? 'show' : 'hide'}>
 			<div ref={wrapper} className={`carousel`}>
 				{items.map((item: Image, index: number) =>
 					<div key={index} style={itemStyle} className='item carousel-cell'>
@@ -261,13 +266,13 @@ const FullScreenIcon = styled.span`
 	}
 `
 const ContainerPose = posed.div({
-	exit: {
+	hide: {
 		opacity: 0,
 		transition: {
 			default: { duration: 150, ease: 'easeOut' }
 		}
 	},
-	enter: {
+	show: {
 		opacity: 1,
 		delay: 0,
 		transition: {
@@ -281,6 +286,7 @@ const FlickityWrapper = styled(ContainerPose)`
 	margin: 0 auto;
 	position: relative;
 	width: 100%;
+	opacity: 0;
 	
 	@media ${device.tablet} {
 			overflow: hidden;
