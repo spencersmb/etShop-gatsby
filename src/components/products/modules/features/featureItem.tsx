@@ -45,10 +45,10 @@ const FeatureItem = (props: IFeatureItem & IProps) => {
 	const itemColor = getFeatureColor(index)
 	return (
 		<Wrapper>
-			<Title color={itemColor}>
+			<Title color={itemColor} data-testid={'title'}>
 				{title}
 			</Title>
-			<Desc>
+			<Desc data-testid={'desc'}>
 				{description}
 			</Desc>
 			<Icon color={itemColor}>

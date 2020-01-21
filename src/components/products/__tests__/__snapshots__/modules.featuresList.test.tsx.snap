@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product Description renders correctly 1`] = `
+<div
+  className="sc-ifAKCX sc-dnqmqq gHjNhy"
+>
+  <h5
+    className="sc-iwsKbI eHxWpl"
+    data-testid="title"
+  >
+    Features
+  </h5>
+  <div
+    className="sc-gzVnrw QqsNn"
+    data-testid="items"
+  >
+    <div
+      className="sc-bxivhb fyrUIa"
+    >
+      <div
+        className="sc-htpNat ePPfSV"
+        color="#A182E9"
+        data-testid="title"
+      >
+        title 1
+      </div>
+      <div
+        className="sc-bwzfXH ihTQNy"
+        data-testid="desc"
+      >
+        description
+      </div>
+      <div
+        className="sc-bdVaJa ktqiA"
+        color="#A182E9"
+      >
+        <test-file-stub />
+      </div>
+    </div>
+    <div
+      className="sc-bxivhb fyrUIa"
+    >
+      <div
+        className="sc-htpNat gYWYhm"
+        color="#18C3C3"
+        data-testid="title"
+      >
+        title 2
+      </div>
+      <div
+        className="sc-bwzfXH ihTQNy"
+        data-testid="desc"
+      >
+        description
+      </div>
+      <div
+        className="sc-bdVaJa hkMwfE"
+        color="#18C3C3"
+      >
+        <test-file-stub />
+      </div>
+    </div>
+  </div>
+  <div
+    className="sc-htoDjs ihmdgm"
+  >
+    <test-file-stub />
+  </div>
+</div>
+`;

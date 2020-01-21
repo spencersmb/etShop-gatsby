@@ -18,10 +18,10 @@ const FeaturesList = (props: IProps) => {
 	const { features } = props
 	return (
 		<Container>
-			<TitleHeader>
+			<TitleHeader data-testid={'title'}>
 				Features
 			</TitleHeader>
-			<Features>
+			<Features data-testid={'items'}>
 				{features.map((feature, index) => (<FeatureItem index={index} key={index} {...feature}/>))}
 			</Features>
 			<Divider>

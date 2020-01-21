@@ -113,8 +113,11 @@ export default class SubSelector extends Component<IProps> {
 
 	loadImage = () => {
 		this.imagesLoaded = this.imagesLoaded + 1
+		console.log('this.imagesLoaded', this.imagesLoaded)
 
 		if (this.imagesLoaded === this.state.totalImages) {
+			console.log('all images loaded')
+
 			if (this.wrapper) {
 				this.checkSize(this.wrapper, this.flkty)
 			}
@@ -125,6 +128,7 @@ export default class SubSelector extends Component<IProps> {
 	}
 
 	render () {
+		console.log('this.state', this.state)
 		const { items } = this.props
 
 		return (
