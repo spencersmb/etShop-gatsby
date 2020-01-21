@@ -107,6 +107,9 @@ export const NavLinks = styled(NavLinksPose)<INavLinkProps>`
 		
 		a{
 			color: ${colors.primary.text};
+			&:hover{
+				color: ${colors.purple.i500};
+			}
 		}
 	}
 		

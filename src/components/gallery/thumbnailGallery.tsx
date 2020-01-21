@@ -1,5 +1,7 @@
+import DefaultSpinner from '@components/spinners/defaultSpinner'
 import { Image } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import React, { Component } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -21,6 +23,12 @@ const itemStyle = {
 	background: '#FFF'
 }
 
+/*
+ * * How it works
+ * onLoad event on IMG tags adds up all the images. Once they are all loaded, set the state
+ * as loaded and fade the whole slider in. Once all the images are loaded, the component
+ * re-sizes itself if any images are small to readjust the height.
+ */
 export default class SubSelector extends Component<IProps> {
 	state = {
 		selectedIndex: 0,
@@ -35,11 +43,9 @@ export default class SubSelector extends Component<IProps> {
 	imagesLoaded = 0
 
 	componentDidMount () {
-		// this.imagesLoaded.current = 0
 		const { items } = this.props
 		this.scrollAt = 1 / (items.length)
 		if (Flickity) {
-			// setTimeout(this.initFlickity, 550)
 			this.initFlickity()
 		}
 	}
@@ -73,7 +79,6 @@ export default class SubSelector extends Component<IProps> {
 				this.flkty.on('settle', this.props.onSettle)
 			}
 		}
-
 	}
 
 	checkSize (element: Element, gallery: any) {
@@ -84,7 +89,6 @@ export default class SubSelector extends Component<IProps> {
 	}
 
 	componentWillReceiveProps (nextProps: IProps) {
-
 		if (!this.flkty) {
 			return
 		}
@@ -124,18 +128,32 @@ export default class SubSelector extends Component<IProps> {
 		const { items } = this.props
 
 		return (
-			<GallerySubNav pose={this.state.galleryLoaded && this.state.allImagesLoaded ? 'open' : 'close'}>
-				<div ref={c => this.wrapper = c}>
-					{items.map((item: Image, index: number) =>
-						<div key={index} style={itemStyle} className='carousel-cell-nav'>
-							<img src={item.localFile.childImageSharp.thumbnail_mobile.src} alt={item.alt} onLoad={this.loadImage}/>
-						</div>
-					)}
-				</div>
+			<GallerySubNav>
+				<SpinnerWrapper>
+					<DefaultSpinner
+						submitting={!this.state.galleryLoaded || !this.state.allImagesLoaded}
+						color={colors.purple.i500}
+						size={'55px'}/>
+				</SpinnerWrapper>
+				<GalleryItems pose={this.state.galleryLoaded && this.state.allImagesLoaded ? 'open' : 'close'}>
+					<div ref={c => this.wrapper = c}>
+						{items.map((item: Image, index: number) =>
+							<div key={index} style={itemStyle} className='carousel-cell-nav'>
+								<img src={item.localFile.childImageSharp.thumbnail_mobile.src} alt={item.alt} onLoad={this.loadImage}/>
+							</div>
+						)}
+					</div>
+				</GalleryItems>
 			</GallerySubNav>
 		)
 	}
 }
+const SpinnerWrapper = styled.div`
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+`
 const ContainerPose = posed.div({
 	close: {
 		opacity: 0,
@@ -151,105 +169,19 @@ const ContainerPose = posed.div({
 		}
 	}
 })
-
-const GallerySubNav = styled(ContainerPose)`
+const GalleryItems = styled(ContainerPose)`
+		height: 100%;
+		position: relative;
+		opacity: 0;
+		z-index: 2;
+`
+const GallerySubNav = styled.div`
 	display: none;
+	max-height: 136px;
+	min-height: 136.44px;
+	position: relative;
 	
 	@media ${device.tablet} {
 		display: block;	
-		height: 100%;
-		max-height: 136px;
-		min-height: 136.44px;
-		opacity: 0;
 	}
 `
-// const ThumbnailGallery = (props: IProps) => {
-// 	const { items, selectedIndex } = props
-// 	// const [selectedIndex, setSelectedIndex] = useSetState(0)
-// 	const flkty = useRef<Flickity | null>(null)
-// 	const wrapper = useRef<HTMLDivElement>(null)
-// 	let scrollAt = null
-//
-// 	// useEffect(() => {
-// 	// 	setTimeout(() => {
-// 	// 		const elmnt = document.getElementById('my-div')
-// 	// 		if (elmnt) {
-// 	// 			elmnt.scrollIntoView()
-// 	// 			console.log('go to footer')
-// 	// 		}
-// 	// 	}, 300)
-// 	//
-// 	// }, [])
-//
-// 	useEffect(() => {
-// 		scrollAt = 1 / (items.length)
-//
-// 		setTimeout(initFlickity, 300)
-//
-// 		return function cleanUp () {
-// 			console.log('cleanup flickity')
-// 			if (flkty.current) {
-// 				flkty.current.destroy()
-// 			}
-//
-// 		}
-// 	}, [])
-// 	useEffect(() => {
-// 		if (flkty.current) {
-// 			flkty.current.selectCell(selectedIndex)
-// 		}
-// 	}, [selectedIndex])
-//
-// 	function initFlickity () {
-// 		const options = {
-// 			cellAlign: 'left',
-// 			cellSelector: '.carousel-cell-nav',
-// 			contain: false,
-// 			initialIndex: 0,
-// 			pageDots: false,
-// 			prevNextButtons: false
-// 		}
-//
-// 		if (wrapper.current) {
-// 			flkty.current = new Flickity(wrapper.current, options)
-// 			flkty.current.on('staticClick', staticClick)
-// 		}
-//
-// 		// this.flkty.on('dragStart', this.dragStart);
-// 		// this.flkty.on('dragEnd', this.dragEnd);
-// 		// this.flkty.on('scroll', this.onScroll);
-// 		// this.flkty.on('settle', this.onSettle);
-// 	}
-//
-// 	function staticClick (event: any, pointer: any, cellElement: any, cellIndex: any) {
-// 		// this.allowClick = false;
-// 		if (flkty.current) {
-// 			props.slideTo(cellIndex, false)
-// 			flkty.current.selectCell(cellIndex)
-// 		}
-// 	}
-//
-// 	console.log(' sub nav state', selectedIndex)
-//
-// 	return (
-// 		<div ref={wrapper}>
-// 			<div key={items[0].id} className='carousel-cell-nav'>
-// 				<img style={itemStyle} src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-// 			</div>
-// 			<div key={items[0].id} className='carousel-cell-nav'>
-// 				<img style={itemStyle} src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-// 			</div>
-// 			<div key={items[0].id} className='carousel-cell-nav'>
-// 				<img style={itemStyle} src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-// 			</div>
-// 			<div key={items[0].id} className='carousel-cell-nav'>
-// 				<img style={itemStyle} src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-// 			</div>
-// 			<div key={items[0].id} className='carousel-cell-nav'>
-// 				<img style={itemStyle} src={items[0].localFile.childImageSharp.fullWidth.src} alt=''/>
-// 			</div>
-// 		</div>
-// 	)
-// }
-//
-// export default ThumbnailGallery

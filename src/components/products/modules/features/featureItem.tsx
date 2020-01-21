@@ -107,21 +107,31 @@ const Wrapper = styled.div`
 		padding: 30px 90px 30px 30px;
 	}
 	@media ${device.laptop}{
-		flex: 1 0 45%;
-		margin: 45px 20px 0;
+		margin: 0 20px 0;
 		position: relative;
-		
-		&:nth-child(2){
-			margin-top: 0;
+    grid-row: 2;
+		&:nth-child(1){
+			align-self: end;
 		}
-		&:last-child{
-			margin-top: 0;
+		&:nth-child(2){
+			grid-row: span 2;
+			grid-row-start: 4;
+		}
+		&:nth-child(3){
+			grid-row-start: 1;
+			grid-row: span 2;
+			grid-column: 2;
+			margin-bottom: 80px;
+		}		
+		&:nth-child(4){
+			grid-row-start: 4;
+			grid-row: span 2;
+			grid-column: 2;
 		}
 	}
 	@media ${device.laptopL}{
 		padding: 30px 120px 30px 30px;
-		flex: 0 1 45%;
-		margin: 75px 15px 0;
+		margin: 0s 15px 0;
 		position: relative;
 		&:nth-child(even){
 			margin-left: 35px;

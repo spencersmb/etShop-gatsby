@@ -27,13 +27,17 @@ const itemStyle = {
 	margin: '0 40px'
 }
 
+/*
+ * * How it works
+ * on each event onChange and subSettle we check if the image is oversized, and if it is change
+ * the CSS Styles. Flickity lazyloads all the images. Each image loads 2 positions ahead.
+ */
+
 export default class GalleryModal extends Component<IProps> {
 
 	state = {
 		selectedIndex: this.props.options.data.selectedIndex,
 		overSized: false,
-		totalImages: this.props.options.data.items.length,
-		allImagesLoaded: false,
 		galleryLoaded: false
 	}
 
@@ -41,22 +45,17 @@ export default class GalleryModal extends Component<IProps> {
 	scrollAt = 1
 	wrapper: Element | null = null
 	dragStarted = false
-	imagesLoaded = 0
 
 	componentDidMount () {
-		console.log('this.props.options.data.items', this.props.options.data.items)
-
 		this.scrollAt = 1 / (this.props.options.data.items.length)
-
-		setTimeout(this.initFlickity, 300)
-
+		this.initFlickity()
 	}
 
 	UNSAFE_componentWillMount () {
 		if (this.flkty) {
 			this.flkty.destroy()
 		}
-	};
+	}
 
 	initFlickity = () => {
 		const options = {
@@ -74,16 +73,14 @@ export default class GalleryModal extends Component<IProps> {
 			lazyLoad: 2,
 			on: {
 				ready: () => {
-					console.log('Flickity is ready', this.state)
+					// console.log('Flickity is ready', this.state)
 					this.setState({
 						galleryLoaded: true
 					})
 
 				}
 			}
-			// fullscreen: true
 		}
-
 		if (this.wrapper) {
 			this.flkty = new Flickity(this.wrapper, options)
 			if (this.flkty) {
@@ -91,17 +88,7 @@ export default class GalleryModal extends Component<IProps> {
 				this.flkty.on('dragEnd', this.dragEnd)
 				this.flkty.on('settle', this.onSettle)
 				this.flkty.on('scroll', this.onChange)
-				// this.flkty.on('lazyLoad', (event: any, cellElement: any) => {
-				// 	const img = event.target
-				// 	console.log(event.type, img.src)
-				// })
 				this.checkOverSizedImage()
-
-				// run if all the images load before flickity finishes loading
-				if (this.state.allImagesLoaded && this.flkty) {
-					this.flkty.reloadCells()
-				}
-
 			}
 		}
 	}
@@ -140,15 +127,6 @@ export default class GalleryModal extends Component<IProps> {
 
 	}
 
-	checkHeight (el: Element, gallery: any) {
-		console.log('checkHeigth')
-		const containerHeight = el.children[0].getBoundingClientRect().height
-		if (containerHeight < 136) {
-			gallery.resize()
-			// console.log('resize')
-		}
-	}
-
 	checkOverSizedImage = () => {
 		const selectedImage = document.getElementsByClassName('item-fullscreen is-selected')
 		const image = selectedImage[0].firstElementChild
@@ -178,23 +156,6 @@ export default class GalleryModal extends Component<IProps> {
 		this.dragStarted = false
 	}
 
-	loadImg = () => {
-		// this.imagesLoaded = this.imagesLoaded + 1
-		// // console.log('this.imagesLoaded', this.imagesLoaded)
-		//
-		// if (this.imagesLoaded === this.state.totalImages) {
-		//
-		// 	console.log('all images loaded')
-		// 	this.setState({
-		// 		allImagesLoaded: true
-		// 	})
-		// 	if (this.wrapper && this.flkty) {
-		// 		console.log('reload')
-		// 		this.flkty.reloadCells()
-		// 	}
-		// }
-	}
-
 	render () {
 		const overSizedStyles = {
 			height: '100%',
@@ -212,11 +173,9 @@ export default class GalleryModal extends Component<IProps> {
 									src={item.localFile.childImageSharp.fullWidth.base64}
 									data-flickity-lazyload-srcset={item.localFile.childImageSharp.fullWidth.srcSet}
 									sizes={item.localFile.childImageSharp.fullWidth.sizes}
-									onLoad={this.loadImg}
 									alt={item.alt}/>
 							</div>
 						)}
-
 					</div>
 					<CloseBtn onClick={this.props.closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
 				</Container>

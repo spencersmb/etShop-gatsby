@@ -14,7 +14,7 @@ Array [
     product intro title
   </h3>,
   <div
-    className="sc-htpNat jjLUkO"
+    className="sc-htpNat fZCtkR"
     dangerouslySetInnerHTML={
       Object {
         "__html": "intro desc",

@@ -1,7 +1,6 @@
 import GalleryModal from '@components/gallery/flickityGalleryModal'
 import ThumbnailGallery from '@components/gallery/thumbnailGallery'
 import { device } from '@styles/global/breakpoints'
-import { colors } from '@styles/global/colors'
 import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
 import { useSetState } from '@utils/stateUtils'
@@ -12,7 +11,7 @@ import { Image } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import posed from 'react-pose'
 import styled from 'styled-components'
-// import Flickity from 'flickity'
+
 const Flickity =
 	typeof window !== 'undefined'
 		? require('flickity')
@@ -26,13 +25,11 @@ interface IProps {
 
 interface IState {
 	selectedIndex: number,
-	subSelector: boolean,
 	loaded: boolean
 }
 
 interface INewState {
 	selectedIndex?: number,
-	subSelector?: boolean,
 	loaded?: boolean
 }
 
@@ -45,27 +42,22 @@ const FlickityGalleryContext = (props: IProps) => {
 	const { items, subSelector } = props
 	const [state, setState] = useSetState<IState, INewState>({
 		selectedIndex: 0,
-		subSelector: false,
 		loaded: false
 	})
 	const flkty = useRef<Flickity | null>(null)
-	const scrollAt = useRef(1)
 	const wrapper = useRef<HTMLDivElement>(null)
 	const prevSelectedIndex = useRef(0)
 
 	useEffect(() => {
-		scrollAt.current = 1 / (items.length)
-		if (subSelector) {
-			setState({
-				subSelector: true
-			})
-		}
+
+		// check if Flickity is on the dom
 		if (Flickity) {
-			setTimeout(initFlickity, 0)
+			initFlickity()
 		}
 
 	}, [])
 
+	// on state change update the prev selected REF
 	useLayoutEffect(() => {
 		prevSelectedIndex.current = state.selectedIndex
 	}, [state.selectedIndex])
@@ -89,18 +81,16 @@ const FlickityGalleryContext = (props: IProps) => {
 			// @ts-ignore
 			flkty.current.on('settle', onSettle)
 			// @ts-ignore
-			flkty.current.on('scroll', onChange)
+			flkty.current.on('scroll', onSettle)
 			// @ts-ignore
 			flkty.current.on('staticClick', staticClick)
 
-			setTimeout(() => {
-				if (flkty.current) {
-					flkty.current.resize()
-					setState({
-						loaded: true
-					})
-				}
-			}, 300)
+			if (flkty.current) {
+				flkty.current.resize()
+				setState({
+					loaded: true
+				})
+			}
 		}
 	}
 
@@ -117,20 +107,6 @@ const FlickityGalleryContext = (props: IProps) => {
 				}
 			}
 		})
-	}
-
-	function onChange () {
-		if (!flkty.current) {
-			return
-		}
-		const selectedIndex = flkty.current.selectedIndex
-
-		if (prevSelectedIndex.current !== selectedIndex) {
-
-			setState({
-				selectedIndex
-			})
-		}
 	}
 
 	function onSettle () {
@@ -153,6 +129,7 @@ const FlickityGalleryContext = (props: IProps) => {
 		}
 		flkty.current.selectCell(index)
 
+		// Used in the subNav
 		if (updateState) {
 			setState({
 				selectedIndex: index
@@ -160,6 +137,7 @@ const FlickityGalleryContext = (props: IProps) => {
 		}
 	}
 
+	// subNav Settle function called with the 2nd nav
 	function onSubSettle (index: number) {
 		if (!flkty.current) {
 			return
@@ -182,26 +160,6 @@ const FlickityGalleryContext = (props: IProps) => {
 						<EnlargeIcon>
 							{renderSvg(svgs.Enlarge)}
 						</EnlargeIcon>
-						{/*<picture>*/}
-						{/*	<source*/}
-						{/*		srcSet={`*/}
-						{/*		${item.localFile.childImageSharp.thumbnail.src} 1x,*/}
-						{/*		${item.localFile.childImageSharp.thumbnail_2x.src} 2x*/}
-						{/*		`}*/}
-						{/*		media='(min-width: 992px)'/>*/}
-						{/*	<source*/}
-						{/*		srcSet={`*/}
-						{/*		${item.localFile.childImageSharp.thumbnail.src} 1x*/}
-						{/*		`}*/}
-						{/*		media='(min-width: 768px)'/>*/}
-						{/*	<source*/}
-						{/*		srcSet={`*/}
-						{/*		${item.localFile.childImageSharp.thumbnail.src} 2x*/}
-						{/*		`}*/}
-						{/*		media='(min-width: 375px)'/>*/}
-						{/*	<img src={item.localFile.childImageSharp.thumbnail_mobile.src}*/}
-						{/*			 alt={item.alt}/>*/}
-						{/*</picture>*/}
 						<Img
 							loading={'eager'}
 							fadeIn={false}
@@ -211,7 +169,7 @@ const FlickityGalleryContext = (props: IProps) => {
 				)}
 			</div>
 			<div>
-				{state.subSelector &&
+				{subSelector &&
         <ThumbnailGallery
           onSettle={onSubSettle}
           slideTo={slideTo}

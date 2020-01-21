@@ -34,16 +34,19 @@ const Features = styled.div`
 	grid-column: 2 /4;
 	position: relative;
 	z-index: 2;
+	align-items: flex-start;
 	@media ${device.tablet} {
 		grid-column: 3 / 13;
 	}
 	
 	@media ${device.laptop} {
 		grid-column: 2 / 14;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		align-items: flex-start;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 80px 1fr 80px 1fr;
+		//flex-direction: row;
+		//flex-wrap: wrap;
+		//align-items: flex-start;
 	}
 		
 `
@@ -91,10 +94,10 @@ position: relative;
 z-index: 1;
 
 	@media ${device.laptop} {
-		padding: 150px 0 100px;
+		padding: 110px 0 150px;
 	}
 	@media ${device.laptopL} {
-		padding: 190px 0 120px;
+		padding: 190px 0 180px;
 	}
 `
 const TitleHeader = styled.h5`

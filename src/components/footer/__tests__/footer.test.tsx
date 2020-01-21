@@ -29,7 +29,7 @@ describe('Footer Tests', () => {
 		const link4 = items[3].children[0]
 
 		expect(link1.innerHTML).toBe('Products')
-		expect(link1.getAttribute('href')).toBe('/products')
+		expect(link1.getAttribute('href')).toBe('/')
 
 		expect(link2.innerHTML).toBe('Blog')
 		expect(link2.getAttribute('href')).toBe('https://every-tuesday.com')
@@ -38,7 +38,7 @@ describe('Footer Tests', () => {
 		expect(link3.getAttribute('href')).toBe('/support')
 
 		expect(link4.innerHTML).toBe('Privacy Policy')
-		expect(link4.getAttribute('href')).toBe('/privacy')
+		expect(link4.getAttribute('href')).toBe('/privacy-policy')
 	})
 
 	it('Should render correct social links', () => {
