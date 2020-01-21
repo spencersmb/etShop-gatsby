@@ -69,9 +69,9 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && gatsby build",
+    "build": "gatsby clean && gatsby build",
     "develop": "gatsby develop",
-    "start": "npm run clean && npm run develop",
+    "start": "gatsby clean && npm run develop",
     "serve": "gatsby serve",
     "test": "jest --watch",
     "test:cover": "jest --collectCoverage",
