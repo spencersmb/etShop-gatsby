@@ -293,8 +293,11 @@ export const productQuery = graphql`
                         fluid(maxWidth: 702, maxHeight: 470) {
                             ...GatsbyImageSharpFluid
                         }
+                        thumbnail_blur: fluid(maxWidth: 45, maxHeight: 30) {
+                            ...GatsbyImageSharpFluid
+                        }
                         thumbnail_mobile: fluid(maxWidth: 305, maxHeight: 203) {
-                            src
+                            ...GatsbyImageSharpFluid
                         }
                         thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
                             src

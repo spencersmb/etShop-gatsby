@@ -1,8 +1,7 @@
 import DefaultSpinner from '@components/spinners/defaultSpinner'
-import { Image } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
 
@@ -15,7 +14,7 @@ interface IProps {
 	slideTo: (index: number, updateState?: boolean) => void
 	selectedIndex: number
 	onSettle: any
-	items: Image[]
+	items: any[]
 }
 
 const itemStyle = {
@@ -42,6 +41,12 @@ export default class SubSelector extends Component<IProps> {
 	wrapper: Element | null = null
 	imagesLoaded = 0
 
+	constructor (props: any) {
+		super(props)
+		this.loadImage = this.loadImage.bind(this)
+		this.checkSize = this.checkSize.bind(this)
+	}
+
 	componentDidMount () {
 		const { items } = this.props
 		this.scrollAt = 1 / (items.length)
@@ -61,6 +66,7 @@ export default class SubSelector extends Component<IProps> {
 			prevNextButtons: false,
 			percentPosition: false,
 			imagesLoaded: true,
+			lazyLoad: 5,
 			on: {
 				ready: () => {
 					this.setState({
@@ -83,8 +89,12 @@ export default class SubSelector extends Component<IProps> {
 
 	checkSize (element: Element, gallery: any) {
 		const containerHeight = element.children[0].getBoundingClientRect().height
+		console.log('containerHeight', containerHeight)
+
 		if (containerHeight < 136) {
+			console.log('resize')
 			gallery.resize()
+			gallery.reloadCells()
 		}
 	}
 
@@ -111,11 +121,11 @@ export default class SubSelector extends Component<IProps> {
 		this.dragStarted = false
 	}
 
-	loadImage = () => {
+	loadImage () {
 		this.imagesLoaded = this.imagesLoaded + 1
 		console.log('this.imagesLoaded', this.imagesLoaded)
 
-		if (this.imagesLoaded === this.state.totalImages) {
+		if (this.imagesLoaded === 4) {
 			console.log('all images loaded')
 
 			if (this.wrapper) {
@@ -128,22 +138,50 @@ export default class SubSelector extends Component<IProps> {
 	}
 
 	render () {
-		console.log('this.state', this.state)
 		const { items } = this.props
 
 		return (
 			<GallerySubNav>
 				<SpinnerWrapper>
 					<DefaultSpinner
-						submitting={!this.state.galleryLoaded || !this.state.allImagesLoaded}
+						// submitting={!this.state.galleryLoaded || !this.state.allImagesLoaded}
+						submitting={!this.state.galleryLoaded}
 						color={colors.purple.i500}
 						size={'55px'}/>
 				</SpinnerWrapper>
-				<GalleryItems pose={this.state.galleryLoaded && this.state.allImagesLoaded ? 'open' : 'close'}>
+				<GalleryItems pose={this.state.galleryLoaded ? 'open' : 'close'}>
 					<div ref={c => this.wrapper = c}>
-						{items.map((item: Image, index: number) =>
+						{items.map((item: any, index: number) =>
 							<div key={index} style={itemStyle} className='carousel-cell-nav'>
-								<img src={item.localFile.childImageSharp.thumbnail_mobile.src} alt={item.alt} onLoad={this.loadImage}/>
+								<LazyLoadImg
+									base={item.localFile.childImageSharp.thumbnail_mobile.base64}
+									src={item.localFile.childImageSharp.thumbnail_mobile.src}
+									alt={item.alt}
+									onLoad={this.loadImage}
+									{...item}
+								/>
+								{/*<img*/}
+								{/*	src={item.localFile.childImageSharp.thumbnail_mobile.base64}*/}
+								{/*	data-flickity-lazyload-srcset={item.localFile.childImageSharp.thumbnail_mobile.srcSet}*/}
+								{/*	sizes={item.localFile.childImageSharp.thumbnail_mobile.sizes}*/}
+								{/*	onLoad={(e, i) => {*/}
+								{/*		console.log('load', e)*/}
+								{/*		console.log('i', i)*/}
+								{/*	}}*/}
+								{/*	alt={item.alt}*/}
+								{/*/>*/}
+								{/*<img*/}
+								{/*	src={item.localFile.childImageSharp.thumbnail_mobile.src}*/}
+								{/*	alt={item.alt}*/}
+								{/*	// loading='lazy'*/}
+								{/*	onLoad={this.loadImage}*/}
+								{/*/>*/}
+								{/*{this.createImage(item.localFile.childImageSharp.thumbnail_mobile.src)}*/}
+								{/*<ExternalImage*/}
+								{/*	// loadImage={this.loadImage}*/}
+								{/*	src={item.localFile.childImageSharp.thumbnail_mobile.src}*/}
+								{/*	alt={item.alt}/>*/}
+								{/*{this.createImage(item.localFile.childImageSharp.thumbnail_mobile.src, item.alt)}*/}
 							</div>
 						)}
 					</div>
@@ -189,3 +227,85 @@ const GallerySubNav = styled.div`
 		display: block;	
 	}
 `
+
+function LazyLoadImg ({ base, src, alt, ...rest }: any) {
+
+	const [loaded, setLoaded] = useState(false)
+	// //
+	// const onLoad = (e: any) => {
+	// 	console.log('manual load', e.target)
+	// 	setLoaded(true)
+	// }
+
+	return (
+		<img
+			style={{ width: '205px', height: '136px' }}
+			src={base}
+			data-flickity-lazyload-src={src}
+			// onLoad={onLoad}
+			alt={alt}
+		/>
+	)
+}
+
+function ExternalImage ({ src, alt }: any) {
+	const [imageSrc, setImageSrc] = useState('')
+	const [imageRef, setImageRef] = useState()
+
+	const onLoad = (event: any) => {
+		console.log('loaded')
+
+		event.target.classList.add('loaded')
+	}
+
+	const onError = (event: any) => {
+		event.target.classList.add('has-error')
+	}
+
+	useEffect(() => {
+		let observer: any
+		let didCancel = false
+
+		if (imageRef && imageSrc !== src) {
+			if (IntersectionObserver) {
+				observer = new IntersectionObserver(
+					entries => {
+						entries.forEach(entry => {
+							if (
+								!didCancel &&
+								(entry.intersectionRatio > 0 || entry.isIntersecting)
+							) {
+								setImageSrc(src)
+								observer.unobserve(imageRef)
+							}
+						})
+					},
+					{
+						threshold: 0.01,
+						rootMargin: '75%'
+					}
+				)
+				observer.observe(imageRef)
+			} else {
+				// Old browsers fallback
+				setImageSrc(src)
+			}
+		}
+		return () => {
+			didCancel = true
+			// on component cleanup, we remove the listner
+			if (observer && observer.unobserve) {
+				observer.unobserve(imageRef)
+			}
+		}
+	}, [src, imageSrc, imageRef])
+	return (
+		<img
+			ref={setImageRef}
+			src={imageSrc}
+			alt={alt}
+			onLoad={onLoad}
+			onError={onError}
+		/>
+	)
+}
