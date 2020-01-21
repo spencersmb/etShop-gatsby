@@ -41,7 +41,6 @@ function LicenseQtyCard (props: IProps) {
 		<LicenseQtyWrapper>
 			<Container>
 				{bulkDiscount && <Discount data-testid='discount'>
-          Save {displayPercent(chooseDiscountPercentage(numberOfLicenses))} %
           <span>Volume Discount</span>
         </Discount>
 				}
@@ -69,7 +68,7 @@ const Warning = styled.div`
 `
 const Container = styled.div`
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: flex-end;
 	@media ${device.laptop} {
 		flex-direction: row;
@@ -93,12 +92,16 @@ const NumberDialStyled = styled(NumberDial)`
 const LicenseQtyWrapper = styled.div`
 	width: 100%;
 	position: relative;
-	padding:  0 0 15px;
+	padding:  0;
 	display: flex;
 	flex-direction: column;
 	max-width: 484px;
 	margin: 0 auto;   
 	justify-content: flex-end;
+	@media ${device.tablet} {
+		padding:  0 0 15px;
+	}
+		
 	@media ${device.laptop} {
 		padding: 15px 0;
 		max-width: none;
@@ -140,35 +143,40 @@ const Label = styled.div`
 const Discount = styled.div`
 	text-align: center;
 	justify-content: center;
-	margin: 0 0 10px;
+	margin: 0 10px 0 0;
 	color: ${colors.red.warning};
 	${Sentinel.black};
 	font-weight: 800;
 	font-size: 20px;
 	line-height: 14px;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	//position: absolute;
+	//left: 0;
+	//top: 50%;
+	//transform: translateY(-50%);
+	flex-direction: row;
 	
 	span{
-		color: ${colors.primary.text};
-		margin: 10px 0 0;
-    font-size: 14px;
+    font-size: 12px;
 		text-align: center;
 		display: flex;
 		line-height: 14px;
 		align-items: center;
 		border-radius: 50%;
+		background: ${colors.red.warning};
+		margin: 0 0 0 5px;
+		width: 72px;
+		height: 72px;
+		justify-content: center;
+		background: ${colors.red.warning};
+		color: #fff;
 	}
 	
 	@media ${device.laptop} {
 		font-size: 14px;
-		margin: 0 0 0 15px;
-		position: absolute;
-		left: 0;
-		top: 50%;
-		transform: translateY(-50%);
-		flex-direction: row;
+		margin: 0 15px 0 0;
+
 		
 		span{
 			margin: 0 0 0 5px;

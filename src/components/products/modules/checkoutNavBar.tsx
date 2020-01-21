@@ -116,7 +116,7 @@ const CheckoutNavBar = (props: IProps) => {
 				{/*<div>*/}
 				{/*	NavBar visible: {(getWindowPosition() > 300 && !inView).toString()}*/}
 				{/*</div>*/}
-				<Section3>
+				<Section3 className={'checkoutNavBar'}>
 					<AddToCartBtn
 						selectedLicense={selectedLicense}
 						handleAddToCartState={handleAddToCartState}

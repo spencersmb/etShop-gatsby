@@ -1,7 +1,9 @@
 import { IState } from '@et/types/State'
+import { device } from '@styles/global/breakpoints'
 import { ButtonReg } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
+import { chooseDiscountPercentage, displayPercent } from '@utils/priceUtils'
 import styled from 'styled-components'
 import { addProductToCart, cartToggle as cartToggleAction, IAddProductAction } from '../../state/actions/cartActions'
 import React from 'react'
@@ -79,7 +81,14 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 	return (
 		<CheckoutWrapper className={'checkoutWrapper'}>
 			<ButtonsWrapper className={'buttonWrapper'}>
-				<Total className={'addToCart__total'} data-testid='total'>{total}</Total>
+				{bulkDiscount && <SavePercent data-testid='discount'>
+          Save {displayPercent(chooseDiscountPercentage(licenseQty))}%
+        </SavePercent>
+				}
+				<Total className={'addToCart__total'} data-testid='total'>
+					<div className={'total_title'}>Total</div>
+					{total}
+				</Total>
 				{getButton()}
 			</ButtonsWrapper>
 		</CheckoutWrapper>
@@ -87,29 +96,79 @@ export function AddToCartBtn (props: IPropsPublic & IPropsPrivate & IPropsReduxA
 
 }
 
+const SavePercent = styled.div`
+	color: ${colors.primary.pink};
+	line-height: 18px;
+	flex: 1;
+	margin: 0 0 15px;
+	font-size: 18px;
+	font-weight: bold;
+	
+	.checkoutNavBar & {
+		display: none;
+	}
+	
+	@media ${device.tablet} {
+		margin:0 10px 0;
+		flex: 1;
+		text-align: right;
+	}
+		
+`
 const CheckoutWrapper = styled.div`
 display: flex;
 flex-direction: column;
 max-width: 484px;
 margin: 0 auto;
+padding-top: 15px;
+border-top: 1px solid ${colors.grey.i600};
+
+	.checkoutNavBar & {
+		border: none;
+		padding:0;
+	}
 `
 const ButtonsWrapper = styled.div`
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: flex-end;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+
+	@media ${device.tablet} {
+		flex-wrap: inherit;
+	}
+	
 `
 const Total = styled.div`
 	${Sentinel.semiboldItalic};
-	margin-right: 15px;
+	margin:0 15px 15px 0;
 	font-size: 21px;
 	color: ${colors.primary.text};
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	.total_title{
+		font-size: 14px;
+		text-transform: uppercase;
+		font-family: inherit;
+		margin-right: 10px;
+	}
+	
+	@media ${device.tablet} {
+		margin:0 15px 0;
+		text-align: right;
+		flex: 0;
+	}
 `
 const ButtonStyled = styled(ButtonReg)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin: 0;
+	flex: 1 100%;
 	
 	span{
 		${Sentinel.italic};	
@@ -118,6 +177,11 @@ const ButtonStyled = styled(ButtonReg)`
 		line-height: 24px;
 		margin-left: 15px; 
 	}
+	
+	@media ${device.tablet} {
+		flex:inherit;
+	}
+		
 `
 
 const mapStateToProps = (state: IState): { cart: ICartState } => {

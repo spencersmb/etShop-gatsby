@@ -158,6 +158,9 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 			setState({
 				selectedLicense: license,
 				selectedProduct: standardItem.current,
+				numberOfLicenses: standardItem.current.pwyw ? 1 : state.numberOfLicenses,
+				bulkDiscount: standardItem.current.pwyw ? false : state.bulkDiscount,
+				payWhatYouWant: standardItem.current.pwyw,
 				price: standardItem.current.on_sale
 					? standardItem.current.sale_price
 					: calcBulkPriceDiscount(state.bulkDiscount, standardItem.current.price, state.numberOfLicenses)
@@ -167,6 +170,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 			setState({
 				selectedLicense: license,
 				selectedProduct,
+				payWhatYouWant: selectedProduct.pwyw,
 				price: selectedProduct.on_sale
 					? selectedProduct.sale_price
 					: calcBulkPriceDiscount(state.bulkDiscount, selectedProduct.price, state.numberOfLicenses)
@@ -536,10 +540,11 @@ const LicenseSelectWrapper = styled(productRowGap)`
 `
 const LicenseQtyWrapper = styled(productRowGap)`
 	grid-column: 2 / 4;
-	& >div{
-		padding: 5px;
-	}
+
 	@media ${device.tablet} {
+		& >div{
+			padding: 5px;
+		}
 	 grid-column: 4 / 12;
 	}
 	@media ${device.laptop} {

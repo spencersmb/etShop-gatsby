@@ -58,8 +58,9 @@ export const CheckoutPage = (props: IProps) => {
 			setKey('stripe')
 		} else {
 			setKey(props.initialLoad)
+			props.handleChangeType('stripe')
 		}
-
+		console.log('freecheckout out', props.freeCheckout)
 		// onload check if there is a free item in the cart and the total is 0
 		// set the payment type to pwyw
 		if (props.freeCheckout) {

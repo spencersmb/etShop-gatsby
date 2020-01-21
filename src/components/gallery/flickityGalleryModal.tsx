@@ -221,13 +221,13 @@ const CloseBtn = styled.button`
 `
 const Container = styled.div<{ isLoaded: boolean }>`
 	width: 100%;
- height: 100%;
- position: relative;
- display: flex;
- flex-direction: column;
- justify-content: center;
- transition: opacity .3s;
- opacity: ${props => props.isLoaded ? 1 : 0};
+	height: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	transition: opacity .3s;
+	opacity: ${props => props.isLoaded ? 1 : 0};
 `
 const ModalPose = posed.div({
 	exit: {

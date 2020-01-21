@@ -89,11 +89,11 @@ export default class SubSelector extends Component<IProps> {
 
 	checkSize (element: Element, gallery: any) {
 		const containerHeight = element.children[0].getBoundingClientRect().height
-		console.log('containerHeight', containerHeight)
+		// console.log('containerHeight', containerHeight)
 
 		if (containerHeight < 136) {
-			console.log('resize')
-			gallery.resize()
+			// console.log('resize')
+			// gallery.resize()
 			gallery.reloadCells()
 		}
 	}
@@ -142,24 +142,20 @@ export default class SubSelector extends Component<IProps> {
 
 		return (
 			<GallerySubNav>
-				<SpinnerWrapper>
-					<DefaultSpinner
-						// submitting={!this.state.galleryLoaded || !this.state.allImagesLoaded}
-						submitting={!this.state.galleryLoaded}
-						color={colors.purple.i500}
-						size={'55px'}/>
-				</SpinnerWrapper>
 				<GalleryItems pose={this.state.galleryLoaded ? 'open' : 'close'}>
 					<div ref={c => this.wrapper = c}>
 						{items.map((item: any, index: number) =>
 							<div key={index} style={itemStyle} className='carousel-cell-nav'>
+
 								<LazyLoadImg
 									base={item.localFile.childImageSharp.thumbnail_mobile.base64}
 									src={item.localFile.childImageSharp.thumbnail_mobile.src}
 									alt={item.alt}
-									onLoad={this.loadImage}
+									// onLoad={this.loadImage}
 									{...item}
 								/>
+
+								{/*Flickity lazy with srcset*/}
 								{/*<img*/}
 								{/*	src={item.localFile.childImageSharp.thumbnail_mobile.base64}*/}
 								{/*	data-flickity-lazyload-srcset={item.localFile.childImageSharp.thumbnail_mobile.srcSet}*/}
@@ -170,13 +166,16 @@ export default class SubSelector extends Component<IProps> {
 								{/*	}}*/}
 								{/*	alt={item.alt}*/}
 								{/*/>*/}
+
+								{/*Original img use*/}
 								{/*<img*/}
 								{/*	src={item.localFile.childImageSharp.thumbnail_mobile.src}*/}
 								{/*	alt={item.alt}*/}
 								{/*	// loading='lazy'*/}
 								{/*	onLoad={this.loadImage}*/}
 								{/*/>*/}
-								{/*{this.createImage(item.localFile.childImageSharp.thumbnail_mobile.src)}*/}
+
+								{/*Observable attempt*/}
 								{/*<ExternalImage*/}
 								{/*	// loadImage={this.loadImage}*/}
 								{/*	src={item.localFile.childImageSharp.thumbnail_mobile.src}*/}
@@ -190,12 +189,6 @@ export default class SubSelector extends Component<IProps> {
 		)
 	}
 }
-const SpinnerWrapper = styled.div`
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-`
 const ContainerPose = posed.div({
 	close: {
 		opacity: 0,
@@ -230,8 +223,7 @@ const GallerySubNav = styled.div`
 
 function LazyLoadImg ({ base, src, alt, ...rest }: any) {
 
-	const [loaded, setLoaded] = useState(false)
-	// //
+	// const [loaded, setLoaded] = useState(false)
 	// const onLoad = (e: any) => {
 	// 	console.log('manual load', e.target)
 	// 	setLoaded(true)
