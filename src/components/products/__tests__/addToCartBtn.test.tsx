@@ -40,7 +40,21 @@ const propsCheckout = {
 	addToCart: jest.fn(),
 	cartToggle: jest.fn(),
 	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 1)
+}
 
+const propsBulkDiscount = {
+	handleAddToCartState: jest.fn(),
+	isInCart: true,
+	slug: ProductKey.WatercolorStd,
+	selectedProduct: testProducts[ProductKey.WatercolorStd],
+	licenseQty: 12,
+	price: testProducts[ProductKey.WatercolorStd].price,
+	bulkDiscount: true,
+	selectedLicense: LicenseEnum.standard,
+	cart: testCartEmpty,
+	addToCart: jest.fn(),
+	cartToggle: jest.fn(),
+	total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 12)
 }
 
 describe('AddToCart Button', () => {
@@ -61,7 +75,7 @@ describe('AddToCart Button', () => {
 			total: calcTotalQtyPrice(testProducts[ProductKey.WatercolorStd].price, 1)
 		}
 		const modalRender = render(<AddToCartBtn {...propsTotal}/>)
-		expect(modalRender.getByTestId('total').innerHTML).toEqual('$16')
+		expect(modalRender.getByTestId('total').innerHTML).toEqual('<div class="total_title">Total</div>$16')
 	})
 
 	it('Should render I want this button.', () => {
@@ -98,6 +112,15 @@ describe('AddToCart Button', () => {
 		const btn = modalRender.getByTestId('checkout')
 		btn.click()
 		expect(propsCheckout.cartToggle).toHaveBeenCalledTimes(1)
+	})
+
+	it('Should not show discount percentage', () => {
+		const modalRender = render(<AddToCartBtn {...propsCheckout}/>)
+		expect(modalRender.queryByTestId('discount')).toBe(null)
+	})
+	it('Should show discount percentage', () => {
+		const modalRender = render(<AddToCartBtn {...propsBulkDiscount}/>)
+		expect(modalRender.getByTestId('discount').innerHTML).toBe('Save 10%')
 	})
 
 })

@@ -2,15 +2,20 @@
 
 exports[`AddToCart Button renders correctly 1`] = `
 <div
-  className="sc-ifAKCX dVKgfg checkoutWrapper"
+  className="sc-ifAKCX gTaDyn checkoutWrapper"
 >
   <div
     className="sc-EHOje cwSfEq buttonWrapper"
   >
     <div
-      className="sc-bZQynM hfCWGI addToCart__total"
+      className="sc-bZQynM krBfeW addToCart__total"
       data-testid="total"
     >
+      <div
+        className="total_title"
+      >
+        Total
+      </div>
       $0
     </div>
     <button

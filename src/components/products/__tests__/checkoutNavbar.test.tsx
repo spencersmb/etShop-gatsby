@@ -72,6 +72,6 @@ describe('Checkout Navbar Description', () => {
 	})
 	it('Should have correct total', () => {
 		const modalRender = renderWithRedux(<Connected {...propsDefault}/>, cartReducer)
-		expect(modalRender.getByTestId('total').innerHTML).toEqual('$12.00')
+		expect(modalRender.getByTestId('total').innerHTML).toEqual('<div class="total_title">Total</div>$12.00')
 	})
 })

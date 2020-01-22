@@ -18,6 +18,10 @@ function getSvgIcon (name: string): string {
 			return svgs.Computer
 		case 'cart':
 			return svgs.Cart
+		case 'brush':
+			return svgs.Procreate
+		case 'lettering':
+			return svgs.Fonts
 		default:
 			return svgs.Textures
 	}

@@ -1,11 +1,8 @@
-import { LoginModal } from '@components/modals/login'
 import CheckoutTabs from '@components/tabs/checkoutTabs'
-import { IModalState } from '@et/types/Modal'
 import { IState } from '@et/types/State'
 import { cartReducer } from '@redux/reducers/cartReducer'
 import { productReducer } from '@redux/reducers/productReducer'
 import { renderWithRedux } from '@redux/reduxTestUtils'
-import { isPWYWItemInCart } from '@utils/cartUtils'
 import React from 'react'
 import { connect } from 'react-redux'
 import {
@@ -15,25 +12,22 @@ import {
 import 'jest-dom/extend-expect'
 import { combineReducers } from 'redux'
 
-afterEach(cleanup)
-
+const jestChangeCheckoutfn = jest.fn()
 const props = {
 	initialLoad: 'stripe',
-	handleChangeType: jest.fn(),
+	handleChangeType: jestChangeCheckoutfn,
 	toggleCheckout: jest.fn(),
 	freeCheckout: false
 }
-
 const propsPaypal = {
 	initialLoad: 'paypal',
-	handleChangeType: jest.fn(),
+	handleChangeType: jestChangeCheckoutfn,
 	toggleCheckout: jest.fn(),
 	freeCheckout: false
 }
-
 const propsFree = {
 	initialLoad: 'paypal',
-	handleChangeType: jest.fn(),
+	handleChangeType: jestChangeCheckoutfn,
 	toggleCheckout: jest.fn(),
 	freeCheckout: true
 }
@@ -58,6 +52,10 @@ const ConnectedPaypal = connect((state: IState) => {
 		}
 	}
 )(CheckoutTabs)
+afterEach(() => {
+	jestChangeCheckoutfn.mockClear()
+	cleanup()
+})
 
 describe('Checkout Tabs', () => {
 
@@ -86,6 +84,25 @@ describe('Checkout Tabs', () => {
 		})
 	})
 
+	it('Should call handleChangeType action', async () => {
+		const modalRender = renderWithRedux(<ConnectedPaypal {...propsPaypal}>
+			<div data-payment='stripe'>Tab 1</div>
+			<div data-payment='paypal'>Tab 2</div>
+		</ConnectedPaypal>, combineReducers({
+			products: productReducer,
+			cart: cartReducer
+		}))
+		// expect(propsPaypal.handleChangeType).toHaveBeenCalledTimes(1)
+		// expect(propsPaypal.handleChangeType).toHaveBeenCalledWith('paypal')
+		const btn = modalRender.getByTestId('tab-stripe')
+		btn.click()
+		await wait(() => {
+			expect(propsPaypal.handleChangeType).toHaveBeenCalledTimes(2)
+			expect(propsPaypal.handleChangeType).toHaveBeenCalledWith('stripe')
+		})
+
+	})
+
 	it('Should render correct tab stripe content', () => {
 		const modalRender = renderWithRedux(<Connected {...props}>
 			<div data-payment='stripe'>Tab 1</div>
@@ -95,20 +112,6 @@ describe('Checkout Tabs', () => {
 			cart: cartReducer
 		}))
 		expect(modalRender.getByTestId('tabs__Content').innerHTML).toEqual('Tab 1')
-	})
-
-	it('Should call handleChangeType action', () => {
-		const modalRender = renderWithRedux(<ConnectedPaypal {...propsPaypal}>
-			<div data-payment='stripe'>Tab 1</div>
-			<div data-payment='paypal'>Tab 2</div>
-		</ConnectedPaypal>, combineReducers({
-			products: productReducer,
-			cart: cartReducer
-		}))
-		const btn = modalRender.getByTestId('tab-stripe')
-		btn.click()
-		expect(propsPaypal.handleChangeType).toHaveBeenCalledTimes(1)
-		expect(propsPaypal.handleChangeType).toHaveBeenCalledWith('stripe')
 	})
 
 	it('Should render correct free checkout content', () => {

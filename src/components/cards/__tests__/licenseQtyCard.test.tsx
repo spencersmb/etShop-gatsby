@@ -18,7 +18,7 @@ const propsDefault = {
 	showModal: jest.fn()
 }
 
-describe('Cart Item tests', () => {
+describe('License Qty tests', () => {
 
 	it('Should not render disabled warning', () => {
 		const modalRender = render(<LicenseQtyCard {...propsDefault}/>)

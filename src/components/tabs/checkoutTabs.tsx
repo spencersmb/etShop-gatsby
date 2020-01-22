@@ -49,7 +49,6 @@ export interface IProps {
 export const CheckoutPage = (props: IProps) => {
 	const [key, setKey] = useState('stripe')
 	const [showCouponInput, setShowCouponInput] = useState(false)
-	console.log('checkout page', props)
 
 	// onMount
 	useEffect(() => {
@@ -57,10 +56,10 @@ export const CheckoutPage = (props: IProps) => {
 		if (!props.initialLoad) {
 			setKey('stripe')
 		} else {
+
 			setKey(props.initialLoad)
-			props.handleChangeType('stripe')
+			props.handleChangeType(props.initialLoad)
 		}
-		console.log('freecheckout out', props.freeCheckout)
 		// onload check if there is a free item in the cart and the total is 0
 		// set the payment type to pwyw
 		if (props.freeCheckout) {
