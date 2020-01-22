@@ -26,6 +26,11 @@ const filterItems: IFilterItem[] = [
 		icon: 'Fonts'
 	},
 	{
+		slug: 'procreate',
+		name: 'Procreate',
+		icon: 'Procreate'
+	},
+	{
 		slug: 'textures',
 		name: 'Textures',
 		icon: 'Textures'

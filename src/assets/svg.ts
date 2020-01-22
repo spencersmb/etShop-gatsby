@@ -43,6 +43,7 @@ const PaypalPPLogo = require('./svg-icons/paypal-pp-logo.svg')
 const PaypalPPLogoDisabled = require('./svg-icons/paypal-pp-logo-disabled.svg')
 const Photoshop = require('./svg-icons/photoshop.svg')
 const Programs = require('./svg-icons/programs.svg')
+const Procreate = require('./svg-icons/Procreate.svg')
 const Tag = require('./svg-icons/Tag.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
@@ -94,6 +95,7 @@ export const svgs = {
 	PaypalDisabledLogo,
 	Photoshop,
 	Programs,
+	Procreate,
 	Pinterest,
 	Tag,
 	Templates,

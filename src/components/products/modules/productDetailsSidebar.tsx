@@ -103,6 +103,14 @@ const SideBar = ({
 		onChange({ license: 'extended', slug: licenses[1].item.slug })
 	}
 
+	function getFileType (type: string) {
+		if (type === 'procreate-brush') {
+			return 'Procreate .brush Set'
+		} else {
+			return type
+		}
+	}
+
 	return (
 		<SideBarWrapper>
 			<SideBarInner>
@@ -118,7 +126,7 @@ const SideBar = ({
         <Section data-testid={'fileTypeSection'}>
           <SectionTitle>FILE TYPES</SectionTitle>
           <FileTypes data-testid={'fileTypes'}>
-						{updateFileTypes.map(type => (<Pill key={type}>{type}</Pill>))}
+						{updateFileTypes.map(type => (<Pill key={type}>{getFileType(type)}</Pill>))}
           </FileTypes>
 
 					{/*Check for extend lic if product is a font*/}

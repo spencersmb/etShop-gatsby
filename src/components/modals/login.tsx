@@ -84,9 +84,9 @@ export const LoginModal = (props: MixedFormProps) => {
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 			closeModal()
-			if (!cart.isOpen) {
-				navigate(`/account/`)
-			}
+			// if (!cart.isOpen) {
+			// 	navigate(`/account/`)
+			// }
 			// if mobile nav open close it
 			if (nav.isOpen) {
 				navToggle()
@@ -105,9 +105,9 @@ export const LoginModal = (props: MixedFormProps) => {
 			closeModal()
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
-			if (!cart.isOpen) {
-				navigate(`/account/`)
-			}
+			// if (!cart.isOpen) {
+			// 	navigate(`/account/`)
+			// }
 
 		} catch (e) {
 			console.error('user signup fail:', e)
@@ -125,9 +125,9 @@ export const LoginModal = (props: MixedFormProps) => {
 			closeModal()
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
-			if (!cart.isOpen) {
-				navigate(`/account/`)
-			}
+			// if (!cart.isOpen) {
+			// 	navigate(`/account/`)
+			// }
 
 		} catch (e) {
 			console.error('user facebook signup fail:', e)
