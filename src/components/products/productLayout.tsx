@@ -496,8 +496,9 @@ const ProductTitle = styled(productRowGap)`
 			font-style: normal;
 			color: ${colors.grey.i800};
 			font-size: 42px;
-			margin-bottom: 0;
 			line-height: 42px;
+			max-width: 640px;
+			margin: 0 auto 15px;
 		}
 		p{
 			${Sentinel.italic};
@@ -515,7 +516,19 @@ const ProductTitle = styled(productRowGap)`
 			grid-column: 9 / 14;
 			grid-row: 1;	
 			text-align: left;
+			h1{
+				font-size: 34px;
+				line-height: 38px;
+			}
 		}
+		@media ${device.laptopL} {
+			h1{
+				font-size: 42px;
+				line-height: 42px;
+			}
+		    
+		}
+			
 `
 const LabelHeader = styled.div`
 	margin: 0 0 5px 20px;

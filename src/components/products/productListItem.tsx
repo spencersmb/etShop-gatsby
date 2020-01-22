@@ -60,8 +60,11 @@ const ListItem = styled.div`
 	margin-bottom: 45px;
 	
 	@media ${device.tablet}{
-		grid-column: span 4;
+		grid-column: span 6;
 		margin-bottom: 0;
+	}
+	@media ${device.laptop}{
+		grid-column: span 4;
 	}
 	
 	@media ${device.laptopL}{

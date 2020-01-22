@@ -282,6 +282,7 @@ const FilterList = styled(ListPosed)`
 	flex-direction: column;
 	justify-content: center;
 	overflow: hidden;
+	height: 0;
 	@media ${device.laptop} {
 		flex-direction: row;
 		height: auto !important;
