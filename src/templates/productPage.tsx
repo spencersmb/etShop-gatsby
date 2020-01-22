@@ -188,7 +188,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		// TODO: get google verification token
 
 		const { data: { wcProduct } } = this.props
-		console.log('wcProduct', wcProduct)
+		console.log('wcProduct', wcProduct.name)
 
 		return (
 			<>
