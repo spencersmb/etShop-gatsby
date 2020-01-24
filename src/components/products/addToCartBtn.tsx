@@ -144,6 +144,7 @@ const Total = styled.div`
 	${Sentinel.semiboldItalic};
 	margin:0 15px 15px 0;
 	font-size: 21px;
+	line-height: 14px;
 	color: ${colors.primary.text};
 	flex: 1;
 	display: flex;

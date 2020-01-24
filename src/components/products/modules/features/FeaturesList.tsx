@@ -88,12 +88,13 @@ grid-column: 1 / -1;
 `
 const Container = styled(GridFluid)`
 grid-row-gap: 0 !important;
-padding: 15px 0 80px;
+padding: 60px 0 80px;
 overflow: hidden;
 position: relative;
 z-index: 1;
 
 	@media ${device.laptop} {
+		margin-top: 80px;
 		padding: 110px 0 150px;
 	}
 	@media ${device.laptopL} {

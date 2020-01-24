@@ -120,6 +120,10 @@ const CloseBtn = styled.div`
 	right: 20px;
 	width: 50px;
 	height: 50px;
+	&:hover{
+		cursor: pointer;
+	}
+	
 	
 	svg{
 		width: 100%;
@@ -151,7 +155,7 @@ const TotalLabel = styled.div`
  font-weight: 500;
 `
 const SubTotal = styled.div`
-	padding-bottom: 5px;
+	padding-bottom: 15px;
 `
 const FinalTotal = styled.div`
  font-size: 21px;
@@ -259,6 +263,7 @@ const Name = styled.div`
 	font-size: 16px;
 	color: ${colors.primary.text};
 	font-weight: 500;
+	width: 100%;
 	
 	span{
 		font-weight: 300;
@@ -268,15 +273,14 @@ const Name = styled.div`
 	}
 	
 	@media ${device.tablet} {
-		font-size: 18px;
+		font-size: 16px;
 		padding-right: 25px;
 	}
-		
 `
 const Product = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 20px 0 20px;
+	padding: 0 0 20px;
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 20px;
 	
@@ -288,7 +292,7 @@ const Product = styled.div`
 `
 const ProductsHeader = styled.div`
 	font-size: 16px;
-	padding-bottom: 5px;
+	margin-bottom: 20px;
 	border-bottom: 1px solid #ddd;
 	color: ${colors.grey.i800};
 `

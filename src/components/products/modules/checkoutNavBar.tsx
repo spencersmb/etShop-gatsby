@@ -68,7 +68,7 @@ const CheckoutNavBar = (props: IProps) => {
 			)
 		} else {
 			return (
-				<InputWrapper disableInput={inCart}>
+				<InputWrapper disableInput={inCart} className={`input_checkoutNavBar`}>
 					<div className={`label`}>Number of Licences</div>
 					<NumberDial
 						disableInput={inCart}
@@ -86,7 +86,7 @@ const CheckoutNavBar = (props: IProps) => {
 		<CheckoutNavContainer
 			// pose={windowPos > 300 && !inView ? 'show' : 'hide'}
 			showNav={getWindowPosition() > 300 && !inView && mounted.current}>
-			<Container>
+			<Container className={'checkoutNavBar'}>
 				<Section0>
 					<Img
 						alt={featuredImage.alt}
@@ -116,7 +116,7 @@ const CheckoutNavBar = (props: IProps) => {
 				{/*<div>*/}
 				{/*	NavBar visible: {(getWindowPosition() > 300 && !inView).toString()}*/}
 				{/*</div>*/}
-				<Section3 className={'checkoutNavBar'}>
+				<Section3>
 					<AddToCartBtn
 						selectedLicense={selectedLicense}
 						handleAddToCartState={handleAddToCartState}
@@ -170,7 +170,7 @@ const Title = styled.div`
 	font-weight: 900;
 	font-style: normal;
 	color: ${colors.grey.i800};
-	font-size: 21px;
+	font-size: 18px;
 	margin-bottom: 0;
 	line-height: 28px;
 `

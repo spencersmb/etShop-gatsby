@@ -47,6 +47,7 @@ const Procreate = require('./svg-icons/Procreate.svg')
 const Tag = require('./svg-icons/Tag.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
+const Thankyou = require('./svg-icons/thank-you.svg')
 const Twitter = require('./svg-icons/Twitter.svg')
 const User = require('./svg-icons/user.svg')
 const Youtube = require('./svg-icons/Youtube.svg')
@@ -100,6 +101,7 @@ export const svgs = {
 	Tag,
 	Templates,
 	Textures,
+	Thankyou,
 	Twitter,
 	User,
 	Youtube

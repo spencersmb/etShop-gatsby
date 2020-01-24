@@ -82,7 +82,7 @@ const fakeData: IReceipt = {
 		products: [
 			{
 				id: 799,
-				name: 'Skinny Jeans Extended',
+				name: 'Font Lovers Procreate Lettering Brushes',
 				slug: 'skinny-jeans-ext',
 				ck_tag: CK_Tag_Enums.FONTS,
 				subtitle: 'Font Trio: Script, Caps + Symbols',
@@ -237,7 +237,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 			>
 
 				<NavCenter data-testid='nav-center' user={user}>
-					{/*<a onClick={receipt}>Receipt</a>*/}
+					<a onClick={receipt}>Receipt</a>
 					{user &&
           <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>

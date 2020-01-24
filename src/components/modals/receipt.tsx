@@ -25,6 +25,9 @@ export function Receipt (props: IReceiptProps) {
 	return (
 		<PoseMain>
 			<RightCol>
+				<ThankyouWrapper>
+					{renderSvg(svgs.Thankyou)}
+				</ThankyouWrapper>
 				<CardWrapper>
 					<ReceiptCard {...data} handleClose={closeModal}/>
 				</CardWrapper>
@@ -34,6 +37,32 @@ export function Receipt (props: IReceiptProps) {
 }
 
 export default Receipt
+const ThankyouWrapper = styled.div`
+	display: none;
+	position: relative;
+	z-index: 1;
+	
+	svg{
+		width: 100%;
+	}
+	path{
+		fill: ${colors.purple.i500};
+	}
+	@media ${device.laptop} {
+		grid-column: 2/9;
+		margin-left: -160px;
+		margin-top: -280px;
+	}
+	@media ${device.laptopL} {
+		display: flex;
+		grid-row: 1;
+		grid-column: 2/11;
+		margin-left: -360px;
+		margin-top: -280px;
+		left: -70px;
+	}
+		
+`
 const CardWrapper = styled.div`
 	grid-column: 2 / 4;
 	display: flex;
@@ -41,13 +70,16 @@ const CardWrapper = styled.div`
 	align-items: center;
 	width: 100%;
 	padding: 20px 0;
+	z-index: 2;
+	position: relative;
+	grid-row: 1;
 @media ${device.tablet} {
 	padding: 40px 40px;
 	grid-column: 2 / 14;
 }
 @media ${device.laptop} {
 	padding: 40px 40px;
-	grid-column: 6 / 14;
+	grid-column: 3 / 13;
 }
 @media ${device.laptopL} {
 	padding: 40px 40px;
@@ -74,6 +106,7 @@ const RightCol = styled(GridFluid)`
 	padding: 0;
 	// left: ${startPos};
 	position: relative;
+	align-items: center;
 `
 const PoseMain = posed(Main)({
 	exit: {

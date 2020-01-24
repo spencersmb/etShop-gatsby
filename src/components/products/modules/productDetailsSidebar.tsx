@@ -171,9 +171,9 @@ const ProgramList = styled.ul`
 	list-style: none;
 	align-items: center;
 	li{
-		width: 28px;
-		height: 28px;
-		margin-right: 7px;
+		width: 38px;
+		height: 38px;
+		margin-right: 10px;
 	}
 	svg{
 		width: 100%;
@@ -221,6 +221,9 @@ flex-wrap: wrap;
 `
 const Section = styled.div`
 	margin-bottom: 40px;
+	&:first-child{
+		margin-bottom: 30px;
+	}
 	&:last-child{
 		margin-bottom: 0;
 	}
@@ -235,6 +238,7 @@ const SectionTitle = styled.h6`
 `
 const SectionIcon = styled.div`
 	width: 24px;
+	display: none;
 	svg{
 		width: 100%;
 		

@@ -92,8 +92,19 @@ const Desc = styled.div`
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	h3{
+		${Sentinel.reg};
+		color: ${colors.primary.headline};
+		font-size: 24px;
+		margin: 1.72em 0 0;
+	}
 	p{
 		color: ${colors.primary.headline};
+		font-size: 18px;
+		line-height: 1.58;
+		letter-spacing: -0.004em;
+		margin-top: 0.86em;
+		margin-bottom: 0;
 		&:first-child{
 			font-size: 21px;
 			strong{
@@ -101,9 +112,15 @@ const Desc = styled.div`
 			}
 		}
 	}
+	ul{
+		margin-top: 0.86em;
+	}
 	li{
 		color: ${colors.primary.headline};
 		margin-bottom: 5px;
+		font-size: 18px;
+		line-height: 1.58;
+		letter-spacing: -0.004em;
 	}
 	a{
 		color: ${colors.db.primary};

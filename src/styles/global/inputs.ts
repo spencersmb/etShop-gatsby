@@ -56,7 +56,7 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 		}
 	}
 	
-		input{
+	input{
 			${Sentinel.reg};
 			font-style: italic;
 			background: transparent;
@@ -84,6 +84,17 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 				cursor: auto;
 				border-color: #D2DCE5;
 			}
+	}
+	
+	&.input_checkoutNavBar{
+		.label{
+			font-size: 14px;
+			line-height: 14px;
+		}
+		input{
+			font-size: 18px;
+			padding: 0 2.5px 0 0;
+		}
 	}
 `
 
