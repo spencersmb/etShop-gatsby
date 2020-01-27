@@ -1,15 +1,20 @@
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { Sentinel } from '@styles/global/fonts'
-import React, { useEffect } from 'react'
+import { useScrollToElement } from '@utils/windowUtils'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 interface IProps {
-	intro_title: string
+	instructions: string
 	intro_description: string
 }
 
-const ProductDescription = ({ intro_title = '', intro_description = '' }: IProps) => {
+const ProductDescription = ({ intro_description = '', instructions }: IProps) => {
+
+	// useScrollToElement('desc')
+
+	const [navSelection, setNavSelection] = useState('desc')
 
 	function createDesc () {
 		const sanitize = intro_description ? intro_description : ''
@@ -19,59 +24,47 @@ const ProductDescription = ({ intro_title = '', intro_description = '' }: IProps
 		}
 	}
 
-	useEffect(() => {
-		setTimeout(() => {
-			const elmnt = document.getElementById('desc')
-			if (elmnt) {
-				elmnt.scrollIntoView()
-			}
-		}, 300)
+	function handleNavClick (e: any) {
+		setNavSelection(e.target.getAttribute('data-tab'))
+	}
 
-	})
 	return (
 		<>
-			<SubTitle>Description</SubTitle>
-			<Title data-testid={'title'}>{intro_title}</Title>
-			<Desc data-testid={'desc'} dangerouslySetInnerHTML={createDesc()}/>
+			<DescNav data-testid={`productNav`}>
+				<DescNavItem
+					selected={navSelection === 'desc'}
+					onClick={handleNavClick}
+					data-tab={`desc`}
+				>
+					Description
+					<span/>
+				</DescNavItem>
+				{instructions.length > 0 &&
+        <DescNavItem
+          selected={navSelection === 'install'}
+          onClick={handleNavClick}
+          data-tab={`install`}
+					data-testid={`install-nav-item`}
+				>
+          Install Instructions
+          <span/>
+        </DescNavItem>
+				}
+			</DescNav>
+			{navSelection === 'desc' &&
+      <DescContainer data-testid={'title'}>
+        <Desc data-testid={'desc'} dangerouslySetInnerHTML={createDesc()}/>
+      </DescContainer>
+			}
+			{navSelection === 'install' &&
+      <InstallContainer data-testid={`instructions`} dangerouslySetInnerHTML={{ __html: instructions }}/>
+			}
 		</>
 	)
 }
-
-const SubTitle = styled.span`
+const InstallContainer = styled.div`
 	grid-column: 2 / 4;
-	font-size: 12px;
-	font-weight: 500;
-	color: ${colors.primary.text};
-	text-transform: uppercase;
-	text-align: left;
-	margin-bottom: 30px;
-	vertical-align: center;
-	display: flex;
-	align-items: center;	
-	
-	@media ${device.tablet} {
-		grid-column: 3/6;
-	}
-	@media ${device.laptop} {
-		grid-column: 2 / 6;
-		width: 100%;
-	}
-	@media ${device.laptopL} {
-		grid-column: 3/6;
-		margin:0 0 0 -30px;
-	}
-		
-`
-const Title = styled.h3`
-	color: ${colors.primary.headline};
-	${Sentinel.semiboldItalic};
-	font-size: 54px;
-	line-height: 52px;
-	font-weight: 500;
-	font-style: italic;
-	margin-bottom: 25px;
-	text-align: left;
-	grid-column: 2 / 4;
+	padding-bottom: 40px;
 	
 	@media ${device.tablet} {
 		grid-column: 2 / 12;
@@ -87,11 +80,88 @@ const Title = styled.h3`
 		margin: 50px 0 50px 0;
 	}
 `
+const DescNavItem = styled.div<{ selected: boolean }>`
+	text-transform: uppercase;
+	color: ${colors.primary.headline};
+	font-weight: bold;
+	padding-bottom: 10px;
+	position: relative;
+	&:hover{
+		cursor: pointer;
+	}
+
+	&:first-child{
+		margin-right: 50px;
+	}
+	
+	span{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: ${props => props.selected ? `100%` : '0'};
+		transition: width .2s ease-in;
+		height: 3px;
+		background: ${colors.teal.i500};
+	}
+`
+const DescNav = styled.div`
+	grid-column: 2 / 4;
+	padding-bottom: 40px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	
+	@media ${device.tablet} {
+		grid-column: 2 /14;
+	}
+	
+	@media ${device.laptop} {
+		grid-column: 2 / 10;
+		justify-content: flex-start;
+	}	
+	
+	@media ${device.laptopL} {
+		grid-column: 3 / 10;
+		margin-left: -30px;
+	}
+		
+	
+`
+const DescContainer = styled.div`
+	margin-bottom: 25px;
+	grid-column: 2 / 4;
+	
+	
+	@media ${device.tablet} {
+		grid-column: 3 / 13;
+	}
+	
+	@media ${device.laptop} {
+		grid-column: 2 / 10;
+		
+		
+	}
+	
+	@media ${device.laptopL} {
+		margin: 0 0 0 0;
+		grid-column: 3 / 10;
+		
+	}
+`
 const Desc = styled.div`
 	grid-column: 2 / 4;
-	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	h1{
+		text-align: center;
+		color: ${colors.primary.headline};
+		${Sentinel.semiboldItalic};
+		font-size: 54px;
+		line-height: 52px;
+		font-weight: 500;
+		font-style: italic;
+	}
+
 	h3{
 		${Sentinel.reg};
 		color: ${colors.primary.headline};
@@ -112,8 +182,9 @@ const Desc = styled.div`
 			}
 		}
 	}
-	ul{
-		margin-top: 0.86em;
+	ul{		
+		margin-top: .86em;
+		margin-bottom: 0;
 	}
 	li{
 		color: ${colors.primary.headline};
@@ -124,28 +195,36 @@ const Desc = styled.div`
 	}
 	a{
 		color: ${colors.db.primary};
+		word-break: break-all;
 	}
 	
 	@media ${device.tablet} {
-				grid-column: 3 /13;
+		grid-column: 3 /13;
 	}
 	
 	@media ${device.laptop} {
 		grid-column: 2 /9;
 		grid-row: 3 / span 4;
+		h1{
+			text-align: left;
+		}
 	}
 		
 	
 	@media ${device.laptopL} {
+		grid-column: 3/10;
+		padding-right: 15px;
+		margin-left: -30px;
+		h1{
+			margin-left: -100px;
+		}
 		p{
 				&:first-child{
 					font-size: 24px;
 					line-height: 32px;
 				}
 		}
-		grid-column: 3/10;
-		padding-right: 15px;
-		margin-left: -30px;
+
 	}
 
 `

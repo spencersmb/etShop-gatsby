@@ -23,7 +23,7 @@ const propsDefault = {
 		}
 	]
 }
-describe('Product Description', () => {
+describe('Feature List Tests', () => {
 	it('renders correctly', () => {
 		const tree = renderer
 			.create(

@@ -13,7 +13,7 @@ const SupportQuestion = (props: any) => {
 		data: {
 			site,
 			featureImage,
-			wpgraphql: { supportQuestion: { title, slug, categories, id } }
+			wpgraphql: { supportQuestion: { title, slug, categories, id, acfSupportQuestions } }
 		}
 	} = props
 	// console.log('support Question PAGE props', props.data.wpgraphql.supportQuestion)
@@ -103,7 +103,8 @@ const SupportQuestion = (props: any) => {
 					id,
 					content,
 					title,
-					categories: categories.nodes
+					categories: categories.nodes,
+					socialMedia: acfSupportQuestions.socialMedia
 				}}/>
 			</Layout>
 		</>
@@ -136,6 +137,12 @@ export const pageQuery = graphql`
                 content
                 slug
                 id
+                acfSupportQuestions{
+                    subtitle
+                    socialMedia{
+                        type
+                    }
+                }
                 categories{
                     nodes{
                         name

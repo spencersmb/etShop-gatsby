@@ -67,6 +67,7 @@ export interface IProductDetails {
 	file_size: string,
 	dpi: string,
 	programs: string[]
+	reqs: boolean
 }
 
 export interface IFontPreviewFile {
@@ -167,9 +168,10 @@ export interface IProduct {
 	sub_header: string,
 	slug: string,
 	type: string,
-	intro_title: string,
 	intro_description: string,
+	install_instructions: string,
 	description: string,
+	description_footer: IBarType[],
 	short_description: string,
 	price: string,
 	regular_price: string;
@@ -191,7 +193,9 @@ export interface IProduct {
 	},
 
 }
-
+export interface IBarType {
+	type: string
+}
 export interface IProducts {
 	[id: string]: IProduct
 }

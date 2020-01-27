@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product Description renders correctly 1`] = `
+Array [
+  <div
+    className="sc-bdVaJa jyvzgi"
+    data-testid="item"
+  >
+    <div
+      className="sc-bwzfXH sc-htpNat fHXyX"
+      color="#fff"
+      data-testid="icon"
+      type="youtube-tuts"
+    >
+      <test-file-stub />
+    </div>
+    <div
+      className="sc-ifAKCX eUWlWz"
+    >
+      <div
+        className="sc-bZQynM bBieGp"
+        data-testid="cat"
+      >
+        youtube
+      </div>
+      <h4
+        className="sc-EHOje gygdqv"
+        data-testid="title"
+      >
+        Looking for free tutorials?
+      </h4>
+      <div
+        className="sc-gzVnrw bxTmTy"
+        data-testid="desc"
+      >
+        You can also find me every Tuesday sharing a new design, Procreate or lettering tutorial on YouTube
+      </div>
+    </div>
+    <a
+      className="sc-htoDjs kiaesC"
+      data-testid="btn"
+      href="https://youtube.com/everytues"
+      rel="noreferrer"
+      target="_blank"
+    >
+      watch
+    </a>
+  </div>,
+  <div
+    className="sc-bdVaJa jyvzgi"
+    data-testid="item"
+  >
+    <div
+      className="sc-bwzfXH sc-htpNat hTJhck"
+      color="#fff"
+      data-testid="icon"
+      type="procreate-Instagram"
+    >
+      <test-file-stub />
+    </div>
+    <div
+      className="sc-ifAKCX eUWlWz"
+    >
+      <div
+        className="sc-bZQynM bBieGp"
+        data-testid="cat"
+      >
+        Instagram
+      </div>
+      <h4
+        className="sc-EHOje gygdqv"
+        data-testid="title"
+      >
+        See more Procreate artwork
+      </h4>
+      <div
+        className="sc-gzVnrw bxTmTy"
+        data-testid="desc"
+      >
+        To see more Procreate artwork using these brushes, find me on Instagram!
+      </div>
+    </div>
+    <a
+      className="sc-htoDjs kiaesC"
+      data-testid="btn"
+      href="https://instagram.com/everytuesday"
+      rel="noreferrer"
+      target="_blank"
+    >
+      Follow
+    </a>
+  </div>,
+]
+`;

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature Item Test renders correctly 1`] = `
+<div
+  className="sc-bdVaJa jyvzgi"
+  data-testid="item"
+>
+  <div
+    className="sc-bwzfXH sc-htpNat fHXyX"
+    color="#fff"
+    data-testid="icon"
+    type="youtube-tuts"
+  >
+    <test-file-stub />
+  </div>
+  <div
+    className="sc-ifAKCX eUWlWz"
+  >
+    <div
+      className="sc-bZQynM bBieGp"
+      data-testid="cat"
+    >
+      youtube
+    </div>
+    <h4
+      className="sc-EHOje gygdqv"
+      data-testid="title"
+    >
+      Looking for free tutorials?
+    </h4>
+    <div
+      className="sc-gzVnrw bxTmTy"
+      data-testid="desc"
+    >
+      You can also find me every Tuesday sharing a new design, Procreate or lettering tutorial on YouTube
+    </div>
+  </div>
+  <a
+    className="sc-htoDjs kiaesC"
+    data-testid="btn"
+    href="https://youtube.com/everytues"
+    rel="noreferrer"
+    target="_blank"
+  >
+    watch
+  </a>
+</div>
+`;

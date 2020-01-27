@@ -215,9 +215,12 @@ const Section1 = styled.div`
 const Section2 = styled.div`
 	background: #fff;
 	flex: 1;
-	align-items: flex-start;
 	display: flex;
 	justify-content: center;
+	border-right: 1px solid #DADADA;
+	height: 100%;
+	align-items: center;
+
 	
 	& > div{
 		flex-direction: column;
@@ -237,7 +240,7 @@ const Section2 = styled.div`
 const Section3 = styled.div`
 	padding: 20px;
 	min-width: 260px;
-	background: ${colors.teal.i500};
+	background: #fff;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -254,15 +257,6 @@ const Container = styled.div`
 
 	.checkoutWrapper{
 		max-width: none;
-	}
-	
-	button{
-		background: #fff;
-		color: ${colors.primary.headline};
-	}
-	
-	.addToCart__total{
-		color: #fff;
 	}
 `
 

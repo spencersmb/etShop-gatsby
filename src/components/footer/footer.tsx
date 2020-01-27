@@ -14,10 +14,8 @@ import fetched from 'isomorphic-unfetch'
 
 const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFooter: boolean }) => {
 
-	// const scroll = useScrollToElement()
-
 	return (
-		<FooterContainer id={'my-div'} whiteFooter={whiteFooter}>
+		<FooterContainer whiteFooter={whiteFooter}>
 			<FooterNav>
 
 				<FooterNavWrapper productPage={productPage} whiteFooter={whiteFooter}>

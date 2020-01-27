@@ -5,7 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { cleanup } from 'react-testing-library'
 import { modalReducer } from '@redux/reducers/modalReducer'
-import { renderWithRedux } from '@redux/reduxTestUtils'
+import { renderWithRedux, testCartEmpty } from '@redux/reduxTestUtils'
 import { IModalState } from '@et/types/Modal'
 import Login, { LoginModal } from '../login'
 
@@ -61,7 +61,8 @@ const initialProps = {
 	navToggle: jest.fn(),
 	nav: {
 		isOpen: false
-	}
+	},
+	cart: testCartEmpty
 }
 const signUpProps = {
 	loginAction: jest.fn(),
@@ -100,6 +101,7 @@ const ConnectedSignUp = connect((state: IModalState) => {
 
 		return {
 			...state,
+			cart: testCartEmpty,
 			component: Login,
 			show: true,
 			createUser: jest.fn(),

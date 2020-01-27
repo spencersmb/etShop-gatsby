@@ -2,7 +2,7 @@
 
 exports[`Product ListItem Tests renders correctly 1`] = `
 <div
-  className="sc-bdVaJa hKSJDv"
+  className="sc-bdVaJa hVeYUl"
   data-testid="listItem"
 >
   <a

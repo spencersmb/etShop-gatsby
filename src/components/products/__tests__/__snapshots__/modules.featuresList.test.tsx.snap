@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Product Description renders correctly 1`] = `
+exports[`Feature List Tests renders correctly 1`] = `
 <div
-  className="sc-ifAKCX sc-dnqmqq gHjNhy"
+  className="sc-ifAKCX sc-dnqmqq kLOfep"
 >
   <h5
     className="sc-iwsKbI eHxWpl"

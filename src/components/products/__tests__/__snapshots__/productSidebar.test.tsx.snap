@@ -2,7 +2,7 @@
 
 exports[`Product Description renders correctly 1`] = `
 <aside
-  className="sc-iwsKbI lmREvF"
+  className="sc-iwsKbI jlNFmO"
 >
   <div
     className="sc-gZMcBi jMrtRl"
@@ -13,7 +13,7 @@ exports[`Product Description renders correctly 1`] = `
       <test-file-stub />
     </div>
     <div
-      className="sc-ifAKCX bWMCgh"
+      className="sc-ifAKCX ljwwhY"
     >
       <h3
         className="sc-htoDjs bmpqec"
@@ -22,7 +22,7 @@ exports[`Product Description renders correctly 1`] = `
       </h3>
     </div>
     <div
-      className="sc-ifAKCX bWMCgh"
+      className="sc-ifAKCX ljwwhY"
       data-testid="fileTypeSection"
     >
       <h6
@@ -42,10 +42,10 @@ exports[`Product Description renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="sc-ifAKCX bWMCgh"
+      className="sc-ifAKCX ljwwhY"
     >
       <div
-        className="sc-bZQynM kpHbwf"
+        className="sc-bZQynM klrOnr"
       >
         <test-file-stub />
       </div>
@@ -65,10 +65,10 @@ exports[`Product Description renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="sc-ifAKCX bWMCgh"
+      className="sc-ifAKCX ljwwhY"
     >
       <div
-        className="sc-bZQynM kpHbwf"
+        className="sc-bZQynM klrOnr"
       >
         <test-file-stub />
       </div>
@@ -88,10 +88,10 @@ exports[`Product Description renders correctly 1`] = `
       />
     </div>
     <div
-      className="sc-ifAKCX bWMCgh"
+      className="sc-ifAKCX ljwwhY"
     >
       <div
-        className="sc-bZQynM kpHbwf"
+        className="sc-bZQynM klrOnr"
       >
         <test-file-stub />
       </div>
@@ -101,7 +101,7 @@ exports[`Product Description renders correctly 1`] = `
         WORKS WITH
       </h6>
       <ul
-        className="sc-bdVaJa cglExA"
+        className="sc-bdVaJa bypbCY"
         data-testid="programs"
       >
         <li>

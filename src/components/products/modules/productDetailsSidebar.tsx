@@ -86,7 +86,8 @@ const SideBar = ({
 											 file_types: [],
 											 file_size: 'none',
 											 dpi: '0',
-											 programs: []
+											 programs: [],
+											 reqs: false
 										 },
 									 fontPreview = false,
 									 onChange,
@@ -290,7 +291,7 @@ const SideBarWrapper = styled.aside`
 	}
 	
 	@media ${device.laptop} {
-		grid-column: 9 / 14;
+		grid-column: 10 / 14;
     grid-row: 1 / span 3;
 		display: flex;
 		justify-content: flex-end;

@@ -2,25 +2,43 @@
 
 exports[`Product Description renders correctly 1`] = `
 Array [
-  <span
-    className="sc-bdVaJa jsByhr"
+  <div
+    className="sc-htpNat fmJebR"
+    data-testid="productNav"
   >
-    Description
-  </span>,
-  <h3
-    className="sc-bwzfXH jrFMpq"
+    <div
+      className="sc-bwzfXH hQDqYL"
+      data-tab="desc"
+      onClick={[Function]}
+      selected={true}
+    >
+      Description
+      <span />
+    </div>
+    <div
+      className="sc-bwzfXH hKbwhV"
+      data-tab="install"
+      data-testid="install-nav-item"
+      onClick={[Function]}
+      selected={false}
+    >
+      Install Instructions
+      <span />
+    </div>
+  </div>,
+  <div
+    className="sc-bxivhb beIibg"
     data-testid="title"
   >
-    product intro title
-  </h3>,
-  <div
-    className="sc-htpNat fZCtkR"
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "intro desc",
+    <div
+      className="sc-ifAKCX bYhReE"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "intro desc",
+        }
       }
-    }
-    data-testid="desc"
-  />,
+      data-testid="desc"
+    />
+  </div>,
 ]
 `;

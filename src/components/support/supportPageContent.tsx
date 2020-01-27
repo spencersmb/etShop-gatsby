@@ -1,5 +1,8 @@
+import { SocialMediaWrapper } from '@components/products/productLayout'
+import SocialMediaBars from '@components/socialMedia/socialBars'
 import RelatedSupportArticles from '@components/support/relatedArticles'
 import SupportBreadCrumb from '@components/support/supportBreadCrumb'
+import { IBarType } from '@et/types/Products'
 import { ICategory } from '@et/types/Support'
 import { device } from '@styles/global/breakpoints'
 import { ButtonReg } from '@styles/global/buttons'
@@ -14,7 +17,8 @@ interface IProps {
 	id: string
 	content: string,
 	title: string
-	categories: ICategory[]
+	categories: ICategory[],
+	socialMedia: IBarType[] | null
 }
 
 const SupportPageContent = (props: IProps) => {
@@ -23,7 +27,8 @@ const SupportPageContent = (props: IProps) => {
 		uploadsUrl: `${process.env.GATSBY_DB}/wp-content/uploads/`
 	}
 	const category = props.categories[0]
-	const { content, title, id } = props
+	const { content, title, id, socialMedia } = props
+
 	return (
 		<PageContainer>
 			<article>
@@ -35,6 +40,11 @@ const SupportPageContent = (props: IProps) => {
 					{contentParser({ content }, pluginOptions)}
 				</Content>
 			</article>
+			{socialMedia && socialMedia.length > 0 &&
+      <SocialMediaContainer className={`supportPage`}>
+        <SocialMediaBars bars={socialMedia}/>
+      </SocialMediaContainer>
+			}
 			<RelatedSupportArticles
 				selectedId={id}
 				supportQuestions={category.supportQuestions.nodes}
@@ -57,6 +67,21 @@ const SupportPageContent = (props: IProps) => {
 		</PageContainer>
 	)
 }
+const SocialMediaContainer = styled(SocialMediaWrapper)`
+	grid-row: auto;
+	padding-top: 0;	
+	@media ${device.tablet}{
+		grid-column: 2 / 14;
+		max-width: 680px;
+		margin: 0 auto;
+	}
+		
+	@media ${device.laptop} {
+		grid-row: auto;
+		padding: 0;
+	}
+		
+`
 const Container = styled.section`
  grid-column: 1 / -1;
  display: flex;
@@ -188,18 +213,16 @@ const PageContainer = styled(SupportPageContainer)`
 		grid-column: 2/4;
 		display: flex;
 		flex-direction: column;
-		margin-bottom: 40px;
 
-		
 		@media ${device.tablet} {
 			grid-column: 2 / 14;
-			margin: 0 auto 40px;
+			margin: 0 auto;
 			max-width: 680px
 		}		
 		
 		@media ${device.laptop} {
 			grid-column: 3 / 13;
-			margin: 0 auto 40px;
+			margin: 0 auto;
 		}
 			
 	}

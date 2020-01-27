@@ -11,6 +11,7 @@ import LicenseSelect from '@components/products/modules/licenseSelect'
 import ProductDescription from '@components/products/modules/productDesc'
 import SideBar from '@components/products/modules/productDetailsSidebar'
 import RelatedProducts from '@components/products/modules/relatedProducts'
+import SocialMediaBars from '@components/socialMedia/socialBars'
 import { ICartItem, ICartState, LicenseEnum } from '@et/types/Cart'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
@@ -309,9 +310,10 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 				{standardItem.current.font_preview.enabled &&
         <FontPreviewer styles={standardItem.current.font_preview.styles}/>}
 
-				<DescriptionWrapper>
+				<DescriptionWrapper id={'desc'}>
+
 					<ProductDescription
-						intro_title={standardItem.current.intro_title}
+						instructions={standardItem.current.install_instructions}
 						intro_description={standardItem.current.intro_description}
 					/>
 					{React.useMemo(() => (<SideBar
@@ -321,12 +323,20 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						details={standardItem.current.details}
 						fontPreview={standardItem.current.font_preview.enabled}
 					/>), [state.selectedLicense])}
+
+					{standardItem.current.description_footer.length > 0 &&
+          <SocialMediaWrapper>
+            <SocialMediaBars bars={standardItem.current.description_footer}/>
+          </SocialMediaWrapper>
+					}
+
 				</DescriptionWrapper>
 
 				{standardItem.current.features.length > 1 && <FeaturesList features={standardItem.current.features}/>}
 
 				{standardItem.current.related_products && standardItem.current.related_products.length > 0 &&
         <RelatedProducts products={standardItem.current.related_products}/>}
+
 
 			</ProductWrapper>
 
@@ -366,7 +376,18 @@ const mapDispatchToProps = (dispatch: ReduxDispatch<Action>) => {
 	}
 }
 export default connect<IPropsPrivate, IPropsActions, IPropsPublic, IState>(mapStateToProps, mapDispatchToProps)(ProductLayout)
-
+export const SocialMediaWrapper = styled.div`
+	grid-column: 2 / 4;
+	padding: 80px 0 0;
+	@media ${device.tablet} {
+		grid-column: 2 / 14;
+	}
+	@media ${device.laptop} {
+		padding: 40px 0 0;
+		grid-row: 4;
+		grid-column: 3 / 13;
+	}	
+`
 const productRowGap = styled.div`
 	margin-bottom: 20px;
 `
@@ -381,15 +402,15 @@ const ProductWrapper = styled.div`
 `
 const DescriptionWrapper = styled(GridFluid)`
 	grid-row-gap: 0 !important;
-	padding: 80px 0 0;
+	padding: 100px 0 0;
 	position: relative;
 	z-index: 2;
+	align-items: flex-start;
 	
 	@media ${device.laptop} {
+		grid-template-rows: auto 1fr auto;
 		padding: 120px 0 0;
-	    
 	}
-		
 `
 const SliderGrid = styled(GridFluid)`
 	grid-row-gap: 0 !important;

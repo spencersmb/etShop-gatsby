@@ -188,7 +188,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		// TODO: get google verification token
 
 		const { data: { wcProduct } } = this.props
-		console.log('wcProduct', wcProduct.name)
+		console.log('wcProduct', wcProduct)
 
 		return (
 			<>
@@ -246,10 +246,10 @@ export const productQuery = graphql`
             name
             sub_header
             id
-            intro_title
             tags{
                 name
             }
+            install_instructions
             intro_description
             font_preview{
                 enabled
@@ -271,6 +271,10 @@ export const productQuery = graphql`
                 dpi
                 file_size
                 programs
+                reqs
+            }
+            description_footer{
+                type
             }
             featuredImage{
                 alt

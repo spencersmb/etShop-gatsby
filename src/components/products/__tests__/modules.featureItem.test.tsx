@@ -15,7 +15,7 @@ const propsDefault = {
 	title: 'title 1',
 	index: 1
 }
-describe('Product Description', () => {
+describe('Feature Item Test', () => {
 	it('renders correctly', () => {
 		const tree = renderer
 			.create(

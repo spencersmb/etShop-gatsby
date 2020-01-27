@@ -237,7 +237,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 			>
 
 				<NavCenter data-testid='nav-center' user={user}>
-					<a onClick={receipt}>Receipt</a>
+					{/*<a onClick={receipt}>Receipt</a>*/}
 					{user &&
           <NavItem hideOnDesktop={true} className={`accountTop`}>
             <MyAccount>

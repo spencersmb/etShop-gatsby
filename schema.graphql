@@ -510,7 +510,7 @@ type Query {
     site(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, host: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, pathPrefix: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, port: IntQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput): Site
     sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, componentPath: StringQueryOperatorInput, context: SitePageContextFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, isCreatedByStatefulCreatePages: BooleanQueryOperatorInput, matchPath: StringQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput, pluginCreatorId: StringQueryOperatorInput): SitePage
     sitePlugin(browserAPIs: StringQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, name: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, packageJson: SitePluginPackageJsonFilterInput, parent: NodeFilterInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: SitePluginPluginOptionsFilterInput, resolve: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, version: StringQueryOperatorInput): SitePlugin
-    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, intro_title: StringQueryOperatorInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, product_licenses: wcProductProduct_licensesFilterListInput, product_type: StringQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
+    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, description_footer: wcProductDescription_footerFilterListInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, install_instructions: StringQueryOperatorInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, product_licenses: wcProductProduct_licensesFilterListInput, product_type: StringQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
     wpgraphql: WPGraphQL!
 }
 
@@ -2928,8 +2928,15 @@ type WPGraphQL_SupportQuestion_Acfsupportquestions {
     fieldGroupName: String
     "short desc of post"
     popularity: Float
+    socialMedia: [WPGraphQL_SupportQuestion_Acfsupportquestions_socialMedia]
     "Limited to one sentence or 140 characters."
     subtitle: String
+}
+
+"Field Group"
+type WPGraphQL_SupportQuestion_Acfsupportquestions_socialMedia {
+    fieldGroupName: String
+    type: String
 }
 
 "The SupportTag type"
@@ -3528,15 +3535,16 @@ type wcProduct implements Node {
         locale: String
     ): Date
     description: String
+    description_footer: [wcProductDescription_footer]
     details: wcProductDetails
     featuredImage: wcProductFeaturedImage
     features: [wcProductFeatures]
     font_preview: wcProductFont_preview
     id: ID!
     images: [wcProductImages]
+    install_instructions: String
     internal: Internal!
     intro_description: String
-    intro_title: String
     name: String
     on_sale: Boolean
     parent: Node
@@ -3558,6 +3566,7 @@ type wcProduct implements Node {
 
 type wcProductAws_download {
     filename: String
+    folder: String
     name: String
 }
 
@@ -3576,11 +3585,16 @@ type wcProductConnection {
     totalCount: Int!
 }
 
+type wcProductDescription_footer {
+    type: String
+}
+
 type wcProductDetails {
     dpi: String
     file_size: String
     file_types: [String]
     programs: [String]
+    reqs: Boolean
 }
 
 type wcProductEdge {
@@ -5066,6 +5080,7 @@ enum WPGraphQL_UsersConnectionOrderbyEnum {
 
 enum wcProductFieldsEnum {
     aws_download___filename
+    aws_download___folder
     aws_download___name
     categories
     categories___id
@@ -5113,10 +5128,13 @@ enum wcProductFieldsEnum {
     date_created_gmt
     date_modified_gmt
     description
+    description_footer
+    description_footer___type
     details___dpi
     details___file_size
     details___file_types
     details___programs
+    details___reqs
     featuredImage___alt
     featuredImage___height
     featuredImage___localFile___absolutePath
@@ -5242,6 +5260,7 @@ enum wcProductFieldsEnum {
     images___localFile___uid
     images___localFile___url
     images___thumbnail___url
+    install_instructions
     internal___content
     internal___contentDigest
     internal___description
@@ -5251,7 +5270,6 @@ enum wcProductFieldsEnum {
     internal___owner
     internal___type
     intro_description
-    intro_title
     name
     on_sale
     parent___children
@@ -9442,6 +9460,7 @@ input WPGraphQL_UsersConnectionOrderbyInput {
 
 input wcProductAws_downloadFilterInput {
     filename: StringQueryOperatorInput
+    folder: StringQueryOperatorInput
     name: StringQueryOperatorInput
 }
 
@@ -9455,11 +9474,20 @@ input wcProductCategoriesFilterListInput {
     elemMatch: wcProductCategoriesFilterInput
 }
 
+input wcProductDescription_footerFilterInput {
+    type: StringQueryOperatorInput
+}
+
+input wcProductDescription_footerFilterListInput {
+    elemMatch: wcProductDescription_footerFilterInput
+}
+
 input wcProductDetailsFilterInput {
     dpi: StringQueryOperatorInput
     file_size: StringQueryOperatorInput
     file_types: StringQueryOperatorInput
     programs: StringQueryOperatorInput
+    reqs: BooleanQueryOperatorInput
 }
 
 input wcProductFeaturedImageFilterInput {
@@ -9487,15 +9515,16 @@ input wcProductFilterInput {
     date_created_gmt: DateQueryOperatorInput
     date_modified_gmt: DateQueryOperatorInput
     description: StringQueryOperatorInput
+    description_footer: wcProductDescription_footerFilterListInput
     details: wcProductDetailsFilterInput
     featuredImage: wcProductFeaturedImageFilterInput
     features: wcProductFeaturesFilterListInput
     font_preview: wcProductFont_previewFilterInput
     id: StringQueryOperatorInput
     images: wcProductImagesFilterListInput
+    install_instructions: StringQueryOperatorInput
     internal: InternalFilterInput
     intro_description: StringQueryOperatorInput
-    intro_title: StringQueryOperatorInput
     name: StringQueryOperatorInput
     on_sale: BooleanQueryOperatorInput
     parent: NodeFilterInput

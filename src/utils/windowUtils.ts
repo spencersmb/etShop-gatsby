@@ -82,10 +82,10 @@ export const bodyScrollBar = {
 	}
 }
 
-export const useScrollToElement = () => {
+export const useScrollToElement = (elName: string) => {
 	useEffect(() => {
 		setTimeout(() => {
-			const elmnt = document.getElementById('my-div')
+			const elmnt = document.getElementById(elName)
 			if (elmnt) {
 				elmnt.scrollIntoView()
 				console.log('go to: ', elmnt)
