@@ -1,6 +1,4 @@
-import DefaultSpinner from '@components/spinners/defaultSpinner'
 import { device } from '@styles/global/breakpoints'
-import { colors } from '@styles/global/colors'
 import React, { Component, useEffect, useState } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -212,8 +210,6 @@ const GalleryItems = styled(ContainerPose)`
 `
 const GallerySubNav = styled.div`
 	display: none;
-	max-height: 136px;
-	min-height: 136.44px;
 	position: relative;
 	
 	@media ${device.tablet} {

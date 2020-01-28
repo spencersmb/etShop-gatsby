@@ -70,6 +70,9 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 			padding: 2.5px 5px 2.5px 0;
 			width: 100%;
 			transition: border .3s;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
 			&:focus{
 				outline: none;
 				border-color: ${colors.teal.i500};

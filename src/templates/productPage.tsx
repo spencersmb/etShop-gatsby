@@ -189,6 +189,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 
 		const { data: { wcProduct } } = this.props
 		console.log('wcProduct', wcProduct)
+		console.log('this.props.data', this.props.data)
 
 		return (
 			<>
@@ -246,6 +247,7 @@ export const productQuery = graphql`
             name
             sub_header
             id
+
             tags{
                 name
             }

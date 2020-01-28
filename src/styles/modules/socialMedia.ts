@@ -136,8 +136,8 @@ export const SMDesc = styled.div`
 `
 
 export const SMButton = styled.a`
-	color: ${colors.primary.headline};
-	border: 3px solid ${colors.primary.headline};
+	color: ${colors.grey.i800};
+	border: 3px solid ${colors.grey.i800};
 	border-radius: 50px;
 	padding: 6px 14px;
 	text-transform: uppercase;
@@ -145,10 +145,15 @@ export const SMButton = styled.a`
 	width: 100%;
 	max-width: 135px;
 	margin: 15px auto 0;
+	transition: .3s;
+	
+	&:hover{
+		background: ${colors.grey.i800};
+		color: #fff;
+	}
 	
 	@media ${device.tablet} {
 		margin: 0 auto;
-	    
 	}
 		
 `

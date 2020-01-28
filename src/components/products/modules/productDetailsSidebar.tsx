@@ -97,7 +97,7 @@ const SideBar = ({
 	if (!details) {
 		return null
 	}
-	const { file_types, dpi, file_size, programs } = details
+	const { file_types, dpi, file_size, programs, reqs } = details
 	const updateFileTypes = updatePills(file_types, isStandardLicense)
 
 	function changeLicense () {
@@ -162,9 +162,44 @@ const SideBar = ({
 				</Section>
 			</SideBarInner>
 
+			{/*Requirements*/}
+			{reqs && <ReqsContainer>
+        <div className='reqsContent'>
+          <div className='reqsTitle'>Additional Requirements</div>
+          <ul>
+            <li>iPad Pro</li>
+            <li>Apple Pencil</li>
+            <li>Procreate App</li>
+          </ul>
+        </div>
+      </ReqsContainer>}
+
 		</SideBarWrapper>
 	)
 }
+const ReqsContainer = styled.div`
+	background: ${colors.secondary.text};
+	padding: 25px 50px;
+	z-index: 2;
+	box-shadow: ${shadowStyles.shadow5};
+	max-width: 365px;
+	width: 100%;
+	margin: 0;
+	position: relative;
+	.reqsContent{	
+		color: #fff;
+		max-width: 365px;
+	}
+	.reqsTitle{
+		${Sentinel.semiboldItalic};
+		font-size: 18px;
+	}
+	ul{
+		margin: 15px auto 5px;
+		padding-left: 20px;
+	}
+	
+`
 const ProgramList = styled.ul`
 	display: flex;
 	margin:0;
@@ -285,6 +320,7 @@ const Icon = styled.div`
 const SideBarWrapper = styled.aside`
 	grid-column: 2 / 4;
 	position: relative;
+	flex-direction: column;	
 	
 	@media ${device.tablet} {
 		grid-column: 2 / 14;
@@ -309,6 +345,7 @@ const SideBarInner = styled.div`
 	max-width: 365px;
 	width: 100%;
 	margin: 0 auto;
+	z-index: 1;
 	
 	@media ${device.laptop} {
 		margin: 0;
