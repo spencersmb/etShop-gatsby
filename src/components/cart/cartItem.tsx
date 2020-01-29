@@ -19,7 +19,7 @@ import {
 	VolumeDiscountPin
 } from '@styles/modules/cartItem'
 import { checkForCoupon } from '@utils/cartUtils'
-import { calcCouponDiscount, displayCurrency, displayPercent } from '@utils/priceUtils'
+import { calcCouponDiscount, chooseDiscountPercentage, displayCurrency, displayPercent } from '@utils/priceUtils'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
@@ -64,15 +64,8 @@ interface IReduxPropActions {
  */
 export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 	const { cart, cartIndex, products, removeItem } = props
-	const [bulkDiscount, setBulkDiscount] = useState(false)
 	const cartItem = cart.items[cartIndex]
 	const total = parseFloat(cartItem.price) * cartItem.qty
-
-	useEffect(() => {
-		if (cart.items[cartIndex].qty > CartPricingConfig.minQuantity) {
-			setBulkDiscount(true)
-		}
-	}, [])
 
 	function hasCoupon (): boolean {
 		return checkForCoupon(cart.coupon.product_ids, cart.items[cartIndex].id)
@@ -173,14 +166,14 @@ export function CartItem (props: IProps & IReduxProps & IReduxPropActions) {
 					</CartItemDetail>
 
 					{/*Discount*/}
-					{bulkDiscount &&
+					{cartItem.bulkDiscount &&
           <>
             <CartItemDiscount>
               <span>Original Total</span>
               <p data-testid={'originalTotal'}>{displayOriginalTotal()}</p>
             </CartItemDiscount>
             <CartItemDiscount>
-              <span className={'discountLabel'}>{displayPercent(CartPricingConfig.bulkDiscount)}% Savings</span>
+              <span className={'discountLabel'}>{displayPercent(chooseDiscountPercentage(cartItem.qty))}% Savings</span>
               <div className={'discountPin'}>
                 <VolumeDiscountPin>
                   Volume Discount

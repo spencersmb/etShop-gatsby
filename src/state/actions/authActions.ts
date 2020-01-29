@@ -3,6 +3,7 @@ import { Actions } from '@et/types/Actions'
 import { AuthActionTypes } from '@et/types/Enums'
 import { IState } from '@et/types/State'
 import { IAuthResponse, ICreateAuthResponse, IFacebookUserCreate, IUserCreate } from '@et/types/User'
+import { updateCartPrice } from '@redux/actions/cartActions'
 import { loadCouponSuccess } from '@redux/actions/couponActions'
 import { clearPagination } from '@redux/actions/paginationActions'
 import { statusCheck } from '@utils/apiUtils'
@@ -71,6 +72,7 @@ export const createUser: any = (user: IUserCreate) => async (dispatch: Dispatch<
 
 	dispatch(loginUserSuccess(body))
 	dispatch(loadCouponSuccess(body.coupon))
+	dispatch(updateCartPrice())
 	saveUserLocalStorage(body)
 	return {
 		firstName: body.first_name

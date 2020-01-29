@@ -33,6 +33,7 @@ interface IProps {
 	onPwywChange: (total: number | string) => void
 	featuredImage: IProductFeaturedImage,
 	licenses: ILicenseType[]
+	cartOpen: boolean
 }
 
 const CheckoutNavBar = (props: IProps) => {
@@ -82,10 +83,20 @@ const CheckoutNavBar = (props: IProps) => {
 
 	}
 
+	function checkWindow () {
+		if (props.cartOpen) {
+			return true
+		} else {
+			return getWindowPosition() > 300
+		}
+	}
+
+	console.log('checkoutNav', getWindowPosition() > 300 && !inView && mounted.current)
+
 	return (
 		<CheckoutNavContainer
 			// pose={windowPos > 300 && !inView ? 'show' : 'hide'}
-			showNav={getWindowPosition() > 300 && !inView && mounted.current}>
+			showNav={checkWindow() && !inView && mounted.current}>
 			<Container className={'checkoutNavBar'}>
 				<Section0>
 					<Img

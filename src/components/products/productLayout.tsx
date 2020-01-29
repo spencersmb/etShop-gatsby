@@ -218,6 +218,8 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		threshold: 0
 	})
 
+	console.log('inView', inView)
+
 	return (
 		<Layout productPage={true}>
 			<ProductWrapper>
@@ -358,6 +360,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					selectedLicense={state.selectedLicense}
 					title={standardItem.current.name}
 					price={state.price}
+					cartOpen={cart.isOpen}
 					total={calcTotalQtyPrice(state.price, numberOfLicenses)}
 				/>
 			), [inView, state.price, numberOfLicenses, inCart, payWhatYouWant, bulkDiscount])}

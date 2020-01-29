@@ -38,7 +38,7 @@ const filterItems: IFilterItem[] = [
 	{
 		slug: 'graphics',
 		name: 'Graphics',
-		icon: 'Graphics'
+		icon: 'Templates'
 	}
 ]
 

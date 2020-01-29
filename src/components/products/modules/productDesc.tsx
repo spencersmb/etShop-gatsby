@@ -117,6 +117,7 @@ const Desc = styled.div`
 	}
 	a{
 		color: ${colors.db.primary};
+		word-break: break-word;
 	}
 	
 	@media ${device.tablet} {

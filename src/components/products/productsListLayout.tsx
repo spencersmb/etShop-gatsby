@@ -3,6 +3,7 @@ import { IProduct } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { col, gutter } from '@styles/global/cssGrid'
+import { Sentinel } from '@styles/global/fonts'
 import { graphql, StaticQuery } from 'gatsby'
 import React, { Component } from 'react'
 import styled from 'styled-components'
@@ -85,7 +86,7 @@ class ProductsListLayout extends Component<IProps> {
 									return (
 										<ProductListItem key={node.id} {...node}/>
 									)
-								}) : <div>No Products Found</div>
+								}) : <EmptyContainer>No Products Found</EmptyContainer>
 							}
 						</ListContainer>
 					)
@@ -95,6 +96,20 @@ class ProductsListLayout extends Component<IProps> {
   }
 }
 
+const EmptyContainer = styled.div`
+	grid-column: 2 / 4;
+	transition: .3s;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	${Sentinel.semiboldItalic};
+	font-size: 24px;
+	color: ${colors.primary.headline};
+	
+	@media ${device.tablet}{
+		grid-column: 1 / 14;
+	}
+`
 const ListContainer = styled.div`
 	grid-column: 1 / -1;
 	position: relative;
