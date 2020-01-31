@@ -37,14 +37,14 @@ export const ResetPasswordForm = (props: any) => {
 			const rpResponse = await resetPassword(submitProps)
 			toastr.removeByType('error')
 			toastr.success(`Welcome ${rpResponse.firstName}`, 'you\'ve successfully changed your password.', toastrOptions.standard)
-			navigate(`/account/`)
+			await navigate(`/account/`)
 		} catch (e) {
 			console.error('e', e)
 		}
 	}
-	const forgotPw = () => {
+	const forgotPw = async () => {
 		toastr.removeByType('error')
-		navigate('/forgotPassword')
+		await navigate('/forgotPassword')
 	}
 
 	return (
@@ -56,8 +56,8 @@ export const ResetPasswordForm = (props: any) => {
 				</p>
 			</FormHeader1>
 			<form onSubmit={handleSubmit(submitForm)}>
-				<FormGroup data-testid={'formGroup'}>
-					<FormInput>
+				<FormGroup data-testid={'formGroup'} column={true}>
+					<FormInput fullWidth={true}>
 						<ReduxFieldExt
 							name='email'
 							type='email'
@@ -68,7 +68,7 @@ export const ResetPasswordForm = (props: any) => {
 							svg={svgs.CreditCard}
 						/>
 					</FormInput>
-					<FormInput>
+					<FormInput fullWidth={true}>
 						<ReduxFieldExt
 							name='password'
 							type='password'
@@ -86,7 +86,6 @@ export const ResetPasswordForm = (props: any) => {
 					backgroundColor={colors.teal.i500}
 					spinnerColor={colors.teal.i500}
 					submitting={submitting}
-					completed={submitSucceeded}
 					invalid={invalid}
 				/>
 			</form>

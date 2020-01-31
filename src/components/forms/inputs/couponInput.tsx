@@ -1,7 +1,7 @@
 import { CheckoutApi } from '@api/checkoutApi'
 import { ICartItemWithKey, ICouponApiResponse, ICouponRaw, ICouponState } from '@et/types/Cart'
 import { IState } from '@et/types/State'
-import { updateCartPrice } from '@redux/actions/cartActions'
+import { changeCheckoutType, updateCartPrice } from '@redux/actions/cartActions'
 import {
 	ICouponSuccessAction,
 	loadCouponInvalid,
@@ -30,6 +30,7 @@ interface IReduxActions {
 	invalidCoupon: () => void
 	submitCoupon: () => void
 	updatePrice: () => void
+	changeCheckout: (type: string) => void
 }
 
 interface IProps {
@@ -42,7 +43,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 	const [input, setInput] = useState('')
 	const [active, setActive] = useState(false)
 	const [pristine, setPristine] = useState(true)
-	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total, cartItems } = props
+	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total, cartItems, changeCheckout } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const prevTotal = useRef(total)
 
@@ -56,6 +57,15 @@ export function CouponInput (props: IProps & IReduxActions) {
 			setPristine(false)
 		}
 	}, [])
+
+	// useEffect(() => {
+	// 	if (total === parseInt(coupon.discount, 10) && coupon.type !== 'percent') {
+	// 		const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
+	// 		if (isFound) {
+	// 			changeCheckout('pwyw')
+	// 		}
+	// 	}
+	// })
 
 	useEffect(() => {
 		let inputSubscribe: Subscription
@@ -131,6 +141,13 @@ export function CouponInput (props: IProps & IReduxActions) {
 
 					loadCoupon(newCoupon)
 					updatePrice()
+					// console.log('total', total)
+					// console.log('newCoupon', newCoupon)
+					//
+					// if (total === parseInt(newCoupon.amount, 10) && newCoupon.discount_type !== 'percent') {
+					// 	changeCheckout('pwyw')
+					// }
+					// check if price is 0 and has Coupon - switch to free item
 				})
 		}
 
@@ -242,7 +259,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 		submitCoupon: bindActionCreators(submitCouponAction, dispatch),
 		loadCoupon: bindActionCreators(loadCouponSuccess, dispatch),
 		invalidCoupon: bindActionCreators(loadCouponInvalid, dispatch),
-		updatePrice: bindActionCreators(updateCartPrice, dispatch)
+		updatePrice: bindActionCreators(updateCartPrice, dispatch),
+		changeCheckout: bindActionCreators(changeCheckoutType, dispatch)
 
 	}
 }

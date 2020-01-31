@@ -133,6 +133,7 @@ export const useScrollEventv2 = (elementId: string, fixedElement: any, scrollEle
 }
 
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
+	const {cart, changeCheckout} = props
 	const target = useRef<HTMLElement | null>(null)
 	const [checkoutOpen, setCheckoutOpen] = useState(false)
 	const [fixed, offsetLeft, width] = useScrollEventv2('cartPageContainer', 'cartCheckoutNav', 'cartWrapper')
@@ -142,13 +143,21 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
 	// to flip to the free checkout form
 	const toggleCheckout = () => {
-		if (checkoutOpen) {
+		console.log('window.innerWidth > 992', window.innerWidth > 992)
+		if (window.innerWidth > 992) {
+			CheckoutSliderRef.current.style.overflowY = `scroll`
+			// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
+		} else {
 			CheckoutSliderRef.current.style.overflowY = `hidden`
-			if (window.innerWidth > 1024) {
-				CheckoutSliderRef.current.style.overflowY = `scroll`
-				// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
-			}
 		}
+		// if (checkoutOpen) {
+		// 	CheckoutSliderRef.current.style.overflowY = `hidden`
+		//
+		// 	if (window.innerWidth > 992) {
+		// 		CheckoutSliderRef.current.style.overflowY = `scroll`
+		// 		// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
+		// 	}
+		// }
 		setCheckoutOpen(!checkoutOpen)
 	}
 
@@ -234,11 +243,14 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 				}}
 			>
 				<CheckoutPage
+					total={cart.totalPrice}
+					cartItems={cart.items}
+					coupon={cart.coupon}
 					initialLoad='stripe'
 					toggleCheckout={toggleCheckout}
 					handleChangeType={props.changeCheckout}
 					user={props.user}
-					freeCheckout={props.cart.totalPrice === 0 && isPWYWItemInCart(props.cart.items, props.products)}
+					freeCheckout={props.cart.totalPrice === 0 && (isPWYWItemInCart(props.cart.items, props.products) || props.cart.paymentType === 'pwyw')}
 				>
 					<div data-payment='stripe'>
 						<StripeProviderWrapper>
@@ -361,7 +373,7 @@ const CartCheckoutNav = styled.div<{ width: number, fixed: boolean, offsetLeft: 
 		position: relative;
 
 		.inner{
-			max-width: 283px;
+			max-width: 293px;
 			position: ${props => props.fixed ? 'fixed' : 'relative'};
 			top: ${props => props.fixed ? '20px' : '0'};
 			left: ${props => props.fixed ? `${props.offsetLeft}px` : 'auto'};

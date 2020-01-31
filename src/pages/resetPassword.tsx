@@ -9,7 +9,6 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 const ResetPassword = (props: any) => {
-	console.log('page props', props)
 	const { site, featureImage } = props.data
 	const searchString = props.location.search || ''
 	const urlParams = new URLSearchParams(searchString)

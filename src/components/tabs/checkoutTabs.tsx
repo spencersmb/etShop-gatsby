@@ -11,6 +11,7 @@ import { GridFluid } from '@styles/global/cssGrid'
 import { CartHeader, CartHeaderTitle } from '@styles/modules/cart'
 import { CartInner, CheckoutFormLabel, CheckoutTabs, CouponWrapper } from '@styles/modules/checkout'
 import { svgs } from '@svg'
+import { checkCartForItemMatchingCoupon } from '@utils/cartUtils'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
 import React, { useEffect, useState } from 'react'
@@ -27,6 +28,9 @@ export interface IProps {
 	handleChangeType: (type: string) => void
 	toggleCheckout: () => void
 	user: IUserState
+	total: any
+	coupon: any
+	cartItems: any
 }
 
 /**
@@ -47,6 +51,7 @@ export interface IProps {
  */
 
 export const CheckoutPage = (props: IProps) => {
+	const { total, coupon, cartItems, handleChangeType } = props
 	const [key, setKey] = useState('stripe')
 	const [showCouponInput, setShowCouponInput] = useState(false)
 
@@ -67,6 +72,21 @@ export const CheckoutPage = (props: IProps) => {
 		}
 
 	}, [])
+
+	useEffect(() => {
+		console.log('total', total)
+		console.log('coupon', coupon)
+
+		if (total === 0 && coupon.product_ids.length > 0) {
+			const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
+			if (isFound) {
+				handleChangeType('pwyw')
+			}
+		}
+		if (total === 0 && coupon.product_ids.length === 0) {
+			handleChangeType('pwyw')
+		}
+	}, [coupon, cartItems, total])
 
 	function onTabClick (itemKey: string) {
 
