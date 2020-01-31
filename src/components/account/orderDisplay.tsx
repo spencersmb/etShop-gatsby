@@ -107,6 +107,8 @@ function OrderDisplay (props: IProps) {
 					return renderSvg(svgs.CCMaster)
 				case 'american express':
 					return renderSvg(svgs.CCAmex)
+				case 'free':
+					return renderSvg(svgs.Free)
 				default:
 					return renderSvg(svgs.CreditCard)
 			}
@@ -415,7 +417,7 @@ const ProductGrid = styled.div`
   grid-auto-rows: minmax(min-content, max-content);
 
   @media ${device.tablet} {
-		grid-template-columns: 4fr .7fr .5fr .7fr 1fr;
+		grid-template-columns: 4fr 1fr .5fr .7fr minmax(98px, 1fr);
 		grid-gap: 10px;
 		align-items: center;
 		justify-items: center;

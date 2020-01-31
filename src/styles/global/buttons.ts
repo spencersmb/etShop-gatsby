@@ -29,7 +29,9 @@ export const ButtonSmall = styled.div<IButtonProps>`
 			cursor: pointer;
 			color: ${props => props.hoverTextColor ? props.hoverTextColor : 'white'};
 			background: ${props => props.hoverColor ? props.hoverColor : '#000000'};
-	
+			${props => !props.outline ? '' : `
+				border: 3px solid ${props.hoverColor};
+			`}
 		}
 	}
 	

@@ -167,6 +167,7 @@ export interface IProduct {
 	font_preview: IFontPreview,
 	sub_header: string,
 	slug: string,
+	sku: string,
 	type: string,
 	intro_description: string,
 	install_instructions: string,

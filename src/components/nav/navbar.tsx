@@ -188,7 +188,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 
 	}
 
-	const changePage = (href: string) => (e: any) => {
+	const changePage = (href: string) => async (e: any) => {
 		e.preventDefault()
 		if (nav.isOpen) {
 			toggleNav()
@@ -197,7 +197,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 				}, 300
 			)
 		} else {
-			navigate(href)
+			await navigate(href)
 		}
 	}
 

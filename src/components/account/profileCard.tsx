@@ -36,7 +36,7 @@ const ProfileCard = ({ user, desktop = false, logUserOut }: IProps & IReduxState
 				MY ACCOUNT
 			</CheckoutFormLabel>
 			<LoginUserWrapper desktop={desktop}>
-				<img src={getUserImage(user).src} alt={getUserImage(user).alt}/>
+				{getUserImage(user)}
 				<UserContent desktop={desktop}>
 					<UserName>
 						{firstName}
@@ -46,11 +46,11 @@ const ProfileCard = ({ user, desktop = false, logUserOut }: IProps & IReduxState
 					</UserEmail>
 					<SignOutBtn
 						desktop={desktop}
-						color={'#F7F8FC'}
-						textColor={'#8593a2'}
-						hoverColor={colors.grey.i600}
+						color={colors.purple.i500}
+						textColor={colors.purple.i500}
+						hoverColor={colors.purple.i700}
 						hoverTextColor={'#fff'}
-						outline={false}
+						outline={true}
 						onClick={logUserOut}
 					>
 						Sign Out

@@ -135,6 +135,7 @@ export const OrderSummery = styled.div`
 	margin-top: 20px;
 	padding: 0 20px;
 	position: relative;
+	flex: 1;
 	
 	h3{
 		text-align: left;
@@ -576,6 +577,12 @@ export const LoginUserWrapper = styled.div<{ desktop: boolean }>`
 		border: 4px solid ${colors.purple.i500};
 		margin-bottom: 15px;
 	}
+	.userSvg{
+		margin: 0 auto 8px;
+		path{
+			fill: ${colors.purple.i500};
+		}
+	}
 `
 export const UserContent = styled.div<{ desktop: boolean }>`
 	display: flex;
@@ -597,7 +604,6 @@ export const UserEmail = styled.div`
  margin-bottom: 15px;
 `
 export const SignOutBtn = styled(ButtonSmall)<{ desktop: boolean }>`
-	border: 3px solid ${colors.grey.i600};
 	
 	${props => !props.desktop ? `
 		right: 0;

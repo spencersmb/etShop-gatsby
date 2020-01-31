@@ -185,9 +185,19 @@ export const NavCenter = styled.ul<{ user: IUser | null }>`
 			opacity: 1 !important;
 			transform: translateX(0) !important;
 			font-size: 14px;
+			height: 100%;
+			flex: 1;
+			justify-content: center;
+			align-items: center;
 			&:first-child{
 				padding-top: 0;
 			}
+		}
+		a{
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 	}

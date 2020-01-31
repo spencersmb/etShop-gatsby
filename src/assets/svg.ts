@@ -28,6 +28,7 @@ const FacebookCir = require('./svg-icons/facebook-circle.svg')
 const FooterCircle = require('./svg-icons/Footer-Circle.svg')
 const Fonts = require('./svg-icons/Fonts.svg')
 const FontPreview = require('./svg-icons/fontPreview.svg')
+const Free = require('./svg-icons/cc-free.svg')
 const Hamburger = require('./svg-icons/hamburger.svg')
 const HamburgerClose = require('./svg-icons/hamburger-close.svg')
 const Illustrator = require('./svg-icons/illustrator.svg')
@@ -78,6 +79,7 @@ export const svgs = {
 	Facebook,
 	FacebookCir,
 	Filter,
+	Free,
 	FontPreview,
 	FooterCircle,
 	Fonts,

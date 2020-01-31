@@ -263,7 +263,7 @@ const Name = styled.div`
 	font-size: 16px;
 	color: ${colors.primary.text};
 	font-weight: 500;
-	width: 100%;
+	width: 60%;
 	
 	span{
 		font-weight: 300;

@@ -40,7 +40,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			type: 'card',
 			amount: stripeCalcTotal,
 			currency: 'USD',
-			statement_descriptor: 'ET Shop',
+			statement_descriptor: 'Every-Tuesday Purchase',
 			usage: 'single_use'
 		}
 		const sourceOrder = {
@@ -124,7 +124,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 	}
 
 	function onFail () {
-		// toaster
+		toastr.error('Stripe error', 'Stripe Failed. Please try again.')
 		console.error('Failed order')
 	}
 

@@ -56,7 +56,7 @@ export const getPaypalFormatItems = (cart: ICartState, products: IProducts): IPa
 				currency_code: 'USD'
 			},
 			quantity: cartItem.qty,
-			sku: products[item].id.toString(),
+			sku: products[item].sku,
 			category: 'DIGITAL_GOODS'
 		}
 	})

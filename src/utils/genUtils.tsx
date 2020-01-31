@@ -47,7 +47,7 @@ export function getUserImage (currentUser: IUser) {
 		)
 	} else {
 		return (
-			<UserProfileSvg>
+			<UserProfileSvg className={'userSvg'}>
 				{renderSvg(svgs.User)}
 			</UserProfileSvg>
 		)

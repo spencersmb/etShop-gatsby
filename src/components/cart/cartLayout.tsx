@@ -361,6 +361,7 @@ const CartCheckoutNav = styled.div<{ width: number, fixed: boolean, offsetLeft: 
 		position: relative;
 
 		.inner{
+			max-width: 283px;
 			position: ${props => props.fixed ? 'fixed' : 'relative'};
 			top: ${props => props.fixed ? '20px' : '0'};
 			left: ${props => props.fixed ? `${props.offsetLeft}px` : 'auto'};

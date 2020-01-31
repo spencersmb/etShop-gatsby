@@ -107,7 +107,7 @@ export function FreeCheckoutForm (props: AllProps & InjectedFormProps<{}, AllPro
 						backgroundColor={colors.teal.i500}
 						spinnerColor={colors.teal.i500}
 						submitting={submitting}
-						invalid={invalid || valid && pristine}
+						invalid={user ? false : invalid || valid && pristine}
 					/>
 				</ButtonWrapper>
 			</form>
