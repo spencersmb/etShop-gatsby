@@ -51,7 +51,6 @@ export const SignUpForm = (props: any) => {
 	const { required } = ReduxValidation
 	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
 		// console.log('response', response)
-
 		handleFacebookSubmit(response)
 	}
 

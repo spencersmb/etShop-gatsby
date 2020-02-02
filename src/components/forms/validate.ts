@@ -1,5 +1,5 @@
 const validate = (values: any) => {
-	console.log('validate', values.signupEmail)
+	// console.log('validate', values.signupEmail)
 
 	const errors: any = {}
 	if (!values.email) {

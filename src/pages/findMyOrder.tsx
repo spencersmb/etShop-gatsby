@@ -118,7 +118,6 @@ const ForgotPasswordPage = ({ data }: any) => {
 			})
 			toastr.success('Order Found!', 'Please check your email.', toastrOptions.noHover)
 		} catch (e) {
-			console.error('error', e)
 			setState({
 				submitting: false
 			})
