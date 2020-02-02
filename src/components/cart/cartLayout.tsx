@@ -133,7 +133,7 @@ export const useScrollEventv2 = (elementId: string, fixedElement: any, scrollEle
 }
 
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
-	const {cart, changeCheckout} = props
+	const { cart, changeCheckout } = props
 	const target = useRef<HTMLElement | null>(null)
 	const [checkoutOpen, setCheckoutOpen] = useState(false)
 	const [fixed, offsetLeft, width] = useScrollEventv2('cartPageContainer', 'cartCheckoutNav', 'cartWrapper')
@@ -235,8 +235,6 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 				ref={CheckoutSliderRef}
 				pose={checkoutOpen ? 'open' : 'closed'}
 				onPoseComplete={(type: OnPoseComplete) => {
-					console.log('type', type)
-
 					if (type === 'open') {
 						// CheckoutSliderRef.current.style.overflowY = `scroll`
 					}

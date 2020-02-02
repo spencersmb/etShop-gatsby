@@ -10,6 +10,7 @@ import { IPaginateState } from '@et/types/Pagination'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
 import { IOrderResponse, IReceipt } from '@et/types/WC_Order'
+import { logout as logoutUser } from '@redux/actions/authActions'
 import {
 	ISearchOrderAction,
 	resetDownloadLinks as resetDownloadLinksAction,
@@ -48,6 +49,7 @@ interface IReduxState {
 interface IReduxActions {
 	searchOrderById: any
 	resetDownloadLinks: any
+	logout: any
 	getOrders: (page: number) => Promise<any>
 }
 
@@ -67,6 +69,7 @@ function getCurrentPage (path: string) {
 }
 
 type AllProps = IProps & IReduxActions & IReduxState
+
 interface ILocalState {
 	searching: boolean,
 	selectedSearchOrder: any,
@@ -74,6 +77,7 @@ interface ILocalState {
 	searchInput: string,
 	orderModalOpen: boolean
 }
+
 interface INewState {
 	searching?: boolean,
 	selectedSearchOrder?: any,
@@ -81,6 +85,7 @@ interface INewState {
 	searchInput?: string,
 	orderModalOpen?: boolean
 }
+
 export function Dashboard (props: AllProps) {
 	const { pagination, resetDownloadLinks } = props
 	const page = getCurrentPage(props.location.search)
@@ -93,20 +98,18 @@ export function Dashboard (props: AllProps) {
 	})
 
 	useEffect(() => {
-		console.log('useEffect page check')
-
 		const getMyOrders = async () => {
 			const { orders } = await props.getOrders(page)
 		}
 
 		getMyOrders().catch((e) => {
-			console.error(e)
+			props.logout()
 		})
 
 	}, [props.location.search])
 
 	function orderClick (orderId: number) {
-		console.log('orderClick', orderId)
+		// console.log('orderClick', orderId)
 
 		if (state.selectedOrder && orderId !== state.selectedOrder.id) {
 			setState({ selectedOrder: pagination.pages[page][orderId], orderModalOpen: true })
@@ -154,6 +157,7 @@ export function Dashboard (props: AllProps) {
 			await resetDownloadLinks(orderId, page)
 		} catch (e) {
 			console.error('e', e)
+			props.logout()
 		}
 	}
 
@@ -326,7 +330,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 	return {
 		searchOrderById: bindActionCreators(searchOrderByIdAction, dispatch),
 		getOrders: bindActionCreators(fetchOrders, dispatch),
-		resetDownloadLinks: bindActionCreators(resetDownloadLinksAction, dispatch)
+		resetDownloadLinks: bindActionCreators(resetDownloadLinksAction, dispatch),
+		logout: bindActionCreators(logoutUser, dispatch)
 	}
 }
 

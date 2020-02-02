@@ -23,7 +23,7 @@ export const Nav = styled.nav`
 	}
 	@media ${device.laptop} {
 		margin: 0 15px;
-		grid-template-columns: repeat(3,minmax(auto,1fr));
+		grid-template-columns: minmax(auto, 1fr) minmax(50px, 270px) minmax(auto, 1fr);
 		position: relative;
 		height: 87px;
 	}
@@ -100,7 +100,7 @@ export const NavLinks = styled(NavLinksPose)<INavLinkProps>`
 		top: 0px;
 		grid-column: 2 / -1;
 		display: grid;
-		grid-template-columns: repeat(2,minmax(auto,1fr));
+		grid-template-columns: minmax(50px ,270px) minmax(auto,1fr);
 		height: 100%;
 		transform: translateX(0) !important;
 		transition: 0s;

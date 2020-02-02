@@ -56,7 +56,7 @@ const ReceiptCard = (props: IReceipt & IClose) => {
 							</DetailItem>
 						</Details>
 						<DownloadBtnWrapper>
-							<a href={product.url} data-testid={`download-url`}>
+							<a href={product.url} target={`_blank`} data-testid={`download-url`}>
 								<DownloadBtn
 									color={'#fff'}
 									submitting={false}

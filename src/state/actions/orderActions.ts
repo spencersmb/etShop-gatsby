@@ -16,7 +16,7 @@ export const createOrder = (orderData: IOrderDetails, stripeSourceToken?: string
 	dispatch({
 		type: OrderActionTypes.SUBMIT_ORDER
 	})
-	console.log('orderData', orderData)
+	// console.log('orderData', orderData)
 
 	let completeOrder
 	if (orderData.payment_method === 'stripe' && stripeSourceToken) {
@@ -87,7 +87,9 @@ export const resetDownloadLinks = (orderId: string, page: number) => async (disp
 	const json: { code: string, message: string, order: { order_id: string, downloads: IOrderDownload } } = await request.json()
 
 	// console.log('json', json)
-	// const item = json.order.downloads.exp_date * 1000
+	// const item = json.order.downloads.exp_date
+	// console.log('item time', item)
+	//
 	// const today = new Date()
 	// const exp = new Date(json.order.downloads.exp_date * 1000)
 	// console.log('exp', exp)

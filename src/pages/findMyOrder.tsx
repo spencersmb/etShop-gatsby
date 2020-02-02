@@ -106,6 +106,7 @@ const ForgotPasswordPage = ({ data }: any) => {
 	}
 
 	const handleSubmit = async () => {
+		toastr.clean()
 		setState({
 			submitting: true
 		})

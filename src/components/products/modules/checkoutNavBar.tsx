@@ -91,7 +91,7 @@ const CheckoutNavBar = (props: IProps) => {
 		}
 	}
 
-	console.log('checkoutNav', getWindowPosition() > 300 && !inView && mounted.current)
+	// console.log('checkoutNav', getWindowPosition() > 300 && !inView && mounted.current)
 
 	return (
 		<CheckoutNavContainer

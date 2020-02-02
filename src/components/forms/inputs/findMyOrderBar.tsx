@@ -49,7 +49,7 @@ const FindMyOrderBar = (props: IProps) => {
 						</span>
 						<input
 							required={true}
-							type='text'
+							type='email'
 							value={state.email}
 							placeholder={`Email Address`}
 							onChange={props.handleInputChange}
@@ -177,6 +177,7 @@ const FindOrderWrapper = styled.div`
 		padding: 20px 15px;
 		${placeholderColor(colors.secondary.text)};
 		${Sentinel.semiboldItalic};
+		color: ${colors.primary.headline};
 		&:focus{
 			outline: none;
 		}

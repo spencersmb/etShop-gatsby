@@ -13,7 +13,7 @@ import { navigate } from 'gatsby'
  * @returns {Function} actionType dispatch( logUserOut )
  * @returns {Error}
  */
-export const 	statusCheck = async (response: any, dispatch: any) => {
+export const statusCheck = async (response: any, dispatch: any) => {
 	// console.log('response.status', response)
 	// console.log('errors?', await response.json())
 
@@ -69,7 +69,7 @@ export const 	statusCheck = async (response: any, dispatch: any) => {
 	// // IE 500 status
 	if (response.status !== 200) {
 		const newError = await response.json()
-		console.log('newError', newError)
+		// console.log('newError', newError)
 
 		if (newError.message) {
 			toastr.error('Error:', newError.message, toastrOptions.noHover)

@@ -7,7 +7,7 @@ import { Actions } from '@et/types/Actions'
 export const userReducer: Reducer<IUserState> = (state: IUserState = initialState.user, action: Actions): IUserState => {
 	switch (action.type) {
 		case AuthActionTypes.LOGIN_USER:
-		console.log('action.payload', action.payload)
+		// console.log('action.payload', action.payload)
 
 			return {
 				email: action.payload.user_email,

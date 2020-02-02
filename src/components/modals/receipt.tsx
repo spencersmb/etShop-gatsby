@@ -43,6 +43,7 @@ const ThankyouWrapper = styled.div`
 	z-index: 1;
 	
 	svg{
+		height: 100%;
 		width: 100%;
 	}
 	path{
@@ -74,15 +75,13 @@ const CardWrapper = styled.div`
 	position: relative;
 	grid-row: 1;
 @media ${device.tablet} {
-	padding: 40px 40px;
+	padding: 0;
 	grid-column: 2 / 14;
 }
 @media ${device.laptop} {
-	padding: 40px 40px;
 	grid-column: 3 / 13;
 }
 @media ${device.laptopL} {
-	padding: 40px 40px;
 	grid-column: 6 / 14;
 }
 `

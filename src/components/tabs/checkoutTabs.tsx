@@ -73,10 +73,8 @@ export const CheckoutPage = (props: IProps) => {
 
 	}, [])
 
+	// free item with coupon
 	useEffect(() => {
-		console.log('total', total)
-		console.log('coupon', coupon)
-
 		if (total === 0 && coupon.product_ids.length > 0) {
 			const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
 			if (isFound) {

@@ -46,11 +46,11 @@ const tooOld = (value: any) =>
 	value && value > 65 ? 'You might be too old for this' : undefined
 
 export const SignUpForm = (props: any) => {
-	const { handleSubmit, submitSucceeded, poseRef, submitting, invalid, handleUserSubmit, handleFacebookSubmit, manualSubmitting, setManualSubmit, setFacebookError, facebookError, closeModal } = props
+	const { handleSubmit, poseRef, submitting, invalid, handleUserSubmit, handleFacebookSubmit, manualSubmitting, setManualSubmit, setFacebookError, facebookError, closeModal } = props
 
 	const { required } = ReduxValidation
 	const responseFacebook = async (response: ReactFacebookLoginInfo) => {
-		console.log('response', response)
+		// console.log('response', response)
 
 		handleFacebookSubmit(response)
 	}

@@ -141,13 +141,6 @@ export function CouponInput (props: IProps & IReduxActions) {
 
 					loadCoupon(newCoupon)
 					updatePrice()
-					// console.log('total', total)
-					// console.log('newCoupon', newCoupon)
-					//
-					// if (total === parseInt(newCoupon.amount, 10) && newCoupon.discount_type !== 'percent') {
-					// 	changeCheckout('pwyw')
-					// }
-					// check if price is 0 and has Coupon - switch to free item
 				})
 		}
 

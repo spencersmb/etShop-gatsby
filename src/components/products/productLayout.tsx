@@ -218,8 +218,6 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		threshold: 0
 	})
 
-	console.log('inView', inView)
-
 	return (
 		<Layout productPage={true}>
 			<ProductWrapper>
@@ -455,7 +453,9 @@ const ButtonWrapper = styled.div`
 	}
 	
 	@media ${device.laptop} {
-		padding: 20px;
+		a{
+			padding: 20px;
+		}
 	}
 		
 `

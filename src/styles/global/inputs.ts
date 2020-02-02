@@ -72,12 +72,12 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 			transition: border .3s;
 			-webkit-appearance: none;
 			-moz-appearance: none;
+			-moz-appearance: textfield;
 			appearance: none;
 			&:focus{
 				outline: none;
 				border-color: ${colors.teal.i500};
 			}
-			-moz-appearance: textfield;
 			&::-webkit-outer-spin-button, 
 			::-webkit-inner-spin-button{
 				-webkit-appearance: none;
@@ -86,6 +86,18 @@ export const InputWrapper = styled.div<{ disableInput: boolean }>`
 			&:read-only{
 				cursor: auto;
 				border-color: #D2DCE5;
+			}
+	}
+	
+	select:-moz-focusring {
+			color: transparent;
+			text-shadow: 0 0 0 #000;
+	}
+	select {
+			background: transparent;
+			&:focus{
+				outline: 0;
+				border: none;
 			}
 	}
 	
