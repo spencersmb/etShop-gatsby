@@ -136,7 +136,7 @@ const LicContainer = styled.div<{ height: string }>`
 	border-top: 1px solid ${colors.grey.i600};
 	border-bottom: 1px solid ${colors.grey.i600};
 	padding: 15px 0 25px;
-	margin-bottom: 25px;
+	margin-bottom: 20px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;

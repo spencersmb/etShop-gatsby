@@ -73,6 +73,7 @@ const Container = styled.div`
 	@media ${device.laptop} {
 		flex-direction: row;
 		max-width: none;
+		align-items: center;
 	}
 `
 const RightSide = styled.div`
@@ -104,7 +105,9 @@ const LicenseQtyWrapper = styled.div`
 		
 	@media ${device.laptop} {
 		padding: 15px 0;
+		margin: 0 0 0 auto;
 		max-width: none;
+		width: auto;
 	}
 		
 `
@@ -176,7 +179,9 @@ const Discount = styled.div`
 	@media ${device.laptop} {
 		font-size: 14px;
 		margin: 0 15px 0 0;
-
+		position: absolute;
+    left: -82px;
+    top: 0;
 		
 		span{
 			margin: 0 0 0 5px;

@@ -577,6 +577,14 @@ const LicenseSelectWrapper = styled(productRowGap)`
 `
 const LicenseQtyWrapper = styled(productRowGap)`
 	grid-column: 2 / 4;
+	
+	p{
+		text-align: right;
+		max-width: 484px;
+		margin: 0 auto;
+		font-size: 14px;
+		color: ${colors.grey.i800};
+	}
 
 	@media ${device.tablet} {
 		& >div{
@@ -585,16 +593,16 @@ const LicenseQtyWrapper = styled(productRowGap)`
 	 grid-column: 4 / 12;
 	}
 	@media ${device.laptop} {
-	 grid-column: 9 / 14;
+	 	grid-column: 9 / 14;
 	 	grid-row: 3;
+		display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    p{
+    	margin: 0 0 0 auto;
+    }
 	}
-	p{
-	text-align: right;
-	max-width: 484px;
-	margin: 0 auto;
-		font-size: 14px;
-		color: ${colors.grey.i800};
-	}
+	
 `
 const PWYWWrapper = styled(productRowGap)`
 	grid-column: 2 / 4;
