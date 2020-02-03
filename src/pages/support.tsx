@@ -25,18 +25,7 @@ interface IProps {
 }
 
 const SupportPage = (props: IProps) => {
-	const { data: { site, featureImage } } = props
-	console.log('props', props)
-	console.log('s', JSON.stringify(`query MyQuery {
-  wpgraphql {
-    posts {
-      nodes {
-        slug
-      }
-    }
-  }
-}`))
-
+	const { data: { wpgraphql: { categories: { nodes } }, site, featureImage } } = props
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -97,7 +86,7 @@ const SupportPage = (props: IProps) => {
 			content: '648'
 		}
 	]
-	// const categories = reArrangeItems(nodes)
+	const categories = reArrangeItems(nodes)
 	return (
 		<Layout whiteFooter={true}>
 			<SEO
@@ -124,11 +113,11 @@ const SupportPage = (props: IProps) => {
 					<HeaderBlockOne headline={'How can we help?'}/>
 				</div>
 				<SupportItemsContainer>
-					{/*{categories.map((cat: ICategory) => {*/}
-					{/*	return (*/}
-					{/*		<SupportCategory key={cat.slug} {...cat}/>*/}
-					{/*	)*/}
-					{/*})}*/}
+					{categories.map((cat: ICategory) => {
+						return (
+							<SupportCategory key={cat.slug} {...cat}/>
+						)
+					})}
 				</SupportItemsContainer>
 
 			</SupportPageContainer>
@@ -183,6 +172,24 @@ export const query = graphql`
                 }
             }
         }
-
+        wpgraphql{
+            categories{
+                nodes{
+                    count
+                    name
+                    slug
+                    supportQuestions{
+                        nodes{
+                            title
+                            slug
+                            excerpt
+                            acfSupportQuestions{
+                                popularity
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 `
