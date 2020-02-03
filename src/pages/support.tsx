@@ -113,11 +113,11 @@ const SupportPage = (props: IProps) => {
 					<HeaderBlockOne headline={'How can we help?'}/>
 				</div>
 				<SupportItemsContainer>
-					{categories.map((cat: ICategory) => {
-						return (
-							<SupportCategory key={cat.slug} {...cat}/>
-						)
-					})}
+					{/*{categories.map((cat: ICategory) => {*/}
+					{/*	return (*/}
+					{/*		<SupportCategory key={cat.slug} {...cat}/>*/}
+					{/*	)*/}
+					{/*})}*/}
 				</SupportItemsContainer>
 
 			</SupportPageContainer>
