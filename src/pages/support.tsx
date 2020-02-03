@@ -174,14 +174,6 @@ export const query = graphql`
                 }
             }
         }
-        wpgraphql{
-            categories{
-                edges{
-                    node{
-                        count
-                    }
-                }
-            }
-        }
+        
     }
 `
