@@ -175,8 +175,8 @@ export const query = graphql`
             }
         }
         wpgraphql {
-            supportQuestions {
-                nodes {
+            pages{
+                nodes{
                     title
                 }
             }
