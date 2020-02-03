@@ -21,7 +21,7 @@
     "gatsby-plugin-react-helmet": "^3.1.18",
     "gatsby-plugin-sharp": "^2.3.5",
     "gatsby-source-filesystem": "^2.1.40",
-    "gatsby-source-graphql": "^2.1.29",
+    "gatsby-source-graphql": "^2.1.33",
     "gatsby-transformer-sharp": "^2.3.7",
     "gatsby-wpgraphql-inline-images": "^0.2.3",
     "gatsby-plugin-module-resolver": "^1.0.3",
