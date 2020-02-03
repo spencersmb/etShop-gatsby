@@ -324,7 +324,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						fontPreview={standardItem.current.font_preview.enabled}
 					/>), [state.selectedLicense])}
 
-					{standardItem.current.description_footer.length > 0 &&
+					{standardItem.current.description_footer[0].type !== '' &&
           <SocialMediaWrapper>
             <SocialMediaBars bars={standardItem.current.description_footer}/>
           </SocialMediaWrapper>
@@ -422,8 +422,7 @@ const SliderGrid = styled(GridFluid)`
 	}
 `
 const ButtonWrapper = styled.div`
-	font-size: 14px;
-	line-height: 14px;
+	text-transform: uppercase;
 	a{
 		display: flex;
 		flex-direction: row;
@@ -437,12 +436,17 @@ const ButtonWrapper = styled.div`
 		}
 	}
 	span{
-		width: 14px;
 		margin-right: 10px;
+		line-height: 14px;
+		&:first-child{
+			max-width: 17px;
+			display: flex;
+			flex-direction: column;
+		}
 		&:last-child{
 			flex: 1;
+			line-height: 11px;
 		}
-		
 	}
 	svg{
 		width: 100%;
@@ -453,6 +457,11 @@ const ButtonWrapper = styled.div`
 	}
 	
 	@media ${device.laptop} {
+		font-size: 14px;
+		line-height: 14px;
+		span{
+			width: 14px;
+		}
 		a{
 			padding: 20px;
 		}
@@ -461,8 +470,11 @@ const ButtonWrapper = styled.div`
 `
 const BackBtnMobile = styled.div`
 	text-align: center;
-	max-width: 150px;
-	margin: 0 auto 15px;
+	width: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto 17px;
 	
 	@media ${device.laptop} {
 		display: none;   
@@ -479,7 +491,7 @@ const BackBtn = styled.div`
 	
 	@media ${device.laptop} {
 		top: -55px;
-		left: -15px;
+		left: 25px;
 		width: 270px;
 		display: block;   
 	}
@@ -519,8 +531,8 @@ const ProductTitle = styled(productRowGap)`
 			font-weight: 900;
 			font-style: normal;
 			color: ${colors.grey.i800};
-			font-size: 42px;
-			line-height: 42px;
+			font-size: 30px;
+			line-height: 34px;
 			max-width: 640px;
 			margin: 0 auto 15px;
 		}
@@ -534,6 +546,10 @@ const ProductTitle = styled(productRowGap)`
 		}
 		@media ${device.tablet} {
 			grid-column: 2 / 14;
+			h1{
+				font-size: 42px;
+				line-height: 42px;
+			}
 		}
 		@media ${device.laptop} {
 			margin: 20px 0 20px;
@@ -543,6 +559,7 @@ const ProductTitle = styled(productRowGap)`
 			h1{
 				font-size: 34px;
 				line-height: 38px;
+				margin-bottom: 5px;
 			}
 		}
 		@media ${device.laptopL} {

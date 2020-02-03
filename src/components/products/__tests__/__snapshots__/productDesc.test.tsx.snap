@@ -3,11 +3,11 @@
 exports[`Product Description renders correctly 1`] = `
 Array [
   <div
-    className="sc-htpNat fmJebR"
+    className="sc-bxivhb bPRwwv"
     data-testid="productNav"
   >
     <div
-      className="sc-bwzfXH hQDqYL"
+      className="sc-htpNat ejPaFj"
       data-tab="desc"
       onClick={[Function]}
       selected={true}
@@ -16,7 +16,7 @@ Array [
       <span />
     </div>
     <div
-      className="sc-bwzfXH hKbwhV"
+      className="sc-htpNat cQqqTW"
       data-tab="install"
       data-testid="install-nav-item"
       onClick={[Function]}
@@ -27,11 +27,11 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-bxivhb beIibg"
+    className="sc-ifAKCX jdHDew"
     data-testid="title"
   >
     <div
-      className="sc-ifAKCX bYhReE"
+      className="sc-bdVaJa dISwgA install"
       dangerouslySetInnerHTML={
         Object {
           "__html": "intro desc",

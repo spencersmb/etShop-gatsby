@@ -15,10 +15,6 @@ const ProductDescription = ({ intro_description = '', instructions }: IProps) =>
 	// useScrollToElement('desc')
 
 	const [navSelection, setNavSelection] = useState('desc')
-	const pluginOptions = {
-		wordPressUrl: `${process.env.GATSBY_DB}`,
-		uploadsUrl: `${process.env.GATSBY_DB}/wp-content/uploads/`
-	}
 
 	function createDesc () {
 		const sanitize = intro_description ? intro_description : ''
@@ -36,6 +32,7 @@ const ProductDescription = ({ intro_description = '', instructions }: IProps) =>
 		<>
 			<DescNav data-testid={`productNav`}>
 				<DescNavItem
+					hasInstructions={instructions.length > 0}
 					selected={navSelection === 'desc'}
 					onClick={handleNavClick}
 					data-tab={`desc`}>
@@ -56,12 +53,13 @@ const ProductDescription = ({ intro_description = '', instructions }: IProps) =>
 			</DescNav>
 			{navSelection === 'desc' &&
       <DescContainer data-testid={'title'}>
+
         <Desc data-testid={'desc'} className={'install'} dangerouslySetInnerHTML={createDesc()}/>
       </DescContainer>
 			}
 			{navSelection === 'install' &&
-      <DescContainer data-testid={`instructions`}>
-        <Desc dangerouslySetInnerHTML={{ __html: instructions }}/>
+      <DescContainer>
+        <Desc data-testid={`instructions`} dangerouslySetInnerHTML={{ __html: instructions }}/>
       </DescContainer>
 			}
 		</>
@@ -75,10 +73,10 @@ const Desc = styled.div`
 		text-align: center;
 		color: ${colors.primary.headline};
 		${Sentinel.semiboldItalic};
-		font-size: 54px;
-		line-height: 52px;
 		font-weight: 500;
 		font-style: italic;
+		font-size: 28px;
+    line-height: 34px;
 	}
 
 	h3{
@@ -120,8 +118,50 @@ const Desc = styled.div`
 		word-break: break-word;
 	}
 	
+	.et-btn__basic{
+		background: ${colors.teal.i500};
+		color: #fff;
+		border-radius: 50px;
+		font-size: 16px;
+		text-transform: uppercase;
+		padding: 12px 27px;
+		font-weight: 500;
+		transition: .3s;
+		outline: none;
+		display: inline-block;
+		
+		&:focus{
+			outline: none;
+		}
+		
+		@media ${device.laptop} {
+			&:hover{
+				cursor: pointer;
+				background: ${colors.teal.i800};
+			}
+		}
+	}
+	
+	.et-btn__container{
+		text-align: center;
+		margin: 20px auto;
+		
+		@media ${device.laptop} {
+			text-align: left;
+		}
+			
+	}
+	
+	.et-install__notes{
+		font-size: 16px;
+	}
+	
 	@media ${device.tablet} {
 		grid-column: 3 /13;
+		h1{
+			font-size: 54px;
+			line-height: 52px;
+		}
 	}
 	
 	@media ${device.laptop} {
@@ -171,7 +211,7 @@ const InstallContainer = styled.div`
 		margin: 50px 0 50px 0;
 	}
 `
-const DescNavItem = styled.div<{ selected: boolean }>`
+const DescNavItem = styled.div<{ selected: boolean, hasInstructions?: boolean }>`
 	text-transform: uppercase;
 	color: ${colors.primary.headline};
 	font-weight: bold;
@@ -181,9 +221,10 @@ const DescNavItem = styled.div<{ selected: boolean }>`
 		cursor: pointer;
 	}
 
-	&:first-child{
+	${props => props.hasInstructions ? `
+		&:first-child{
 		margin-right: 50px;
-	}
+	}` : ''}
 	
 	span{
 		position: absolute;

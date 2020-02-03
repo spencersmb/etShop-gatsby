@@ -37,6 +37,10 @@ const BreadCrumbContainer = styled.div`
 	font-size: 14px;
 	color: ${colors.db.primary};
 	justify-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+	align-items: flex-start;
+	
 	.divider{
 		margin: 0 5px;
 	}
@@ -47,8 +51,13 @@ const BreadCrumbContainer = styled.div`
 		}
 	}
 	
+	&:last-child{
+    flex: 1 100%;
+    width: 100%;
+	}
+	
 	@media ${device.tablet} {
-		justify-content: flex-start;
+		justify-content: center;
 	}
 		
 `

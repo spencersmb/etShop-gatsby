@@ -2,10 +2,10 @@
 
 exports[`Feature List Tests renders correctly 1`] = `
 <div
-  className="sc-ifAKCX sc-dnqmqq kLOfep"
+  className="sc-ifAKCX sc-dnqmqq yDHMF"
 >
   <h5
-    className="sc-iwsKbI eHxWpl"
+    className="sc-iwsKbI kZcBPN"
     data-testid="title"
   >
     Features

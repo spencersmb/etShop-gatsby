@@ -133,7 +133,11 @@ describe('General Utils', () => {
 							src: 'image-url'
 						},
 						fullWidth: {
-							src: 'image-url'
+							src: 'image-url',
+							aspectRatio: 12345,
+							base64: 'base64',
+							sizes: 'sizes',
+							srcSet: 'srcSet'
 						}
 					}
 				}
@@ -149,7 +153,7 @@ describe('General Utils', () => {
 	})
 	it('Should return gravatar pic for user', () => {
 		const userImg = getUserImage(testUser)
-		expect(userImg).toEqual(<UserProfileSvg>
+		expect(userImg).toEqual(<UserProfileSvg className={'userSvg'}>
 			{renderSvg(svgs.User)}
 		</UserProfileSvg>)
 	})

@@ -87,6 +87,25 @@ export const CartHeaderTitle = styled.div`
 		margin: 0;
 		color: ${colors.secondary.text};
 	}
+	.total{
+		font-size: 24px;
+		line-height: 24px;
+		color: ${colors.grey.i800};
+	}
+	.qty{
+		display: none;
+	}
+	@media ${device.tablet} {
+		.qty{
+			display: flex;
+			flex-direction: column;
+		}
+		.total{
+			display: none;
+		}
+		
+	}
+		
 `
 export const EmptyCartList = styled.div`
 	text-align: center;

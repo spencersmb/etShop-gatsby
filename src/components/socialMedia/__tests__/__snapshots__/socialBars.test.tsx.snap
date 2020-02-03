@@ -24,7 +24,7 @@ Array [
         youtube
       </div>
       <h4
-        className="sc-EHOje gygdqv"
+        className="sc-EHOje eDbdtz"
         data-testid="title"
       >
         Looking for free tutorials?
@@ -37,7 +37,7 @@ Array [
       </div>
     </div>
     <a
-      className="sc-htoDjs kiaesC"
+      className="sc-htoDjs jlYWml"
       data-testid="btn"
       href="https://youtube.com/everytues"
       rel="noreferrer"
@@ -68,7 +68,7 @@ Array [
         Instagram
       </div>
       <h4
-        className="sc-EHOje gygdqv"
+        className="sc-EHOje eDbdtz"
         data-testid="title"
       >
         See more Procreate artwork
@@ -81,7 +81,7 @@ Array [
       </div>
     </div>
     <a
-      className="sc-htoDjs kiaesC"
+      className="sc-htoDjs jlYWml"
       data-testid="btn"
       href="https://instagram.com/everytuesday"
       rel="noreferrer"

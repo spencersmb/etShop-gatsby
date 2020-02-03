@@ -94,11 +94,11 @@ position: relative;
 z-index: 1;
 
 	@media ${device.laptop} {
-		margin-top: 80px;
+		margin-top: 40px;
 		padding: 110px 0 150px;
 	}
 	@media ${device.laptopL} {
-		padding: 190px 0 180px;
+		padding: 150px 0 180px;
 	}
 `
 const TitleHeader = styled.h5`
@@ -131,7 +131,7 @@ const TitleHeader = styled.h5`
     position: absolute;
 	}
 	@media ${device.laptopL} {
-		top: 0;
+		top: -41px;
 		font-size: 248px;
     line-height: 248px;
 	}

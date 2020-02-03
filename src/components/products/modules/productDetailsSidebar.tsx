@@ -184,8 +184,9 @@ const ReqsContainer = styled.div`
 	box-shadow: ${shadowStyles.shadow5};
 	max-width: 365px;
 	width: 100%;
-	margin: 0;
+	margin: 0 auto;
 	position: relative;
+	
 	.reqsContent{	
 		color: #fff;
 		max-width: 365px;
@@ -198,6 +199,10 @@ const ReqsContainer = styled.div`
 		margin: 15px auto 5px;
 		padding-left: 20px;
 	}
+	
+	@media ${device.laptop} {
+		margin:0;
+		}
 	
 `
 const ProgramList = styled.ul`
@@ -344,7 +349,7 @@ const SideBarInner = styled.div`
 	padding: 50px;
 	max-width: 365px;
 	width: 100%;
-	margin: 0 auto;
+	margin: 40px auto 0;
 	z-index: 1;
 	
 	@media ${device.laptop} {

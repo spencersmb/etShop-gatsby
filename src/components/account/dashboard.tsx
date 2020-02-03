@@ -147,18 +147,14 @@ export function Dashboard (props: AllProps) {
 				setState({ searching: false, selectedSearchOrder: order })
 			} catch (e) {
 				setState({ searching: false })
+				props.logout()
 			}
 		}
 
 	}
 
 	async function resetOrderLinks (orderId: string) {
-		try {
-			await resetDownloadLinks(orderId, page)
-		} catch (e) {
-			console.error('e', e)
-			props.logout()
-		}
+		return resetDownloadLinks(orderId, page)
 	}
 
 	function buildDesktopList () {

@@ -142,8 +142,8 @@ const ButtonsWrapper = styled.div`
 `
 const Total = styled.div`
 	${Sentinel.semiboldItalic};
-	margin:0 15px 15px 0;
-	font-size: 21px;
+	margin:15px 15px 30px 0;
+	font-size: 32px;
 	line-height: 14px;
 	color: ${colors.primary.text};
 	flex: 1;
@@ -162,6 +162,7 @@ const Total = styled.div`
 		margin:0 15px 0;
 		text-align: right;
 		flex: 0;
+		font-size: 21px;
 	}
 `
 const ButtonStyled = styled(ButtonReg)`

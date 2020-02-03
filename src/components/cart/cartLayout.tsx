@@ -148,7 +148,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			CheckoutSliderRef.current.style.overflowY = `scroll`
 			// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
 		} else {
-			CheckoutSliderRef.current.style.overflowY = `hidden`
+			// CheckoutSliderRef.current.style.overflowY = `hidden`
 		}
 		// if (checkoutOpen) {
 		// 	CheckoutSliderRef.current.style.overflowY = `hidden`
@@ -190,11 +190,12 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 				</div>
 				<CartHeaderTitle>
 					<h2>Your Cart</h2>
-					<p>{props.cart.totalItems} items</p>
+					<p className={'qty'}>{props.cart.totalItems} items</p>
+					<p className={'total'}>{displayCurrency(props.cart.originalPrice)}</p>
 				</CartHeaderTitle>
 				<CartSubTotalHeader>
-					<span>Total</span>
-					<p>{displayCurrency(props.cart.originalPrice)}</p>
+					{/*<span>Total</span>*/}
+					{/*<p>{displayCurrency(props.cart.originalPrice)}</p>*/}
 				</CartSubTotalHeader>
 			</CartHeader>
 
@@ -469,6 +470,7 @@ const CartSubTotalHeader = styled.div`
 	display: flex;
 	flex-direction: column;
 	text-align: right;
+	width: 56px;
 	
 	span{
 		color: ${colors.secondary.text};

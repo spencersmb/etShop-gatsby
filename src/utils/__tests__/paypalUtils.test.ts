@@ -54,7 +54,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item1.qty,
-				sku: testProducts[item1.slug].id.toString(),
+				sku: testProducts[item1.slug].sku,
 				category: 'DIGITAL_GOODS'
 			},
 			{
@@ -66,7 +66,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item2.qty,
-				sku: testProducts[item2.slug].id.toString(),
+				sku: testProducts[item2.slug].sku,
 				category: 'DIGITAL_GOODS'
 			}
 		]
@@ -85,7 +85,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item1.qty,
-				sku: testProducts[item1.slug].id.toString(),
+				sku: testProducts[item1.slug].sku,
 				category: 'DIGITAL_GOODS'
 			},
 			{
@@ -96,7 +96,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item2.qty,
-				sku: testProducts[item2.slug].id.toString(),
+				sku: testProducts[item2.slug].sku,
 				category: 'DIGITAL_GOODS'
 			}
 		]
@@ -119,7 +119,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item1.qty,
-				sku: testProducts[item1.slug].id.toString(),
+				sku: testProducts[item1.slug].sku,
 				category: 'DIGITAL_GOODS'
 			},
 			{
@@ -130,7 +130,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item2.qty,
-				sku: testProducts[item2.slug].id.toString(),
+				sku: testProducts[item2.slug].sku,
 				category: 'DIGITAL_GOODS'
 			}
 		]
@@ -149,7 +149,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item1.qty,
-				sku: testProducts[item1.slug].id.toString(),
+				sku: testProducts[item1.slug].sku,
 				category: 'DIGITAL_GOODS'
 			},
 			{
@@ -160,7 +160,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item2.qty,
-				sku: testProducts[item2.slug].id.toString(),
+				sku: testProducts[item2.slug].sku,
 				category: 'DIGITAL_GOODS'
 			}
 		]
@@ -179,7 +179,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item1.qty,
-				sku: testProducts[item1.slug].id.toString(),
+				sku: testProducts[item1.slug].sku,
 				category: 'DIGITAL_GOODS'
 			},
 			{
@@ -190,7 +190,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item2.qty,
-				sku: testProducts[item2.slug].id.toString(),
+				sku: testProducts[item2.slug].sku,
 				category: 'DIGITAL_GOODS'
 			}
 		]
@@ -210,7 +210,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item1.qty,
-				sku: testProducts[item1.slug].id.toString(),
+				sku: testProducts[item1.slug].sku,
 				category: 'DIGITAL_GOODS'
 			},
 			{
@@ -221,7 +221,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item2.qty,
-				sku: testProducts[item2.slug].id.toString(),
+				sku: testProducts[item2.slug].sku,
 				category: 'DIGITAL_GOODS'
 			},
 			{
@@ -232,7 +232,7 @@ describe('Paypal Utils Tests', () => {
 					currency_code: 'USD'
 				},
 				quantity: item3.qty,
-				sku: testProducts[item3.slug].id.toString(),
+				sku: testProducts[item3.slug].sku,
 				category: 'DIGITAL_GOODS'
 			}
 		]

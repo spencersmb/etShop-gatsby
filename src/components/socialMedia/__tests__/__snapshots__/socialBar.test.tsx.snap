@@ -23,7 +23,7 @@ exports[`Feature Item Test renders correctly 1`] = `
       youtube
     </div>
     <h4
-      className="sc-EHOje gygdqv"
+      className="sc-EHOje eDbdtz"
       data-testid="title"
     >
       Looking for free tutorials?
@@ -36,7 +36,7 @@ exports[`Feature Item Test renders correctly 1`] = `
     </div>
   </div>
   <a
-    className="sc-htoDjs kiaesC"
+    className="sc-htoDjs jlYWml"
     data-testid="btn"
     href="https://youtube.com/everytues"
     rel="noreferrer"

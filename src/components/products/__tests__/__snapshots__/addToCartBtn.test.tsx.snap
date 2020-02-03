@@ -8,7 +8,7 @@ exports[`AddToCart Button renders correctly 1`] = `
     className="sc-EHOje cwSfEq buttonWrapper"
   >
     <div
-      className="sc-bZQynM FMTsR addToCart__total"
+      className="sc-bZQynM dQujWH addToCart__total"
       data-testid="total"
     >
       <div

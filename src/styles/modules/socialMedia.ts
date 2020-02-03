@@ -110,7 +110,7 @@ export const SMContentContainer = styled.div`
 `
 export const SMTitle = styled.h4`
 	color: ${colors.primary.headline};
-	font-size: 21px;
+	font-size: 24px;
 	font-weight: 400;
 	margin-bottom: 15px	;
 	${Sentinel.semiboldItalic};
@@ -119,7 +119,6 @@ export const SMTitle = styled.h4`
 		font-size: 28px;
 		line-height: 28px;
 	}
-		
 `
 export const SMCat = styled.div`
 	font-size: 13px;
@@ -144,7 +143,7 @@ export const SMButton = styled.a`
 	text-align: center;
 	width: 100%;
 	max-width: 135px;
-	margin: 15px auto 0;
+	margin: 25px auto 0;
 	transition: .3s;
 	
 	&:hover{

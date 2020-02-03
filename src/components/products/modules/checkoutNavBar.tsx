@@ -57,7 +57,7 @@ const CheckoutNavBar = (props: IProps) => {
 	function showInput () {
 		if (payWhatYouWant) {
 			return (
-				<InputWrapper disableInput={inCart}>
+				<InputWrapper disableInput={inCart} className={`input_checkoutNavBar`}>
 					<div className={`label`}>Pay What You Want</div>
 					<NumberDial
 						disableInput={inCart}

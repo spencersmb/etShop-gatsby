@@ -108,7 +108,11 @@ const images = [
 					src: ''
 				},
 				fullWidth: {
-					src: ''
+					src: '',
+					aspectRatio: 12345,
+					base64: 'base64',
+					sizes: 'sizes',
+					srcSet: 'srcSet'
 				}
 			}
 		}
@@ -160,6 +164,7 @@ export const singleProduct: IProduct = {
 	price: '16',
 	product_id: 222,
 	pwyw: false,
+	sku: '123545-sku',
 	regular_price: '16',
 	sale_price: '',
 	slug: 'watercolor-texture-kit-vol-1',
@@ -181,6 +186,8 @@ export const singleProduct: IProduct = {
 		{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 	],
 	images: [...images],
+	install_instructions: 'instructions',
+	description_footer: [],
 	product_licenses: [
 		{
 			type: {
@@ -209,10 +216,10 @@ export const singleProduct: IProduct = {
 		programs: [],
 		file_size: '1.2gb',
 		file_types: ['otf'],
-		dpi: '600'
+		dpi: '600',
+		reqs: false
 	},
 	intro_description: 'intro desc',
-	intro_title: 'intro-title',
 	licenseDiscountPrice: ''
 }
 
@@ -226,6 +233,7 @@ export enum ProductKey {
 export const testProducts: IProducts = {
 	[ProductKey.WatercolorStd]: {
 		type: 'simple',
+		sku: '12345-sku',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
 		id: '202eca74-fc90-56e7-8269-b59f18a19194',
@@ -253,6 +261,8 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
+		install_instructions: 'instructions',
+		description_footer: [],
 		product_licenses: [
 			{
 				type: {
@@ -293,15 +303,16 @@ export const testProducts: IProducts = {
 			programs: [],
 			file_size: '1.2gb',
 			file_types: ['otf'],
-			dpi: '600'
+			dpi: '600',
+			reqs: false
 		},
 		intro_description: 'intro desc',
-		intro_title: 'intro-title',
 		licenseDiscountPrice: '',
 		related_products: []
 	},
 	[ProductKey.WatercolorExt]: {
 		type: 'simple',
+		sku: '12345-sku',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
 		id: '202eca74-fc90-56e7-8269-b59f18a19194-ext',
@@ -327,6 +338,8 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
+		install_instructions: 'instructions',
+		description_footer: [],
 		product_licenses: [],
 		seo: {
 			desc: 'Add serious vibrant color and detail with this kit packed with 32 unique watercolor textures, 12 seamless, repeatable watercolor texture patterns and 2 bonus watercolor paper patterns.',
@@ -340,15 +353,16 @@ export const testProducts: IProducts = {
 			programs: [],
 			file_size: '1.2gb',
 			file_types: ['otf'],
-			dpi: '600'
+			dpi: '600',
+			reqs: false
 		},
 		intro_description: 'intro desc',
-		intro_title: 'intro-title',
 		licenseDiscountPrice: '',
 		related_products: []
 
 	},
 	[ProductKey.Honeymoon]: {
+		sku: '12345-sku',
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
@@ -375,6 +389,8 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
+		install_instructions: 'instructions',
+		description_footer: [],
 		product_licenses: [
 			{
 				type: {
@@ -399,15 +415,16 @@ export const testProducts: IProducts = {
 			programs: [],
 			file_size: '1.2gb',
 			file_types: ['otf'],
-			dpi: '600'
+			dpi: '600',
+			reqs: false
 		},
 		intro_description: 'intro desc',
-		intro_title: 'intro-title',
 		licenseDiscountPrice: '',
 		related_products: []
 
 	},
 	[ProductKey.Skinnyjeans]: {
+		sku: '12345-sku',
 		type: 'simple',
 		date_created_gmt: '2018-09-25T20:35:51',
 		date_modified_gmt: '2019-02-18T21:44:25',
@@ -434,6 +451,8 @@ export const testProducts: IProducts = {
 		featuredImage: { ...featuredImage },
 		images: [...images],
 		font_preview: { ...fontPreview },
+		install_instructions: 'instructions',
+		description_footer: [],
 		product_licenses: [
 			{
 				type: {
@@ -458,10 +477,10 @@ export const testProducts: IProducts = {
 			programs: [],
 			file_size: '1.2gb',
 			file_types: ['otf'],
-			dpi: '600'
+			dpi: '600',
+			reqs: false
 		},
 		intro_description: 'intro desc',
-		intro_title: 'intro-title',
 		licenseDiscountPrice: '',
 		related_products: []
 	}

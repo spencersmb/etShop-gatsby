@@ -2,7 +2,6 @@ import { CartItem } from '@components/cart/cartItem'
 import { ProductKey, testCartWithItem, testProducts } from '@redux/reduxTestUtils'
 import { calcBulkDiscount, displayCurrency, getPrice } from '@utils/priceUtils'
 import React from 'react'
-import renderer from 'react-test-renderer'
 import {
 	render,
 	cleanup,
@@ -56,6 +55,7 @@ describe('Cart Item tests', () => {
 	it('Should render correct discounted price and show discount content', async () => {
 		const discountedProps = props
 		discountedProps.cart.items[ProductKey.WatercolorStd].qty = 12
+		discountedProps.cart.items[ProductKey.WatercolorStd].bulkDiscount = true
 		discountedProps.cart.items[ProductKey.WatercolorStd].price = '11.7'
 		const modalRender = render(<CartItem {...discountedProps}/>)
 

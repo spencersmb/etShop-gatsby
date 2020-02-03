@@ -121,6 +121,9 @@ describe('Auth Action tests', () => {
 					coupon: { ...apiResponse.coupon }
 				},
 				type: CouponActionTypes.SUBMIT_COUPON_SUCCESS
+			},
+			{
+				type: CartActionTypes.UPDATE_CART_PRICE
 			}
 		]
 
@@ -145,7 +148,7 @@ describe('Auth Action tests', () => {
 			.then(() => {
 				const expectedActions = store.getActions()
 
-				expect(expectedActions.length).toBe(2)
+				expect(expectedActions.length).toBe(actionResponse.length)
 				expect(expectedActions).toEqual(actionResponse)
 			})
 

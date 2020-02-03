@@ -2,60 +2,60 @@
 
 exports[`Product Description renders correctly 1`] = `
 <aside
-  className="sc-iwsKbI jlNFmO"
+  className="sc-gZMcBi iARPnT"
 >
   <div
-    className="sc-gZMcBi jMrtRl"
+    className="sc-gqjmRU eTvGQB"
   >
     <div
-      className="sc-dnqmqq eGyIVY"
+      className="sc-iwsKbI jlWZrW"
     >
       <test-file-stub />
     </div>
     <div
-      className="sc-ifAKCX ljwwhY"
+      className="sc-EHOje gWPvZT"
     >
       <h3
-        className="sc-htoDjs bmpqec"
+        className="sc-dnqmqq fpYqNh"
       >
         DETAILS
       </h3>
     </div>
     <div
-      className="sc-ifAKCX ljwwhY"
+      className="sc-EHOje gWPvZT"
       data-testid="fileTypeSection"
     >
       <h6
-        className="sc-EHOje eKkQUB"
+        className="sc-bZQynM hlAzNT"
       >
         FILE TYPES
       </h6>
       <div
-        className="sc-bxivhb gfmzLj"
+        className="sc-ifAKCX iBPxhH"
         data-testid="fileTypes"
       >
         <div
-          className="sc-htpNat iqonUU"
+          className="sc-bxivhb ksBBKm"
         >
           jpg
         </div>
       </div>
     </div>
     <div
-      className="sc-ifAKCX ljwwhY"
+      className="sc-EHOje gWPvZT"
     >
       <div
-        className="sc-bZQynM klrOnr"
+        className="sc-gzVnrw ioMsCW"
       >
         <test-file-stub />
       </div>
       <h6
-        className="sc-EHOje eKkQUB"
+        className="sc-bZQynM hlAzNT"
       >
         RESOLUTION
       </h6>
       <div
-        className="sc-gzVnrw ipIUEJ"
+        className="sc-htoDjs cYYHFH"
         data-testid="dpi"
       >
         600
@@ -65,20 +65,20 @@ exports[`Product Description renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="sc-ifAKCX ljwwhY"
+      className="sc-EHOje gWPvZT"
     >
       <div
-        className="sc-bZQynM klrOnr"
+        className="sc-gzVnrw ioMsCW"
       >
         <test-file-stub />
       </div>
       <h6
-        className="sc-EHOje eKkQUB"
+        className="sc-bZQynM hlAzNT"
       >
         File Size
       </h6>
       <div
-        className="sc-gzVnrw ipIUEJ"
+        className="sc-htoDjs cYYHFH"
         dangerouslySetInnerHTML={
           Object {
             "__html": "1.2<span>Gigs</span>",
@@ -88,20 +88,20 @@ exports[`Product Description renders correctly 1`] = `
       />
     </div>
     <div
-      className="sc-ifAKCX ljwwhY"
+      className="sc-EHOje gWPvZT"
     >
       <div
-        className="sc-bZQynM klrOnr"
+        className="sc-gzVnrw ioMsCW"
       >
         <test-file-stub />
       </div>
       <h6
-        className="sc-EHOje eKkQUB"
+        className="sc-bZQynM hlAzNT"
       >
         WORKS WITH
       </h6>
       <ul
-        className="sc-bdVaJa bypbCY"
+        className="sc-bwzfXH gwZJzL"
         data-testid="programs"
       >
         <li>

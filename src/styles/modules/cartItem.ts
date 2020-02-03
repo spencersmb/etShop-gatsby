@@ -34,6 +34,7 @@ export const CartItemHeader = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 0 15px;
 	
 	@media ${device.tablet} {
 		flex: 0 1 45.5%;
@@ -50,6 +51,8 @@ export const CartItemTitle = styled.div`
 	text-align: center;
 	color: ${colors.grey.i800};
 	padding-top: 20px;
+	margin-bottom: 10px;
+	line-height: 28px;
 	@media ${device.tablet} {
 		padding: 0;	
 		text-align: left;

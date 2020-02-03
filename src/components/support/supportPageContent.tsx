@@ -177,22 +177,14 @@ const PageHeader = styled.div`
 	text-align: left;
 	padding: 30px 0 0;
 
-	& > div{
-		align-items: flex-start;
-		justify-content: flex-start;
-		color: rgba(0, 0, 0, 0.54);
-		a{
-			color: rgba(0, 0, 0, 0.54);
-		}
-	}
-	
 	h1{
-		margin: 0;
 		${Sentinel.reg};
 		color: ${colors.primary.headline};
 		font-size: 40px;
 		line-height: 40px;
 		font-weight: 400;
+		text-align: center;
+    margin: 0 auto;
 	}
 	
 	@media ${device.tablet} {
