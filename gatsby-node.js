@@ -12,7 +12,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // await createSupportPages({ actions, graphql })
   await createWcProducts({ actions, graphql })
-  await createCatPages({ actions, graphql })
+  // await createCatPages({ actions, graphql })
 
 }
 

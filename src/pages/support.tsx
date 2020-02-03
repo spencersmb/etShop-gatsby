@@ -174,6 +174,10 @@ export const query = graphql`
                 }
             }
         }
-        
+        wpgraphql{
+            category(id: "Y2F0ZWdvcnk6MjQ="){
+                name
+            }
+        }
     }
 `
