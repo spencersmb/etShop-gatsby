@@ -25,7 +25,7 @@ interface IProps {
 }
 
 const SupportPage = (props: IProps) => {
-	const { data: { wpgraphql: { categories: { nodes } }, site, featureImage } } = props
+	const { data: { site, featureImage } } = props
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -86,7 +86,7 @@ const SupportPage = (props: IProps) => {
 			content: '648'
 		}
 	]
-	const categories = reArrangeItems(nodes)
+	// const categories = reArrangeItems(nodes)
 	return (
 		<Layout whiteFooter={true}>
 			<SEO
@@ -172,13 +172,6 @@ export const query = graphql`
                 }
             }
         }
-        wpgraphql{
-            categories{
-                nodes{
-                    count
-                    
-                }
-            }
-        }
+
     }
 `
