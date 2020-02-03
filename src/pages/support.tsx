@@ -26,6 +26,8 @@ interface IProps {
 
 const SupportPage = (props: IProps) => {
 	const { data: { site, featureImage } } = props
+	console.log('props', props)
+
 	const twitterAddons = [
 		{
 			name: `twitter:card`,
@@ -172,6 +174,14 @@ export const query = graphql`
                 }
             }
         }
-
+        wpgraphql{
+            categories{
+                edges{
+                    node{
+                        count
+                    }
+                }
+            }
+        }
     }
 `

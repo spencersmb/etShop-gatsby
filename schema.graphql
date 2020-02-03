@@ -510,7 +510,7 @@ type Query {
     site(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, host: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, pathPrefix: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, port: IntQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput): Site
     sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, componentPath: StringQueryOperatorInput, context: SitePageContextFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, isCreatedByStatefulCreatePages: BooleanQueryOperatorInput, matchPath: StringQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput, pluginCreatorId: StringQueryOperatorInput): SitePage
     sitePlugin(browserAPIs: StringQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, name: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, packageJson: SitePluginPackageJsonFilterInput, parent: NodeFilterInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: SitePluginPluginOptionsFilterInput, resolve: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, version: StringQueryOperatorInput): SitePlugin
-    wcProduct(aws_download: wcProductAws_downloadFilterInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, description_footer: wcProductDescription_footerFilterListInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, install_instructions: StringQueryOperatorInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, product_licenses: wcProductProduct_licensesFilterListInput, product_type: StringQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
+    wcProduct(aws_download: wcProductAws_downloadFilterInput, bullet_point: StringQueryOperatorInput, categories: wcProductCategoriesFilterListInput, children: NodeFilterListInput, date_created_gmt: DateQueryOperatorInput, date_modified_gmt: DateQueryOperatorInput, description: StringQueryOperatorInput, description_footer: wcProductDescription_footerFilterListInput, details: wcProductDetailsFilterInput, featuredImage: wcProductFeaturedImageFilterInput, features: wcProductFeaturesFilterListInput, font_preview: wcProductFont_previewFilterInput, id: StringQueryOperatorInput, images: wcProductImagesFilterListInput, install_instructions: StringQueryOperatorInput, internal: InternalFilterInput, intro_description: StringQueryOperatorInput, intro_title: StringQueryOperatorInput, name: StringQueryOperatorInput, on_sale: BooleanQueryOperatorInput, parent: NodeFilterInput, price: StringQueryOperatorInput, product_id: IntQueryOperatorInput, product_licenses: wcProductProduct_licensesFilterListInput, product_type: StringQueryOperatorInput, pwyw: BooleanQueryOperatorInput, regular_price: StringQueryOperatorInput, related_products: StringQueryOperatorInput, sale_price: StringQueryOperatorInput, seo: wcProductSeoFilterInput, short_description: StringQueryOperatorInput, slug: StringQueryOperatorInput, sub_header: StringQueryOperatorInput, tags: wcProductTagsFilterListInput, type: StringQueryOperatorInput): wcProduct
     wpgraphql: WPGraphQL!
 }
 
@@ -587,19 +587,7 @@ type SitePageConnection {
 }
 
 type SitePageContext {
-    cat: String
-    content: String
-    date: Date
-    featuredImage: SitePageContextFeaturedImage
-    id: String
     slug: String
-    title: String
-    uri: String
-}
-
-type SitePageContextFeaturedImage {
-    altText: String
-    sourceUrl: String
 }
 
 type SitePageEdge {
@@ -3512,6 +3500,7 @@ type WPGraphQL_WritingSettings {
 
 type wcProduct implements Node {
     aws_download: wcProductAws_download
+    bullet_point: String
     categories: [wcProductCategories]
     children: [Node!]!
     date_created_gmt(
@@ -3545,6 +3534,7 @@ type wcProduct implements Node {
     install_instructions: String
     internal: Internal!
     intro_description: String
+    intro_title: String
     name: String
     on_sale: Boolean
     parent: Node
@@ -4439,15 +4429,7 @@ enum SitePageFieldsEnum {
     component
     componentChunkName
     componentPath
-    context___cat
-    context___content
-    context___date
-    context___featuredImage___altText
-    context___featuredImage___sourceUrl
-    context___id
     context___slug
-    context___title
-    context___uri
     id
     internalComponentName
     internal___content
@@ -5082,6 +5064,7 @@ enum wcProductFieldsEnum {
     aws_download___filename
     aws_download___folder
     aws_download___name
+    bullet_point
     categories
     categories___id
     categories___name
@@ -5270,6 +5253,7 @@ enum wcProductFieldsEnum {
     internal___owner
     internal___type
     intro_description
+    intro_title
     name
     on_sale
     parent___children
@@ -5627,20 +5611,8 @@ input SiteFilterInput {
     siteMetadata: SiteSiteMetadataFilterInput
 }
 
-input SitePageContextFeaturedImageFilterInput {
-    altText: StringQueryOperatorInput
-    sourceUrl: StringQueryOperatorInput
-}
-
 input SitePageContextFilterInput {
-    cat: StringQueryOperatorInput
-    content: StringQueryOperatorInput
-    date: DateQueryOperatorInput
-    featuredImage: SitePageContextFeaturedImageFilterInput
-    id: StringQueryOperatorInput
     slug: StringQueryOperatorInput
-    title: StringQueryOperatorInput
-    uri: StringQueryOperatorInput
 }
 
 input SitePageFilterInput {
@@ -9510,6 +9482,7 @@ input wcProductFeaturesFilterListInput {
 
 input wcProductFilterInput {
     aws_download: wcProductAws_downloadFilterInput
+    bullet_point: StringQueryOperatorInput
     categories: wcProductCategoriesFilterListInput
     children: NodeFilterListInput
     date_created_gmt: DateQueryOperatorInput
@@ -9525,6 +9498,7 @@ input wcProductFilterInput {
     install_instructions: StringQueryOperatorInput
     internal: InternalFilterInput
     intro_description: StringQueryOperatorInput
+    intro_title: StringQueryOperatorInput
     name: StringQueryOperatorInput
     on_sale: BooleanQueryOperatorInput
     parent: NodeFilterInput

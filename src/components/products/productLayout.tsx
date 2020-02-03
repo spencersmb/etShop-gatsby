@@ -324,7 +324,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						fontPreview={standardItem.current.font_preview.enabled}
 					/>), [state.selectedLicense])}
 
-					{standardItem.current.description_footer[0].type !== '' &&
+					{standardItem.current.description_footer.length > 0 &&
           <SocialMediaWrapper>
             <SocialMediaBars bars={standardItem.current.description_footer}/>
           </SocialMediaWrapper>
