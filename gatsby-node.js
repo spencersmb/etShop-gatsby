@@ -10,9 +10,9 @@ const createCatPages = require(`./gatsby/createCatsPages`)
 
 exports.createPages = async ({ graphql, actions }) => {
 
-  // await createSupportPages({ actions, graphql })
+  await createSupportPages({ actions, graphql })
   await createWcProducts({ actions, graphql })
-  // await createCatPages({ actions, graphql })
+  await createCatPages({ actions, graphql })
 
 }
 

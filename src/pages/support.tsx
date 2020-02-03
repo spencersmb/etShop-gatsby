@@ -27,6 +27,15 @@ interface IProps {
 const SupportPage = (props: IProps) => {
 	const { data: { site, featureImage } } = props
 	console.log('props', props)
+	console.log('s', JSON.stringify(`query MyQuery {
+  wpgraphql {
+    posts {
+      nodes {
+        slug
+      }
+    }
+  }
+}`))
 
 	const twitterAddons = [
 		{
@@ -174,12 +183,6 @@ export const query = graphql`
                 }
             }
         }
-        wpgraphql {
-            pages{
-                nodes{
-                    title
-                }
-            }
-        }
+
     }
 `
