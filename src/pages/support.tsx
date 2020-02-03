@@ -172,6 +172,13 @@ export const query = graphql`
                 }
             }
         }
-        
+        wpgraphql{
+            categories{
+                nodes{
+                    count
+                    
+                }
+            }
+        }
     }
 `
