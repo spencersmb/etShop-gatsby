@@ -7,6 +7,7 @@ import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { createOrder, ICreateOrderAction } from '@redux/actions/orderActions'
 import { toastrOptions } from '@utils/apiUtils'
 import { tagUserInConvertKit } from '@utils/orderUtils'
+import _ from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
@@ -30,7 +31,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			return null
 		}
 
-		const stripeCalcTotal = parseFloat(order.total) * 100
+		const stripeCalcTotal = _.round(parseFloat(order.total) * 100, 2)
 		const ownerInfo = {
 			owner: {
 				name: `${order.billing.first_name} ${order.billing.last_name}`,
@@ -49,7 +50,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			source_order: {
 				items: order.line_items.map(item => {
 					return {
-						amount: parseFloat(item.price) * 100,
+						amount: _.round(parseFloat(item.price) * 100, 2),
 						currency: 'USD',
 						description: item.name,
 						parent: item.product_id,

@@ -63,7 +63,7 @@ export const CheckoutPage = (props: IProps) => {
 		if (!props.initialLoad) {
 			setKey('stripe')
 		} else if (!props.freeCheckout) {
-			console.log('onLoad change type')
+			// console.log('onLoad change type')
 			setKey(props.initialLoad)
 			props.handleChangeType(props.initialLoad)
 		}
@@ -75,24 +75,22 @@ export const CheckoutPage = (props: IProps) => {
 
 	}, [])
 
-	// free item with coupon
-
 	useLayoutEffect(() => {
-		if (mountedCount.current) {
-			console.log('other coupon check')
+		const cartItemKeys = Object.keys(cartItems)
+		if (mountedCount.current && cartItemKeys.length > 0) {
+
 			if (total === 0 && coupon.product_ids.length > 0) {
 				const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
-				const cartItemKeys = Object.keys(cartItems)
 				const firstItem: ICartItem = cartItems[cartItemKeys[0]]
 				const isItemPwyw = firstItem.price === '0'
 
 				if (isFound && !isItemPwyw) {
-					console.log('100% off')
+					// console.log('100% off')
 					handleChangeType('pwyw')
 				}
 
 				if (!isFound && isItemPwyw) {
-					console.log('has coupon in DB but not used, but item is free')
+					// console.log('has coupon in DB but not used, but item is free')
 					handleChangeType('pwyw')
 				}
 			}
@@ -100,7 +98,7 @@ export const CheckoutPage = (props: IProps) => {
 				handleChangeType('pwyw')
 			}
 			if (total !== 0) {
-				console.log('key', key)
+				// console.log('key', key)
 				props.handleChangeType(key)
 			}
 		}

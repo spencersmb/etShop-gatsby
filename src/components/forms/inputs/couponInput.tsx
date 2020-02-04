@@ -1,5 +1,5 @@
 import { CheckoutApi } from '@api/checkoutApi'
-import { ICartItemWithKey, ICouponApiResponse, ICouponRaw, ICouponState } from '@et/types/Cart'
+import { ICartItemWithKey, ICartState, ICouponApiResponse, ICouponRaw, ICouponState } from '@et/types/Cart'
 import { IState } from '@et/types/State'
 import { changeCheckoutType, updateCartPrice } from '@redux/actions/cartActions'
 import {
@@ -36,14 +36,14 @@ interface IReduxActions {
 interface IProps {
 	coupon: ICouponState
 	total: number
-	cartItems: ICartItemWithKey
+	cart: ICartState
 }
 
 export function CouponInput (props: IProps & IReduxActions) {
 	const [input, setInput] = useState('')
 	const [active, setActive] = useState(false)
 	const [pristine, setPristine] = useState(true)
-	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total, cartItems, changeCheckout } = props
+	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total, cart, changeCheckout } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const prevTotal = useRef(total)
 
@@ -141,12 +141,11 @@ export function CouponInput (props: IProps & IReduxActions) {
 
 					loadCoupon(newCoupon)
 					updatePrice()
-					const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
-					if (!isFound) {
+					const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cart.items)
+					if (!isFound && newCoupon.product_ids.length > 0) {
 						toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
 					}
 					if (inputRef.current) {
-						console.log('set blur')
 						inputRef.current.blur()
 					}
 				})
@@ -251,7 +250,7 @@ const mapStateToProps = (state: IState): any => {
 	return {
 		coupon: state.cart.coupon,
 		total: state.cart.totalPrice,
-		cartItems: state.cart.items
+		cart: state.cart
 	}
 }
 
