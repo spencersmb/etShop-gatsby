@@ -26,6 +26,10 @@ function NumberDial ({ qty = 0, inputOnChange, disableInput, className, label = 
 				return
 			}
 
+			if (!Number.isInteger(Number(inputValue))) {
+				return
+			}
+
 			if (inputValue) {
 				currentNumber = parseInt(inputValue, 10)
 			}
@@ -33,7 +37,6 @@ function NumberDial ({ qty = 0, inputOnChange, disableInput, className, label = 
 			if (inputValue === '') {
 				currentNumber = ''
 			}
-
 			inputOnChange(currentNumber)
 		}
 	}
@@ -46,7 +49,8 @@ function NumberDial ({ qty = 0, inputOnChange, disableInput, className, label = 
 				id='numberDial'
 				type='number'
 				className='numberInput'
-				inputMode='numeric' pattern='[0-9]*'
+				inputMode='numeric'
+				pattern='[0-9]*'
 				onChange={handleInputOnChange}
 				value={qty}
 				onKeyPress={(e) => {

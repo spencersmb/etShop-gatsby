@@ -1,4 +1,4 @@
-import DefaultSpinner from '@components/spinners/defaultSpinner'
+	import DefaultSpinner from '@components/spinners/defaultSpinner'
 import { IOrderResponse, IReceipt } from '@et/types/WC_Order'
 import { device } from '@styles/global/breakpoints'
 import { ButtonSmall } from '@styles/global/buttons'

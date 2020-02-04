@@ -56,7 +56,20 @@ export default createGlobalStyle`
   svg{
   	width: 100%;
   }
-  
+  input{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+    &:focus{
+      outline: none;
+    }
+    &::-webkit-outer-spin-button, 
+    ::-webkit-inner-spin-button{
+      -webkit-appearance: none;
+      margin: 0;
+    };
+  }
   ${toastr}
   ${rangeSlider}
   ${radioClass}
