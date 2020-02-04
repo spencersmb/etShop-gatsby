@@ -78,29 +78,33 @@ export const LoginModal = (props: MixedFormProps) => {
 	}
 
 	const userSubmit = async (formProps: any) => {
+		toastr.removeByType('error')
 
 		try {
 			const loginResponse: { firstName: string } = await props.loginAction(formProps)
-			toastr.removeByType('error')
-			toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
-			closeModal()
+
 			// if mobile nav open close it
 			if (nav.isOpen) {
 				navToggle()
 			}
+
+			closeModal()
+
+			toastr.success(`Welcome ${loginResponse.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 		} catch (e) {
 			// console.error('user login fail:', e)
 		}
 	}
 
 	const userSignUp = async (formProps: any) => {
+		toastr.removeByType('error')
+
 		try {
 			const response: { firstName: string } = await props.createUser(formProps)
 			if (nav.isOpen) {
 				navToggle()
 			}
 			closeModal()
-			toastr.removeByType('error')
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 			// if (!cart.isOpen) {
 			// 	navigate(`/account/`)
@@ -112,6 +116,8 @@ export const LoginModal = (props: MixedFormProps) => {
 	}
 
 	const facebookSignUp = async (formProps: IFacebookUserCreate) => {
+		toastr.removeByType('error')
+
 		try {
 			const response: { firstName: string } = await props.createUserFacebook(formProps)
 			setSubmitting(false)
@@ -120,7 +126,6 @@ export const LoginModal = (props: MixedFormProps) => {
 				navToggle()
 			}
 			closeModal()
-			toastr.removeByType('error')
 			toastr.success(`Welcome ${response.firstName}`, 'you\'ve successfully logged in.', toastrOptions.standard)
 
 		} catch (e) {
