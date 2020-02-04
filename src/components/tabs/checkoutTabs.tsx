@@ -4,7 +4,9 @@ import CartLogin from '@components/cart/login/cartLogin'
 import FreeCheckoutForm from '@components/forms/freeItem-checkout'
 import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
+import { ICartItem } from '@et/types/Cart'
 import { OnPoseComplete } from '@et/types/Modal'
+import { IProduct } from '@et/types/Products'
 import { IUserState } from '@et/types/User'
 import { device } from '@styles/global/breakpoints'
 import { GridFluid } from '@styles/global/cssGrid'
@@ -14,7 +16,7 @@ import { svgs } from '@svg'
 import { checkCartForItemMatchingCoupon } from '@utils/cartUtils'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 /**
@@ -54,14 +56,14 @@ export const CheckoutPage = (props: IProps) => {
 	const { total, coupon, cartItems, handleChangeType } = props
 	const [key, setKey] = useState('stripe')
 	const [showCouponInput, setShowCouponInput] = useState(false)
-
+	const mountedCount = useRef(false)
 	// onMount
-	useEffect(() => {
+	useLayoutEffect(() => {
 
 		if (!props.initialLoad) {
 			setKey('stripe')
-		} else {
-
+		} else if (!props.freeCheckout) {
+			console.log('onLoad change type')
 			setKey(props.initialLoad)
 			props.handleChangeType(props.initialLoad)
 		}
@@ -74,17 +76,44 @@ export const CheckoutPage = (props: IProps) => {
 	}, [])
 
 	// free item with coupon
-	useEffect(() => {
-		if (total === 0 && coupon.product_ids.length > 0) {
-			const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
-			if (isFound) {
+
+	useLayoutEffect(() => {
+		if (mountedCount.current) {
+			console.log('other coupon check')
+			if (total === 0 && coupon.product_ids.length > 0) {
+				const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
+				const cartItemKeys = Object.keys(cartItems)
+				const firstItem: ICartItem = cartItems[cartItemKeys[0]]
+				const isItemPwyw = firstItem.price === '0'
+
+				if (isFound && !isItemPwyw) {
+					console.log('100% off')
+					handleChangeType('pwyw')
+				}
+
+				if (!isFound && isItemPwyw) {
+					console.log('has coupon in DB but not used, but item is free')
+					handleChangeType('pwyw')
+				}
+			}
+			if (total === 0 && coupon.product_ids.length === 0) {
 				handleChangeType('pwyw')
 			}
+			if (total !== 0) {
+				console.log('key', key)
+				props.handleChangeType(key)
+			}
 		}
-		if (total === 0 && coupon.product_ids.length === 0) {
-			handleChangeType('pwyw')
-		}
+
 	}, [coupon, cartItems, total])
+
+	useLayoutEffect(() => {
+		mountedCount.current = true
+
+		return () => {
+			mountedCount.current = false
+		}
+	}, [])
 
 	function onTabClick (itemKey: string) {
 

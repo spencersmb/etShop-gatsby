@@ -38,7 +38,7 @@ export const submitCouponCode = (couponCode: string) => async (dispatch: Dispatc
 			dispatch(loadCouponInvalid())
 		} else {
 			dispatch(loadCouponSuccess(body.data.coupon))
-			dispatch(updateCartPrice())
+			// dispatch(updateCartPrice())
 		}
 
 	} catch (e) {

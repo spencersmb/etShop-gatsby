@@ -103,13 +103,13 @@ export function CouponInput (props: IProps & IReduxActions) {
 						toastr.error('Invalid', 'Invalid Coupon', toastrOptions.noHover)
 						invalidCoupon()
 						// Sync up total and and prevTotal Ref locally
+						updatePrice()
 						if (total !== prevTotal.current) {
-							updatePrice()
 						}
 
 						// focus back into the input
 						if (inputRef.current) {
-							// inputRef.current.focus()
+							// inputRef.current.blur()
 						}
 						return
 					}
@@ -132,19 +132,28 @@ export function CouponInput (props: IProps & IReduxActions) {
 					}
 
 					// if there is no error check if a coupon applies to a product in the cart and add it in if found, or reject if not found
-					if (newCoupon.discount_type === 'fixed_product') {
-						const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
-						if (!isFound) {
-							toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
-						}
-					}
+					// if (newCoupon.discount_type === 'fixed_product') {
+					// 	const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
+					// 	if (!isFound) {
+					// 		toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
+					// 	}
+					// }
 
 					loadCoupon(newCoupon)
 					updatePrice()
+					const isFound = checkCartForItemMatchingCoupon(newCoupon.product_ids, cartItems)
+					if (!isFound) {
+						toastr.warning('Coupon Item', 'Coupon added but no items matching it are in the cart.', toastrOptions.noHover)
+					}
+					if (inputRef.current) {
+						console.log('set blur')
+						inputRef.current.blur()
+					}
 				})
 		}
 
 		if (coupon.valid) {
+
 			setInput(coupon.code)
 		}
 

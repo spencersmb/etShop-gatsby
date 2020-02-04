@@ -2,7 +2,7 @@ import { CartPricingConfig } from '@components/cart/cartStatics'
 import CouponInput from '@components/forms/inputs/couponInput'
 import { ICartState, ICouponState } from '@et/types/Cart'
 import { IState } from '@et/types/State'
-import { CartItemDetail, CartItemDiscount} from '@styles/modules/cartItem'
+import { CartItemDetail, CartItemDiscount } from '@styles/modules/cartItem'
 import {
 	CouponButton,
 	CouponButtonWrapper,
@@ -38,28 +38,28 @@ function calcSavings (cart: ICartState) {
 export function CheckoutTotal (props: IProps & ILocalState) {
 	const { cart, showCouponInput, setShowCouponInput } = props
 	const getDiscountText = () => {
-		if(cart.coupon.type === 'percent'){
+		if (cart.coupon.type === 'percent') {
 			const discountToDecimal = parseInt(cart.coupon.discount, 10) / 100
-			return(
+			return (
 				<span className={'discountLabel'}>{displayPercent(discountToDecimal)}% discount</span>
 			)
 		}
-		return(
+		return (
 			<span className={'discountLabel'}>Discount applied</span>
 		)
 	}
-	const showDiscount = ():boolean => {
-		const {coupon} = cart
-		if(coupon.type === 'fixed_product'){
+	const showDiscount = (): boolean => {
+		const { coupon } = cart
+		if (coupon.type === 'fixed_product') {
 			// check if cart has the item listed in coupon
 			// returns boolean
 			return checkCartForItemMatchingCoupon(coupon.product_ids, cart.items)
 
 		}
-		if(coupon.type === 'percent'){
-			return true
+		if (coupon.type === 'percent') {
+			return checkCartForItemMatchingCoupon(coupon.product_ids, cart.items)
 		}
-		return coupon.type === 'fixed_cart';
+		return coupon.type === 'fixed_cart'
 	}
 
 	return (
@@ -69,7 +69,7 @@ export function CheckoutTotal (props: IProps & ILocalState) {
 			<TotalSummery hasDiscount={showDiscount()}>
 
 				{showDiscount() &&
-        	<DiscountSummary>
+        <DiscountSummary>
           <CartItemDetail>
             <span>Original total</span>
             <p>{displayCurrency(cart.originalPrice)}</p>

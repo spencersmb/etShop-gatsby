@@ -143,7 +143,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
 	// to flip to the free checkout form
 	const toggleCheckout = () => {
-		console.log('window.innerWidth > 992', window.innerWidth > 992)
+		// console.log('window.innerWidth > 992', window.innerWidth > 992)
 		if (window.innerWidth > 992) {
 			CheckoutSliderRef.current.style.overflowY = `scroll`
 			// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
