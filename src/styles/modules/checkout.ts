@@ -566,10 +566,10 @@ export const ProfileCardContainer = styled.div<{ desktop: boolean }>`
 `
 export const LoginUserWrapper = styled.div<{ desktop: boolean }>`
 	display: flex;
-	flex-direction: ${props => props.desktop ? 'column' : 'row'};
+	flex-direction: column;
 	justify-content: ${props => props.desktop ? 'center' : 'left'};
 	position: relative;
-	align-items: center;
+	align-items: flex-start;
 	img{
 		border-radius: 50%;
 		width: 50px;
@@ -578,18 +578,28 @@ export const LoginUserWrapper = styled.div<{ desktop: boolean }>`
 		margin-bottom: 15px;
 	}
 	.userSvg{
-		margin: 0 auto 8px;
+		margin: 0 0 8px;
 		path{
 			fill: ${colors.purple.i500};
 		}
 	}
+	
+	@media ${device.laptop} {
+		align-items: center;
+		.userSvg{
+			margin: 0 auto 8px;
+		}
+	}
+		
 `
 export const UserContent = styled.div<{ desktop: boolean }>`
 	display: flex;
 	flex-direction: column;
-	align-items: ${props => props.desktop ? 'center' : 'flex-start'};
-	padding-left: ${props => props.desktop ? '0' : '20px'};
-	
+	align-items: flex-start;
+	@media ${device.laptop} {
+		align-items: center;
+	}
+		
 `
 export const UserName = styled.div`
 	${Sentinel.semiboldItalic};
@@ -604,9 +614,15 @@ export const UserEmail = styled.div`
  margin-bottom: 15px;
 `
 export const SignOutBtn = styled(ButtonSmall)<{ desktop: boolean }>`
-	
+	padding: 5px 15px;
+	@media ${device.laptop} {
+		padding: 8px 18px;
+	}
+		
 	${props => !props.desktop ? `
 		right: 0;
 		position: absolute;
+		align-self: flex-end;
+    top: 0;
 	` : ''}
 `

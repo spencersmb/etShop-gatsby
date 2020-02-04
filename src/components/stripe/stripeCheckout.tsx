@@ -5,6 +5,7 @@ import { IOrderDetails, IOrderResponse } from '@et/types/WC_Order'
 import { cartToggle, emptyCart } from '@redux/actions/cartActions'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { createOrder, ICreateOrderAction } from '@redux/actions/orderActions'
+import { toastrOptions } from '@utils/apiUtils'
 import { tagUserInConvertKit } from '@utils/orderUtils'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -29,13 +30,14 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			return null
 		}
 
-		const stripeCalcTotal = parseInt(order.total, 10) * 100
+		const stripeCalcTotal = parseFloat(order.total) * 100
 		const ownerInfo = {
 			owner: {
 				name: `${order.billing.first_name} ${order.billing.last_name}`,
 				email: `${order.billing.email}`
 			}
 		}
+
 		const card = {
 			type: 'card',
 			amount: stripeCalcTotal,
@@ -43,11 +45,13 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			statement_descriptor: 'Every-Tuesday Purchase',
 			usage: 'single_use'
 		}
+		console.log('card', card)
+
 		const sourceOrder = {
 			source_order: {
 				items: order.line_items.map(item => {
 					return {
-						amount: parseInt(item.price, 10) * 100,
+						amount: parseFloat(item.price) * 100,
 						currency: 'USD',
 						description: item.name,
 						parent: item.product_id,
@@ -69,6 +73,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 		}
 
 		if (result.error) {
+			toastr.error('Stripe error', `${result.error.message}`, toastrOptions.standard)
 			console.error('stripe error:', result.error.message)
 			return null
 		}
@@ -123,10 +128,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 
 	}
 
-	function onFail () {
-		toastr.error('Stripe error', 'Stripe Failed. Please try again.')
-		console.error('Failed order')
-	}
+	function onFail () {}
 
 	return (
 		<RegisterStripeForm
