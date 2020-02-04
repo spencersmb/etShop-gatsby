@@ -103,8 +103,8 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 			console.log('myOrder', myOrder)
 
 			if (!myOrder || myOrder && myOrder.code !== 200) {
-				actions.restart()
 				setManualSubmitting(false)
+				actions.restart()
 				onError('order create error')
 				return
 			}
@@ -145,18 +145,18 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 							data: order
 						}
 					})
+					setManualSubmitting(false)
 					props.emptyCart()
 					props.reset()
 					props.closeCart()
-					setManualSubmitting(false)
 					await tagUserInConvertKit({
 						email: order.email,
 						firstName: order.first_name
 					}, order.downloads.products)
 
 				} else {
-					actions.restart()
 					setManualSubmitting(false)
+					actions.restart()
 					onError('order process error')
 				}
 

@@ -109,7 +109,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 
 						// focus back into the input
 						if (inputRef.current) {
-							inputRef.current.focus()
+							// inputRef.current.focus()
 						}
 						return
 					}

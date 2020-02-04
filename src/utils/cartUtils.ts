@@ -101,8 +101,11 @@ export const getCartTotal = (items: ICartItemWithKey, coupon: ICouponState): ITo
 			discountedPrice = productPrice - calcCouponDiscount(coupon, productPrice)
 
 			// Error checking for coupon
+			// console.log('calcCouponDiscount(coupon, productPrice)', calcCouponDiscount(coupon, productPrice))
+			//
+			// console.log('productPrice', productPrice)
 			// console.log('discountedPrice', discountedPrice)
-			// console.log('coupon Found for', product.id)
+			// console.log('coupon Found for ID:', product.id)
 		}
 
 		// 2.d
@@ -286,8 +289,7 @@ export function isPWYWItemInCart (cartItems: ICartItemWithKey, products: IProduc
 	return itemFound.length > 0
 }
 
-
-export function getIndexFromLicenseType(type: LicenseEnum){
+export function getIndexFromLicenseType (type: LicenseEnum) {
 	switch (type) {
 		case LicenseEnum.extended:
 			return 1

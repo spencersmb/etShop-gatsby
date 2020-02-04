@@ -45,8 +45,6 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 			statement_descriptor: 'Every-Tuesday Purchase',
 			usage: 'single_use'
 		}
-		console.log('card', card)
-
 		const sourceOrder = {
 			source_order: {
 				items: order.line_items.map(item => {
@@ -79,6 +77,7 @@ export function StripeCheckout (props: IReduxActions & ReactStripeElements.Injec
 		}
 
 		if (result.source && result.source.status !== 'chargeable') {
+			toastr.error('Stripe error', `${result.source.status}`, toastrOptions.standard)
 			console.error('source status:', result.source.status)
 			return null
 		}
