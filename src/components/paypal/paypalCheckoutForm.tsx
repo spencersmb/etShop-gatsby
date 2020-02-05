@@ -16,6 +16,7 @@ import {
 	IProcessPaypalOrderAction,
 	processPaypalOrder as processPaypalOrderAction
 } from '@redux/actions/orderActions'
+import { colors } from '@styles/global/colors'
 import {
 	CheckoutFormLabel, GuestBillingContainer,
 	InputSpinner,
@@ -30,6 +31,7 @@ import React, { useMemo, useState } from 'react'
 import { connect } from 'react-redux'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { reduxForm, InjectedFormProps, reset, formValueSelector } from 'redux-form'
+import styled from 'styled-components'
 
 interface IPublicProps {
 	cart: ICartState
@@ -145,14 +147,16 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 							data: order
 						}
 					})
-					setManualSubmitting(false)
-					props.emptyCart()
-					props.reset()
-					props.closeCart()
 					await tagUserInConvertKit({
 						email: order.email,
 						firstName: order.first_name
 					}, order.downloads.products)
+					setManualSubmitting(false)
+					setTimeout(() => {
+						props.emptyCart()
+						props.reset()
+						props.closeCart()
+					}, 800)
 
 				} else {
 					setManualSubmitting(false)
@@ -227,13 +231,22 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
         </CheckoutFormLabel>
         <GuestBilling/>
       </GuestBillingContainer>}
-			{manualSubmitting && <PaypalSpinner>
-        <InputSpinner submitting={true} spinnerColor={'#009cde'}>
-          <svg className='spinner' viewBox='0 0 50 50'>
-            <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
-          </svg>
-        </InputSpinner>
-      </PaypalSpinner>}
+			{manualSubmitting && <PaypalOverlay>
+        <div className={`innerSpinner`}>
+          <InputSpinner submitting={true} spinnerColor={colors.teal.i500}>
+            <svg className='spinner' viewBox='0 0 50 50'>
+              <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>
+            </svg>
+          </InputSpinner>
+        </div>
+      </PaypalOverlay>}
+			{/*{manualSubmitting && <PaypalSpinner>*/}
+			{/*  <InputSpinner submitting={true} spinnerColor={'#009cde'}>*/}
+			{/*    <svg className='spinner' viewBox='0 0 50 50'>*/}
+			{/*      <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='6'/>*/}
+			{/*    </svg>*/}
+			{/*  </InputSpinner>*/}
+			{/*</PaypalSpinner>}*/}
 			<PaypalButtonPoseWrapper pose={manualSubmitting ? 'hide' : 'show'}>
 				{Button}
 			</PaypalButtonPoseWrapper>
@@ -264,6 +277,27 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 	}
 }
 
+const PaypalOverlay = styled.div`
+	position:absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(51, 63, 79, 0.69);
+	
+	.innerSpinner{
+		position:relative;
+		height: 100%;
+		
+		${InputSpinner}{
+			height: 62px;
+			width: 62px;
+			left: 50%;
+			top:50%;
+			transform: translate(-50%,-50%);
+		}
+	}
+`
 // export default connect<{}, IReduxActions, IPublicProps, IState>(null, mapDispatchToProps)(RegisterPaypalForm)
 export default React.memo(connect<IReduxState, IReduxActions, IPublicProps, IState>(mapStateToProps, mapDispatchToProps)(RegisterPaypalForm), (prev: IPublicProps, next: IPublicProps): boolean => {
 	return !(prev.cart.totalPrice !== next.cart.totalPrice || prev.cart.coupon.valid !== prev.cart.coupon.valid || prev.user !== next.user)
