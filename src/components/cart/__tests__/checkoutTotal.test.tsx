@@ -19,7 +19,7 @@ describe('Checkout Total', () => {
 
 	it('Should render header', () => {
 		const modalRender = render(<CheckoutTotal {...props}/>)
-		expect(modalRender.getByText('Order Summery')).toBeTruthy()
+		expect(modalRender.getByText('Order Summary')).toBeTruthy()
 	})
 
 	it('Should render correct Total', () => {

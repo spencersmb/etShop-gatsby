@@ -28,6 +28,7 @@ export interface IProps {
 	freeCheckout: boolean;
 	initialLoad?: string;
 	handleChangeType: (type: string) => void
+	calcCheckoutType: (key: string) => void
 	toggleCheckout: () => void
 	user: IUserState
 	total: any
@@ -39,8 +40,14 @@ export interface IProps {
  * TabsList
  *
  * How it works:
- * onInitialize - first set to passed in initializer or default stripe
+ * onInitialize - first set tabs to passed in initializer and default stripe
  * onInitialize - check if pwyw is enabled and set that payment type via redux
+ *
+ * onReRender - only runs if the component has been mounted previously
+ * This checks the state once an item has been removed/added, a coupon has changed to determin the
+ * correct payment type.
+ * Update price happens in the coupon redux action or the add/remove item action.
+ *
  * Render Tabs: map over component children and render a tab item for each one
  * Render Tab content: maps over each child and matches state to the item[data-payment]
  *
@@ -53,55 +60,69 @@ export interface IProps {
  */
 
 export const CheckoutPage = (props: IProps) => {
-	const { total, coupon, cartItems, handleChangeType } = props
+	const { total, coupon, cartItems, handleChangeType, calcCheckoutType } = props
 	const [key, setKey] = useState('stripe')
 	const [showCouponInput, setShowCouponInput] = useState(false)
 	const mountedCount = useRef(false)
+
 	// onMount
 	useLayoutEffect(() => {
 
-		if (!props.initialLoad) {
-			setKey('stripe')
-		} else if (!props.freeCheckout) {
-			// console.log('onLoad change type')
+		if (props.initialLoad && !props.freeCheckout) {
 			setKey(props.initialLoad)
 			props.handleChangeType(props.initialLoad)
-		}
-		// onload check if there is a free item in the cart and the total is 0
-		// set the payment type to pwyw
-		if (props.freeCheckout) {
+		} else if (props.freeCheckout) {
 			props.handleChangeType('pwyw')
+		} else {
+			// default to
+			setKey('stripe')
+			props.handleChangeType('stripe')
 		}
 
 	}, [])
 
+	// on re-render
+	// example if we add or remove an item or a coupon gets changed
+	// we also updatePrice here to make sure it stays in-sync and the correct
+	// payment type gets selected
 	useLayoutEffect(() => {
-		const cartItemKeys = Object.keys(cartItems)
-		if (mountedCount.current && cartItemKeys.length > 0) {
-
-			if (total === 0 && coupon.product_ids.length > 0) {
-				const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
-				const firstItem: ICartItem = cartItems[cartItemKeys[0]]
-				const isItemPwyw = firstItem.price === '0'
-
-				if (isFound && !isItemPwyw) {
-					// console.log('100% off')
-					handleChangeType('pwyw')
-				}
-
-				if (!isFound && isItemPwyw) {
-					// console.log('has coupon in DB but not used, but item is free')
-					handleChangeType('pwyw')
-				}
-			}
-			if (total === 0 && coupon.product_ids.length === 0) {
-				handleChangeType('pwyw')
-			}
-			if (total !== 0) {
-				// console.log('key', key)
-				props.handleChangeType(key)
-			}
+		if (mountedCount.current) {
+			calcCheckoutType(key)
 		}
+		// const cartItemKeys = Object.keys(cartItems)
+		// if (mountedCount.current && cartItemKeys.length > 0) {
+		//
+		// 	if (total === 0 && coupon.product_ids.length > 0) {
+		// 		const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
+		// 		const firstItem: ICartItem = cartItems[cartItemKeys[0]]
+		// 		const isItemPwyw = firstItem.price === '0'
+		//
+		// 		// if the item in the cart is paid but the coupon is for 100% off
+		// 		//  change the type to PWYW so the server knows its free
+		// 		if (isFound && !isItemPwyw) {
+		// 			// console.log('100% off')
+		// 			handleChangeType('pwyw')
+		// 		}
+		//
+		// 		// if the item is not found in possible coupon added but is a free item
+		// 		// it still should change to PWYW
+		// 		if (!isFound && isItemPwyw) {
+		// 			// console.log('has coupon in DB but not used, but item is free')
+		// 			handleChangeType('pwyw')
+		// 		}
+		// 	}
+		//
+		// 	// if the total === 0 and there is a coupon but it has no exclusions
+		// 	// make it PWYW
+		// 	if (total === 0 && coupon.product_ids.length === 0) {
+		// 		handleChangeType('pwyw')
+		// 	}
+		//
+		// 	// if we switch back, set it to the key that was last selected
+		// 	if (total !== 0) {
+		// 		props.handleChangeType(key)
+		// 	}
+		// }
 
 	}, [coupon, cartItems, total])
 
@@ -201,7 +222,6 @@ export const CheckoutPage = (props: IProps) => {
           </div>
 					}
 					{props.freeCheckout && <FreeCheckoutForm/>}
-
 
 				</CartInner>
 

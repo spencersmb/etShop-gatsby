@@ -50,7 +50,12 @@ export function CheckoutTotal (props: IProps & ILocalState) {
 	}
 	const showDiscount = (): boolean => {
 		const { coupon } = cart
-		// console.log('update discount', checkCartForItemMatchingCoupon(coupon.product_ids, cart.items))
+
+		// check if its a global coupon first
+		if (coupon.type === 'fixed_cart' && coupon.product_ids.length === 0) {
+			return true
+		}
+		return checkCartForItemMatchingCoupon(coupon.product_ids, cart.items)
 
 		// if (coupon.type === 'fixed_product') {
 		// 	// check if cart has the item listed in coupon
@@ -61,8 +66,9 @@ export function CheckoutTotal (props: IProps & ILocalState) {
 		// if (coupon.type === 'percent') {
 		// 	return checkCartForItemMatchingCoupon(coupon.product_ids, cart.items)
 		// }
-		return checkCartForItemMatchingCoupon(coupon.product_ids, cart.items)
+
 	}
+	console.log('showDiscount', showDiscount())
 
 	return (
 		<OrderSummery>

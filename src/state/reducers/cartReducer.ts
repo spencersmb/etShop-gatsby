@@ -63,6 +63,17 @@ export const cartReducer: Reducer<ICartState> = (state: ICartState = initialStat
 				totalItems // es6 destructure totalItems: totalItems
 			}
 
+		case CartActionTypes.REFRESH_CART:
+			// calc total items here so we dont use getState in Action creater
+			const calcTotalItems = totalItemsInCart(state.items)
+			const calcTotalPrice: ITotal = getCartTotal(state.items, state.coupon)
+			return {
+				...state,
+				totalItems: calcTotalItems,
+				totalPrice: calcTotalPrice.discountedTotal,
+				originalPrice: calcTotalPrice.total // available if a coupon is added
+			}
+
 		/*
 		* * Tested!
 		*/

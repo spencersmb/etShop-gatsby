@@ -3,7 +3,7 @@ import { ICartItem, ICartItemWithKey, IChangeLicenseData, IChangeQty, ILocalStor
 import { CartActionTypes } from '@et/types/Enums'
 import { IProduct, IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
-import { emptyLocalStorageCart, updateLocalStorageCart } from '@utils/cartUtils'
+import { checkCartForItemMatchingCoupon, emptyLocalStorageCart, updateLocalStorageCart } from '@utils/cartUtils'
 import { calcBulkPriceDiscount } from '@utils/priceUtils'
 import { Action, Dispatch } from 'redux'
 
@@ -58,16 +58,16 @@ export const addProductToCart: IAddProductAction =
 					}
 				}
 			)
-
-			// After item added - re-calc totalItems
-			dispatch(updateCartTotal())
-
-			dispatch(updateCartPrice())
+			dispatch(refreshCart())
 
 			const newState: IState = getState()
 			updateLocalStorageCart(newState.cart)
 		}
-
+export const refreshCart = (): Actions => {
+	return {
+		type: CartActionTypes.REFRESH_CART
+	}
+}
 /*
 * * Tested!
 */
@@ -144,10 +144,7 @@ export const removeProductFromCart = (slug: string) => (dispatch: Dispatch<Actio
 		type: CartActionTypes.REMOVE_ITEM
 	})
 
-	// After item added - re-calc totalItems
-	dispatch(updateCartTotal())
-
-	dispatch(updateCartPrice())
+	dispatch(refreshCart())
 
 	const newState: IState = getState()
 	updateLocalStorageCart(newState.cart)
@@ -174,11 +171,7 @@ export const updateCartItemQty = ({ key, cartItem, bulkDiscount, regularPrice }:
 			}
 		)
 
-		// then update total
-		dispatch(updateCartTotal())
-
-		// then update price
-		dispatch(updateCartPrice())
+		dispatch(refreshCart())
 
 		const newState: IState = getState()
 		updateLocalStorageCart(newState.cart)
@@ -194,3 +187,46 @@ export const changeCheckoutType = (type: string): Actions => {
 		type: CartActionTypes.CHANGE_CHECKOUT_TYPE
 	}
 }
+
+export const calcCheckoutType = (type: string) =>
+	(dispatch: Dispatch<Action>, getState: () => IState) => {
+		const { cart } = getState()
+		const cartItems = cart.items
+		const cartItemKeys = Object.keys(cartItems)
+		const { totalPrice, coupon } = cart
+
+		if (cartItemKeys.length === 0) {
+			return
+		}
+
+		if (totalPrice === 0) {
+			const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
+			const firstItem: ICartItem = cartItems[cartItemKeys[0]]
+			const isItemPwyw = firstItem.price === '0'
+
+			// if the item in the cart is paid but the coupon is for 100% off
+			//  change the type to PWYW so the server knows its free
+			if (isFound && !isItemPwyw) {
+				// console.log('100% off')
+				dispatch(changeCheckoutType('pwyw'))
+			}
+
+			// if the item is not found in possible coupon added but is a free item
+			// it still should change to PWYW
+			if (!isFound && isItemPwyw) {
+				// console.log('has coupon in DB but not used, but item is free')
+				dispatch(changeCheckoutType('pwyw'))
+			}
+		}
+
+		// if the total === 0 and there is a coupon but it has no exclusions
+		// make it PWYW
+		if (totalPrice === 0 && coupon.product_ids.length === 0) {
+			dispatch(changeCheckoutType('pwyw'))
+		}
+
+		// if we switch back, set it to the key that was last selected
+		if (totalPrice !== 0 && cart.paymentType === 'pwyw') {
+			dispatch(changeCheckoutType(type))
+		}
+	}

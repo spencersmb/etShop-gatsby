@@ -66,7 +66,7 @@ const FlickityGalleryContext = (props: IProps) => {
 		const options = {
 			cellSelector: '.item',
 			cellAlign: 'left',
-			dragThreshold: 10,
+			dragThreshold: 1,
 			contain: false,
 			initialIndex: 0,
 			accessibility: false,

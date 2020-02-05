@@ -1,8 +1,9 @@
 import CheckoutTabs from '@components/tabs/checkoutTabs'
 import { IState } from '@et/types/State'
+import { IUserState } from '@et/types/User'
 import { cartReducer } from '@redux/reducers/cartReducer'
 import { productReducer } from '@redux/reducers/productReducer'
-import { renderWithRedux } from '@redux/reduxTestUtils'
+import { renderWithRedux, testCartEmpty } from '@redux/reduxTestUtils'
 import React from 'react'
 import { connect } from 'react-redux'
 import {
@@ -17,19 +18,55 @@ const props = {
 	initialLoad: 'stripe',
 	handleChangeType: jestChangeCheckoutfn,
 	toggleCheckout: jest.fn(),
-	freeCheckout: false
+	freeCheckout: false,
+	user: null,
+	total: 0,
+	coupon: {
+		code: 'string',
+		discount: 'string',
+		loading: false,
+		product_ids: [],
+		submitted: false,
+		type: 'string',
+		valid: false
+	},
+	cartItems: {}
 }
 const propsPaypal = {
 	initialLoad: 'paypal',
 	handleChangeType: jestChangeCheckoutfn,
 	toggleCheckout: jest.fn(),
-	freeCheckout: false
+	freeCheckout: false,
+	user: null,
+	total: 0,
+	coupon: {
+		code: 'string',
+		discount: 'string',
+		loading: false,
+		product_ids: [],
+		submitted: false,
+		type: 'string',
+		valid: false
+	},
+	cartItems: {}
 }
 const propsFree = {
 	initialLoad: 'paypal',
 	handleChangeType: jestChangeCheckoutfn,
 	toggleCheckout: jest.fn(),
-	freeCheckout: true
+	freeCheckout: true,
+	user: null,
+	total: 0,
+	coupon: {
+		code: 'string',
+		discount: 'string',
+		loading: false,
+		product_ids: [],
+		submitted: false,
+		type: 'string',
+		valid: false
+	},
+	cartItems: {}
 }
 
 const Connected = connect((state: IState) => {

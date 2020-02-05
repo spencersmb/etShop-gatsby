@@ -69,6 +69,10 @@ export interface IUpdateCartTotal {
 	type: CartActionTypes.UPDATE_CART_TOTAL
 }
 
+export interface IRefreshCart {
+	type: CartActionTypes.REFRESH_CART
+}
+
 export interface IupdateCartPrice {
 	type: CartActionTypes.UPDATE_CART_PRICE
 }
@@ -114,6 +118,11 @@ export interface IUpdateCartLicense {
 }
 
 export interface ICartChangeCheckoutType {
+	payload: string,
+	type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+}
+
+export interface ICalcCheckoutType {
 	payload: string,
 	type: CartActionTypes.CHANGE_CHECKOUT_TYPE
 }
@@ -192,6 +201,8 @@ type CartActions =
 	| IUpdateCartQty
 	| IUpdateCartLicense
 	| ICartChangeCheckoutType
+	| IRefreshCart
+	| ICalcCheckoutType
 
 type CouponActions =
 	| ICouponSubmitAction

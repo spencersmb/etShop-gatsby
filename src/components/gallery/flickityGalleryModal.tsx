@@ -62,7 +62,7 @@ export default class GalleryModal extends Component<IProps> {
 			cellSelector: '.item-fullscreen',
 			cellAlign: 'center',
 			contain: false,
-			dragThreshold: 10,
+			dragThreshold: 1,
 			initialIndex: this.props.options.data.selectedIndex,
 			accessibility: false,
 			pageDots: true,

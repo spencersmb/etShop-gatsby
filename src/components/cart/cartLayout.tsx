@@ -6,7 +6,7 @@ import { IModalState, OnPoseComplete } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
-import { cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
+import { calcCheckoutType as calcCheckoutTypeAction, cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
 import { device } from '@styles/global/breakpoints'
 import { ButtonReg } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
@@ -41,6 +41,7 @@ interface IReduxState {
 
 interface IReduxActions {
 	changeCheckout: (type: string) => Actions,
+	calcCheckoutType: (type: string) => void,
 	emptyCart: () => Actions,
 	cartToggle: () => void
 }
@@ -251,6 +252,7 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 					initialLoad='stripe'
 					toggleCheckout={toggleCheckout}
 					handleChangeType={props.changeCheckout}
+					calcCheckoutType={props.calcCheckoutType}
 					user={props.user}
 					freeCheckout={props.cart.totalPrice === 0 && (isPWYWItemInCart(props.cart.items, props.products) || props.cart.paymentType === 'pwyw')}
 				>
@@ -284,6 +286,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
 	return {
 		cartToggle: bindActionCreators(cartToggle, dispatch),
 		changeCheckout: bindActionCreators(changeCheckoutType, dispatch),
+		calcCheckoutType: bindActionCreators(calcCheckoutTypeAction, dispatch),
 		emptyCart: bindActionCreators(emptyCart, dispatch)
 	}
 }
