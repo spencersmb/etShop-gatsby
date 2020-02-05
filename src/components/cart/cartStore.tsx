@@ -51,7 +51,7 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 	useEffect(() => {
 		if (cartIsOpen && target.current) {
 			// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
-			// bodyScrollBar.show(target.current, bodyScrollPos.current)
+			bodyScrollBar.show(target.current, bodyScrollPos.current)
 		}
 	}, [cartIsOpen])
 
@@ -69,7 +69,7 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 					}
 
 					if (type === 'exit' && !overlayOpen && target.current) {
-						// bodyScrollBar.remove(target.current)
+						bodyScrollBar.remove(target.current)
 
 						// document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
 					}

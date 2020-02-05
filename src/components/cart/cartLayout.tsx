@@ -488,10 +488,6 @@ const CartSubTotalHeader = styled.div`
 		line-height: 18px;
 		margin: 0;
 	}
-	
-	@media ${device.tablet} {
-		display: none;
-	}
 		
 `
 

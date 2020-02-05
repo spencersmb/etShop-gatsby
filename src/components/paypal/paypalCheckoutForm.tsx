@@ -138,20 +138,18 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					// controll success from parent
 
 					const { order } = result
+					props.showModal({
+						modal: Receipt,
+						options: {
+							closeModal: true,
+							hasBackground: false,
+							data: order
+						}
+					})
 					setManualSubmitting(false)
 					props.closeCart()
 					props.emptyCart()
 					props.reset()
-					setTimeout(() => {
-						props.showModal({
-							modal: Receipt,
-							options: {
-								closeModal: true,
-								hasBackground: false,
-								data: order
-							}
-						})
-					}, 1000)
 					await tagUserInConvertKit({
 						email: order.email,
 						firstName: order.first_name

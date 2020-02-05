@@ -55,11 +55,6 @@ export const CartHeader = styled.div`
 			fill: ${colors.grey.i800};
 		}
 		
-		@media ${device.tablet} {
-			position: absolute;
-			left: 20px;		    
-		}
-		
 		@media ${device.laptop} {
 			&:hover{
 				cursor: pointer;
