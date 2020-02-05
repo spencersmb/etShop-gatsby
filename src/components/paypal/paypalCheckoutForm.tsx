@@ -138,7 +138,6 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 					// controll success from parent
 
 					const { order } = result
-					setManualSubmitting(false)
 					props.showModal({
 						modal: Receipt,
 						options: {
@@ -147,9 +146,10 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 							data: order
 						}
 					})
-					props.closeCart()
-					props.emptyCart()
-					props.reset()
+					// setManualSubmitting(false)
+					// props.closeCart()
+					// props.emptyCart()
+					// props.reset()
 					await tagUserInConvertKit({
 						email: order.email,
 						firstName: order.first_name
