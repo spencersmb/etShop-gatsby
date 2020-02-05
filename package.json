@@ -79,6 +79,7 @@
     "storybook": "start-storybook -p 6006 -c .storybook",
     "build:storybook": "build-storybook",
     "dev": "run-p storybook nextDev",
+    "dev-m": "gatsby develop -H 0.0.0.0 -p 8000",
     "clean": "node cleanDir",
     "email": "mjml --watch welcome.mjml -o welcome.html"
   },

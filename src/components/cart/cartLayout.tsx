@@ -182,21 +182,24 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			id='cartWrapper'>
 
 			<CartHeader>
-				<div
-					data-testid='close-btn'
-					className='closeCartBtn jestCloseCart'
-					onClick={closeCart}>
-					{renderSvg(svgs.ArrowLeft)}
+				<div className={`cartHeader__inner`}>
+					<div
+						data-testid='close-btn'
+						className='closeCartBtn jestCloseCart'
+						onClick={closeCart}>
+						{renderSvg(svgs.ArrowLeft)}
+					</div>
+					<CartHeaderTitle>
+						<h2>Your Cart</h2>
+						<p className={'qty'}>{props.cart.totalItems} items</p>
+						<p className={'total'}>{displayCurrency(props.cart.originalPrice)}</p>
+					</CartHeaderTitle>
+					<CartSubTotalHeader>
+						{/*<span>Total</span>*/}
+						{/*<p>{displayCurrency(props.cart.originalPrice)}</p>*/}
+					</CartSubTotalHeader>
 				</div>
-				<CartHeaderTitle>
-					<h2>Your Cart</h2>
-					<p className={'qty'}>{props.cart.totalItems} items</p>
-					<p className={'total'}>{displayCurrency(props.cart.originalPrice)}</p>
-				</CartHeaderTitle>
-				<CartSubTotalHeader>
-					{/*<span>Total</span>*/}
-					{/*<p>{displayCurrency(props.cart.originalPrice)}</p>*/}
-				</CartSubTotalHeader>
+
 			</CartHeader>
 
 			{/* CartList Items */}

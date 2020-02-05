@@ -32,13 +32,15 @@ export const CartSliderTransition = {
 	}
 }
 export const CartHeader = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
 	border-bottom: 1px solid ${colors.grey.i300};
 	padding: 15px;
 	grid-column: 1 / -1;
+	
+	.cartHeader__inner{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
 
 	.closeCartBtn,
 	.closeCheckoutBtn{
@@ -75,6 +77,11 @@ export const CartHeaderTitle = styled.div`
 	font-weight: bold;
 	text-align: center;
 	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
 	
 	h2{
 		${Sentinel.black};

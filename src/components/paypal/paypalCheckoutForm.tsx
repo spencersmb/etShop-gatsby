@@ -146,10 +146,10 @@ export function PaypalCheckoutForm (props: AllProps & InjectedFormProps<IStripeG
 							data: order
 						}
 					})
-					// setManualSubmitting(false)
-					// props.closeCart()
-					// props.emptyCart()
-					// props.reset()
+					setManualSubmitting(false)
+					props.closeCart()
+					props.emptyCart()
+					props.reset()
 					await tagUserInConvertKit({
 						email: order.email,
 						firstName: order.first_name

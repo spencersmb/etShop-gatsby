@@ -125,16 +125,19 @@ export const CheckoutPage = (props: IProps) => {
 	return (
 		<div>
 			<CartHeader>
-				<div
-					data-testid='close-btn'
-					className='closeCheckoutBtn jestCloseCheckout'
-					onClick={props.toggleCheckout}>
-					{renderSvg(svgs.ArrowLeft)}
+				<div className={`cartHeader__inner`}>
+					<div
+						data-testid='close-btn'
+						className='closeCheckoutBtn jestCloseCheckout'
+						onClick={props.toggleCheckout}>
+						{renderSvg(svgs.ArrowLeft)}
+					</div>
+					<CartHeaderTitle>
+						<h2>Checkout</h2>
+					</CartHeaderTitle>
+					<div className='spacer' style={{ width: '56px' }}/>
 				</div>
-				<CartHeaderTitle>
-					<h2>Checkout</h2>
-				</CartHeaderTitle>
-				<div className='spacer' style={{ width: '56px' }}/>
+
 			</CartHeader>
 			<CheckOutContainer>
 
