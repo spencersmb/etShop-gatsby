@@ -62,8 +62,10 @@ export function getWindowSize (): string {
 
 export const bodyScrollBar = {
 	remove: (el: HTMLElement) => {
-		el.style.removeProperty('position')
-		el.style.removeProperty('width')
+		if (window.innerWidth >= 768) {
+			el.style.removeProperty('position')
+			el.style.removeProperty('width')
+		}
 
 		if (window.innerWidth > 1024) {
 			el.style.removeProperty('top')
@@ -74,13 +76,14 @@ export const bodyScrollBar = {
 		}
 	},
 	show: (el: HTMLElement, scrollPos: number) => {
-		el.style.position = 'fixed'
-		el.style.width = `100%`
+		if (window.innerWidth >= 768) {
+			el.style.position = 'fixed'
+			el.style.width = `100%`
+		}
 		if (window.innerWidth > 1024) {
 			if (windowHasScrollbar()) {
 				el.style.padding = '0 15px 0 0'
 			}
-
 			el.style.top = `-${scrollPos}px`
 			el.style.bottom = `0`
 		}

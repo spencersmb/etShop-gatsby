@@ -68,8 +68,6 @@ export function CheckoutTotal (props: IProps & ILocalState) {
 		// }
 
 	}
-	console.log('showDiscount', showDiscount())
-
 	return (
 		<OrderSummery>
 			<h3>Order Summary</h3>
