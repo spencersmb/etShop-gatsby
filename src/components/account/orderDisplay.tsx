@@ -1,4 +1,4 @@
-	import DefaultSpinner from '@components/spinners/defaultSpinner'
+import DefaultSpinner from '@components/spinners/defaultSpinner'
 import { IOrderResponse, IReceipt } from '@et/types/WC_Order'
 import { device } from '@styles/global/breakpoints'
 import { ButtonSmall } from '@styles/global/buttons'
@@ -119,8 +119,11 @@ function OrderDisplay (props: IProps) {
 	async function resetOrderLinks () {
 		setSubmitting(true)
 		try {
-			await props.resetDownloadLinks(selectedOrder.order_id, page)
-			setSubmitting(false)
+			const result = await props.resetDownloadLinks(selectedOrder.order_id, page)
+
+			if (result.completed) {
+				setSubmitting(false)
+			}
 		} catch (e) {
 			setSubmitting(false)
 			console.error('e', e)
@@ -579,10 +582,12 @@ const DisplayPoseRef = styled.div<{ mobile: boolean }>`
 		margin-bottom: 25px;
 	` : `
 	position: fixed;
-	top: 0;
+	top: 75px;
 	transform: translate3d(0, 0, 0);
 	width: 100%;
 	height: 100%;
+	padding: 0 0 80px;
+	margin: 0 0 80px;
 	left:0;
 	z-index: 3;
 	overflow-y: scroll;

@@ -1,5 +1,6 @@
 import { IReceipt } from '@et/types/WC_Order'
 import { colors } from '@styles/global/colors'
+import { Sentinel } from '@styles/global/fonts'
 import { shadowStyles } from '@styles/global/shadows'
 import { formatDate } from '@utils/orderUtils'
 import React from 'react'
@@ -34,12 +35,12 @@ function OrderItem (props: IProps & IReceipt) {
 				data-testid='orderItem-wrapper'
 			>
 				<Left>
-					<Title>order</Title>
-					<div data-testid='orderItem-id'>{id}</div>
+					<Title>order #</Title>
+					<div data-testid='orderItem-id' className={'orderNumber'}>{id}</div>
 				</Left>
 				<Right>
 					<Date data-testid='orderItem-date'>{formatDate(date)}</Date>
-					<div data-testid='orderItem-total'>${total}</div>
+					<div data-testid='orderItem-total' className={'total'}>${total}</div>
 				</Right>
 			</ItemContent>
 		</ItemCard>
@@ -53,19 +54,30 @@ const Title = styled.div`
 	text-transform: uppercase;
 `
 const Date = styled(Title)`
-	font-size: 16px;
+	font-size: 14px;
+	text-align: right;
 `
 const Left = styled.div`
 	flex: 1 0 50%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	
+	.orderNumber{
+		${Sentinel.semiboldItalic};
+		font-size: 20px;
+	}
 `
 const Right = styled.div`
 	flex: 1 0 50%;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
+	
+	.total{
+		${Sentinel.semiboldItalic};
+		font-size: 20px;
+	}
 `
 const ItemCard = styled.div<ISelected>`
 	background: ${props => props.selected ? colors.db.mid : '#fff'};

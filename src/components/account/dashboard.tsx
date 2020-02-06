@@ -88,6 +88,8 @@ interface INewState {
 
 export function Dashboard (props: AllProps) {
 	const { pagination, resetDownloadLinks } = props
+	const body = useRef<any>(null)
+
 	const page = getCurrentPage(props.location.search)
 	const [state, setState] = useSetState<ILocalState, INewState>({
 		searching: false,
@@ -96,6 +98,10 @@ export function Dashboard (props: AllProps) {
 		searchInput: '',
 		orderModalOpen: false
 	})
+
+	useEffect(() => {
+		body.current = document.getElementsByTagName('body')[0]
+	}, [])
 
 	useEffect(() => {
 		const getMyOrders = async () => {
@@ -108,6 +114,16 @@ export function Dashboard (props: AllProps) {
 
 	}, [props.location.search])
 
+	useEffect(() => {
+		if (state.orderModalOpen) {
+			if (body.current) {
+				body.current.style.overflow = 'hidden'
+			}
+		} else {
+			body.current.style.removeProperty('overflow')
+		}
+	}, [state.orderModalOpen])
+
 	function orderClick (orderId: number) {
 		// console.log('orderClick', orderId)
 
@@ -119,6 +135,10 @@ export function Dashboard (props: AllProps) {
 	}
 
 	async function submitSearch (orderId: any) {
+
+		if (orderId.length === 0) {
+			return
+		}
 
 		setState({ searching: true })
 
@@ -145,9 +165,12 @@ export function Dashboard (props: AllProps) {
 				const { order } = await props.searchOrderById(orderId)
 				setState({ searching: false })
 				setState({ searching: false, selectedSearchOrder: order })
+
 			} catch (e) {
 				setState({ searching: false })
-				props.logout()
+				if (e.message === 'User must be logged in.') {
+					props.logout()
+				}
 			}
 		}
 
@@ -365,7 +388,6 @@ const PageHeader = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin: 15px auto 0;
-	padding: 0 20px;
 	grid-column: 2/ 4;
 	max-width: 955px;
 	width: 100%;
@@ -380,6 +402,7 @@ const PageHeader = styled.div`
 	}
 	
 	@media ${device.tablet} {
+		padding: 0 20px;
 		flex-direction: row;
 		grid-column: 2/ 14;
 		margin: 30px auto 0;
@@ -392,11 +415,11 @@ const PageHeader = styled.div`
 const OrderDisplayContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 0 20px;
 	position: relative;
 	grid-column: 2/ 4;
 	
 	@media ${device.tablet} {
+		padding: 0 20px;
 		grid-column: 2/ 14;
 	}	
 	@media ${device.laptopL} {

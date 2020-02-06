@@ -716,7 +716,7 @@ export const testCartWithFreeItem: ICartState = {
 	},
 	loaded: true,
 	paymentType: 'Stripe',
-	totalItems: 2,
+	totalItems: 1,
 	totalPrice: 0,
 	originalPrice: 0
 }

@@ -4,7 +4,7 @@ import { LicenseEnum } from '@et/types/Cart'
 import { CartActionTypes } from '@et/types/Enums'
 import { IProduct } from '@et/types/Products'
 import {
-	addProductToCart, cartLoadedComplete,
+	addProductToCart, calcCheckoutType, cartLoadedComplete,
 	cartToggle, changeCheckoutType,
 	emptyCart, removeProductFromCart, updateCartItemQty,
 	updateCartPrice,
@@ -17,7 +17,7 @@ import {
 	testCartEmpty,
 	ProductKey,
 	testProducts,
-	testCartWithItem
+	testCartWithItem, testCartWithFreeItem, testCartWithMultiplesFixedCartCoupon
 } from '@redux/reduxTestUtils'
 import { cleanup } from 'react-testing-library'
 import configureMockStore from 'redux-mock-store'
@@ -50,14 +50,11 @@ describe('Cart Action tests', () => {
 				}
 			},
 			{
-				type: CartActionTypes.UPDATE_CART_TOTAL
-			},
-			{
-				type: CartActionTypes.UPDATE_CART_PRICE
+				type: CartActionTypes.REFRESH_CART
 			}
 		]
 
-		expect(getActions.length).toBe(3)
+		expect(getActions.length).toBe(expectedActions.length)
 		expect(getActions).toEqual(expectedActions)
 	})
 
@@ -99,14 +96,11 @@ describe('Cart Action tests', () => {
 					type: CartActionTypes.ADD_TO_CART
 				},
 				{
-					type: CartActionTypes.UPDATE_CART_TOTAL
-				},
-				{
-					type: CartActionTypes.UPDATE_CART_PRICE
+					type: CartActionTypes.REFRESH_CART
 				}
 			]
 
-		expect(getActions.length).toBe(3)
+		expect(getActions.length).toBe(expectedActions.length)
 		expect(getActions).toEqual(expectedActions)
 
 	})
@@ -227,14 +221,11 @@ describe('Cart Action tests', () => {
 				type: CartActionTypes.REMOVE_ITEM
 			},
 			{
-				type: CartActionTypes.UPDATE_CART_TOTAL
-			},
-			{
-				type: CartActionTypes.UPDATE_CART_PRICE
+				type: CartActionTypes.REFRESH_CART
 			}
 		]
 
-		expect(getActions.length).toBe(3)
+		expect(getActions.length).toBe(expectedActions.length)
 		expect(getActions).toEqual(expectedActions)
 
 	})
@@ -263,14 +254,11 @@ describe('Cart Action tests', () => {
 				type: CartActionTypes.UPDATE_CART_QTY
 			},
 			{
-				type: CartActionTypes.UPDATE_CART_TOTAL
-			},
-			{
-				type: CartActionTypes.UPDATE_CART_PRICE
+				type: CartActionTypes.REFRESH_CART
 			}
 		]
 
-		expect(getActions.length).toBe(3)
+		expect(getActions.length).toBe(expectedActions.length)
 		expect(getActions).toEqual(expectedActions)
 
 	})
@@ -294,4 +282,136 @@ describe('Cart Action tests', () => {
 		expect(getActions).toEqual(expectedActions)
 
 	})
+
+	it('Should not call any changeCheckoutType', () => {
+		const stateWithCartItem = initialState
+		const store = mockStore(stateWithCartItem)
+
+		// @ts-ignore
+		store.dispatch(calcCheckoutType('paypal'))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = []
+
+		expect(getActions.length).toBe(0)
+		expect(getActions).toEqual(expectedActions)
+	})
+
+	it('Should check for 100% off coupon', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithItem
+		stateWithCartItem.cart.totalPrice = 0
+		stateWithCartItem.cart.coupon = {
+			code: '100% off',
+			discount: '16',
+			loading: false,
+			product_ids: [222],
+			submitted: true,
+			type: 'fixed_product',
+			valid: true
+		}
+
+		const store = mockStore(stateWithCartItem)
+
+		// @ts-ignore
+		store.dispatch(calcCheckoutType('paypal'))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: 'pwyw',
+				type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+			}
+		]
+
+		expect(getActions.length).toBe(expectedActions.length)
+		expect(getActions).toEqual(expectedActions)
+	})
+
+	it('Should check for coupon added but item is already pwyw', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithFreeItem
+		stateWithCartItem.cart.coupon = {
+			code: 'Test',
+			discount: '16',
+			loading: false,
+			product_ids: [],
+			submitted: true,
+			type: 'fixed_product',
+			valid: true
+		}
+
+		const store = mockStore(stateWithCartItem)
+
+		// @ts-ignore
+		store.dispatch(calcCheckoutType('paypal'))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: 'pwyw',
+				type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+			}
+		]
+
+		expect(getActions.length).toBe(expectedActions.length)
+		expect(getActions).toEqual(expectedActions)
+	})
+
+	it('Should check for coupon added with restrictions but item is already pwyw', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithFreeItem
+		stateWithCartItem.cart.coupon = {
+			code: 'Test restricted',
+			discount: '16',
+			loading: false,
+			product_ids: [222],
+			submitted: true,
+			type: 'fixed_cart',
+			valid: true
+		}
+
+		const store = mockStore(stateWithCartItem)
+
+		// @ts-ignore
+		store.dispatch(calcCheckoutType('paypal'))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: 'pwyw',
+				type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+			}
+		]
+
+		expect(getActions.length).toBe(expectedActions.length)
+		expect(getActions).toEqual(expectedActions)
+	})
+
+	it('Should change from pwyw to selected paymentType', () => {
+		const stateWithCartItem = initialState
+		stateWithCartItem.cart = testCartWithMultiplesFixedCartCoupon
+		stateWithCartItem.cart.paymentType = 'pwyw'
+		stateWithCartItem.cart.coupon = {
+			code: 'Test Change Back',
+			discount: '16',
+			loading: false,
+			product_ids: [222],
+			submitted: true,
+			type: 'fixed_cart',
+			valid: true
+		}
+
+		const store = mockStore(stateWithCartItem)
+
+		// @ts-ignore
+		store.dispatch(calcCheckoutType('paypal'))
+		const getActions = store.getActions()
+		const expectedActions: Actions[] = [
+			{
+				payload: 'paypal',
+				type: CartActionTypes.CHANGE_CHECKOUT_TYPE
+			}
+		]
+
+		expect(getActions.length).toBe(expectedActions.length)
+		expect(getActions).toEqual(expectedActions)
+	})
+
 })

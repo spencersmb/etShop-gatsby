@@ -6,7 +6,12 @@ import { IModalState, OnPoseComplete } from '@et/types/Modal'
 import { IProducts } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IUserState } from '@et/types/User'
-import { calcCheckoutType as calcCheckoutTypeAction, cartToggle, changeCheckoutType, emptyCart } from '@redux/actions/cartActions'
+import {
+	calcCheckoutType as calcCheckoutTypeAction,
+	cartToggle,
+	changeCheckoutType,
+	emptyCart
+} from '@redux/actions/cartActions'
 import { device } from '@styles/global/breakpoints'
 import { ButtonReg } from '@styles/global/buttons'
 import { colors } from '@styles/global/colors'
@@ -134,11 +139,10 @@ export const useScrollEventv2 = (elementId: string, fixedElement: any, scrollEle
 }
 
 export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
-	const { cart, changeCheckout } = props
+	const { cart } = props
 	const target = useRef<HTMLElement | null>(null)
 	const [checkoutOpen, setCheckoutOpen] = useState(false)
 	const [fixed, offsetLeft, width] = useScrollEventv2('cartPageContainer', 'cartCheckoutNav', 'cartWrapper')
-	const bodyScrollPos = useRef(0)
 	const CheckoutSliderRef: any = useRef(null)
 
 	// use memo here to only keep track if there is a PWYW item in the cart and the total is 0
@@ -147,18 +151,9 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 		// console.log('window.innerWidth > 992', window.innerWidth > 992)
 		if (window.innerWidth > 992) {
 			CheckoutSliderRef.current.style.overflowY = `scroll`
-			// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
 		} else {
 			// CheckoutSliderRef.current.style.overflowY = `hidden`
 		}
-		// if (checkoutOpen) {
-		// 	CheckoutSliderRef.current.style.overflowY = `hidden`
-		//
-		// 	if (window.innerWidth > 992) {
-		// 		CheckoutSliderRef.current.style.overflowY = `scroll`
-		// 		// CheckoutSliderRef.current.style.padding = `0 15px 0 0`
-		// 	}
-		// }
 		setCheckoutOpen(!checkoutOpen)
 	}
 
@@ -195,12 +190,8 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 						<p className={'qty'}>{props.cart.totalItems} items</p>
 						<p className={'total'}>{displayCurrency(props.cart.originalPrice)}</p>
 					</CartHeaderTitle>
-					<CartSubTotalHeader>
-						{/*<span>Total</span>*/}
-						{/*<p>{displayCurrency(props.cart.originalPrice)}</p>*/}
-					</CartSubTotalHeader>
+					<CartSubTotalHeader/>
 				</div>
-
 			</CartHeader>
 
 			{/* CartList Items */}
@@ -239,11 +230,6 @@ export function CartLayout (props: IPropsPublic & IReduxState & IReduxActions) {
 			<CheckoutSlide
 				ref={CheckoutSliderRef}
 				pose={checkoutOpen ? 'open' : 'closed'}
-				onPoseComplete={(type: OnPoseComplete) => {
-					if (type === 'open') {
-						// CheckoutSliderRef.current.style.overflowY = `scroll`
-					}
-				}}
 			>
 				<CheckoutPage
 					total={cart.totalPrice}

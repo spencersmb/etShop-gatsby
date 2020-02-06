@@ -188,6 +188,29 @@ export const changeCheckoutType = (type: string): Actions => {
 	}
 }
 
+/*
+* * Tested!
+* Checks for:
+* * Case 1:  100% off coupon
+* 	Cart price is 0 and a coupon was added with product restrictions
+* 	Check if its a match for the item in the cart and if that item is not PWYW
+* 	set paymentType to be PWYW
+*
+* * Case 2: Coupon entered but item is not a match, but item is already PWYW
+* 	Cart price is 0 and a coupon was added with product restrictions,
+* 	but the item is not a match - check if the item is a PWYW item.
+* 	If it is PWYW item then set paymentType to PWYW. This scenario happens
+* 	when cart had more than one item in it + coupon and the paid item was
+* 	removed leaving ony the free item left.
+*
+* * Case 3: Total is 0 and no coupon restrictions
+* 	Make sure to set paymentType as PWYW. This happens when an item is free,
+* 	coupon is applied and doesn't have item restrictions. This coupon can be
+* 	ignored and change paymentType
+*
+* * Case 4: Change back to paid paymentType
+*
+*/
 export const calcCheckoutType = (type: string) =>
 	(dispatch: Dispatch<Action>, getState: () => IState) => {
 		const { cart } = getState()
@@ -199,7 +222,7 @@ export const calcCheckoutType = (type: string) =>
 			return
 		}
 
-		if (totalPrice === 0) {
+		if (totalPrice === 0 && coupon.product_ids.length > 0) {
 			const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
 			const firstItem: ICartItem = cartItems[cartItemKeys[0]]
 			const isItemPwyw = firstItem.price === '0'
@@ -209,6 +232,7 @@ export const calcCheckoutType = (type: string) =>
 			if (isFound && !isItemPwyw) {
 				// console.log('100% off')
 				dispatch(changeCheckoutType('pwyw'))
+				return
 			}
 
 			// if the item is not found in possible coupon added but is a free item
@@ -216,6 +240,7 @@ export const calcCheckoutType = (type: string) =>
 			if (!isFound && isItemPwyw) {
 				// console.log('has coupon in DB but not used, but item is free')
 				dispatch(changeCheckoutType('pwyw'))
+				return
 			}
 		}
 
@@ -223,6 +248,7 @@ export const calcCheckoutType = (type: string) =>
 		// make it PWYW
 		if (totalPrice === 0 && coupon.product_ids.length === 0) {
 			dispatch(changeCheckoutType('pwyw'))
+			return
 		}
 
 		// if we switch back, set it to the key that was last selected

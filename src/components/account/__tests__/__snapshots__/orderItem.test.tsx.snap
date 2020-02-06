@@ -12,29 +12,31 @@ exports[`Order Item Tests renders correctly 1`] = `
     data-testid="orderItem-wrapper"
   >
     <div
-      className="sc-htpNat bvZytV"
+      className="sc-htpNat cgQusK"
     >
       <div
         className="sc-bdVaJa knVLoF"
       >
-        order
+        order #
       </div>
       <div
+        className="orderNumber"
         data-testid="orderItem-id"
       >
         667
       </div>
     </div>
     <div
-      className="sc-bxivhb byWfLn"
+      className="sc-bxivhb hVdxVT"
     >
       <div
-        className="sc-bdVaJa sc-bwzfXH ezRsHV"
+        className="sc-bdVaJa sc-bwzfXH fGrzDT"
         data-testid="orderItem-date"
       >
         02/12/22
       </div>
       <div
+        className="total"
         data-testid="orderItem-total"
       >
         $

@@ -3,7 +3,7 @@ import { colors } from '@styles/global/colors'
 import { Pill, PillPose, SearchInputSpinner } from '@styles/modules/searchInputPill'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { PoseGroup } from 'react-pose'
 
 interface IProps {
@@ -18,10 +18,14 @@ interface IProps {
 
 const SearchInput = (props: IProps) => {
 	const { state, handleState } = props
+	const inputRef = useRef<HTMLInputElement | null>(null)
 
 	async function submit (e: any) {
 		e.preventDefault()
 		await props.handleSubmit(state.searchInput)
+		if (inputRef.current) {
+			inputRef.current.blur()
+		}
 	}
 
 	function handleChange (e: any) {
@@ -41,6 +45,7 @@ const SearchInput = (props: IProps) => {
 		<form onSubmit={submit}>
 			<div className={`search__wrapper`}>
 				<input
+					ref={inputRef}
 					className={!!props.state.selectedSearchOrder ? 'searchInput__selected' : ''}
 					type='text'
 					placeholder={`Search by Order Number`}

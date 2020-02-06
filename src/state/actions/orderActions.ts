@@ -4,6 +4,7 @@ import { OrderActionTypes, PaginationTypes } from '@et/types/Enums'
 import { IPaypalSuccessOrder } from '@et/types/Paypal'
 import { IState } from '@et/types/State'
 import { IOrderDetails, IOrderDownload, IOrderResponse } from '@et/types/WC_Order'
+import { logout } from '@redux/actions/authActions'
 import { addItemAfterOrder, clearPagination, updateDownloadLinks } from '@redux/actions/paginationActions'
 import { statusCheck } from '@utils/apiUtils'
 import { Action, Dispatch } from 'redux'
@@ -84,9 +85,14 @@ export const resetDownloadLinks = (orderId: string, page: number) => async (disp
 
 	const request: Response = await AuthApi.resetLinks(orderId)
 	await statusCheck(request, dispatch)
-	const json: { code: string, message: string, order: { order_id: string, downloads: IOrderDownload } } = await request.json()
+	const json: { code: number, message: string, order: { order_id: string, downloads: IOrderDownload } } = await request.json()
 
-	// console.log('json', json)
+	if (json.code !== 200) {
+		dispatch(logout())
+		return {
+			completed: false
+		}
+	}
 	// const item = json.order.downloads.exp_date
 	// console.log('item time', item)
 	//
@@ -99,4 +105,7 @@ export const resetDownloadLinks = (orderId: string, page: number) => async (disp
 		order: json.order,
 		page
 	}))
+	return {
+		completed: true
+	}
 }

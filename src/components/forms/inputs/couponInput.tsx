@@ -74,7 +74,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 			const inputPipe: any = inputObsv.pipe(
 				map((e: any) => e.target.value),
 				filter((e: string) => e !== ''),
-				debounceTime(1000),
+				debounceTime(2000),
 				distinctUntilChanged(),
 				switchMap((target: string) => {
 					if (target.length < 4) {

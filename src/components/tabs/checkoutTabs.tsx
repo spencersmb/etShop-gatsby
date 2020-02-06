@@ -4,19 +4,16 @@ import CartLogin from '@components/cart/login/cartLogin'
 import FreeCheckoutForm from '@components/forms/freeItem-checkout'
 import CouponInput from '@components/forms/inputs/couponInput'
 import CheckoutTab from '@components/tabs/checkoutTab'
-import { ICartItem } from '@et/types/Cart'
 import { OnPoseComplete } from '@et/types/Modal'
-import { IProduct } from '@et/types/Products'
 import { IUserState } from '@et/types/User'
 import { device } from '@styles/global/breakpoints'
 import { GridFluid } from '@styles/global/cssGrid'
 import { CartHeader, CartHeaderTitle } from '@styles/modules/cart'
 import { CartInner, CheckoutFormLabel, CheckoutTabs, CouponWrapper } from '@styles/modules/checkout'
 import { svgs } from '@svg'
-import { checkCartForItemMatchingCoupon } from '@utils/cartUtils'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 /**
@@ -70,13 +67,13 @@ export const CheckoutPage = (props: IProps) => {
 
 		if (props.initialLoad && !props.freeCheckout) {
 			setKey(props.initialLoad)
-			props.handleChangeType(props.initialLoad)
+			handleChangeType(props.initialLoad)
 		} else if (props.freeCheckout) {
-			props.handleChangeType('pwyw')
+			handleChangeType('pwyw')
 		} else {
 			// default to
 			setKey('stripe')
-			props.handleChangeType('stripe')
+			handleChangeType('stripe')
 		}
 
 	}, [])
@@ -139,7 +136,7 @@ export const CheckoutPage = (props: IProps) => {
 		// setState callback done with useEffects hooks in new version
 		if (key !== itemKey) {
 			setKey(itemKey)
-			props.handleChangeType(reduceChildrenByDataType(itemKey, props.children, 'data-payment'))
+			handleChangeType(reduceChildrenByDataType(itemKey, props.children, 'data-payment'))
 		}
 	}
 
