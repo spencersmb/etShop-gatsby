@@ -206,6 +206,13 @@ module.exports = {
         mergeCachingHeaders: true// boolean to turn off the default caching headers
         // transformHeaders: (headers, path) => headers, // optional transform for manipulating headers under each path (e.g.sorting), etc.
       }
+    },
+    {
+      resolve: `gatsby-plugin-hotjar`,
+      options: {
+        id: 1676936,
+        sv: 6
+      }
     }
   ]
 }
