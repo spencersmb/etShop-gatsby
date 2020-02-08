@@ -1,3 +1,4 @@
+import SupportCard from '@components/cards/supportCard'
 import DesignHero from '@components/pageHeaders/designHero'
 import ProductsDisplay from '@components/products/productsDisplay'
 import { device } from '@styles/global/breakpoints'
@@ -102,6 +103,7 @@ const IndexPage = ({ data }: any) => {
 		</Layout>
 	)
 }
+
 const PageContainer = styled.div`
 	background: ${colors.grey.i200};
 	padding-bottom: 30px;

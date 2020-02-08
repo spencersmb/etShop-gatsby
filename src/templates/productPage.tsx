@@ -189,7 +189,7 @@ export class ProductDetailPage extends Component<IProductQuery> {
 
 		const { data: { wcProduct } } = this.props
 		console.log('wcProduct', wcProduct)
-		console.log('this.props.data', this.props.data)
+		console.log('this.props.data', this.props)
 
 		return (
 			<>

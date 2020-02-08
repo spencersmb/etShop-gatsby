@@ -13,7 +13,7 @@ import { CartInner, CheckoutFormLabel, CheckoutTabs, CouponWrapper } from '@styl
 import { svgs } from '@svg'
 import { reduceChildrenByDataType } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 /**

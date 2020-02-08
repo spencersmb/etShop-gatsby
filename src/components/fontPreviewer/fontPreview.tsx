@@ -349,6 +349,7 @@ const Font = styled.div<{ state: IState }>`
 	margin: 0 0 25px;
 	display: flex;
 	flex-direction: column;
+	word-break: break-word;
 	font-feature-settings: ${props =>
 	`
 		${props.state.calt ? '"calt"' : '"calt" 0'},

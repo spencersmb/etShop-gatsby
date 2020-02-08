@@ -33,6 +33,7 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 	const { cartIsOpen } = props
 	// onComponent mount
 	useLayoutEffect(() => {
+
 		target.current = document.querySelector('#___gatsby')
 
 		const localStateCart: ILocalStorageCart = getLocalStorageCart()

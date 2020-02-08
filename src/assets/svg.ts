@@ -18,6 +18,7 @@ const Coupon = require('./svg-icons/Coupon.svg')
 const Divider1 = require('./svg-icons/divider-1.svg')
 const DottedLine = require('./svg-icons/Dotted-line.svg')
 const Download = require('./svg-icons/download.svg')
+const DownloadArrows = require('./svg-icons/downloadArrows.svg')
 const Email = require('./svg-icons/Email_outline.svg')
 const Enlarge = require('./svg-icons/enlarge.svg')
 const Eye = require('./svg-icons/eye.svg')
@@ -45,6 +46,7 @@ const PaypalPPLogoDisabled = require('./svg-icons/paypal-pp-logo-disabled.svg')
 const Photoshop = require('./svg-icons/photoshop.svg')
 const Programs = require('./svg-icons/programs.svg')
 const Procreate = require('./svg-icons/Procreate.svg')
+const QuestionMarks = require('./svg-icons/questionMarks.svg')
 const Tag = require('./svg-icons/Tag.svg')
 const Templates = require('./svg-icons/Templates.svg')
 const Textures = require('./svg-icons/Texture.svg')
@@ -72,6 +74,7 @@ export const svgs = {
 	Divider1,
 	DottedLine,
 	Download,
+	DownloadArrows,
 	Email,
 	Enlarge,
 	Eye,
@@ -100,6 +103,7 @@ export const svgs = {
 	Programs,
 	Procreate,
 	Pinterest,
+	QuestionMarks,
 	Tag,
 	Templates,
 	Textures,

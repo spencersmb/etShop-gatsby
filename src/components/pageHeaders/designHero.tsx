@@ -1,3 +1,4 @@
+import SupportCard from '@components/cards/supportCard'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
@@ -6,6 +7,23 @@ import { graphql, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
+
+const supportCards = [
+	{
+		theme: 'purple',
+		title: 'Expired downloads?',
+		text: 'Download links with your order last 24 hrs. If you’re already a customer then just log in to refresh them. If you checked out as a guest then click here.',
+		icon: 'DownloadArrows',
+		link: '/findMyOrder'
+	},
+	{
+		theme: 'teal',
+		title: 'Support for products',
+		text: 'Need help installing a font for the first time? Maybe unzipping items on an iPad? Explore the support section to get up and creating quickly.',
+		icon: 'QuestionMarks',
+		link: '/support'
+	}
+]
 
 function DesignHero () {
 	return (
@@ -26,14 +44,38 @@ function DesignHero () {
 					<HeroImage/>
 				</HeroImageContainer>
 			</GridFluid>
+			<SupportCardsContainer>
+				{supportCards.map(card => (<SupportCard key={card.title} {...card}/>))}
+			</SupportCardsContainer>
 		</HeroContainer>
 	)
 }
 
+const SupportCardsContainer = styled.div`
+	display: flex;
+	background: #fff;
+	flex-direction: column;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px 20px 40px;	
+	
+	@media ${device.tablet} {
+		flex-direction: row;
+		padding: 0 50px 30px;
+	}
+	@media ${device.laptop} {
+		max-width: 1290px;
+		padding: 0 45px 30px;
+	}
+	@media ${device.laptopL} {
+		max-width: 1200px;
+		padding: 0 0px 30px;
+	}
+	
+`
 const HeroContainer = styled.div`
 	background: white;
 	overflow-x: hidden;
-	overflow-y: hidden;
 	position: relative;
 	z-index: 1;
 	padding: 0 20px;
@@ -48,9 +90,9 @@ const HeroText = styled.div`
 	h1{
 		${Sentinel.reg};
 		font-style: normal;
-		font-weight: 600;
+		font-weight: 400;
 		letter-spacing: -.5px;
-		color: ${colors.primary.text};
+		color: ${colors.purple.i500};
 		font-size: 55px;
 		line-height: 53px;
 		margin-top: 80px;
@@ -59,7 +101,7 @@ const HeroText = styled.div`
 		${Sentinel.reg};
 		font-style: italic;
 		font-weight: 600;
-		color: ${colors.primary.pink};
+		color: ${colors.grey.i800};
 		font-size: 24px;
 		line-height: 32px;
 		margin-bottom: 30px;
@@ -72,7 +114,7 @@ const HeroText = styled.div`
 	@media ${device.tablet}{
 		grid-column: 2 / 8;
 		max-width: none;
-		margin: 0 auto 60px;
+		margin: 0 auto 30px;
 
 		h1{
 			font-size: 95px;
@@ -87,7 +129,7 @@ const HeroText = styled.div`
 	}
 	@media ${device.laptop}{
 		grid-column: 2 / 7;
-
+		margin-bottom: 60px;
 	}
 `
 const HeroImageContainer = styled.div`

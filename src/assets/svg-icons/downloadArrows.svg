@@ -1,0 +1,10 @@
+<svg viewBox="0 0 128 177" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Download Arrows</title>
+    <path class="svg-primary" d="M90.0172 85.1176H64.5265V47H26.2905V85.1176H0.799805L45.4085 129.588L90.0172 85.1176Z"
+          fill="#A182E9"/>
+    <path class="svg-third" opacity="0.7" d="M112 21.6923H97.7143V0H76.2857V21.6923H62L87 47L112 21.6923Z"
+          fill="#E4D8FD"/>
+    <path class="svg-third" d="M112 127.846H98.8571V108H79.1429V127.846H66L89 151L112 127.846Z" fill="#CDBAF8"/>
+    <path class="svg-secondary" d="M76 163H68V151H56V163H48L62 177L76 163Z" fill="#B09AE3"/>
+    <path class="svg-secondary" d="M128 71.8462H118.857V58H105.143V71.8462H96L112 88L128 71.8462Z" fill="#A182E9"/>
+</svg>

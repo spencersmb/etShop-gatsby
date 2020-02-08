@@ -4,7 +4,7 @@ import React, {
 	ComponentType,
 	RefObject,
 	useRef,
-	useEffect
+	useEffect, useLayoutEffect
 } from 'react'
 import { Action, bindActionCreators, Dispatch } from 'redux'
 import { hideModal } from '@redux/actions/modalActions'
@@ -49,6 +49,7 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 	const modalContentRef: RefObject<any> = useRef(null)
 	const target: any = useRef(null)
 	const scrollPos: any = useRef(0)
+	const mountedCount = useRef(false)
 
 	function handleOnOutsideClick (e: any) {
 		if (isChildOf(e.target, modalContentRef.current)) {
@@ -79,13 +80,14 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 		target.current = document.querySelector('#___gatsby')
 	}, [])
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 
 		// on close - render body before modal closes to stop safari from blinking text
-		if (!show && target.current && !cartIsOpen) {
+		if (!show && target.current && !cartIsOpen && mountedCount.current) {
 
 			// delay by 300 to allow modal to animate out with scrollbar issue
 			setTimeout(() => {
+				console.log('render scroll')
 				bodyScrollBar.remove(target.current)
 				document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 			}, 300)
@@ -93,6 +95,14 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 		}
 
 	}, [show])
+
+	useLayoutEffect(() => {
+		mountedCount.current = true
+
+		return () => {
+			mountedCount.current = false
+		}
+	}, [])
 
 	return (
 		<PoseGroup>

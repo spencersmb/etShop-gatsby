@@ -30,7 +30,10 @@ const Layout = ({ children, productPage = false, whiteFooter = false }: IlayoutP
 			render={data => (
 				<>
 					<GlobalStyle key='globalStyles'/>
-					<MyShoppingCart key='myCart' defaultOpenState={false}/>
+					<MyShoppingCart
+						key='myCart'
+						defaultOpenState={false}
+					/>
 					<div id='app' style={{ position: 'relative', width: '100%' }}>
 						<Header siteTitle={data.site.siteMetadata.title}/>
 						<PageContainer>
