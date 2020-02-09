@@ -1,6 +1,6 @@
 import MyShoppingCart from '@components/cart/cartStore'
 import Footer from '@components/footer/footer'
-import React, { ReactNode, useEffect, useRef } from 'react'
+import React, { ReactNode } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import ReduxToastr from 'react-redux-toastr'
 import Header from './header'

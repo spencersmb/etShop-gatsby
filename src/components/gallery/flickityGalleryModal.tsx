@@ -131,14 +131,16 @@ export default class GalleryModal extends Component<IProps> {
 	checkOverSizedImage = () => {
 		const selectedImage = document.getElementsByClassName('item-fullscreen is-selected')
 		const image = selectedImage[0].firstElementChild
+
 		if (image) {
+
 			const boundingClient = image.getBoundingClientRect()
 			if (boundingClient.height > 800 && !this.state.overSized) {
 
 				this.setState({
 					overSized: true
 				})
-			} else if (this.state.overSized) {
+			} else if (boundingClient.height < 800 && this.state.overSized) {
 				if (window) {
 					window.scrollTo({ top: 0, behavior: 'smooth' })
 				}

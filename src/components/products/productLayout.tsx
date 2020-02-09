@@ -211,6 +211,10 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 
 	}
 
+	function handleBackClick () {
+		window.history.back()
+	}
+
 	const { name, sub_header, images } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
 	const [ref, inView, entry] = useInView({
@@ -225,10 +229,10 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					<Gallery>
 						<BackBtn>
 							<ButtonWrapper>
-								<Link to='/'>
+								<div onClick={handleBackClick}>
 									<span>{renderSvg(svgs.ChevronLeft)}</span>
 									<span>Back to products</span>
-								</Link>
+								</div>
 							</ButtonWrapper>
 						</BackBtn>
 						<FlickityGalleryContext items={images} showModal={showModalAction} subSelector={true}/>
@@ -236,10 +240,10 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 					<ProductTitle>
 						<BackBtnMobile>
 							<ButtonWrapper>
-								<Link to='/'>
+								<div onClick={handleBackClick}>
 									<span>{renderSvg(svgs.ChevronLeft)}</span>
 									<span>Back to products</span>
-								</Link>
+								</div>
 							</ButtonWrapper>
 						</BackBtnMobile>
 						<h1 className={`sentinel-bold`}>{name}</h1>
@@ -423,7 +427,7 @@ const SliderGrid = styled(GridFluid)`
 `
 const ButtonWrapper = styled.div`
 	text-transform: uppercase;
-	a{
+	a, div{
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -462,8 +466,11 @@ const ButtonWrapper = styled.div`
 		span{
 			width: 14px;
 		}
-		a{
+		a, div{
 			padding: 20px;
+			&:hover{
+				cursor: pointer;
+			}
 		}
 	}
 		

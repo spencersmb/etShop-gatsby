@@ -113,6 +113,9 @@ const Container = styled.div`
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: space-between;
+		max-width: 887px;
+    margin: 0 auto;
+    width: 100%;
 		
 		& > div {
 			flex: 0 1 45%;
@@ -121,19 +124,20 @@ const Container = styled.div`
 	}
 	
 	@media ${device.laptop} {
+		max-width: none;
 		grid-column: 2 / 14;
 		justify-content: center;
 		& > div {
-				flex: 0 1 21%;
+				flex: 0 1 29%;
 			}
 	}
-		@media ${device.laptopL} {
-			grid-column: 2 / 14;
-			margin: 0 -30px;
+	@media ${device.laptopL} {
+		grid-column: 2 / 14;
+		margin: 0 -30px;
 
-			& > div {
-				flex: 0 1 22%;
-			}
+		& > div {
+			flex: 0 1 22%;
+		}
 	}
 		
 		

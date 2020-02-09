@@ -30,7 +30,6 @@ interface IReduxActions {
 	invalidCoupon: () => void
 	submitCoupon: () => void
 	updatePrice: () => void
-	changeCheckout: (type: string) => void
 }
 
 interface IProps {
@@ -43,7 +42,7 @@ export function CouponInput (props: IProps & IReduxActions) {
 	const [input, setInput] = useState('')
 	const [active, setActive] = useState(false)
 	const [pristine, setPristine] = useState(true)
-	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total, cart, changeCheckout } = props
+	const { coupon, submitCoupon, invalidCoupon, loadCoupon, updatePrice, total, cart } = props
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const prevTotal = useRef(total)
 
@@ -57,15 +56,6 @@ export function CouponInput (props: IProps & IReduxActions) {
 			setPristine(false)
 		}
 	}, [])
-
-	// useEffect(() => {
-	// 	if (total === parseInt(coupon.discount, 10) && coupon.type !== 'percent') {
-	// 		const isFound = checkCartForItemMatchingCoupon(coupon.product_ids, cartItems)
-	// 		if (isFound) {
-	// 			changeCheckout('pwyw')
-	// 		}
-	// 	}
-	// })
 
 	useEffect(() => {
 		let inputSubscribe: Subscription
@@ -260,9 +250,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): any => {
 		submitCoupon: bindActionCreators(submitCouponAction, dispatch),
 		loadCoupon: bindActionCreators(loadCouponSuccess, dispatch),
 		invalidCoupon: bindActionCreators(loadCouponInvalid, dispatch),
-		updatePrice: bindActionCreators(updateCartPrice, dispatch),
-		changeCheckout: bindActionCreators(changeCheckoutType, dispatch)
-
+		updatePrice: bindActionCreators(updateCartPrice, dispatch)
 	}
 }
 
