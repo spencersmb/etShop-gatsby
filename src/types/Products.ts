@@ -5,7 +5,44 @@ interface ICat {
 	name: string,
 	slug: string
 }
-
+export interface ILocalFile {
+	name: string
+	id: string
+	childImageSharp: {
+		fluid: {
+			src: string
+			aspectRatio: number
+			base64: string
+			sizes: string
+			srcSet: string
+		},
+		fixed: {
+			width: string
+			height: string
+			src: string
+		},
+		fullWidth: {
+			src: string
+			aspectRatio: number
+			base64: string
+			sizes: string
+			srcSet: string
+		},
+		thumbnail_mobile: {
+			src: string
+			aspectRatio: number
+			base64: string
+			sizes: string
+			srcSet: string
+		},
+		thumbnail: {
+			src: string
+		},
+		thumbnail_2x: {
+			src: string
+		}
+	}
+}
 export interface Image {
 	id: number,
 	alt: string,
@@ -16,40 +53,7 @@ export interface Image {
 		url: string
 	},
 	// Graphgql Images
-	localFile: {
-		name: string
-		id: string
-		childImageSharp: {
-			fluid: {
-				src: string
-				aspectRatio: number
-				base64: string
-				sizes: string
-				srcSet: string
-			},
-			fixed: {
-				width: string
-				height: string
-				src: string
-			},
-			fullWidth: {
-				src: string
-				aspectRatio: number
-				base64: string
-				sizes: string
-				srcSet: string
-			},
-			thumbnail_mobile: {
-				src: string
-			},
-			thumbnail: {
-				src: string
-			},
-			thumbnail_2x: {
-				src: string
-			}
-		}
-	}
+	localFile: ILocalFile
 }
 
 interface Itag {
@@ -158,12 +162,32 @@ export interface IProductFeaturedImage {
 	}
 }
 
+export interface IYoutubeItem {
+	video_id: string
+	gallery_position: string
+	video_thumbnail:{
+		url: string
+		alt: string
+		localFile: Image
+	}
+}
+
+export interface IGalleryItem {
+	video? : {
+		id: string
+	},
+	alt: string,
+	localFile: ILocalFile
+}
+
 export interface IProduct {
 	product_id: number,
 	id: string,
 	name: string,
 	details: IProductDetails
 	featuredImage: IProductFeaturedImage
+	images: Image[],
+	youtube_gallery_items: IYoutubeItem[]
 	font_preview: IFontPreview,
 	sub_header: string,
 	slug: string,
@@ -183,7 +207,6 @@ export interface IProduct {
 	on_sale: boolean;
 	categories: ICat[],
 	tags: Itag [],
-	images: Image[],
 	product_licenses: ILicenseType[]
 	features: IFeatureItem[]
 	related_products: string[] | null

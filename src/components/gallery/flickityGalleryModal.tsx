@@ -1,11 +1,22 @@
 import { IModal, Merge } from '@et/types/Modal'
-import { Image } from '@et/types/Products'
+import { IGalleryItem, Image } from '@et/types/Products'
+import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
 import React, { Component } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
+import YouTube, { Options } from 'react-youtube'
+
+const opts: Options = {
+	height: '390',
+	width: '640',
+	playerVars: { // https://developers.google.com/youtube/player_parameters
+		autoplay: 0,
+		enablejsapi: 1
+	}
+}
 
 const Flickity =
 	typeof window !== 'undefined'
@@ -15,7 +26,7 @@ const Flickity =
 type IProps = Merge<IModal, {
 	options: {
 		data: {
-			items: Image[],
+			items: IGalleryItem[],
 			onSettle: (index: number) => void,
 			selectedIndex: number
 		}
@@ -45,16 +56,28 @@ export default class GalleryModal extends Component<IProps> {
 	scrollAt = 1
 	wrapper: Element | null = null
 	dragStarted = false
+	myRef: any
+
+	constructor (props: IProps) {
+		super(props)
+		this._onReady = this._onReady.bind(this)
+	}
 
 	componentDidMount () {
 		this.scrollAt = 1 / (this.props.options.data.items.length)
 		this.initFlickity()
+		this.myRef = React.createRef()
 	}
 
 	UNSAFE_componentWillMount () {
 		if (this.flkty) {
 			this.flkty.destroy()
 		}
+	}
+
+	isVideoItem = (index: number): boolean => {
+		const items = this.props.options.data.items
+		return typeof items[index].video !== 'undefined'
 	}
 
 	initFlickity = () => {
@@ -90,6 +113,7 @@ export default class GalleryModal extends Component<IProps> {
 				this.flkty.on('settle', this.onSettle)
 				this.flkty.on('scroll', this.onChange)
 				this.checkOverSizedImage()
+
 			}
 		}
 	}
@@ -107,6 +131,12 @@ export default class GalleryModal extends Component<IProps> {
 				selectedIndex
 			})
 			this.checkOverSizedImage()
+
+			if (this.isVideoItem(selectedIndex)) {
+				this.myRef.current.internalPlayer.playVideo()
+			} else {
+				this.myRef.current.internalPlayer.pauseVideo()
+			}
 		}
 
 	}
@@ -129,14 +159,19 @@ export default class GalleryModal extends Component<IProps> {
 	}
 
 	checkOverSizedImage = () => {
+		const viewport = document.getElementsByClassName('carousel-modal')
 		const selectedImage = document.getElementsByClassName('item-fullscreen is-selected')
 		const image = selectedImage[0].firstElementChild
+
+		if (viewport) {
+			viewport[0].scrollTop = 0
+		}
 
 		if (image) {
 
 			const boundingClient = image.getBoundingClientRect()
-			if (boundingClient.height > 800 && !this.state.overSized) {
 
+			if (boundingClient.height > 800 && !this.state.overSized) {
 				this.setState({
 					overSized: true
 				})
@@ -159,6 +194,17 @@ export default class GalleryModal extends Component<IProps> {
 		this.dragStarted = false
 	}
 
+	_onReady (event: any) {
+		// only play on first render
+		if (!this.flkty) {
+			return
+		}
+
+		if (this.isVideoItem(this.flkty.selectedIndex)) {
+			this.myRef.current.internalPlayer.playVideo()
+		}
+	}
+
 	render () {
 		const overSizedStyles = {
 			height: '100%',
@@ -170,14 +216,36 @@ export default class GalleryModal extends Component<IProps> {
 					<div ref={c => this.wrapper = c} className={'carousel-modal'}
 						// @ts-ignore
 							 style={this.state.overSized ? overSizedStyles : {}}>
-						{this.props.options.data.items.map((item: Image, index: number) =>
-							<div key={index} style={itemStyle} className='item-fullscreen'>
-								<img
-									src={item.localFile.childImageSharp.fullWidth.base64}
-									data-flickity-lazyload-srcset={item.localFile.childImageSharp.fullWidth.srcSet}
-									sizes={item.localFile.childImageSharp.fullWidth.sizes}
-									alt={item.alt}/>
-							</div>
+						{this.props.options.data.items.map((item: IGalleryItem, index: number) => {
+								if (item.video) {
+									return (
+										<YoutubeGalleryItem key={'tubemodal'} className='item-fullscreen'>
+											<YoutubeContainer className={'youtubeContainer'}>
+												<YouTube
+													ref={this.myRef}
+													videoId={item.video.id}
+													opts={opts}
+													onReady={this._onReady}
+												/>
+												{/*<iframe*/}
+												{/*	src='https://www.youtube.com/embed/2TGOJ0_ssuo'*/}
+												{/*	frameBorder='0'*/}
+												{/*	allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'*/}
+												{/*	allowFullScreen={true}/>*/}
+											</YoutubeContainer>
+										</YoutubeGalleryItem>
+									)
+								}
+								return (
+									<div key={index} style={itemStyle} className='item-fullscreen'>
+										<img
+											src={item.localFile.childImageSharp.fullWidth.base64}
+											data-flickity-lazyload-srcset={item.localFile.childImageSharp.fullWidth.srcSet}
+											sizes={item.localFile.childImageSharp.fullWidth.sizes}
+											alt={item.alt}/>
+									</div>
+								)
+							}
 						)}
 					</div>
 					<CloseBtn onClick={this.props.closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
@@ -187,10 +255,41 @@ export default class GalleryModal extends Component<IProps> {
 	}
 }
 
+const YoutubeGalleryItem = styled.div`
+	width: 100%;
+	margin: 0 40px;
+	height: 390px;
+	
+	@media ${device.laptop} {
+		height: 720px;
+		max-width: 1275px;
+	}
+		
+`
+const YoutubeContainer = styled.div`
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    
+    iframe{
+			position: absolute;
+			top: 50%;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: 0;
+			transform: translateY(-50%);
+    }
+
+    	
+`
+
 const CloseBtn = styled.button`
 	position: absolute;
 	top: 15px;
-	right: 15px;
+	right: 30px;
 	width: 50px;
 	height: 50px;
 	z-index: 5;
@@ -230,7 +329,7 @@ const Container = styled.div<{ isLoaded: boolean }>`
 	flex-direction: column;
 	justify-content: center;
 	transition: opacity .3s;
-	opacity: ${props => props.isLoaded ? 1 : 0};
+	opacity: 1;
 `
 const ModalPose = posed.div({
 	exit: {

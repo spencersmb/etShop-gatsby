@@ -131,7 +131,10 @@ const SideBar = ({
           </FileTypes>
 
 					{/*Check for extend lic if product is a font*/}
-					{fontPreview && isStandardLicense && <ExtLicMsg onClick={changeLicense} data-testid={'upgrade'}>
+					{fontPreview &&
+					isStandardLicense &&
+					licenses.length > 1 &&
+          <ExtLicMsg onClick={changeLicense} data-testid={'upgrade'}>
             <p>Web Font? Upgrade to</p>
             <span>Extended License</span>
           </ExtLicMsg>}

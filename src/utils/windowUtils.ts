@@ -20,6 +20,10 @@ export const Width = thisWidth
 export const windowHasScrollbar = () => {
 	const body = document.getElementsByTagName('body')
 	if (body.length > 0) {
+		// console.log('window.innerWidth', window.innerWidth)
+		// console.log('body[0].clientWidth', body[0].clientWidth)
+		// console.log('calc', window.innerWidth - body[0].clientWidth !== 0)
+
 		return (window.innerWidth - body[0].clientWidth) !== 0
 	} else {
 		return false
@@ -62,6 +66,7 @@ export function getWindowSize (): string {
 
 export const bodyScrollBar = {
 	remove: (el: HTMLElement) => {
+
 		if (window.innerWidth >= 768) {
 			el.style.removeProperty('position')
 			el.style.removeProperty('width')
@@ -70,22 +75,19 @@ export const bodyScrollBar = {
 		if (window.innerWidth > 1024) {
 			el.style.removeProperty('top')
 			el.style.removeProperty('bottom')
-			if (windowHasScrollbar()) {
-				el.style.removeProperty('padding')
-			}
+			el.style.removeProperty('padding')
 		}
 	},
 	show: (el: HTMLElement, scrollPos: number) => {
+		const hasBar = windowHasScrollbar()
 		if (window.innerWidth >= 768) {
 			el.style.position = 'fixed'
 			el.style.width = `100%`
-		}
-		if (window.innerWidth > 1024) {
-			if (windowHasScrollbar()) {
-				el.style.padding = '0 15px 0 0'
-			}
 			el.style.top = `-${scrollPos}px`
-			el.style.bottom = `0`
+		}
+		if (window.innerWidth > 1024 && hasBar) {
+			el.style.padding = '0 15px 0 0'
+			// el.style.bottom = `0`
 		}
 
 	}

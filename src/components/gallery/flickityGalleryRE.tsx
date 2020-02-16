@@ -7,7 +7,7 @@ import { useSetState } from '@utils/stateUtils'
 import { renderSvg } from '@utils/styleUtils'
 import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
-import { Image } from '@et/types/Products'
+import { IGalleryItem } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -18,7 +18,7 @@ const Flickity =
 		: () => null
 
 interface IProps {
-	items: Image[]
+	items: IGalleryItem[]
 	showModal: IShowModalAction
 	subSelector?: boolean
 }
@@ -35,6 +35,7 @@ interface INewState {
 
 const itemStyle = {
 	width: '100%',
+	// height: `100%`,
 	margin: 0
 }
 
@@ -42,6 +43,7 @@ const FlickityGalleryContext = (props: IProps) => {
 	const { items, subSelector } = props
 	const [state, setState] = useSetState<IState, INewState>({
 		selectedIndex: 0,
+		galleryItems: [],
 		loaded: false
 	})
 	const flkty = useRef<Flickity | null>(null)
@@ -125,9 +127,11 @@ const FlickityGalleryContext = (props: IProps) => {
 	}
 
 	function slideTo (index: number, updateState = true) {
+
 		if (!flkty.current) {
 			return
 		}
+
 		flkty.current.selectCell(index)
 
 		// Used in the subNav
@@ -149,24 +153,49 @@ const FlickityGalleryContext = (props: IProps) => {
 	}
 
 	{/*<FlickityWrapper initialPose='exit' pose='enter'>*/}
+	// position: absolute;
+	// top: 0;
+	// bottom: 0;
+	// left: 0;
+	// width: 100%;
+	// height: 100%;
+	// border: 0;
 
 	return (
 		<FlickityWrapper pose={state.loaded ? 'show' : 'hide'}>
 			<div ref={wrapper} className={`carousel`}>
-				{items.map((item: Image, index: number) =>
-					<div key={index} style={itemStyle} className='item carousel-cell'>
-						<FullScreenIcon>
-							{renderSvg(svgs.MagnifyGlass)}
-						</FullScreenIcon>
-						<EnlargeIcon>
-							{renderSvg(svgs.Enlarge)}
-						</EnlargeIcon>
-						<Img
-							loading={'eager'}
-							fadeIn={false}
-							fluid={item.localFile.childImageSharp.fluid}
-							alt={item.alt}/>
-					</div>
+
+				{items.map((item: IGalleryItem, index: number) => {
+						if (item.video) {
+							return (
+								<div key={'index'} style={itemStyle} className='item carousel-cell'>
+									<YoutubeIcon className={'youtubeIcon'}>
+										{renderSvg(svgs.Youtube)}
+									</YoutubeIcon>
+									<Img
+										loading={'eager'}
+										fadeIn={false}
+										fluid={item.localFile.childImageSharp.fluid}
+										alt={item.alt}/>
+								</div>
+							)
+						}
+						return (
+							<div key={index} style={itemStyle} className='item carousel-cell'>
+								<FullScreenIcon>
+									{renderSvg(svgs.MagnifyGlass)}
+								</FullScreenIcon>
+								<EnlargeIcon>
+									{renderSvg(svgs.Enlarge)}
+								</EnlargeIcon>
+								<Img
+									loading={'eager'}
+									fadeIn={false}
+									fluid={item.localFile.childImageSharp.fluid}
+									alt={item.alt}/>
+							</div>
+						)
+					}
 				)}
 			</div>
 			<div>
@@ -182,7 +211,6 @@ const FlickityGalleryContext = (props: IProps) => {
 		</FlickityWrapper>
 	)
 }
-
 const EnlargeIcon = styled.div`
 	position: absolute;
 	top:10px;
@@ -224,6 +252,12 @@ const FullScreenIcon = styled.span`
 		}
 	}
 `
+const YoutubeIcon = styled(FullScreenIcon)`
+	svg{
+		max-width: 136px;
+		padding: 20px;
+	}
+`
 const ContainerPose = posed.div({
 	hide: {
 		opacity: 0,
@@ -249,6 +283,10 @@ const FlickityWrapper = styled(ContainerPose)`
 	
 	@media ${device.tablet} {
 			overflow: hidden;
+	}
+	
+	.flickity-slider{
+		height: 100%;
 	}
 `
 export default React.memo(FlickityGalleryContext)

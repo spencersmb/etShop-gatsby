@@ -133,7 +133,7 @@ const Container = styled.div`
 	}
 	@media ${device.laptopL} {
 		grid-column: 2 / 14;
-		margin: 0 -30px;
+		margin: auto;
 
 		& > div {
 			flex: 0 1 22%;

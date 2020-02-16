@@ -122,15 +122,16 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 					onPoseComplete={(type: OnPoseComplete) => {
 						if (type === 'enter') {
 							// 1. Check if TOP is already set and get the value
-							const topExists = getComputedStyle(target.current).top || 'auto'
-							const topReverse = parseInt(topExists, 10) * -1
-							// console.log('top', isNaN(topReverse))
+							const topExists = window.scrollY || 'auto'
+							// const topReverse = parseInt(topExists, 10) * -1
+							// console.log('isNaN', isNaN(topReverse))
+							// console.log('getComputedStyle(target.current)', window.scrollY)
 
 							// 2. check if top has a value to start with instead of looking up body scroll position
-							const hasTop = !isNaN(topReverse)
+							// const hasTop = !isNaN(topReverse)
 
-							scrollPos.current = hasTop
-								? topReverse
+							scrollPos.current = topExists === 'auto'
+								? topExists
 								: document.body.scrollTop || document.documentElement.scrollTop || 0
 
 							bodyScrollBar.show(target.current, scrollPos.current)

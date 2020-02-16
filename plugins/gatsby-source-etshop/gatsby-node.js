@@ -66,6 +66,27 @@ exports.sourceNodes = async (
 
     product.featuredImage = await processFeatureV2(product.featuredImage, args)
 
+    if (product.youtube_gallery_items.length > 0) {
+      product.youtube_gallery_items = await Promise.all(product.youtube_gallery_items.map(async youtubeItem => {
+        let fileNode
+
+        try {
+          fileNode = await createRemoteFileNode({
+            url: youtubeItem.video_thumbnail.url,
+            ...args
+          })
+
+        } catch (e) {
+          console.log("e", e)
+
+        }
+        if (fileNode) {
+          youtubeItem.video_thumbnail.localFile___NODE = fileNode.id
+          return youtubeItem
+        }
+      }))
+    }
+
     const nodeId = createNodeId(`wc-product-${product.id}`)
     const nodeContent = JSON.stringify(product)
 

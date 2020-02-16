@@ -1,7 +1,7 @@
 import ProductLayout from '@components/products/productLayout'
 import SEO from '@components/seo'
 import { IGatsbyConfig } from '@et/types/Gatsby'
-import { IFontPreviewFile, IFontPreviewStyles, IProduct } from '@et/types/Products'
+import { IFontPreviewFile, IFontPreviewStyles, Image, IProduct, IYoutubeItem } from '@et/types/Products'
 import { IMeta, IOGType } from '@et/types/SEO'
 import { facebookDefaultMeta, jsonldImages, socialConfig, twitterDefaultMeta } from '@utils/socialUtils'
 import { graphql } from 'gatsby'
@@ -184,6 +184,33 @@ export class ProductDetailPage extends Component<IProductQuery> {
 		return cssString
 	}
 
+	combineGalleryItems (arrayItems: Image[], youtubeItems: IYoutubeItem[]) {
+
+		console.log('combine items')
+
+		const newArray: any = [...arrayItems]
+
+		if (youtubeItems.length === 0) {
+			return arrayItems
+		}
+
+		youtubeItems.forEach(item => {
+			const position = parseInt(item.gallery_position, 10)
+
+			newArray.splice(position, 0, {
+				video: {
+					id: item.video_id
+				},
+				alt: item.video_thumbnail.alt,
+				localFile: {
+					...item.video_thumbnail.localFile
+				}
+			})
+		})
+
+		return newArray
+	}
+
 	render () {
 		// TODO: get google verification token
 
@@ -214,7 +241,9 @@ export class ProductDetailPage extends Component<IProductQuery> {
 
 					<script type='application/ld+json'>{JSON.stringify(this.jsonld)}</script>
 				</SEO>
-				<ProductLayout product={wcProduct}/>
+				<ProductLayout
+					product={wcProduct}
+					galleryItems={this.combineGalleryItems(wcProduct.images, wcProduct.youtube_gallery_items)}/>
 			</>
 		)
 	}
@@ -296,25 +325,42 @@ export const productQuery = graphql`
                 localFile{
                     childImageSharp {
                         #						fluid(maxWidth: 1404, maxHeight: 936) {
-                        fluid(maxWidth: 702, maxHeight: 470) {
+                        fluid(maxWidth: 702, maxHeight: 470, cropFocus: NORTH) {
                             ...GatsbyImageSharpFluid
                         }
-                        thumbnail_blur: fluid(maxWidth: 45, maxHeight: 30) {
+                        thumbnail_blur: fluid(maxWidth: 45, maxHeight: 30, cropFocus: NORTH) {
                             ...GatsbyImageSharpFluid
                         }
-                        thumbnail_mobile: fluid(maxWidth: 305, maxHeight: 203) {
+                        thumbnail_mobile: fluid(maxWidth: 305, maxHeight: 203, cropFocus: NORTH) {
                             ...GatsbyImageSharpFluid
                         }
-                        thumbnail: fluid(maxWidth: 702, maxHeight: 468) {
+                        thumbnail: fluid(maxWidth: 702, maxHeight: 468, cropFocus: NORTH) {
                             src
                         }
-                        thumbnail_2x: fluid(maxWidth: 1404, maxHeight: 936) {
+                        thumbnail_2x: fluid(maxWidth: 1404, maxHeight: 936, cropFocus: NORTH) {
                             src
                         }
-                        fullWidth: fluid(maxWidth: 1820) {
+                        fullWidth: fluid(maxWidth: 1170) {
                             ...GatsbyImageSharpFluid
                         }
                     }
+                }
+            }
+            youtube_gallery_items{
+                video_id
+                gallery_position
+                video_thumbnail{
+                    localFile{
+                        childImageSharp {
+                            fluid(maxWidth: 702, maxHeight: 470, cropFocus: NORTH) {
+                                ...GatsbyImageSharpFluid
+                            }
+                            thumbnail_mobile: fluid(maxWidth: 305, maxHeight: 203, cropFocus: NORTH) {
+                                ...GatsbyImageSharpFluid
+                            }
+                        }
+                    }
+                    alt
                 }
             }
             categories{

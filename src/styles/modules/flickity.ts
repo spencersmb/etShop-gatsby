@@ -34,6 +34,8 @@ export default css`
 		.flickity-viewport{
 			//height: 220px !important;
 			//height: 520px;
+			position: relative;
+			z-index: 1;
 			transition: none;
 		}
 		.flickity-page-dots{
@@ -75,6 +77,11 @@ export default css`
 			transition: .3s;
 			transform: translateY(-60%)translateX(-50%);
 			opacity: 0;
+			
+			&.youtubeIcon{
+				transform: translateY(-50%)translateX(-50%);
+				opacity: 1;
+			}
   	}
   	img{
   		width: 100%;
@@ -98,9 +105,30 @@ export default css`
 	.carousel-cell-nav{
 		max-width: 205px;
 		cursor: pointer;
+		position: relative;
 		img{
 				width: 100%;
 			}
+		.youtube-cell__icon{
+			z-index: 2;
+			background: #333f4fa3;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translateY(-50%)translateX(-50%);
+			border-radius: 50%;
+			padding: 15px;
+			display: flex;
+			justify-content: center;
+			
+			svg{
+				width: 100%;
+				max-width: 45px;
+			}
+			path{
+				fill: #fff;
+			}
+		}
 	}
 	.item-fullscreen{
 		max-width: 728px;
@@ -120,11 +148,14 @@ export default css`
 			
 		@media ${device.laptop} {
 			max-width: 1075px;
+			&.youtube-fullscreen{
+				max-width: 1275px;
+			}
 		}
+		
+
 			
 	}
-	
-	
 	.flickity-button{
 		position: fixed;
     background: hsla(0, 0%, 100%, 0.75);
@@ -133,6 +164,7 @@ export default css`
     cursor: pointer;
     transition: .3s;
     display: none;
+    z-index: 2;
     &:hover{
     	background: #fff;
     }
@@ -153,7 +185,7 @@ export default css`
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    left: 10px;
+    left: 30px;
     transform: translateY(-50%);
     display: none;
     svg{
@@ -163,7 +195,7 @@ export default css`
     }
     &.next{
     	left: auto;
-    	right: 10px;
+    	right: 30px;
     }
     
 		@media ${device.laptop} {

@@ -13,7 +13,7 @@ import SideBar from '@components/products/modules/productDetailsSidebar'
 import RelatedProducts from '@components/products/modules/relatedProducts'
 import SocialMediaBars from '@components/socialMedia/socialBars'
 import { ICartItem, ICartState, LicenseEnum } from '@et/types/Cart'
-import { IProduct, IProducts } from '@et/types/Products'
+import { IGalleryItem, Image, IProduct, IProducts, IYoutubeItem } from '@et/types/Products'
 import { IState } from '@et/types/State'
 import { IShowModalAction, showModal } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
@@ -46,6 +46,7 @@ interface IPropsActions {
 
 interface IPropsPublic {
 	product: IProduct
+	galleryItems: IGalleryItem[]
 }
 
 interface IPublicState {
@@ -73,7 +74,7 @@ export type ISelectProduct = ({ license, slug }: { license: string, slug: string
 // TODO: Dont show related if none are present,
 // switch off of has ext license data point instead if needed
 export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsActions) => {
-	const { product, products, cart, showModalAction } = props
+	const { product, products, cart, showModalAction, galleryItems } = props
 	const [state, setState] = useSetState<IPublicState, INewState>({
 		selectedProduct: product,
 		selectedLicense: 'standard',
@@ -215,7 +216,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 		window.history.back()
 	}
 
-	const { name, sub_header, images } = props.product
+	const { name, sub_header, images, youtube_gallery_items } = props.product
 	const { bulkDiscount, numberOfLicenses, inCart, payWhatYouWant } = state
 	const [ref, inView, entry] = useInView({
 		/* Optional options */
@@ -235,7 +236,10 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								</div>
 							</ButtonWrapper>
 						</BackBtn>
-						<FlickityGalleryContext items={images} showModal={showModalAction} subSelector={true}/>
+						<FlickityGalleryContext
+							items={galleryItems}
+							showModal={showModalAction}
+							subSelector={true}/>
 					</Gallery>
 					<ProductTitle>
 						<BackBtnMobile>

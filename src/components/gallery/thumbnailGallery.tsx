@@ -1,4 +1,7 @@
+import { IGalleryItem } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
+import { svgs } from '@svg'
+import { renderSvg } from '@utils/styleUtils'
 import React, { Component, useEffect, useState } from 'react'
 import posed from 'react-pose'
 import styled from 'styled-components'
@@ -12,7 +15,7 @@ interface IProps {
 	slideTo: (index: number, updateState?: boolean) => void
 	selectedIndex: number
 	onSettle: any
-	items: any[]
+	items: IGalleryItem[]
 }
 
 const itemStyle = {
@@ -142,9 +145,17 @@ export default class SubSelector extends Component<IProps> {
 			<GallerySubNav>
 				<GalleryItems pose={this.state.galleryLoaded ? 'open' : 'close'}>
 					<div ref={c => this.wrapper = c}>
-						{items.map((item: any, index: number) =>
+						{/*<div key={'test'} style={itemStyle} className='carousel-cell-nav'>*/}
+						{/*	<img*/}
+						{/*		src={items[0].localFile.childImageSharp.thumbnail_mobile.src}*/}
+						{/*		alt={items[0].alt}*/}
+						{/*		// loading='lazy'*/}
+						{/*		onLoad={this.loadImage}*/}
+						{/*	/>*/}
+						{/*</div>*/}
+						{items.map((item: IGalleryItem, index: number) =>
 							<div key={index} style={itemStyle} className='carousel-cell-nav'>
-
+								{item.video && <div className={'youtube-cell__icon'}>{renderSvg(svgs.Youtube)}</div>}
 								<LazyLoadImg
 									base={item.localFile.childImageSharp.thumbnail_mobile.base64}
 									src={item.localFile.childImageSharp.thumbnail_mobile.src}
@@ -152,7 +163,6 @@ export default class SubSelector extends Component<IProps> {
 									// onLoad={this.loadImage}
 									{...item}
 								/>
-
 								{/*Flickity lazy with srcset*/}
 								{/*<img*/}
 								{/*	src={item.localFile.childImageSharp.thumbnail_mobile.base64}*/}
