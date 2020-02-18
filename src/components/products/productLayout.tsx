@@ -436,6 +436,7 @@ const ButtonWrapper = styled.div`
 		flex-direction: row;
 		align-items: center;
 		color: ${colors.primary.text};
+		transition: .3s;
 		&:hover{
 			color: ${colors.primary.pink};
 			path{

@@ -102,10 +102,18 @@ const images = [
 					src: ''
 				},
 				thumbnail_mobile: {
-					src: ''
+					src: '',
+					aspectRatio: 12345,
+					base64: 'base64',
+					sizes: 'sizes',
+					srcSet: 'srcSet'
 				},
 				thumbnail: {
-					src: ''
+					src: '',
+					aspectRatio: 12345,
+					base64: 'base64',
+					sizes: 'sizes',
+					srcSet: 'srcSet'
 				},
 				fullWidth: {
 					src: '',
@@ -185,6 +193,7 @@ export const singleProduct: IProduct = {
 		{ id: 1, slug: 'fonts', name: 'Fonts' },
 		{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 	],
+	youtube_gallery_items: [],
 	images: [...images],
 	install_instructions: 'instructions',
 	description_footer: [],
@@ -255,6 +264,7 @@ export const testProducts: IProducts = {
 				title: 'singleItemQuery title'
 			}
 		],
+		youtube_gallery_items: [],
 		categories: [
 			{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 		],
@@ -332,6 +342,7 @@ export const testProducts: IProducts = {
 			icon: 'icon',
 			title: 'singleItemQuery title'
 		}],
+		youtube_gallery_items: [],
 		categories: [
 			{ id: 2, slug: 'Watercolor', name: 'Watercolor' }
 		],
@@ -383,6 +394,7 @@ export const testProducts: IProducts = {
 			icon: 'icon',
 			title: 'singleItemQuery title'
 		}],
+		youtube_gallery_items: [],
 		categories: [
 			{ id: 1, slug: 'fonts', name: 'Fonts' }
 		],
@@ -439,6 +451,7 @@ export const testProducts: IProducts = {
 		sub_header: 'sub header',
 		description: 'description',
 		short_description: 'short desc',
+		youtube_gallery_items: [],
 		on_sale: true,
 		features: [{
 			description: 'item desc',

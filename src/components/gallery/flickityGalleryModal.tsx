@@ -133,12 +133,24 @@ export default class GalleryModal extends Component<IProps> {
 			this.checkOverSizedImage()
 
 			if (this.isVideoItem(selectedIndex)) {
-				this.myRef.current.internalPlayer.playVideo()
+				this.playVideo()
 			} else {
-				this.myRef.current.internalPlayer.pauseVideo()
+				this.pauseVideo()
 			}
 		}
 
+	}
+
+	playVideo = () => {
+		if (this.myRef.current) {
+			this.myRef.current.internalPlayer.playVideo()
+		}
+	}
+
+	pauseVideo = () => {
+		if (this.myRef.current) {
+			this.myRef.current.internalPlayer.pauseVideo()
+		}
 	}
 
 	onSettle = () => {
@@ -201,7 +213,7 @@ export default class GalleryModal extends Component<IProps> {
 		}
 
 		if (this.isVideoItem(this.flkty.selectedIndex)) {
-			this.myRef.current.internalPlayer.playVideo()
+			this.playVideo()
 		}
 	}
 

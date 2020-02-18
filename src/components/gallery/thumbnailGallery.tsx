@@ -145,14 +145,6 @@ export default class SubSelector extends Component<IProps> {
 			<GallerySubNav>
 				<GalleryItems pose={this.state.galleryLoaded ? 'open' : 'close'}>
 					<div ref={c => this.wrapper = c}>
-						{/*<div key={'test'} style={itemStyle} className='carousel-cell-nav'>*/}
-						{/*	<img*/}
-						{/*		src={items[0].localFile.childImageSharp.thumbnail_mobile.src}*/}
-						{/*		alt={items[0].alt}*/}
-						{/*		// loading='lazy'*/}
-						{/*		onLoad={this.loadImage}*/}
-						{/*	/>*/}
-						{/*</div>*/}
 						{items.map((item: IGalleryItem, index: number) =>
 							<div key={index} style={itemStyle} className='carousel-cell-nav'>
 								{item.video && <div className={'youtube-cell__icon'}>{renderSvg(svgs.Youtube)}</div>}

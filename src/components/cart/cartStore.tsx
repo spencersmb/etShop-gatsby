@@ -29,7 +29,7 @@ interface IPropsPublic {
 
 export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPublic) => {
 	const target = useRef<HTMLElement | null>(null)
-	const bodyScrollPos = useRef(0)
+	const bodyScrollPos: any = useRef(0)
 	const { cartIsOpen } = props
 	// onComponent mount
 	useLayoutEffect(() => {
@@ -51,7 +51,11 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 	}, [])
 	useEffect(() => {
 		if (cartIsOpen && target.current) {
+			const topExists = window.scrollY || 'auto'
 			// bodyScrollPos.current = document.body.scrollTop || document.documentElement.scrollTop || 0
+			bodyScrollPos.current = topExists === 'auto'
+				? topExists
+				: document.body.scrollTop || document.documentElement.scrollTop || 0
 			bodyScrollBar.show(target.current, bodyScrollPos.current)
 		}
 	}, [cartIsOpen])
@@ -71,8 +75,7 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 
 					if (type === 'exit' && !overlayOpen && target.current) {
 						bodyScrollBar.remove(target.current)
-
-						// document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
+						document.documentElement.scrollTop = document.body.scrollTop = bodyScrollPos.current
 					}
 
 				}}>
