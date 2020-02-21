@@ -1,4 +1,5 @@
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { css } from 'styled-components'
 
 export default css`
@@ -106,9 +107,26 @@ export default css`
 		max-width: 205px;
 		cursor: pointer;
 		position: relative;
+		&:before{
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+			background: transparent;
+			transition: .3s;
+		}
 		img{
-				width: 100%;
+			width: 100%;
+		}
+		&.is-selected{
+			&:before{
+				background: #35546d73;
 			}
+		}
+		
 		.youtube-cell__icon{
 			z-index: 2;
 			background: #333f4fa3;

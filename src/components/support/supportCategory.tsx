@@ -10,7 +10,7 @@ import styled from 'styled-components'
 
 const SupportCategory = (props: ICategory) => {
 	const { name, supportQuestions, slug, count } = props
-	const orderedByPopularity = supportQuestions.nodes.sort(orderByPopularity)
+	// const orderedByPopularity = supportQuestions.nodes.sort(orderByPopularity)
 
 	return (
 		<CategoryContainer>
@@ -21,14 +21,14 @@ const SupportCategory = (props: ICategory) => {
 
 			{/*ITEMS*/}
 			<SupportLinksContainer>
-				{orderedByPopularity.filter((item, index) => index <= 2).map((item) => (
+				{supportQuestions.nodes.filter((item, index) => index <= 2).map((item) => (
 					<SupportLink key={item.slug} item={item} showExcerpt={false}/>))}
 			</SupportLinksContainer>
 
 			{/*VIEW MORE*/}
 			{count > 3 &&
       <ViewAllBtn data-testid={`viewAll`}>
-        <Link to={`/support/category/${slug}`}>
+        <Link to={`/support/category/${slug}/page/1`}>
           View All
         </Link>
       </ViewAllBtn>
@@ -40,10 +40,10 @@ const ViewAllBtn = styled.div`
 	a{
 		text-transform: uppercase;
 		font-size: 14px;
-		color: ${colors.secondary.text};
+		color: ${colors.purple.i500};
 		font-weight: 500;
 		&:hover{
-			color: ${colors.teal.i500};
+			color: ${colors.teal.i600};
 		}
 	}
 `
@@ -62,13 +62,15 @@ const CategoryContainer = styled.div`
 	}
 	
 	@media ${device.tablet} {
-		grid-column: span 4;
+		grid-column: span 6;
 		padding: 0 15px;
+		margin-bottom: 40px;	
 		h2{
 			margin-bottom: 20px;
 		}
 	}
 	@media ${device.laptop} {
+		grid-column: span 4;
 		h2{
 			font-size: 42px;
 			line-height: 48px;

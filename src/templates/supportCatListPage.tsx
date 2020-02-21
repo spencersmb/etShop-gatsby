@@ -2,18 +2,43 @@ import HeaderBlockOneBCrumb from '@components/headers/headerBlockOneBreadcrumb'
 import Layout from '@components/layout'
 import SEO from '@components/seo'
 import SupportCategoryList from '@components/support/supportCategoryItems'
+import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { orderByPopularity } from '@utils/genUtils'
 import { createStandardJSONLD, facebookDefaultMeta, socialConfig, twitterDefaultMeta } from '@utils/socialUtils'
 import React from 'react'
-import { graphql, Link } from 'gatsby'
+import { graphql, Link, navigate } from 'gatsby'
 import styled from 'styled-components'
 import { SupportPageContainer } from '../pages/support'
 
 const SupportCategoryPage = (props: any) => {
-	const { data: { wpgraphql: { categories } } } = props
+	const { data: { wpgraphql: { categories } }, pageContext } = props
 	const { site, featureImage } = props.data
 	const category = categories.nodes[0]
+	const { pageNumber } = pageContext
+	const totalPagesCount = Math.ceil(10 / 4)
+	const totalPages = new Array(totalPagesCount).fill(totalPagesCount)
+	console.log('totalPages', totalPages)
+	console.log('props', props)
+
 	// console.log('Category page props', props.data.wpgraphql.categories)
+	const nextPage = async () => {
+		const nextPageNumber = pageContext.pageNumber + 1
+		await navigate(`support/category/${category.slug}/page/${nextPageNumber}`)
+	}
+
+	const prevPage = async () => {
+		const prevPageNumber = pageContext.pageNumber - 1
+		await navigate(`support/category/${category.slug}/page/${prevPageNumber}`)
+	}
+	const onPageSelect = async (event: any) => {
+		event.preventDefault()
+		const currentPage = event.target.getAttribute('data-currentpage')
+		if (currentPage === pageNumber.toString()) {
+			return
+		}
+		await navigate(`support/category/${category.slug}/page/${currentPage}`)
+	}
 
 	return (
 		<>
@@ -98,10 +123,28 @@ const SupportCategoryPage = (props: any) => {
 				<SupportPageContainer>
 					<BackgroundBar/>
 					<HeaderBlockOneBCrumb headline={category.name}/>
-					{category.supportQuestions &&
+					{pageContext.questions &&
           <SupportCategoryList
-            supportQuestions={category.supportQuestions.nodes.sort(orderByPopularity)}/>
+            supportQuestions={pageContext.questions}/>
 					}
+
+					<PaginationContainer>
+						{pageContext.hasPrevPage &&
+            <PageBtn position={`left`} onClick={prevPage}>Prev</PageBtn>}
+						{totalPages.map((page, index) => {
+							const currentPage = index + 1
+							return (
+								<NumbersBtn
+									isSelected={currentPage === pageNumber}
+									data-currentpage={currentPage}
+									onClick={onPageSelect}
+									key={index}>{currentPage}</NumbersBtn>
+							)
+						})}
+						{pageContext.hasNextPage &&
+            <PageBtn position={`right`} onClick={nextPage}>Next</PageBtn>}
+					</PaginationContainer>
+
 				</SupportPageContainer>
 			</Layout>
 		</>
@@ -110,7 +153,7 @@ const SupportCategoryPage = (props: any) => {
 
 export default SupportCategoryPage
 export const pageCatQuery = graphql`
-    query GET_PAGES_BY_CAT($cat: [String]!) {
+    query GET_PAGES_BY_CAT($cat: [String]!, $catId: ID!) {
         site {
             siteMetadata {
                 title
@@ -133,23 +176,63 @@ export const pageCatQuery = graphql`
                     count
                     name
                     slug
-                    supportQuestions {
-                        nodes {
-                            title
-                            slug
-                            excerpt
-                            acfSupportQuestions{
-                                popularity
-                            }
-                        }
-                    }
                 }
             }
+            category(id: $catId){
+                name
+                slug
+            }
+
         }
     }
+`
+const NumbersBtn = styled.div<{ isSelected: boolean }>`
+	padding: 0 10px;
+	transition: .3s;
+	${props => props.isSelected ? `
+		color:${colors.teal.i500};
+		font-weight: bold;
+		&:hover{
+			cursor: default;
+		}
+	` : `
+		&:hover{
+			cursor: pointer;
+			color: ${colors.teal.i500};
+		}
+	`}
+	
+`
+const PageBtn = styled.div<{ position?: string }>`
+	transition: .3s;
+	${props => {
+	if (props.position === 'right') {
+		return `margin-left: 15px;`
+	}
+	if (props.position === 'left') {
+		return `margin-right: 15px;`
+	}
+}}
+	&:hover{
+		cursor: pointer;
+		color: ${colors.teal.i500};
+	}
 `
 const BackgroundBar = styled.div`
 	grid-column: 1 / -1;
 	background: #E4D8FD;
 	grid-row:1;
+`
+const PaginationContainer = styled.div`
+	grid-column: 1 / -1;
+	display: flex;
+	flex-direction: row;
+	margin: 0 0 40px;
+	justify-content: center;
+	align-items: center;
+	color: ${colors.primary.headline};
+	@media ${device.tablet} {
+		grid-column: 4 / 12;
+	}
+		
 `

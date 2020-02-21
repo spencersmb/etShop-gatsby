@@ -62,10 +62,6 @@ interface Itag {
 	slug: string
 }
 
-export interface IProductBullet {
-	bullet_point: string
-}
-
 export interface IProductDetails {
 	file_types: string[],
 	file_size: string,
@@ -98,20 +94,6 @@ export interface IFeatureItem {
 	description: string
 	icon: string
 	title: string
-}
-
-export interface IProductLicenseType {
-	type: string,
-	// may not need this if we are testing the extendedItem itself
-	hasExtendedLicense: boolean,
-	standardItem: {
-		slug: string,
-		desc: string
-	},
-	extendedItem: {
-		slug: string,
-		desc: string
-	}
 }
 
 export interface ILicenseType {

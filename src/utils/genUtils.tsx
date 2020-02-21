@@ -55,19 +55,29 @@ export function getUserImage (currentUser: IUser) {
 }
 
 export function reArrangeItems (items: any[]) {
+	const nonListedItems: any = []
 	const initialValue: any = []
-	return items.reduce((total: any, item: any) => {
+	const arrayLength = items.length
+
+	return items.reduce((total: any, item: any, idx: number) => {
 		// first run through put getting started at top
-		if (item.slug === 'getting-started') {
+		if (item.slug.toLowerCase() === 'getting-started') {
 			total.unshift(item)
-		} else if (item.slug === 'fonts') {
+		} else if (item.slug.toLowerCase() === 'fonts') {
 			total.splice(1, 0, item)
-		} else if (item.slug === 'procreate') {
+		} else if (item.slug.toLowerCase() === 'procreate') {
 			total.splice(2, 0, item)
-		} else if (item.slug === 'uncategorized') {
+		} else if (item.slug.toLowerCase() === 'uncategorized') {
 			return total
 		} else {
-			total.push(item)
+			nonListedItems.push(item)
+		}
+
+		// return the array if the total amount of items combined === the original amount
+		// because that means we are finished filtering out each item to each array
+		// after we've excluded uncategorized category
+		if ((total.length + nonListedItems.length) === (arrayLength - 1)) {
+			return [...new Set([...total, ...nonListedItems])]
 		}
 		return total
 

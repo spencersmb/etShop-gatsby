@@ -74,7 +74,7 @@ const BackLink = styled.div`
 	 }
 `
 const SupportListItems = styled.div`
-	padding: 40px 0;
+	padding: 40px 0 0;
  grid-column: 2 / 4;
  @media ${device.tablet} {
 		grid-column: 2 / 14;

@@ -148,7 +148,7 @@ const SupportItemsContainer = styled.div`
 	  grid-template-columns: repeat(12, 1fr);
 		grid-column: 2 / 14;
 		margin: 0 -15px 0;
-		padding: 50px 0;
+		padding: 50px 0 0;
 	}
 	
 `
