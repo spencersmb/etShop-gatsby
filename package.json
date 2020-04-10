@@ -51,7 +51,7 @@
     "react-scrolllock": "^4.0.1",
     "react-sticky": "^6.0.3",
     "react-stripe-elements": "^2.0.3",
-    "react-youtube": "^7.9.0",
+    "react-youtube": "^7.11.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-form": "^8.1.0",
