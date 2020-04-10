@@ -5,6 +5,7 @@ import SupportCategory from '@components/support/supportCategory'
 import { IGatsbyConfig } from '@et/types/Gatsby'
 import { ICategory } from '@et/types/Support'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { GridFluid } from '@styles/global/cssGrid'
 import { reArrangeItems } from '@utils/genUtils'
 import { createStandardJSONLD, facebookDefaultMeta, twitterDefaultMeta } from '@utils/socialUtils'
@@ -132,7 +133,7 @@ export const SupportPageContainer = styled(GridFluid)`
 	.headerContainer{
 		grid-column: 1 / -1;
 		grid-row: 1;
-		background: #E4D8FD;
+		background: ${colors.pink.i200};
 	}
 	
 	@media ${device.tablet} {

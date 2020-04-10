@@ -35,7 +35,7 @@ const BreadCrumbContainer = styled.div`
 	flex-direction: row;
 	text-transform: uppercase;
 	font-size: 14px;
-	color: ${colors.db.primary};
+	color: ${colors.pink.i600};
 	justify-content: center;
 	flex-wrap: wrap;
 	margin-bottom: 15px;
@@ -45,9 +45,9 @@ const BreadCrumbContainer = styled.div`
 		margin: 0 5px;
 	}
 	a{
-		color: ${colors.db.primary};
+		color: ${colors.pink.i600};
 		&:hover{
-			color: ${colors.teal.i500};
+			color: ${colors.pink.i700};
 		}
 	}
 	
@@ -58,6 +58,9 @@ const BreadCrumbContainer = styled.div`
 	
 	@media ${device.tablet} {
 		justify-content: center;
+	}
+	@media ${device.laptop} {
+		justify-content: flex-start;
 	}
 		
 `

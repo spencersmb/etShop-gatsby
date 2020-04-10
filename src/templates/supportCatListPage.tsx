@@ -220,7 +220,7 @@ const PageBtn = styled.div<{ position?: string }>`
 `
 const BackgroundBar = styled.div`
 	grid-column: 1 / -1;
-	background: #E4D8FD;
+	background: #fae7e7;
 	grid-row:1;
 `
 const PaginationContainer = styled.div`

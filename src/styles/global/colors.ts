@@ -29,6 +29,11 @@ export const colors = {
 		i600: `#755FA7`,
 		i700: `#6A539F`
 	},
+	pink: {
+		i200: `#fae7e7`,
+		i600: `#b08383`,
+		i700: `#8d4b3f`
+	},
 	teal: {
 		i200: `#E5FCFF`,
 		i300: `#98E8F1`,

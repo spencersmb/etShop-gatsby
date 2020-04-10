@@ -108,7 +108,7 @@ export const NavLinks = styled(NavLinksPose)<INavLinkProps>`
 		a{
 			color: ${colors.primary.text};
 			&:hover{
-				color: ${colors.purple.i500};
+				color: ${colors.teal.i500};
 			}
 		}
 	}
@@ -274,11 +274,11 @@ export const SignInButton = styled(ButtonSmall)`
 	}
 	
 	@media ${device.laptop} {
-		&:hover{
-			color: ${colors.purple.i600};
-		}
 		font-size: 14px;
-		color: ${colors.purple.i500};
+		color: ${colors.teal.i500};
+		&:hover{
+			color: ${colors.teal.i800};
+		}
 	}
 `
 export const MyAccount = styled.div`
@@ -379,7 +379,7 @@ export const CartSvg = styled.div`
 	}
 `
 export const CartCount = styled.div`
-	color:${colors.primary.pink};
+	color:${colors.teal.i500};
 	position: absolute;
 	transform: translateY(-50%)translateX(-50%);
 	top: 22%;

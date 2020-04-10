@@ -40,10 +40,10 @@ const ViewAllBtn = styled.div`
 	a{
 		text-transform: uppercase;
 		font-size: 14px;
-		color: ${colors.purple.i500};
+		color: ${colors.pink.i600};
 		font-weight: 500;
 		&:hover{
-			color: ${colors.teal.i600};
+			color: ${colors.pink.i700};
 		}
 	}
 `

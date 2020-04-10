@@ -58,47 +58,10 @@ module.exports = async ({ actions, graphql }) => {
               }
             }
           }
-          // if (allCats[cat.slug] && allCats[cat.slug].pages) {
-          //   allCats[cat.slug] = {
-          //     pages: {
-          //       ...allCats[cat.slug].pages,
-          //       [pageNumber]: {
-          //         path: catPagePath,
-          //         component: catPageTemplate,
-          //         context: {
-          //           cat: cat.name,
-          //           catId: cat.id,
-          //           questions,
-          //           pageNumber,
-          //           hasNextPage,
-          //           hasPrevPage: hasPreviousPage
-          //         }
-          //       }
-          //     }
-          //   }
-          // } else {
-          //   allCats[cat.slug] = {
-          //     ...allCats[cat.slug],
-          //     pages: {
-          //       [pageNumber]: {
-          //         path: catPagePath,
-          //         component: catPageTemplate,
-          //         context: {
-          //           cat: cat.name,
-          //           catId: cat.id,
-          //           questions,
-          //           pageNumber,
-          //           hasNextPage,
-          //           hasPrevPage: hasPreviousPage
-          //         }
-          //       }
-          //     }
-          //   }
-          // }
+
           if (hasNextPage) {
             pageNumber++
             return fetchCatPages({ first: perPage, after: endCursor })
-            // await fetchSupportPages({ first: 4, after: endCursor, id: cat.id })
           }
         }))
       return allCats

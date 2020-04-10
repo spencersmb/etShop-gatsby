@@ -22,6 +22,10 @@ function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) 
 								content: 'width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no'
 							},
 							{
+								name: 'description',
+								content: `${data.site.siteMetadata.description}`
+							},
+							{
 								name: 'google-site-verification',
 								content: 'verification_token'
 							},
@@ -66,24 +70,28 @@ function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) 
 									font-style: normal;
 									font-weight: 900;
 									src: url(/fonts/Sentinel-Black.woff2) format("woff2");
+									font-display: swap;
 									}
 									@font-face {
 									font-family: "Sentinel MediumItal";
 									font-style: italic;
 									font-weight: 500;
-									src: url(/fonts/Sentinel-MediumItal.woff2) format("woff2")
+									src: url(/fonts/Sentinel-MediumItal.woff2) format("woff2");
+									font-display: swap;
 									}
 									@font-face {
 									font-family: "Sentinel SemiboldItal";
 									font-style: italic;
 									font-weight: 500;
-									src: url(/fonts/Sentinel-SemiboldItal.woff) format("woff"), url(/fonts/Sentinel-SemiboldItal.woff2) format("woff2")
+									src: url(/fonts/Sentinel-SemiboldItal.woff) format("woff"), url(/fonts/Sentinel-SemiboldItal.woff2) format("woff2");
+									font-display: swap;
 									}
 									@font-face {
 									font-family: "Sentinel";
 									font-style: normal;
 									font-weight: 600;
-									src: url(/fonts/Sentinel-Semibold.woff2) format("woff2")
+									src: url(/fonts/Sentinel-Semibold.woff2) format("woff2");
+									font-display: swap;
 									}
 						`}</style>
 						{children ? children : null}

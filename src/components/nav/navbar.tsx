@@ -278,16 +278,16 @@ function Navbar (props: IPropsActions & IPropsState) {
               <SignInButton
                 outline={false}
                 color='transparent'
-                textColor={colors.purple.i500}
+                textColor={colors.pink.i600}
                 hoverColor='transparent'
-                hoverTextColor={colors.purple.i600}
+                hoverTextColor={colors.pink.i700}
                 onClick={openSignInModal('signin')}>Sign In</SignInButton>
             </NavItem>
             <NavItem>
               <JoinButton
                 outline={false}
-                color={colors.purple.i500}
-                hoverColor={colors.purple.i600}
+                color={colors.teal.i500}
+                hoverColor={colors.teal.i800}
                 onClick={openSignInModal('signup')}>Join Now</JoinButton>
             </NavItem>
           </LoginStatus>

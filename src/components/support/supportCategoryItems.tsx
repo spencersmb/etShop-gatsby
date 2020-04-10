@@ -38,9 +38,12 @@ export default SupportCategoryList
 
 const BackLink = styled.div`
 	grid-column: 2 / 4;
-	 border-bottom: 1px solid #DADADA;
-	 padding: 0 0 15px;
-	 margin: 0 0 30px;
+	border-bottom: 1px solid #DADADA;
+	padding: 0 0 15px;
+	margin: 0 0 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 	 svg{
 	 		width: 100%;
 	 		max-width: 20px;
