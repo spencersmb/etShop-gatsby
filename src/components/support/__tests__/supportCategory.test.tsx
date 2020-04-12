@@ -56,6 +56,6 @@ describe('Support Category Component', () => {
 	})
 	it('Should have View All Btn with correct link', () => {
 		const modalRender = render(<SupportCategory {...propsViewBtn}/>)
-		expect(modalRender.getByTestId('viewAll').children[0].getAttribute('href')).toBe(`/support/category/${props.slug}`)
+		expect(modalRender.getByTestId('viewAll').children[0].getAttribute('href')).toBe(`/support/category/${propsViewBtn.slug}/page/1`)
 	})
 })

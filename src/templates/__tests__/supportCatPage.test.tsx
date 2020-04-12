@@ -13,6 +13,24 @@ import { CatPageQuery } from '@redux/reduxTestUtils'
 const setup = () => {
 	return shallow(<SupportCategoryTopic
 		data={CatPageQuery}
+		pageContext={
+			{
+				pageNumber: 1,
+				questions: [
+					{
+						title: 'test 1',
+						slug: 'test-1',
+						excerpt: 'test-excerpt',
+						content: 'test-content',
+						id: '1234',
+						acfSupportQuestions: {
+							popularity: 1,
+							subtitle: 'subtitle'
+						}
+					}
+				]
+			}
+		}
 	/>)
 }
 

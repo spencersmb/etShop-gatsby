@@ -20,7 +20,9 @@ const hasUser = {
 		email: 'spencer.bigum@gmail.com',
 		firstName: 'spencer',
 		lastName: 'spencer',
-		token: '12345'
+		token: '12345',
+		gravatar: '',
+		fbProfilePic: 'string'
 	}
 }
 

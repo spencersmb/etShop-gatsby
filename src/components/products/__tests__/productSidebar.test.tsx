@@ -18,7 +18,8 @@ const propsDefault = {
 			dpi: '600',
 			programs: [
 				'photoshop', 'procreate', 'illustrator'
-			]
+			],
+			reqs: false
 		},
 	fontPreview: false,
 	onChange: jest.fn(),
@@ -34,7 +35,8 @@ const webfontDefault = {
 			dpi: '600',
 			programs: [
 				'photoshop', 'procreate', 'illustrator'
-			]
+			],
+			reqs: false
 		},
 	fontPreview: true,
 	onChange: jest.fn(),
@@ -49,7 +51,8 @@ const webfontExt = {
 			dpi: '600',
 			programs: [
 				'photoshop', 'procreate', 'illustrator'
-			]
+			],
+			reqs: false
 		},
 	fontPreview: true,
 	onChange: jest.fn(),
