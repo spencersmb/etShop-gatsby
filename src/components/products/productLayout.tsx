@@ -3,6 +3,7 @@ import { CartPricingConfig } from '@components/cart/cartStatics'
 import FontPreviewer from '@components/fontPreviewer/fontPreview'
 import NumberDial from '@components/forms/inputs/numberDial'
 import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
+import SwipeGallery from '@components/gallery/swipeGallery'
 import Layout from '@components/layout'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import CheckoutNavBar from '@components/products/modules/checkoutNavBar'
@@ -236,10 +237,13 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 								</div>
 							</ButtonWrapper>
 						</BackBtn>
-						<FlickityGalleryContext
+						{/*<FlickityGalleryContext*/}
+						{/*	items={galleryItems}*/}
+						{/*	showModal={showModalAction}*/}
+						{/*	subSelector={true}/> */}
+						<SwipeGallery
 							items={galleryItems}
-							showModal={showModalAction}
-							subSelector={true}/>
+							showModal={showModalAction}/>
 					</Gallery>
 					<ProductTitle>
 						<BackBtnMobile>

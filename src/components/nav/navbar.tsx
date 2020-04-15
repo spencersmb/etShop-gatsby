@@ -38,6 +38,7 @@ import { getUserImage } from '@utils/genUtils'
 import { renderSvg } from '@utils/styleUtils'
 import { getWindowSize, Width } from '@utils/windowUtils'
 import { navigate } from 'gatsby'
+import { func } from 'prop-types'
 import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
@@ -170,6 +171,14 @@ function Navbar (props: IPropsActions & IPropsState) {
 		})
 	}
 
+	function testToasterError () {
+		toastr.error('User Expired:', 'Please login again.', toastrOptions.noHover)
+	}
+
+	function testToasterSuccess () {
+		toastr.success('User Expired:', 'Please login again.', toastrOptions.noHover)
+	}
+
 	function signOut () {
 		setTimeout(() => {
 			logout()
@@ -186,6 +195,26 @@ function Navbar (props: IPropsActions & IPropsState) {
 	function cartToggleEvent () {
 		props.cartToggle()
 
+	}
+
+	function modalDevTest () {
+		const env = process.env.NODE_ENV || 'development'
+		if (env === 'development') {
+			return (
+				<>
+					<NavItem>
+						<div onClick={testToasterError}>
+							Toastr Error
+						</div>
+					</NavItem>
+					<NavItem>
+						<div onClick={testToasterSuccess}>
+							Toastr Success
+						</div>
+					</NavItem>
+				</>
+			)
+		}
 	}
 
 	const changePage = (href: string) => async (e: any) => {
@@ -269,6 +298,7 @@ function Navbar (props: IPropsActions & IPropsState) {
 							Support
 						</a>
 					</NavItem>
+					{modalDevTest()}
 					{/*<li onClick={receipt}>Receipt test</li>*/}
 				</NavCenter>
 				<NavRight>

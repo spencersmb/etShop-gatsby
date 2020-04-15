@@ -43,9 +43,9 @@ const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFoote
 								</Link>
 							</li>
 							<li>
-								<Link to={'/privacy-policy'}>
+								<a href='https://every-tuesday.com/privacy-policy/' target='_blank' rel='noreferrer'>
 									Privacy Policy
-								</Link>
+								</a>
 							</li>
 						</Links>
 						<SocialMediaLinks data-testid='social-links'>

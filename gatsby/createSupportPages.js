@@ -3,7 +3,7 @@ module.exports = async ({ actions, graphql }) => {
   const supportQuery = `
   {
   wpgraphql {
-    supportQuestions(where: {status: PUBLISH}){
+    supportQuestions(where: {status: PUBLISH}, first: 100){
       nodes{
         date
         uri
