@@ -10,6 +10,13 @@ import React from "react"
 
 export const wrapRootElement = wrapWithProvider
 
+export const onRenderBody = ({ setPostBodyComponents }) => {
+  setPostBodyComponents([
+    <script id='swiper'
+            key={`swiper-js`}
+            src={`/js/swiper.js`}/>
+  ])
+}
 // thrd party script ex
 // exports.onRenderBody = ({ setHeadComponents }) => {
 //   setHeadComponents([<script id="stripe-js" src="https://js.stripe.com/v3/"/>])

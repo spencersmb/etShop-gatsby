@@ -57,7 +57,7 @@ function SEO ({ lang = `en`, meta = [], keywords = [], title, children }: ISeo) 
 							)
 							.concat(meta)}
 					>
-
+						<link rel='stylesheet' href='https://unpkg.com/swiper/css/swiper.min.css'/>
 						{/*<link rel='dns-prefetch' href='//assets.pinterest.com'/>*/}
 						{/*<link rel='dns-prefetch' href='//apis.google.com'/>*/}
 						{/*<link rel='preload'*/}

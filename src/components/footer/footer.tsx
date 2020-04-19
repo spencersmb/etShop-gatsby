@@ -15,70 +15,74 @@ import fetched from 'isomorphic-unfetch'
 const Footer = ({ productPage, whiteFooter }: { productPage: boolean, whiteFooter: boolean }) => {
 
 	return (
-		<FooterContainer whiteFooter={whiteFooter}>
-			<FooterNav>
+		<>
+			<FooterContainer whiteFooter={whiteFooter}>
+				<FooterNav>
 
-				<FooterNavWrapper productPage={productPage} whiteFooter={whiteFooter}>
-					<FooterNavInner>
-						<SvgCircle>
-							{renderSvg(svgs.FooterCircle)}
-						</SvgCircle>
-						<Logo data-testid='footer-logo'>
-							{renderSvg(svgs.ETLogo)}
-						</Logo>
-						<Links data-testid='footer-links'>
-							<li>
-								<Link to={'/'}>
-									Products
-								</Link>
-							</li>
-							<li>
-								<a href='https://every-tuesday.com' target='_blank' rel='noreferrer'>
-									Blog
-								</a>
-							</li>
-							<li>
-								<Link to={'/support'}>
-									Support
-								</Link>
-							</li>
-							<li>
-								<a href='https://every-tuesday.com/privacy-policy/' target='_blank' rel='noreferrer'>
-									Privacy Policy
-								</a>
-							</li>
-						</Links>
-						<SocialMediaLinks data-testid='social-links'>
-							<li>
-								<a href='https://www.youtube.com/user/everytues' target='_blank' rel='noreferrer'>
-									{renderSvg(svgs.Youtube)}
-								</a>
-							</li>
-							<li>
-								<a href='https://www.instagram.com/everytuesday/' target='_blank' rel='noreferrer'>
-									{renderSvg(svgs.Instagram)}
-								</a>
-							</li>
-							<li>
-								<a href='https://www.pinterest.com/teelac/' target='_blank' rel='noreferrer'>
-									{renderSvg(svgs.Pinterest)}
-								</a>
-							</li>
-							<li>
-								<a href='https://www.facebook.com/everytues' target='_blank' rel='noreferrer'>
-									{renderSvg(svgs.Facebook)}
-								</a>
-							</li>
-							<li>
-								<a href='https://twitter.com/teelacunningham' target='_blank' rel='noreferrer'>
-									{renderSvg(svgs.Twitter)}
-								</a>
-							</li>
-						</SocialMediaLinks>
-					</FooterNavInner>
-				</FooterNavWrapper>
-			</FooterNav>
-		</FooterContainer>
+					<FooterNavWrapper productPage={productPage} whiteFooter={whiteFooter}>
+						<FooterNavInner>
+							<SvgCircle>
+								{renderSvg(svgs.FooterCircle)}
+							</SvgCircle>
+							<Logo data-testid='footer-logo'>
+								{renderSvg(svgs.ETLogo)}
+							</Logo>
+							<Links data-testid='footer-links'>
+								<li>
+									<Link to={'/'}>
+										Products
+									</Link>
+								</li>
+								<li>
+									<a href='https://every-tuesday.com' target='_blank' rel='noreferrer'>
+										Blog
+									</a>
+								</li>
+								<li>
+									<Link to={'/support'}>
+										Support
+									</Link>
+								</li>
+								<li>
+									<a href='https://every-tuesday.com/privacy-policy/' target='_blank' rel='noreferrer'>
+										Privacy Policy
+									</a>
+								</li>
+							</Links>
+							<SocialMediaLinks data-testid='social-links'>
+								<li>
+									<a href='https://www.youtube.com/user/everytues' target='_blank' rel='noreferrer'>
+										{renderSvg(svgs.Youtube)}
+									</a>
+								</li>
+								<li>
+									<a href='https://www.instagram.com/everytuesday/' target='_blank' rel='noreferrer'>
+										{renderSvg(svgs.Instagram)}
+									</a>
+								</li>
+								<li>
+									<a href='https://www.pinterest.com/teelac/' target='_blank' rel='noreferrer'>
+										{renderSvg(svgs.Pinterest)}
+									</a>
+								</li>
+								<li>
+									<a href='https://www.facebook.com/everytues' target='_blank' rel='noreferrer'>
+										{renderSvg(svgs.Facebook)}
+									</a>
+								</li>
+								<li>
+									<a href='https://twitter.com/teelacunningham' target='_blank' rel='noreferrer'>
+										{renderSvg(svgs.Twitter)}
+									</a>
+								</li>
+							</SocialMediaLinks>
+						</FooterNavInner>
+					</FooterNavWrapper>
+				</FooterNav>
+			</FooterContainer>
+			<script id='swiper'
+							src={`./js/swiper.js`}/>
+		</>
 	)
 }
 

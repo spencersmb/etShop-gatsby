@@ -8,6 +8,43 @@ import { colors } from './colors'
 import toastr from '@styles/modules/toastr'
 
 export default createGlobalStyle`
+:root {
+		--space-unit:  1em;
+		--space-xxxs:  calc(0.25 * var(--space-unit));
+		--space-xs:    calc(0.5 * var(--space-unit));
+		--slideshow-height: 280px;
+	
+		// transitions
+		--slideshow-fade-transition-duration: 0.25s; // fade effect transition duration
+		--slideshow-slide-transition-duration: 0.35s; // slide effect transition duration
+		--slideshow-prx-transition-duration: 0.5s; // parallax effect transition duration
+		--ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+	
+		// controls
+		--slideshow-btn-width: 1.6em; 
+		--slideshow-btn-height: 3.2em;
+		--slideshow-btn-icon-size: 1.6em;
+		--slideshow-btn-offset: var(--space-xs); // gap between button and slideshow edges
+		
+		--color-black:hsl(240, 8%, 12%);
+    --color-bg: hsl(0, 0%, 100%);
+    --color-contrast-high:hsl(240, 4%, 20%);
+    --color-contrast-higher: hsl(240, 8%, 12%);
+    
+    --radius: 0.25em; 
+    --radius-sm: calc(var(--radius, 0.25em)/2);
+    --radius-md: var(--radius, 0.25em);
+		
+		@media ${device.sm}{
+			--slideshow-height: 380px;
+		}
+		@media ${device.md}{
+			--slideshow-height: 480px;
+		}
+		@media ${device.lg}{
+			--slideshow-height: 580px;
+		}
+	}
 
   ${cssReset}
   ${cssFlickity}

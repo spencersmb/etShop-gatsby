@@ -3,7 +3,9 @@ import { CartPricingConfig } from '@components/cart/cartStatics'
 import FontPreviewer from '@components/fontPreviewer/fontPreview'
 import NumberDial from '@components/forms/inputs/numberDial'
 import FlickityGalleryContext from '@components/gallery/flickityGalleryRE'
-import SwipeGallery from '@components/gallery/swipeGallery'
+import GallerySlideshow from '@components/gallery/slideShow/slideshow'
+import SwipeGallery from '@components/gallery/swipeSlider/swipeGallery'
+import SwipeSlider from '@components/gallery/swipeSlider/swiperSlider'
 import Layout from '@components/layout'
 import AddToCartBtn from '@components/products/addToCartBtn'
 import CheckoutNavBar from '@components/products/modules/checkoutNavBar'
@@ -240,10 +242,14 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						{/*<FlickityGalleryContext*/}
 						{/*	items={galleryItems}*/}
 						{/*	showModal={showModalAction}*/}
-						{/*	subSelector={true}/> */}
-						<SwipeGallery
-							items={galleryItems}
-							showModal={showModalAction}/>
+						{/*	subSelector={true}/>*/}
+						{/*<GallerySlideshow*/}
+						{/*	navigation={true}*/}
+						{/*	swipe={true}*/}
+						{/*	items={galleryItems}*/}
+						{/*	showModal={showModalAction}*/}
+						{/*/>*/}
+						<SwipeGallery/>
 					</Gallery>
 					<ProductTitle>
 						<BackBtnMobile>
@@ -520,15 +526,20 @@ const BackBtn = styled.div`
 `
 const Gallery = styled.div`
 	grid-column: 2 / 4;
-	margin: 0 15px 60px;
+	margin: 0;
 	grid-row: 2;
 	position: relative;
+	padding-bottom: 35px;
+	min-height: 400px;
+	height: 100%;
 	
 	@media ${device.tablet} {
 		//height: 686px; // remember to remove
+		
 	 	grid-column: 2 / 14; 
 	}
 	@media ${device.laptop} {
+		padding: 0;
 		width: 100%;
 	 	grid-column: 2 / 9; 
 	 	margin: 0 15px 0 -30px;

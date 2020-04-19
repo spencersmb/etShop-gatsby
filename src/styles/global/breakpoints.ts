@@ -71,7 +71,12 @@ const size: { [id: string]: string } = {
 	tablet: '768px',
 	laptop: '1024px',
 	laptopL: '1440px',
-	desktop: '2560px'
+	desktop: '2560px',
+	xs: '32rem', // ~512px
+	sm: '48rem', // ~768px
+	md: '64rem', // ~1024px
+	lg: '80rem', // ~1280px
+	xl: '90rem'  // ~1440px
 }
 
 interface IDeviceKeys {
@@ -83,7 +88,12 @@ interface IDeviceKeys {
 	laptop: string,
 	laptopL: string,
 	desktop: string,
-	desktopL: string
+	desktopL: string,
+	xs: string,
+	sm: string,
+	md: string,
+	lg: string,
+	xl: string
 }
 
 export const device: IDeviceKeys = {
@@ -95,5 +105,10 @@ export const device: IDeviceKeys = {
 	laptop: `(min-width: ${size.laptop})`,
 	laptopL: `(min-width: ${size.laptopL})`,
 	desktop: `(min-width: ${size.desktop})`,
-	desktopL: `(min-width: ${size.desktop})`
+	desktopL: `(min-width: ${size.desktop})`,
+	xs: `(min-width: ${size.xs})`, // ~512px
+	sm: `(min-width: ${size.sm})`, // ~768px
+	md: `(min-width: ${size.md})`, // ~1024px
+	lg: `(min-width: ${size.lg})`, // ~1280px
+	xl: `(min-width: ${size.xl})`  // ~1440px
 }
