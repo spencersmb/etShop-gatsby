@@ -1,13 +1,19 @@
 import SwipeSlider from '@components/gallery/swipeSlider/swiperSlider'
 import SwipeThumbs from '@components/gallery/swipeSlider/swiperThumbs'
+import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { shadowStyles } from '@styles/global/shadows'
-import { useSetState } from '@utils/stateUtils'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const slides = ['blue', 'red', 'yellow', 'green', 'purple', 'orange']
-const SwipeGallery = () => {
+
+interface IProps {
+	showModal: IShowModalAction
+}
+
+const SwipeGallery = (props: IProps) => {
 	// const [state, setState] = useSetState<any, any>({
 	// 	loaded: false,
 	// 	selectedSlide: 1
@@ -32,28 +38,101 @@ const SwipeGallery = () => {
 		}
 	}
 
-	function thumbnailClick (slideIndex: number) {
+	function goToSlide (slideIndex: number) {
 		setSelectedSlide(slideIndex)
+	}
+
+	function nextSlide () {
+		handleSlideChange('next')
+	}
+
+	function prevSlide () {
+		handleSlideChange('prev')
 	}
 
 	console.log('selectedSlide in parent', selectedSlide)
 
 	return (
 		<Wrapper>
-			<SwipeSlider
-				slides={slides}
-				selectedSlide={selectedSlide}
-				handleSlideChange={handleSlideChange}
-			/>
+			<MainGallery>
+				<SwipeSlider
+					slides={slides}
+					selectedSlide={selectedSlide}
+					handleSlideChange={handleSlideChange}
+					goToSlide={goToSlide}
+					showModal={props.showModal}
+				/>
+				<BtnLeft onClick={prevSlide}>
+					<svg className='icon' viewBox='0 0 32 32'><title>Show previous slide</title>
+						<path
+							d='M20.768,31.395L10.186,16.581c-0.248-0.348-0.248-0.814,0-1.162L20.768,0.605l1.627,1.162L12.229,16 l10.166,14.232L20.768,31.395z'/>
+					</svg>
+				</BtnLeft>
+				<BtnRight onClick={nextSlide}>
+					<svg className='icon' viewBox='0 0 32 32'><title>Show next slide</title>
+						<path
+							d='M11.232,31.395l-1.627-1.162L19.771,16L9.605,1.768l1.627-1.162l10.582,14.813 c0.248,0.348,0.248,0.814,0,1.162L11.232,31.395z'/>
+					</svg>
+				</BtnRight>
+			</MainGallery>
 			<ThumbsWrapper>
 				<SwipeThumbs
-					handleSlideChange={thumbnailClick}
+					handleSlideChange={goToSlide}
 					selectedSlide={selectedSlide}
 					slides={slides}/>
 			</ThumbsWrapper>
 		</Wrapper>
 	)
 }
+const MainGallery = styled.div`
+	position: relative;
+	height: 100%;
+`
+const SliderButton = styled.button`
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	transform: translateX(0) translateY(-50%);
+	outline: none;
+	display: none;
+	height: 64px;
+	width: 32px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background .2s,transform .2s,-webkit-transform .2s;
+	background-color: #fff;
+	padding: 0;
+	border: 0;
+	visibility: hidden;
+	
+	path{
+		transition: .2s;
+	}
+	
+	&:focus{
+		outline: none;
+	}
+	
+	@media ${device.laptop}{
+		display: block;
+		visibility: visible;
+		&:hover{
+			background-color: ${colors.grey.i800};
+			path{
+				fill: #fff;
+			}
+		}
+	}
+	
+
+`
+const BtnLeft = styled(SliderButton)`
+
+`
+const BtnRight = styled(SliderButton)`
+	right: 10px;
+	left: auto;
+`
 const ThumbsWrapper = styled.div`
 -ms-touch-action: pan-y;
 	touch-action: pan-y;

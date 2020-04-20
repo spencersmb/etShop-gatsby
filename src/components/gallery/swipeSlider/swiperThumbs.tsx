@@ -80,7 +80,6 @@ const SwipeThumbs = (props: IProps) => {
 	}
 
 	const goToSlide = (slideIndex: number) => (e: any) => {
-		console.log('go to index', slideIndex)
 		props.handleSlideChange(slideIndex + 1)
 	}
 
@@ -149,7 +148,6 @@ const SwipeThumbs = (props: IProps) => {
 				/>
 			))}
 		</DragContainer>
-
 	)
 }
 const Draggable = posed.div({

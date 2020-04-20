@@ -1,3 +1,6 @@
+import GalleryModal from '@components/gallery/flickityGalleryModal'
+import SwipeModal from '@components/gallery/swipeSlider/swiperModal'
+import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { shadowStyles } from '@styles/global/shadows'
 import { CodyUtils } from '@utils/codyUtils'
@@ -13,8 +16,10 @@ const DISTANCE_PERCENTILE_THRESHOLD = 0.3
 
 interface IProps {
 	handleSlideChange: (nextSlide: string) => void
+	goToSlide: (index: number) => void
 	selectedSlide: number
-	slides: any[]
+	slides: any[],
+	showModal: IShowModalAction
 }
 
 const SwipeSlider = (props: IProps) => {
@@ -27,6 +32,7 @@ const SwipeSlider = (props: IProps) => {
 	})
 	const rootElement = useRef<HTMLDivElement | null>(null)
 	const preventClick = useRef<boolean>(false)
+
 	const prevState = useRef(state)
 	const prevSelectedSlide = useRef(props.selectedSlide)
 	const xRef: any = useRef(value(0))
@@ -74,6 +80,7 @@ const SwipeSlider = (props: IProps) => {
 
 	function onDragStart (e: any) {
 		preventClick.current = false
+
 		// props.onDragStart();
 	}
 
@@ -109,7 +116,29 @@ const SwipeSlider = (props: IProps) => {
 				prev()
 			}
 		}
+
 		// this.props.onDragEnd();
+	}
+
+	function goToSlide (slideIndex: number) {
+		console.log('go to index', slideIndex)
+		props.goToSlide(slideIndex)
+	}
+
+	function staticClick () {
+
+		props.showModal({
+			modal: SwipeModal,
+			options: {
+				closeModal: true,
+				hasBackground: true,
+				data: {
+					selectedSlide: props.selectedSlide,
+					goToSlide,
+					items: props.slides
+				}
+			}
+		})
 	}
 
 	// const index = state.selectedSlide - 1
@@ -128,7 +157,8 @@ const SwipeSlider = (props: IProps) => {
 			onDragStart={onDragStart}
 			onDragEnd={onDragEnd}
 			onPoseComplete={() => {
-				console.log('Complete')
+				console.log('Completed gallerySlide animating')
+
 			}}
 			poseKey={zeroIndex * state.width}
 			pose={'rest'}
@@ -140,11 +170,10 @@ const SwipeSlider = (props: IProps) => {
 					key={index}
 					className='slide'
 					style={{ backgroundColor: b }}
-					// onClick={() => this.setSlideIndex(index)}
+					onClick={staticClick}
 				/>
 			))}
 		</DragContainer>
-
 	)
 }
 const Draggable = posed.div({

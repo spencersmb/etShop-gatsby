@@ -13,6 +13,7 @@ export interface IModalOptions {
 }
 export interface IModal {
   closeModal: () => void,
+  innerRef?: any
   options: IModalOptions
 }
 export interface IModalState {
