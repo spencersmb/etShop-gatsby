@@ -1,10 +1,15 @@
 import GalleryModal from '@components/gallery/flickityGalleryModal'
 import SwipeModal from '@components/gallery/swipeSlider/swiperModal'
+import { IGalleryItem } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
+import { colors } from '@styles/global/colors'
 import { shadowStyles } from '@styles/global/shadows'
+import { svgs } from '@svg'
 import { CodyUtils } from '@utils/codyUtils'
 import { useSetState } from '@utils/stateUtils'
+import { renderSvg } from '@utils/styleUtils'
+import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import posed from 'react-pose'
 import { value, spring } from 'popmotion'
@@ -18,21 +23,18 @@ interface IProps {
 	handleSlideChange: (nextSlide: string) => void
 	goToSlide: (index: number) => void
 	selectedSlide: number
-	slides: any[],
+	slides: IGalleryItem[],
 	showModal: IShowModalAction
 }
 
 const SwipeSlider = (props: IProps) => {
 	const [state, setState] = useSetState<any, any>({
-		loaded: false,
 		root: null,
-		offset: 0,
 		width: 0,
 		selectedSlide: 1
 	})
 	const rootElement = useRef<HTMLDivElement | null>(null)
 	const preventClick = useRef<boolean>(false)
-
 	const prevState = useRef(state)
 	const prevSelectedSlide = useRef(props.selectedSlide)
 	const xRef: any = useRef(value(0))
@@ -132,6 +134,7 @@ const SwipeSlider = (props: IProps) => {
 			options: {
 				closeModal: true,
 				hasBackground: true,
+				background: colors.grey.i800,
 				data: {
 					selectedSlide: props.selectedSlide,
 					goToSlide,
@@ -158,21 +161,52 @@ const SwipeSlider = (props: IProps) => {
 			onDragEnd={onDragEnd}
 			onPoseComplete={() => {
 				console.log('Completed gallerySlide animating')
-
 			}}
 			poseKey={zeroIndex * state.width}
 			pose={'rest'}
 		>
 
 			{/*	{children}*/}
-			{props.slides.map((b, index) => (
-				<Slide
-					key={index}
-					className='slide'
-					style={{ backgroundColor: b }}
-					onClick={staticClick}
-				/>
-			))}
+			{props.slides.map((slide, index) => {
+				if (slide.video) {
+					return (
+						<Slide
+							key={index}
+							className='slide'
+							onClick={staticClick}
+						>
+							<YoutubeIcon className={'youtubeIcon'}>
+								{renderSvg(svgs.Youtube)}
+							</YoutubeIcon>
+							<Img
+								loading={'eager'}
+								fadeIn={false}
+								fluid={slide.localFile.childImageSharp.fluid}
+								alt={slide.alt}/>
+						</Slide>
+					)
+				}
+				return (
+					<Slide
+						key={index}
+						className='slide'
+						onClick={staticClick}
+					>
+						<FullScreenIcon>
+							{renderSvg(svgs.MagnifyGlass)}
+						</FullScreenIcon>
+						<EnlargeIcon>
+							{renderSvg(svgs.Enlarge)}
+						</EnlargeIcon>
+						<Img
+							loading={'eager'}
+							fadeIn={false}
+							fluid={slide.localFile.childImageSharp.fluid}
+							alt={slide.alt}/>
+					</Slide>
+				)
+			})
+			}
 		</DragContainer>
 	)
 }
@@ -197,9 +231,68 @@ const DragContainer = styled(Draggable)`
 	width: 100%;
 	flexWrap: nowrap;
 `
+
+const FullScreenIcon = styled.span`
+	background: #333f4fa3;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-40%)translateX(-50%);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 5;
+	opacity: 0;
+	transition: opacity .2s, transform .2s;
+	svg{
+		width: 100%;
+		max-width: 56px;
+		padding: 10px;
+		path{
+			fill: #fff;
+		}
+	}
+`
+const YoutubeIcon = styled(FullScreenIcon)`
+	opacity: 1;
+	transform: translateY(-50%)translateX(-50%);
+	svg{
+		max-width: 100px;
+		padding: 20px;
+	}
+`
+const EnlargeIcon = styled.div`
+	position: absolute;
+	top:10px;
+	right: 10px;
+	display: flex;
+	align-items: center;
+	z-index: 5;
+	max-width: 46px;
+	border-radius: 8px;
+	width: 100%;
+	background: #e2eaf28a;
+	padding: 8px;
+	path{
+		fill: #111;
+	}
+	@media ${device.laptop} {
+		display: none;
+		z-index: 1;
+	}	
+`
 const Slide = styled.div`
 	min-width: 100%;
   cursor: pointer;
+  position: relative;
+  
+  &:hover{
+  	${FullScreenIcon}{
+  		opacity: 1;
+			transform: translateY(-50%)translateX(-50%);
+  	}
+  }
 `
 export default SwipeSlider
 

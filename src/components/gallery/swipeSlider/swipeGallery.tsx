@@ -1,5 +1,6 @@
 import SwipeSlider from '@components/gallery/swipeSlider/swiperSlider'
 import SwipeThumbs from '@components/gallery/swipeSlider/swiperThumbs'
+import { IGalleryItem } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
@@ -11,6 +12,7 @@ const slides = ['blue', 'red', 'yellow', 'green', 'purple', 'orange']
 
 interface IProps {
 	showModal: IShowModalAction
+	items: IGalleryItem[]
 }
 
 const SwipeGallery = (props: IProps) => {
@@ -30,7 +32,7 @@ const SwipeGallery = (props: IProps) => {
 		// 	selectedSlide: nextSlide
 		// })
 
-		if (dir === 'next' && prevState.current + 1 <= slides.length) {
+		if (dir === 'next' && prevState.current + 1 <= props.items.length) {
 			setSelectedSlide(prevState.current + 1)
 		}
 		if (dir === 'prev' && prevState.current - 1 > 0) {
@@ -56,19 +58,19 @@ const SwipeGallery = (props: IProps) => {
 		<Wrapper>
 			<MainGallery>
 				<SwipeSlider
-					slides={slides}
+					slides={props.items}
 					selectedSlide={selectedSlide}
 					handleSlideChange={handleSlideChange}
 					goToSlide={goToSlide}
 					showModal={props.showModal}
 				/>
-				<BtnLeft onClick={prevSlide}>
+				<BtnLeft onClick={prevSlide} disabled={selectedSlide <= 1}>
 					<svg className='icon' viewBox='0 0 32 32'><title>Show previous slide</title>
 						<path
 							d='M20.768,31.395L10.186,16.581c-0.248-0.348-0.248-0.814,0-1.162L20.768,0.605l1.627,1.162L12.229,16 l10.166,14.232L20.768,31.395z'/>
 					</svg>
 				</BtnLeft>
-				<BtnRight onClick={nextSlide}>
+				<BtnRight onClick={nextSlide} disabled={selectedSlide >= props.items.length}>
 					<svg className='icon' viewBox='0 0 32 32'><title>Show next slide</title>
 						<path
 							d='M11.232,31.395l-1.627-1.162L19.771,16L9.605,1.768l1.627-1.162l10.582,14.813 c0.248,0.348,0.248,0.814,0,1.162L11.232,31.395z'/>
@@ -79,14 +81,13 @@ const SwipeGallery = (props: IProps) => {
 				<SwipeThumbs
 					handleSlideChange={goToSlide}
 					selectedSlide={selectedSlide}
-					slides={slides}/>
+					slides={props.items}/>
 			</ThumbsWrapper>
 		</Wrapper>
 	)
 }
 const MainGallery = styled.div`
 	position: relative;
-	height: 100%;
 `
 const SliderButton = styled.button`
 	position: absolute;
@@ -99,11 +100,16 @@ const SliderButton = styled.button`
 	width: 32px;
 	border-radius: 8px;
 	cursor: pointer;
-	transition: background .2s,transform .2s,-webkit-transform .2s;
-	background-color: #fff;
+	transition: background .2s,transform .2s,-webkit-transform .2s, opacity .2s;
+	background-color: #ffffff69;
+	opacity: 1;
 	padding: 0;
 	border: 0;
 	visibility: hidden;
+	
+	&[disabled]{
+		opacity: 0;
+	}
 	
 	path{
 		transition: .2s;
@@ -143,7 +149,6 @@ const ThumbsWrapper = styled.div`
 	background: grey;
 	display: flex;
 	flex-direction: column;
-	height: 100px;
 	overflow: hidden;
 `
 const Wrapper = styled.div`
@@ -157,7 +162,6 @@ const Wrapper = styled.div`
 	background: grey;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 	overflow: hidden;
 	
 	@media ${device.tablet} {

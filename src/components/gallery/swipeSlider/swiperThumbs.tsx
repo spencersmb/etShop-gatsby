@@ -3,6 +3,7 @@ import { colors } from '@styles/global/colors'
 import { shadowStyles } from '@styles/global/shadows'
 import { CodyUtils } from '@utils/codyUtils'
 import { useSetState } from '@utils/stateUtils'
+import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import posed from 'react-pose'
 import { value, spring } from 'popmotion'
@@ -17,6 +18,87 @@ interface IProps {
 	handleSlideChange: (slideIndex: number) => void
 	selectedSlide: number
 	slides: any[]
+}
+
+function LazyLoadImg ({ base, src, alt, ...rest }: any) {
+
+	// const [loaded, setLoaded] = useState(false)
+	// const onLoad = (e: any) => {
+	// 	console.log('manual load', e.target)
+	// 	setLoaded(true)
+	// }
+
+	return (
+		<img
+			style={{ width: '205px', height: '136px' }}
+			src={base}
+			data-flickity-lazyload-src={src}
+			// onLoad={onLoad}
+			alt={alt}
+		/>
+	)
+}
+
+function ExternalImage ({ src, alt }: any) {
+	const [imageSrc, setImageSrc] = useState('')
+	const [imageRef, setImageRef] = useState()
+
+	const onLoad = (event: any) => {
+		console.log('loaded')
+
+		event.target.classList.add('loaded')
+	}
+
+	const onError = (event: any) => {
+		event.target.classList.add('has-error')
+	}
+
+	useEffect(() => {
+		let observer: any
+		let didCancel = false
+
+		if (imageRef && imageSrc !== src) {
+			if (IntersectionObserver) {
+				observer = new IntersectionObserver(
+					entries => {
+						entries.forEach(entry => {
+							if (
+								!didCancel &&
+								(entry.intersectionRatio > 0 || entry.isIntersecting)
+							) {
+								setImageSrc(src)
+								observer.unobserve(imageRef)
+							}
+						})
+					},
+					{
+						threshold: 0.01,
+						rootMargin: '75%'
+					}
+				)
+				observer.observe(imageRef)
+			} else {
+				// Old browsers fallback
+				setImageSrc(src)
+			}
+		}
+		return () => {
+			didCancel = true
+			// on component cleanup, we remove the listner
+			if (observer && observer.unobserve) {
+				observer.unobserve(imageRef)
+			}
+		}
+	}, [src, imageSrc, imageRef])
+	return (
+		<img
+			ref={setImageRef}
+			src={imageSrc}
+			alt={alt}
+			onLoad={onLoad}
+			onError={onError}
+		/>
+	)
 }
 
 const SwipeThumbs = (props: IProps) => {
@@ -138,14 +220,25 @@ const SwipeThumbs = (props: IProps) => {
 		>
 
 			{/*	{children}*/}
-			{props.slides.map((b, index) => (
+			{props.slides.map((slide, index) => (
 				<Slide
 					key={index}
 					className={`slide-thumb ${zeroIndex === index ? 'active' : ''}`}
-					style={{ backgroundColor: b }}
 					onClick={goToSlide(index)}
-					// onClick={() => this.setSlideIndex(index)}
-				/>
+				>
+					<Img
+						loading={'eager'}
+						fadeIn={false}
+						fluid={slide.localFile.childImageSharp.fluid}
+						alt={slide.alt}/>
+					{/*<ExternalImage*/}
+					{/*	base={slide.localFile.childImageSharp.thumbnail_mobile.base64}*/}
+					{/*	src={slide.localFile.childImageSharp.thumbnail_mobile.src}*/}
+					{/*	alt={slide.alt}*/}
+					{/*	// onLoad={this.loadImage}*/}
+					{/*	{...slide}*/}
+					{/*/>*/}
+				</Slide>
 			))}
 		</DragContainer>
 	)
@@ -196,7 +289,7 @@ const Slide = styled.div`
     right: 0;
     width: 100%;
     height: 100%;
-    background: ${colors.grey.i800} url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cg stroke-width='1.5' stroke='%23ffffff'%3E%3Cpolyline fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10' points='1,9 5,13 15,3 ' %3E%3C/polyline%3E%3C/g%3E%3C/svg%3E") no-repeat center center;
+    background: rgba(63, 75, 91, 0.45) url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cg stroke-width='1.5' stroke='%23ffffff'%3E%3Cpolyline fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10' points='1,9 5,13 15,3 ' %3E%3C/polyline%3E%3C/g%3E%3C/svg%3E") no-repeat center center;
     background-size: 1.25em;
     backdrop-filter: blur(5px);
   }

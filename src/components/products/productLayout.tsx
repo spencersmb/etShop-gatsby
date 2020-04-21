@@ -249,7 +249,7 @@ export const ProductLayout = (props: IPropsPublic & IPropsPrivate & IPropsAction
 						{/*	items={galleryItems}*/}
 						{/*	showModal={showModalAction}*/}
 						{/*/>*/}
-						<SwipeGallery showModal={showModalAction}/>
+						<SwipeGallery showModal={showModalAction} items={galleryItems}/>
 					</Gallery>
 					<ProductTitle>
 						<BackBtnMobile>

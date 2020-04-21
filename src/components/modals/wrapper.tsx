@@ -89,7 +89,7 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 			// delay by 300 to allow modal to animate out with scrollbar issue
 			setTimeout(() => {
 				// console.log('render scroll')
-				bodyScrollBar.remove(target.current)
+				// bodyScrollBar.remove(target.current)
 				document.documentElement.scrollTop = document.body.scrollTop = scrollPos.current
 			}, 300)
 
@@ -115,6 +115,7 @@ export const Modal = (props: IPropsActions & IPropsRedux) => {
 					{renderModal(component)}
 				</ModalPose>,
 				<Overlay
+					background={props.options.background ? props.options.background : null}
 					id={'overlay'}
 					data-testid='overlay'
 					key='overlay'
@@ -179,8 +180,8 @@ const ModalPose = posed.div({
 		zIndex: 7
 	}
 })
-const Shade = styled.div`
-		background: #333f4fcc;
+const Shade = styled.div<{ background: string | null }>`
+		background: ${props => props.background ? props.background : '#333f4fcc'};
 		height: 100%;
 		left: 0;
 		position: absolute;

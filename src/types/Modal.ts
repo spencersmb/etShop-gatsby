@@ -10,6 +10,7 @@ export interface IModalOptions {
   content?: string,
   name?: string,
   data?: any
+  background?: string
 }
 export interface IModal {
   closeModal: () => void,
