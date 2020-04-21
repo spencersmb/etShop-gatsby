@@ -1,4 +1,5 @@
 import GalleryModal from '@components/gallery/flickityGalleryModal'
+import FmGalleryModal from '@components/gallery/swipeSlider/fmGalleryModal'
 import SwipeModal from '@components/gallery/swipeSlider/swiperModal'
 import { IGalleryItem } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
@@ -130,7 +131,8 @@ const SwipeSlider = (props: IProps) => {
 	function staticClick () {
 
 		props.showModal({
-			modal: SwipeModal,
+			modal: FmGalleryModal,
+			// modal: SwipeModal,
 			options: {
 				closeModal: true,
 				hasBackground: true,
