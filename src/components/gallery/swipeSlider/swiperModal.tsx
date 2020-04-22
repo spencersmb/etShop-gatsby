@@ -73,6 +73,7 @@ const SwipeModal = (props: IProps) => {
 
 	useEffect(() => {
 		window.addEventListener('resize', adjustCurrentBox)
+
 		if (rootElement.current) {
 			// const { slideIndex } = state.selectedSlide
 			setTimeout(() => {
@@ -488,37 +489,6 @@ const BtnLeft = styled(SliderButton)`
 const BtnRight = styled(SliderButton)`
 	right: 10px;
 	left: auto;
-`
-
-const YoutubeGalleryItem = styled.div`
-	width: 100%;
-	margin: 0 40px;
-	height: 390px;
-	
-	@media ${device.laptop} {
-		height: 720px;
-		max-width: 1275px;
-	}
-		
-`
-const YoutubeContainer = styled.div`
-    position: relative;
-    display: block;
-    height: 100%;
-    width: 100%;
-    
-    iframe{
-			position: absolute;
-			top: 50%;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			border: 0;
-			transform: translateY(-50%);
-    }
-
-    	
 `
 
 const CloseBtn = styled.button`

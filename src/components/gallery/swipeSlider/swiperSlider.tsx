@@ -43,6 +43,7 @@ const SwipeSlider = (props: IProps) => {
 
 	useEffect(() => {
 		window.addEventListener('resize', adjustCurrentBox)
+
 		if (rootElement.current) {
 			// const { slideIndex } = state.selectedSlide
 			setState({
@@ -138,7 +139,7 @@ const SwipeSlider = (props: IProps) => {
 				hasBackground: true,
 				background: colors.grey.i800,
 				data: {
-					selectedSlide: props.selectedSlide,
+					selectedSlide: props.selectedSlide - 1, // because the modal is zerobased
 					goToSlide,
 					items: props.slides
 				}
