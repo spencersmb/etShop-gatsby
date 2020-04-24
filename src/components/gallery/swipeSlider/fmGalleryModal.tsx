@@ -390,9 +390,9 @@ const FmGalleryModal = (props: IProps) => {
 							{videoCheck(images[imageIndex])}
 							{/*<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>*/}
 						</motion.div>
-						: <motion.img
+						: <motion.div
 							key={page}
-							src={images[imageIndex].localFile.childImageSharp.fullWidth.src}
+							// src={images[imageIndex].localFile.childImageSharp.fullWidth.src}
 							className={'test2'}
 							custom={direction}
 							variants={variants}
@@ -431,9 +431,9 @@ const FmGalleryModal = (props: IProps) => {
 								}
 							}}
 						>
-							{/*{videoCheck(images[imageIndex])}*/}
+							{videoCheck(images[imageIndex])}
 							{/*<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>*/}
-						</motion.img>
+						</motion.div>
 					}
 				</AnimatePresence>
 			</ContainerTest2>
