@@ -97,7 +97,7 @@ const IndexPage = ({ data }: any) => {
 				<script type='application/ld+json'>{JSON.stringify(jsonld)}</script>
 			</SEO>
 			<PageContainer>
-				<DesignHero/>
+				{/*<DesignHero/>*/}
 				<ProductsDisplay/>
 			</PageContainer>
 		</Layout>
