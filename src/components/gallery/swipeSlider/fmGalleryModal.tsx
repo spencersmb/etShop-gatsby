@@ -28,12 +28,12 @@ const variants = {
 			x: direction > 0 ? 500 : -500,
 			opacity: 0,
 			transition: {
-				// type: 'spring',
+				// type: 'linear',
 				// damping: 1600,
 				// stiffness: 5,
 				// velocity: 200,
-				ease: [0.17, 0.67, 0.83, 0.67],
-				duration: .2
+				// ease: [0.17, 0.67, 0.83, 0.67],
+				duration: .3
 			}
 		}
 	},
@@ -43,12 +43,12 @@ const variants = {
 		y: 0,
 		opacity: 1,
 		transition: {
-			// ease: [0.17, 0.67, 0.83, 0.67],
+			// ease: [0.17, 0.67, 0.83, 0.67]
 			// type: 'spring',
-			// damping: 100,
-			// stiffness: 10,
+			// damping: 600,
+			// stiffness: 200,
 			// velocity: 200,
-			// duration: .1
+			duration: .1
 		}
 	},
 	exit: (direction: number) => {
@@ -57,8 +57,8 @@ const variants = {
 			x: direction < 0 ? 500 : -500,
 			opacity: 0,
 			transition: {
-				ease: [0.17, 0.67, 0.83, 0.67],
-				// type: 'spring',
+				// type: 'easeOut',
+				// ease: [0.17, 0.67, 0.83, 0.67],
 				// damping: 5,
 				// stiffness: 600,
 				// velocity: 200,
