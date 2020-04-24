@@ -11,6 +11,7 @@ import { spring, value } from 'popmotion'
 import { func } from 'prop-types'
 import React, { Component, useEffect, useLayoutEffect, useRef } from 'react'
 import posed from 'react-pose'
+import debounce from 'lodash/debounce'
 import styled from 'styled-components'
 import YouTube, { Options } from 'react-youtube'
 
@@ -85,8 +86,6 @@ const SwipeModal = (props: IProps) => {
 					// ...childrenBox(rootElement.current, state.selectedSlide)
 					...childrenBox(rootElement.current, props.options.data.selectedSlide)
 				})
-				mapOversizedAttr()
-				testDrag()
 			}, 200)
 		}
 		return () => {
@@ -101,30 +100,14 @@ const SwipeModal = (props: IProps) => {
 		prevState.current = state
 	}, [state])
 
-	function mapOversizedAttr () {
-		const selectedSlides = document.getElementsByClassName('et-modal-slide')
-		// tslint:disable-next-line:prefer-for-of
-		for (let i = 0; i < selectedSlides.length; i++) {
-			const el = selectedSlides[i]
-			const gatsbyImage = el.children[0]
-			console.log('gatsbyImage', gatsbyImage.clientHeight)
-
-			if (gatsbyImage.clientHeight > 772) {
-				el.setAttribute('data-oversized', 'true')
-			}
-
-		}
-
-	}
-
-	function adjustCurrentBox () {
+	const adjustCurrentBox = debounce(() =>{
 		if (rootElement.current) {
 			setState({
 				root: rootElement.current,
 				...childrenBox(rootElement.current, prevState.current.selectedSlide)
 			})
 		}
-	}
+	}, 250)
 
 	function childrenBox (root: any, index: any) {
 		const rootWidth = root.clientWidth
@@ -189,12 +172,6 @@ const SwipeModal = (props: IProps) => {
 		// }
 	}
 
-	function testDrag () {
-		if (rootElement.current) {
-			rootElement.current.addEventListener('touchstart', dragStart, false)
-		}
-	}
-
 	function onDragEnd (e: any) {
 		const { width } = prevState.current
 		const zerBaseIndex = prevState.current.selectedSlide - 1
@@ -225,7 +202,6 @@ const SwipeModal = (props: IProps) => {
 	}
 
 	function checkOverSizedImage (nextSlideIndex: number) {
-		console.log('nextSlide', nextSlideIndex)
 
 		const viewport = document.getElementsByClassName('carousel-modal')
 		// it wont have selected just yet cus we havnt changed state
@@ -234,7 +210,6 @@ const SwipeModal = (props: IProps) => {
 
 		// const image: HTMLCollection = selectedImage[0].children
 		const image: any = selectedImage.children[0]
-		console.log('image', image)
 
 		// console.log('image array', image)
 		// console.log('image', image[0])

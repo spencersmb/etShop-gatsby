@@ -1,20 +1,15 @@
-import GalleryModal from '@components/gallery/flickityGalleryModal'
 import FmGalleryModal from '@components/gallery/swipeSlider/fmGalleryModal'
-import SwipeModal from '@components/gallery/swipeSlider/swiperModal'
 import { IGalleryItem } from '@et/types/Products'
 import { IShowModalAction } from '@redux/actions/modalActions'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
-import { shadowStyles } from '@styles/global/shadows'
 import { svgs } from '@svg'
-import { CodyUtils } from '@utils/codyUtils'
-import { useSetState } from '@utils/stateUtils'
+import { useGalleryResizeEffect } from '@utils/galleryUtils'
 import { renderSvg } from '@utils/styleUtils'
 import Img from 'gatsby-image'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import posed from 'react-pose'
 import { value, spring } from 'popmotion'
-import debounce from 'lodash/debounce'
 import styled from 'styled-components'
 
 const VELOCITY_THRESHOLD = 600
@@ -29,58 +24,20 @@ interface IProps {
 }
 
 const SwipeSlider = (props: IProps) => {
-	const [state, setState] = useSetState<any, any>({
-		root: null,
-		width: 0,
-		selectedSlide: 1
-	})
 	const rootElement = useRef<HTMLDivElement | null>(null)
 	const preventClick = useRef<boolean>(false)
-	const prevState = useRef(state)
 	const prevSelectedSlide = useRef(props.selectedSlide)
 	const xRef: any = useRef(value(0))
 	const valuesMap = { x: xRef.current }
+	const [galleryState] = useGalleryResizeEffect(rootElement.current)
+	const prevState = useRef(galleryState)
 
-	useEffect(() => {
-		window.addEventListener('resize', adjustCurrentBox)
-
-		if (rootElement.current) {
-			// const { slideIndex } = state.selectedSlide
-			setState({
-				root: rootElement.current,
-				// ...childrenBox(rootElement.current, state.selectedSlide)
-				...childrenBox(rootElement.current, props.selectedSlide)
-			})
-		}
-		return () => {
-			window.removeEventListener('resize', adjustCurrentBox)
-		}
-
-	}, [])
 	useEffect(() => {
 		prevSelectedSlide.current = props.selectedSlide
 	}, [props.selectedSlide])
 	useLayoutEffect(() => {
-		prevState.current = state
-	}, [state])
-
-	function adjustCurrentBox () {
-		if (rootElement.current) {
-			setState({
-				root: rootElement.current,
-				...childrenBox(rootElement.current, props.selectedSlide)
-			})
-		}
-	}
-
-	function childrenBox (root: any, index: any) {
-		const rootWidth = root.clientWidth
-		const el = root
-		return {
-			offset: el.offsetLeft,
-			width: el.offsetWidth
-		}
-	}
+		prevState.current = galleryState
+	}, [galleryState])
 
 	function onDragStart (e: any) {
 		preventClick.current = false
@@ -130,10 +87,8 @@ const SwipeSlider = (props: IProps) => {
 	}
 
 	function staticClick () {
-
 		props.showModal({
 			modal: FmGalleryModal,
-			// modal: SwipeModal,
 			options: {
 				closeModal: true,
 				hasBackground: true,
@@ -147,14 +102,13 @@ const SwipeSlider = (props: IProps) => {
 		})
 	}
 
-	// const index = state.selectedSlide - 1
 	const zeroIndex = props.selectedSlide - 1
 
 	return (
 		<DragContainer
 			ref={rootElement}
 			values={valuesMap}
-			offset={zeroIndex * state.width}
+			offset={zeroIndex * galleryState.width}
 			onClickCapture={(e: any) => {
 				if (preventClick.current) {
 					e.stopPropagation()
@@ -162,14 +116,11 @@ const SwipeSlider = (props: IProps) => {
 			}}
 			onDragStart={onDragStart}
 			onDragEnd={onDragEnd}
-			onPoseComplete={() => {
-				console.log('Completed gallerySlide animating')
-			}}
-			poseKey={zeroIndex * state.width}
+			// onPoseComplete={null}
+			poseKey={zeroIndex * galleryState.width}
 			pose={'rest'}
 		>
 
-			{/*	{children}*/}
 			{props.slides.map((slide, index) => {
 				if (slide.video) {
 					return (
@@ -290,11 +241,13 @@ const Slide = styled.div`
   cursor: pointer;
   position: relative;
   
+  @media ${device.laptop}{
   &:hover{
   	${FullScreenIcon}{
   		opacity: 1;
 			transform: translateY(-50%)translateX(-50%);
   	}
+  }
   }
 `
 export default SwipeSlider

@@ -2,14 +2,17 @@ import { IModal, Merge } from '@et/types/Modal'
 import { IGalleryItem } from '@et/types/Products'
 import { device } from '@styles/global/breakpoints'
 import { colors } from '@styles/global/colors'
+import { FmGalleryBtnLeft, FmGalleryBtnRight } from '@styles/modules/fmGallery'
 import { svgs } from '@svg'
 import { renderSvg } from '@utils/styleUtils'
+import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { wrap } from '@popmotion/popcorn'
 import posed from 'react-pose'
 import YouTube, { Options } from 'react-youtube'
 import styled from 'styled-components'
+import debounce from 'lodash/debounce'
 
 const opts: Options = {
 	height: '390',
@@ -22,20 +25,45 @@ const opts: Options = {
 const variants = {
 	enter: (direction: number) => {
 		return {
-			x: direction > 0 ? 1000 : -1000,
-			opacity: 0
+			x: direction > 0 ? 500 : -500,
+			opacity: 0,
+			transition: {
+				// type: 'spring',
+				// damping: 1600,
+				// stiffness: 5,
+				// velocity: 200,
+				ease: [0.17, 0.67, 0.83, 0.67],
+				duration: .2
+			}
 		}
 	},
 	center: {
 		zIndex: 1,
 		x: 0,
-		opacity: 1
+		y: 0,
+		opacity: 1,
+		transition: {
+			// ease: [0.17, 0.67, 0.83, 0.67],
+			// type: 'spring',
+			// damping: 100,
+			// stiffness: 10,
+			// velocity: 200,
+			// duration: .1
+		}
 	},
 	exit: (direction: number) => {
 		return {
 			zIndex: 0,
-			x: direction < 0 ? 1000 : -1000,
-			opacity: 0
+			x: direction < 0 ? 500 : -500,
+			opacity: 0,
+			transition: {
+				ease: [0.17, 0.67, 0.83, 0.67],
+				// type: 'spring',
+				// damping: 5,
+				// stiffness: 600,
+				// velocity: 200,
+				duration: .2
+			}
 		}
 	}
 }
@@ -51,13 +79,14 @@ type IProps = Merge<IModal, {
 }>
 
 const FmGalleryModal = (props: IProps) => {
-
+	const mounted = useRef(false)
 	const [[page, direction], setPage] = useState([props.options.data.selectedSlide, 0])
-	const hasScrollBar = document.querySelector('.hasScrollBar')
+	const hasScrollBarRef = useRef(document.querySelector('.hasScrollBar'))
 	const [axis, setAxis] = useState<boolean | 'x' | 'y'>('x')
 	const images = props.options.data.items
 	const [height, setHeight] = useState(0)
 	const imgRef = useRef<HTMLDivElement>(null)
+	const fmModalContainerRef = useRef<HTMLDivElement>(null)
 	const prevStateHeight = useRef(0)
 	const imageIndex = wrap(0, images.length, page)
 
@@ -67,6 +96,9 @@ const FmGalleryModal = (props: IProps) => {
 	// detect it as an entirely new image. So you can infinitely paginate as few as 1 images.
 
 	const paginate = (newDirection: number) => {
+		if (axis === 'y') {
+			return
+		}
 		if (page === 0 && newDirection === -1) {
 			return
 		}
@@ -79,17 +111,23 @@ const FmGalleryModal = (props: IProps) => {
 		prevStateHeight.current = height
 	})
 	useEffect(() => {
+		window.addEventListener('resize', adjustLayout)
 		setTimeout(() => {
-			getHeight(1)
-		}, 0)
-	}, [])
-	useLayoutEffect(() => {
-		setTimeout(() => {
-			getHeight(1)
-		}, 300)
-	}, [page])
+		}, 200)
 
-	const getHeight = (index: number) => {
+		return () => {
+			window.removeEventListener('resize', adjustLayout)
+		}
+
+	}, [])
+
+	const adjustLayout = debounce(() => {
+		hasScrollBarRef.current = document.querySelector('.hasScrollBar')
+		if (fmModalContainerRef.current) {
+			getHeightTest2()
+		}
+	}, 250)
+	const getHeightOg = () => {
 		if (isVideoItem(imageIndex)) {
 			return
 		}
@@ -103,11 +141,58 @@ const FmGalleryModal = (props: IProps) => {
 			// 	imageSelectetd = imgRef.current.children[0]
 			// }
 			const boundingClient = newSlide.getBoundingClientRect()
-			console.log('rect', boundingClient)
+			// if (window && boundingClient.height > window.innerHeight) {
+			// 	console.log('scrollTop')
+			// 	window.scrollTo(0, fmModalContainerRef.current.offsetTop)
+			// }
+			// console.log('rect', boundingClient)
+			if (prevStateHeight.current > window.outerHeight) {
+				if (window) {
+					console.log('scroll top')
+
+					window.scrollTo({ top: 0, behavior: 'smooth' })
+				}
+			}
 			if (prevStateHeight.current !== boundingClient.height) {
 				console.log('new height')
 
 				setHeight(boundingClient.height)
+
+			}
+		}
+
+	}
+	const getHeightTest2 = () => {
+		if (isVideoItem(imageIndex)) {
+			return
+		}
+		if (fmModalContainerRef.current) {
+			const slides = fmModalContainerRef.current.children
+			const newSlide = slides[fmModalContainerRef.current.children.length - 1] // last item
+
+			// console.log('newSlide', newSlide)
+
+			// if (imageSelectetd.tagName !== 'img') {
+			// 	imageSelectetd = imgRef.current.children[0]
+			// }
+			const boundingClient = newSlide.getBoundingClientRect()
+			// if (window && boundingClient.height > window.innerHeight) {
+			// 	console.log('scrollTop')
+			// 	window.scrollTo(0, fmModalContainerRef.current.offsetTop)
+			// }
+			// console.log('rect', boundingClient)
+			if (prevStateHeight.current > window.outerHeight) {
+				if (window) {
+					// console.log('scroll top')
+
+					window.scrollTo({ top: 0, behavior: 'smooth' })
+				}
+			}
+			if (prevStateHeight.current !== boundingClient.height) {
+				// console.log('new height')
+
+				setHeight(boundingClient.height)
+
 			}
 		}
 
@@ -117,6 +202,8 @@ const FmGalleryModal = (props: IProps) => {
 		if (height > window.innerHeight && !isVideoItem(imageIndex)) {
 			console.log(myAxis)
 			setAxis(myAxis)
+		} else {
+			setAxis('x')
 		}
 	}
 
@@ -134,7 +221,7 @@ const FmGalleryModal = (props: IProps) => {
 	}
 
 	function _onReadyYouTube () {
-
+		mounted.current = true
 		if (isVideoItem(page)) {
 			console.log('play Video')
 
@@ -144,8 +231,6 @@ const FmGalleryModal = (props: IProps) => {
 
 	function videoCheck (item: IGalleryItem) {
 		if (item.video) {
-			console.log('item', item)
-
 			return (
 				<YoutubeGalleryItem key={'tubemodal'}>
 					<YoutubeContainer>
@@ -154,16 +239,15 @@ const FmGalleryModal = (props: IProps) => {
 							opts={opts}
 							onReady={_onReadyYouTube}
 						/>
-						{/*<iframe*/}
-						{/*	src='https://www.youtube.com/embed/2TGOJ0_ssuo'*/}
-						{/*	frameBorder='0'*/}
-						{/*	allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'*/}
-						{/*	allowFullScreen={true}/>*/}
 					</YoutubeContainer>
 				</YoutubeGalleryItem>
 			)
 		}
-		return (<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>)
+		return (
+			<Img
+				fluid={images[imageIndex].localFile.childImageSharp.fullWidth}
+				alt={images[imageIndex].alt}/>
+		)
 	}
 
 	/**
@@ -177,96 +261,236 @@ const FmGalleryModal = (props: IProps) => {
 		return Math.abs(offset) * velocity
 	}
 
-	console.log('sttate', [page, direction])
-	console.log('sttate', axis)
+	const backup = () => {
+		return (
+			<Main
+				height={window.outerHeight}
+				key={'main'}>
+				<Container
+					ref={fmModalContainerRef}
+					height={height}
+					hasScrollbar={!!hasScrollBarRef.current}
+					className={isVideoItem(imageIndex) ? 'hasVideo' : ''}>
+					<Inner>
+						<div
+							className={'height-container'}
+							ref={imgRef}
+							style={{
+								display: 'flex',
+								width: '100%',
+								justifyContent: 'center'
+							}}
+						>
+							<AnimatePresence initial={false} custom={direction} onExitComplete={() => {
+								props.options.data.goToSlide(page + 1) // because the gallery is not zerobased
+							}}>
+								<motion.div
+									key={page}
+									className={'fm-divImage'}
+									custom={direction}
+									variants={variants}
+									initial='enter'
+									animate='center'
+									exit='exit'
+									dragDirectionLock={true}
+									onDirectionLock={(dirAxis: string) => dragDirection(dirAxis)}
+									transition={{
+										x: { type: 'spring', stiffness: 300, damping: 200 },
+										opacity: { duration: 0.2 }
+									}}
+									drag={axis}
+									dragConstraints={{
+										left: 0,
+										right: 0,
+										bottom: 0,
+										top: -(height - window.innerHeight)
+									}}
+									dragElastic={0.3}
+									onDragEnd={(e, { offset, velocity }) => {
+										const swipe = swipePower(offset.x, velocity.x)
+
+										if (swipe < -swipeConfidenceThreshold) {
+											paginate(1)
+										} else if (swipe > swipeConfidenceThreshold) {
+											paginate(-1)
+										}
+									}}
+								>
+									{videoCheck(images[imageIndex])}
+									{/*<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>*/}
+								</motion.div>
+							</AnimatePresence>
+						</div>
+					</Inner>
+				</Container>
+				<FmGalleryBtnLeft onClick={prevSlide} disabled={page === 0}>
+					<svg className='icon' viewBox='0 0 32 32'><title>Show previous slide</title>
+						<path
+							d='M20.768,31.395L10.186,16.581c-0.248-0.348-0.248-0.814,0-1.162L20.768,0.605l1.627,1.162L12.229,16 l10.166,14.232L20.768,31.395z'/>
+					</svg>
+				</FmGalleryBtnLeft>
+				<FmGalleryBtnRight onClick={nextSlide} disabled={page + 1 === images.length}>
+					<svg className='icon' viewBox='0 0 32 32'><title>Show next slide</title>
+						<path
+							d='M11.232,31.395l-1.627-1.162L19.771,16L9.605,1.768l1.627-1.162l10.582,14.813 c0.248,0.348,0.248,0.814,0,1.162L11.232,31.395z'/>
+					</svg>
+				</FmGalleryBtnRight>
+				<CloseBtn onClick={props.closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
+			</Main>
+		)
+	}
+
 	return (
 		<Main
+			height={window.outerHeight}
 			key={'main'}>
-			<Container
-				isLoaded={true}
-				height={height}
-				hasScrollbar={!!hasScrollBar}
-				className={isVideoItem(imageIndex) ? 'hasVideo' : ''}>
-				<Inner>
-					<div
-						className={'height-container'}
-						ref={imgRef}
-						style={{
-							display: 'flex',
-							width: '100%',
-							justifyContent: 'center'
-						}}
-					>
-						<AnimatePresence initial={false} custom={direction} onExitComplete={() => {
-							console.log('exited, go to slide', page)
-							props.options.data.goToSlide(page + 1) // because the gallery is not zerobased
-						}}>
-							<motion.div
-								key={page}
-								className={'fm-divImage'}
-								custom={direction}
-								variants={variants}
-								// style={{ width: '100%', maxWidth: 800 }}
-								initial='enter'
-								animate='center'
-								exit='exit'
-								dragDirectionLock={true}
-								onDirectionLock={(dirAxis: string) => dragDirection(dirAxis)}
-								transition={{
-									x: { type: 'spring', stiffness: 300, damping: 200 },
-									opacity: { duration: 0.2 }
-								}}
-								drag={axis}
-								dragConstraints={{
-									left: 0,
-									right: 0,
-									bottom: 0,
-									top: -(height - window.innerHeight)
-								}}
-								dragElastic={0.3}
-								onDragEnd={(e, { offset, velocity }) => {
-									const swipe = swipePower(offset.x, velocity.x)
+			<ContainerTest2 ref={fmModalContainerRef}
+											height={height}
+											className={isVideoItem(imageIndex) ? 'hasVideo' : ''}>
+				<AnimatePresence initial={false} custom={direction} onExitComplete={() => {
+					getHeightTest2()
+					props.options.data.goToSlide(page + 1) // because the gallery is not zerobased
+				}}>
+					{images[imageIndex].video ?
+						<motion.div
+							key={page}
+							className={'test2 youtubeVideo'}
+							custom={direction}
+							variants={variants}
+							initial='enter'
+							animate='center'
+							exit='exit'
+							dragDirectionLock={true}
+							onDirectionLock={(dirAxis: string) => dragDirection(dirAxis)}
+							transition={{
+								x: { type: 'spring', stiffness: 600, damping: 200 }
+								// x: { ease: [0.17, 0.67, 0.83, 0.67] },
+								// opacity: { duration: 0.2 }
+							}}
+							drag={axis}
+							dragConstraints={{
+								left: 0,
+								right: 0,
+								bottom: 0,
+								top: -(height - window.innerHeight)
+							}}
+							dragElastic={0.2}
+							onDragEnd={(e, { offset, velocity }) => {
+								console.log('e', e)
 
-									if (swipe < -swipeConfidenceThreshold) {
-										paginate(1)
-									} else if (swipe > swipeConfidenceThreshold) {
-										paginate(-1)
-									}
-								}}
-							>
-								{videoCheck(images[imageIndex])}
-								{/*<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>*/}
-							</motion.div>
-						</AnimatePresence>
-					</div>
-				</Inner>
-			</Container>
-			<BtnLeft onClick={prevSlide} disabled={page === 0}>
+								const swipe = swipePower(offset.x, velocity.x)
+
+								if (swipe < -swipeConfidenceThreshold) {
+									paginate(1)
+								} else if (swipe > swipeConfidenceThreshold) {
+									paginate(-1)
+								}
+							}}
+						>
+							{videoCheck(images[imageIndex])}
+							{/*<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>*/}
+						</motion.div>
+						: <motion.img
+							key={page}
+							src={images[imageIndex].localFile.childImageSharp.fullWidth.src}
+							className={'test2'}
+							custom={direction}
+							variants={variants}
+							initial='enter'
+							animate='center'
+							exit='exit'
+							onLoad={(e) => {
+								console.log('loaded')
+								if (!mounted.current) {
+									getHeightTest2()
+								}
+								mounted.current = true
+							}}
+							dragDirectionLock={true}
+							onDirectionLock={(dirAxis: string) => dragDirection(dirAxis)}
+							transition={{
+								x: { type: 'spring', stiffness: 600, damping: 200 }
+								// x: { ease: [0.17, 0.67, 0.83, 0.67] },
+								// opacity: { duration: 0.2 }
+							}}
+							drag={axis}
+							dragConstraints={{
+								left: 0,
+								right: 0,
+								bottom: 0,
+								top: -(height - window.innerHeight)
+							}}
+							dragElastic={0.2}
+							onDragEnd={(e, { offset, velocity }) => {
+								const swipe = swipePower(offset.x, velocity.x)
+
+								if (swipe < -swipeConfidenceThreshold) {
+									paginate(1)
+								} else if (swipe > swipeConfidenceThreshold) {
+									paginate(-1)
+								}
+							}}
+						>
+							{/*{videoCheck(images[imageIndex])}*/}
+							{/*<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>*/}
+						</motion.img>
+					}
+				</AnimatePresence>
+			</ContainerTest2>
+			<FmGalleryBtnLeft onClick={prevSlide} disabled={page === 0}
+												background={{ hover: colors.grey.i800, color: '#ffffff69' }}>
 				<svg className='icon' viewBox='0 0 32 32'><title>Show previous slide</title>
 					<path
 						d='M20.768,31.395L10.186,16.581c-0.248-0.348-0.248-0.814,0-1.162L20.768,0.605l1.627,1.162L12.229,16 l10.166,14.232L20.768,31.395z'/>
 				</svg>
-			</BtnLeft>
-			<BtnRight onClick={nextSlide} disabled={page + 1 === images.length}>
+			</FmGalleryBtnLeft>
+			<FmGalleryBtnRight onClick={nextSlide} disabled={page + 1 === images.length}
+												 background={{ hover: colors.grey.i800, color: '#ffffff69' }}
+												 hasScrollbar={!!hasScrollBarRef.current}>
 				<svg className='icon' viewBox='0 0 32 32'><title>Show next slide</title>
 					<path
 						d='M11.232,31.395l-1.627-1.162L19.771,16L9.605,1.768l1.627-1.162l10.582,14.813 c0.248,0.348,0.248,0.814,0,1.162L11.232,31.395z'/>
 				</svg>
-			</BtnRight>
+			</FmGalleryBtnRight>
 			<CloseBtn onClick={props.closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
 		</Main>
 	)
 
 }
 export default FmGalleryModal
+const ContainerTest2 = styled.div<{ height: number }>`
+		//transition: height 5.3s;
+		width: 100%;
+		height: ${props => props.height}px;
+		${props => props.height > window.outerHeight ? 'transition: height .9s .2s;' : 'transition: height .3s;'};
+		//transition: height .3s;
+		position: relative;
+		transform-origin: center center;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+		
+		&.hasVideo{
+			height: 100% !important;
+			position: relative;
+			z-index: 3;
+			transition: height 0s;
+		}
 
+		@media ${device.laptop}{
+			overflow: hidden;
+			${props => props.height > 800 ? 'overflow-y: scroll;' : ''}
+		}
+`
 const YoutubeGalleryItem = styled.div`
 	width: 100%;
 	margin: 0;
 	height: 390px;
 	@media ${device.laptop} {
-		height: 480px;
-		max-width: 1275px;
+		//height: 480px;
+		//max-width: 1275px;
+		height: 640px;
+    max-width: 1140px;
 	}
 	@media ${device.laptopL} {
 		height: 720px;
@@ -326,32 +550,11 @@ const CloseBtn = styled.button`
 		}
 	}
 `
-const Container = styled.div<{ isLoaded: boolean, hasScrollbar: boolean, height: number }>`
-	// width: 100%;
-	// height: 100%;
-	// position: relative;
-	// display: flex;
-	// flex-direction: column;
-	// justify-content: center;
-	// transition: opacity .3s .3s;
-	// opacity: ${props => props.isLoaded ? 1 : 0};
-	//  width: 100vw;
-	//// height: 100vh;
-	//	position: relative;
-	//	display: flex;
-	//	justify-content: center;
-		transition: height .3s;
-	//	img {	
-	//		position: absolute;
-	//		//max-width: 100vw;
-	//		top: 0;
-	//		width: 100%;
-	//		opacity: 1;
-	//		transform: none;
-	//		user-select: none;
-	//		z-index: 1;
-	//	}
+const Container = styled.div<{ hasScrollbar: boolean, height: number }>`
+		//transition: height 5.3s;
 		height: ${props => props.height}px;
+		transition: height .2s;
+    z-index: 2;
 		
 		&.hasVideo{
 			height: 100% !important;
@@ -361,27 +564,20 @@ const Container = styled.div<{ isLoaded: boolean, hasScrollbar: boolean, height:
 		}
 
 		@media ${device.laptop}{
-			position: relative;
-			z-index: 2;
 			overflow: hidden;
-			${props => props.height > 800 ? 'overflow-y: scroll;' : 'overflow: hidden;'}
+			${props => props.height > 800 ? 'overflow-y: scroll;' : ''}
 			${props => props.hasScrollbar ? `margin-right: 15px;` : null};
+		}
+		
+		.test2{
+			position: absolute;
 		}
 `
 const Inner = styled.div`
-	// width: 100%;
-	// height: 100%;
-	// position: relative;
-	// display: flex;
-	// flex-direction: column;
-	// justify-content: center;
-		
-	// transition: opacity .3s .3s;
 	  width: 100vw;
 		position: relative;
 		display: flex;
 		justify-content: center;
-		transition: height .3s;
 		.hasVideo & {
 			transition: height 0;
 			height: 100%;
@@ -392,7 +588,6 @@ const Inner = styled.div`
 			}
 		}
 		.fm-divImage {	
-			
 			position: absolute;
 			top: 0;
 			width: 100%;
@@ -401,19 +596,14 @@ const Inner = styled.div`
 			transform: none;
 			user-select: none;
 			z-index: 1;
+			
+			@media ${device.laptop}{
+				max-width: 1167px;
+			}
 		}		
 		img{
 			width: 100%;
 		}
-		//img {	
-		//	position: absolute;
-		//	top: 0;
-		//	width: 100%;
-		//	opacity: 1;
-		//	transform: none;
-		//	user-select: none;
-		//	z-index: 1;
-		//}
 `
 const ModalPose = posed.div({
 	exit: {
@@ -451,55 +641,18 @@ const Main = styled(ModalPose)`
 	justify-content: center;
 	align-items: center;
 	backface-visibility: hidden;
-`
-const SliderButton = styled.button`
-	position: absolute;
-	top: 50%;
-	left: 10px;
-	transform: translateX(0) translateY(-50%);
-	outline: none;
-	display: none;
-	height: 64px;
-	width: 45px;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: background .2s,transform .2s,-webkit-transform .2s;
-	background-color: transparent;
-	padding: 0;
-	border: 0;
-	visibility: hidden;
-	z-index: 4;
 	
-	&[disabled]{
-		opacity: 0;
-	}
-	
-	path{
-		transition: .2s;
-		fill: #fff;
-	}
-	
-	&:focus{
-		outline: none;
-	}
-	
-	@media ${device.laptop}{
-		display: block;
-		visibility: visible;
-		
-		&:hover{
-			path{
-				fill: ${colors.teal.i500};
-			}
-		}
-	}
-	
+	.test2{
+		position: absolute;
+		width: 100%;
+		max-width: 1200px;
 
-`
-const BtnLeft = styled(SliderButton)`
-
-`
-const BtnRight = styled(SliderButton)`
-	right: 10px;
-	left: auto;
+	}
+	.youtubeVideo{
+		width: 100%;
+		display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+	}
 `

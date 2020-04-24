@@ -1,18 +1,9 @@
-import { device } from '@styles/global/breakpoints'
-import { colors } from '@styles/global/colors'
-import { shadowStyles } from '@styles/global/shadows'
-import { CodyUtils } from '@utils/codyUtils'
-import { useSetState } from '@utils/stateUtils'
+import { useGalleryResizeEffect } from '@utils/galleryUtils'
 import Img from 'gatsby-image'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import posed from 'react-pose'
 import { value, spring } from 'popmotion'
-import debounce from 'lodash/debounce'
 import styled from 'styled-components'
-import { inspect } from 'util'
-
-const VELOCITY_THRESHOLD = 600
-const DISTANCE_PERCENTILE_THRESHOLD = 0.3
 
 interface IProps {
 	handleSlideChange: (slideIndex: number) => void
@@ -20,152 +11,32 @@ interface IProps {
 	slides: any[]
 }
 
-function LazyLoadImg ({ base, src, alt, ...rest }: any) {
-
-	// const [loaded, setLoaded] = useState(false)
-	// const onLoad = (e: any) => {
-	// 	console.log('manual load', e.target)
-	// 	setLoaded(true)
-	// }
-
-	return (
-		<img
-			style={{ width: '205px', height: '136px' }}
-			src={base}
-			data-flickity-lazyload-src={src}
-			// onLoad={onLoad}
-			alt={alt}
-		/>
-	)
-}
-
-function ExternalImage ({ src, alt }: any) {
-	const [imageSrc, setImageSrc] = useState('')
-	const [imageRef, setImageRef] = useState()
-
-	const onLoad = (event: any) => {
-		console.log('loaded')
-
-		event.target.classList.add('loaded')
-	}
-
-	const onError = (event: any) => {
-		event.target.classList.add('has-error')
-	}
-
-	useEffect(() => {
-		let observer: any
-		let didCancel = false
-
-		if (imageRef && imageSrc !== src) {
-			if (IntersectionObserver) {
-				observer = new IntersectionObserver(
-					entries => {
-						entries.forEach(entry => {
-							if (
-								!didCancel &&
-								(entry.intersectionRatio > 0 || entry.isIntersecting)
-							) {
-								setImageSrc(src)
-								observer.unobserve(imageRef)
-							}
-						})
-					},
-					{
-						threshold: 0.01,
-						rootMargin: '75%'
-					}
-				)
-				observer.observe(imageRef)
-			} else {
-				// Old browsers fallback
-				setImageSrc(src)
-			}
-		}
-		return () => {
-			didCancel = true
-			// on component cleanup, we remove the listner
-			if (observer && observer.unobserve) {
-				observer.unobserve(imageRef)
-			}
-		}
-	}, [src, imageSrc, imageRef])
-	return (
-		<img
-			ref={setImageRef}
-			src={imageSrc}
-			alt={alt}
-			onLoad={onLoad}
-			onError={onError}
-		/>
-	)
-}
-
 const SwipeThumbs = (props: IProps) => {
-	const [state, setState] = useSetState<any, any>({
-		loaded: false,
-		root: null,
-		offset: 0,
-		width: 0,
-		selectedSlide: 1
-	})
+
 	const rootElement = useRef<HTMLDivElement | null>(null)
 	const preventClick = useRef<boolean>(false)
-	const prevState = useRef(state)
 	const prevSelectedSlide = useRef(props.selectedSlide)
 	const xRef: any = useRef(value(0))
 	const valuesMap = { x: xRef.current }
+	const zeroIndex = props.selectedSlide - 1
 
-	useEffect(() => {
-		window.addEventListener('resize', adjustCurrentBoxThumbnail)
-		if (rootElement.current) {
-			// const { slideIndex } = state.selectedSlide
-			setState({
-				root: rootElement.current,
-				// ...childrenBox(rootElement.current, state.selectedSlide)
-				...childrenBox(rootElement.current, props.selectedSlide)
-			})
-		}
-		return () => {
-			window.removeEventListener('resize', adjustCurrentBoxThumbnail)
-		}
+	const [galleryState] = useGalleryResizeEffect(rootElement.current, 4)
+	const goToSlide = (slideIndex: number) => (e: any) => {
+		props.handleSlideChange(slideIndex + 1)
+	}
 
-	}, [])
 	useEffect(() => {
 		prevSelectedSlide.current = props.selectedSlide
 	}, [props.selectedSlide])
-	useLayoutEffect(() => {
-		prevState.current = state
-	}, [state])
-
-	function adjustCurrentBoxThumbnail () {
-		if (rootElement.current) {
-			setState({
-				root: rootElement.current,
-				...childrenBox(rootElement.current, props.selectedSlide)
-			})
-		}
-	}
-
-	function childrenBox (root: any, index: any) {
-		const rootWidth = root.clientWidth
-		const el = root
-		return {
-			offset: el.offsetLeft,
-			width: el.offsetWidth / 4
-		}
-	}
 
 	function onDragStart (e: any) {
 		preventClick.current = false
 		// props.onDragStart();
 	}
 
-	const goToSlide = (slideIndex: number) => (e: any) => {
-		props.handleSlideChange(slideIndex + 1)
-	}
-
 	function onDragEnd (e: any) {
+		console.log('e', e)
+
 		// const { width } = prevState.current
 		// const zerBaseIndex = prevSelectedSlide.current - 1
 		// const newOffset = zerBaseIndex * width
@@ -192,30 +63,17 @@ const SwipeThumbs = (props: IProps) => {
 		// this.props.onDragEnd();
 	}
 
-	// const index = state.selectedSlide - 1
-	const zeroIndex = props.selectedSlide - 1
-
 	return (
 		<DragContainer
 			selectedSlide={props.selectedSlide}
-			width={state.width}
+			width={galleryState.width}
 			sliderWidth={props.slides.length}
 			ref={rootElement}
 			values={valuesMap}
-			offset={zeroIndex * state.width}
-			// onClickCapture={(e: any) => {
-			// 	// console.log('e', e.target)
-			//
-			// 	if (preventClick.current) {
-			// 		e.stopPropagation()
-			// 	}
-			// }}
-			onDragStart={onDragStart}
+			offset={zeroIndex * galleryState.width}
 			onDragEnd={onDragEnd}
-			onPoseComplete={() => {
-				console.log('Complete')
-			}}
-			poseKey={zeroIndex * state.width}
+			onDragStart={onDragStart}
+			poseKey={zeroIndex * galleryState.width}
 			pose={'rest'}
 		>
 
@@ -248,12 +106,15 @@ const Draggable = posed.div({
 	rest: {
 		x: (digits: { offset: number, selectedSlide: number, width: number, sliderWidth: number }) => {
 
+			// IF we are on the last slide make sure it stays in the 4th position
 			if (digits.selectedSlide === digits.sliderWidth) {
-				const lastSlideCount = (digits.selectedSlide - 1) - 3 // calc the 2nd to last slide and use its positioning
+				// calc the position of the 2nd to last slide and force the last slide to not move after click
+				const lastSlideCount = digits.selectedSlide - 4
 				return -(digits.width * lastSlideCount)
 			}
+			// if selectedSlide is past the 3rd starting position, start sliding over each time
 			if (digits.selectedSlide > 3) {
-				const newIndex = digits.selectedSlide - 3
+				const newIndex = digits.selectedSlide - 3 // subtract the first three items because they dont move
 				return -(digits.width * newIndex)
 			}
 			return 0
@@ -268,6 +129,7 @@ const Draggable = posed.div({
 		return { left: -(itemsOffCanvas * props.width), right: 0 }
 	},
 	dragEnd: {
+		transition: 'spring'
 		// transition: ({ from, to, velocity, offset }: any) => {
 		// 	return spring({ from, to: -offset, velocity })
 		// }
