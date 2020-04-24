@@ -28,6 +28,7 @@ const variants = {
 			x: direction > 0 ? 500 : -500,
 			opacity: 0,
 			transition: {
+				ease: 'easeIn',
 				// type: 'linear',
 				// damping: 1600,
 				// stiffness: 5,
@@ -43,12 +44,13 @@ const variants = {
 		y: 0,
 		opacity: 1,
 		transition: {
+			ease: 'easeInOut',
 			// ease: [0.17, 0.67, 0.83, 0.67]
 			// type: 'spring',
 			// damping: 600,
 			// stiffness: 200,
 			// velocity: 200,
-			duration: .1
+			duration: .3
 		}
 	},
 	exit: (direction: number) => {
@@ -57,6 +59,7 @@ const variants = {
 			x: direction < 0 ? 500 : -500,
 			opacity: 0,
 			transition: {
+				ease: 'easeOut',
 				// type: 'easeOut',
 				// ease: [0.17, 0.67, 0.83, 0.67],
 				// damping: 5,
