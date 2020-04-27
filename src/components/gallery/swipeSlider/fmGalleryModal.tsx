@@ -402,7 +402,7 @@ const ContainerTest2 = styled.div<{ height: number }>`
 		}
 
 		@media ${device.laptop}{
-			${props => props.height > 800 ? 'overflow-y: scroll;' : 'overflow: hidden;'}
+			${props => props.height > window.outerHeight ? 'overflow-y: scroll;' : 'overflow: hidden;'}
 		}
 `
 const YoutubeGalleryItem = styled.div`
