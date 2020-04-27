@@ -264,85 +264,6 @@ const FmGalleryModal = (props: IProps) => {
 		return Math.abs(offset) * velocity
 	}
 
-	const backup = () => {
-		return (
-			<Main
-				height={window.outerHeight}
-				key={'main'}>
-				<Container
-					ref={fmModalContainerRef}
-					height={height}
-					hasScrollbar={!!hasScrollBarRef.current}
-					className={isVideoItem(imageIndex) ? 'hasVideo' : ''}>
-					<Inner>
-						<div
-							className={'height-container'}
-							ref={imgRef}
-							style={{
-								display: 'flex',
-								width: '100%',
-								justifyContent: 'center'
-							}}
-						>
-							<AnimatePresence initial={false} custom={direction} onExitComplete={() => {
-								props.options.data.goToSlide(page + 1) // because the gallery is not zerobased
-							}}>
-								<motion.div
-									key={page}
-									className={'fm-divImage'}
-									custom={direction}
-									variants={variants}
-									initial='enter'
-									animate='center'
-									exit='exit'
-									dragDirectionLock={true}
-									onDirectionLock={(dirAxis: string) => dragDirection(dirAxis)}
-									transition={{
-										x: { type: 'spring', stiffness: 300, damping: 200 },
-										opacity: { duration: 0.2 }
-									}}
-									drag={axis}
-									dragConstraints={{
-										left: 0,
-										right: 0,
-										bottom: 0,
-										top: -(height - window.innerHeight)
-									}}
-									dragElastic={0.3}
-									onDragEnd={(e, { offset, velocity }) => {
-										const swipe = swipePower(offset.x, velocity.x)
-
-										if (swipe < -swipeConfidenceThreshold) {
-											paginate(1)
-										} else if (swipe > swipeConfidenceThreshold) {
-											paginate(-1)
-										}
-									}}
-								>
-									{videoCheck(images[imageIndex])}
-									{/*<img src={images[imageIndex].localFile.childImageSharp.fullWidth.src} alt='alt'/>*/}
-								</motion.div>
-							</AnimatePresence>
-						</div>
-					</Inner>
-				</Container>
-				<FmGalleryBtnLeft onClick={prevSlide} disabled={page === 0}>
-					<svg className='icon' viewBox='0 0 32 32'><title>Show previous slide</title>
-						<path
-							d='M20.768,31.395L10.186,16.581c-0.248-0.348-0.248-0.814,0-1.162L20.768,0.605l1.627,1.162L12.229,16 l10.166,14.232L20.768,31.395z'/>
-					</svg>
-				</FmGalleryBtnLeft>
-				<FmGalleryBtnRight onClick={nextSlide} disabled={page + 1 === images.length}>
-					<svg className='icon' viewBox='0 0 32 32'><title>Show next slide</title>
-						<path
-							d='M11.232,31.395l-1.627-1.162L19.771,16L9.605,1.768l1.627-1.162l10.582,14.813 c0.248,0.348,0.248,0.814,0,1.162L11.232,31.395z'/>
-					</svg>
-				</FmGalleryBtnRight>
-				<CloseBtn onClick={props.closeModal}>{renderSvg(svgs.Close)}</CloseBtn>
-			</Main>
-		)
-	}
-
 	return (
 		<Main
 			height={window.outerHeight}
@@ -481,8 +402,7 @@ const ContainerTest2 = styled.div<{ height: number }>`
 		}
 
 		@media ${device.laptop}{
-			overflow: hidden;
-			${props => props.height > 800 ? 'overflow-y: scroll;' : ''}
+			${props => props.height > 800 ? 'overflow-y: scroll;' : 'overflow: hidden;'}
 		}
 `
 const YoutubeGalleryItem = styled.div`
@@ -645,11 +565,14 @@ const Main = styled(ModalPose)`
 	align-items: center;
 	backface-visibility: hidden;
 	
+	img{
+		-webkit-user-drag: none;
+	}
+	
 	.test2{
 		position: absolute;
 		width: 100%;
 		max-width: 1200px;
-
 	}
 	.youtubeVideo{
 		width: 100%;
