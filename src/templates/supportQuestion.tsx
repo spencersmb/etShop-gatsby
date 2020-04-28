@@ -16,7 +16,6 @@ const SupportQuestion = (props: any) => {
 			wpgraphql: { supportQuestion: { title, slug, categories, id, acfSupportQuestions } }
 		}
 	} = props
-	// console.log('support Question PAGE props', props.data.wpgraphql.supportQuestion)
 
 	return (
 		<>

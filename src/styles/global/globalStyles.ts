@@ -88,6 +88,7 @@ export default createGlobalStyle`
     display: flex;
   	flex-direction: column;
   	flex: 1;
+  	z-index: 1;
   }
   
   svg{
