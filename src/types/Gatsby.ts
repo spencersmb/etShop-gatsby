@@ -1,20 +1,21 @@
 import { graphql } from 'gatsby'
 
-export interface IGatsbyConfig {
-	site: {
-		siteMetadata: {
-			title: string,
-			description: string,
-			author: string,
-			authorUrl: string,
-			siteUrl: string,
-			siteName: string,
-			db: string,
-			route: string,
-			twitterUrl: string
-			twitterDefaultImage: string
-		},
+export interface IGatsbySite {
+	siteMetadata: {
+		title: string,
+		description: string,
+		author: string,
+		authorUrl: string,
+		siteUrl: string,
+		siteName: string,
+		db: string,
+		route: string,
+		twitterUrl: string
+		twitterDefaultImage: string
 	}
+}
+export interface IGatsbyConfig {
+	site: IGatsbySite
 	featureImage?:any
 }
 

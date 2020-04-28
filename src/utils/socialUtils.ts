@@ -24,6 +24,7 @@ export const socialConfig = {
 
 /**
  * * Tested
+ * * * * Deprecated
  * Twitter Card default
  * - Add-on and override default twitter props
  *
@@ -106,7 +107,7 @@ export const facebookDefaultMeta = (additionalProps: IOGType[] = []): IOGType[] 
 	return _.unionBy(additionalProps, facebook, 'property')
 }
 
-export const createStandardJSONLD = ({siteUrl, featureImgSrc}: {siteUrl: string, featureImgSrc: string}) => {
+export const createStandardJSONLD = ({ siteUrl, featureImgSrc }: { siteUrl: string, featureImgSrc: string }) => {
 	return {
 		['@context']: 'http://schema.org',
 		['@type']: 'Organization',

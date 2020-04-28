@@ -32,7 +32,7 @@ const SliderButton = styled.button<{ background?: { hover: string, color: string
 	}
 	
 	@media ${device.laptop}{
-		display: block;
+		display: flex;
 		visibility: visible;
 		&:hover{
 			${props => props.background ? `
