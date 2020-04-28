@@ -95,6 +95,11 @@ const FmGalleryModal = (props: IProps) => {
 	}, [])
 
 	const paginate = (newDirection: number) => {
+		// if the height is larger than the window height its oversized
+		// scroll back to top for large images
+		if (fmModalContainerRef.current) {
+			fmModalContainerRef.current.scrollTop = 0
+		}
 		if (axis === 'y') {
 			return
 		}
@@ -129,12 +134,6 @@ const FmGalleryModal = (props: IProps) => {
 			const slides = fmModalContainerRef.current.children
 			const newSlide = slides[fmModalContainerRef.current.children.length - 1] // last item
 			const boundingClient = newSlide.getBoundingClientRect()
-
-			// if the height is larger than the window height its oversized
-			// scroll back to top for large images
-			if (window && boundingClient.height > window.innerHeight) {
-				fmModalContainerRef.current.scrollTop = 0
-			}
 
 			// if its a different image size lets switch it
 			if (prevStateHeight.current !== boundingClient.height) {
