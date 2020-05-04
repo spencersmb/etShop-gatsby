@@ -16,17 +16,13 @@ const SupportCategoryPage = (props: any) => {
 	const { site, featureImage } = props.data
 	const category = categories.nodes[0]
 	const { pageNumber } = pageContext
-	const totalPagesCount = Math.ceil(10 / 4)
+	// show 10 per page - page Count also defined in ./gatsby/createCatsPages.js
+	const totalPagesCount = Math.ceil(category.count / 10)
 	const totalPages = new Array(totalPagesCount).fill(totalPagesCount)
-	console.log('totalPages', totalPages)
-	console.log('props', props)
-
-	// console.log('Category page props', props.data.wpgraphql.categories)
 	const nextPage = async () => {
 		const nextPageNumber = pageContext.pageNumber + 1
 		await navigate(`support/category/${category.slug}/page/${nextPageNumber}`)
 	}
-
 	const prevPage = async () => {
 		const prevPageNumber = pageContext.pageNumber - 1
 		await navigate(`support/category/${category.slug}/page/${prevPageNumber}`)
@@ -131,7 +127,7 @@ const SupportCategoryPage = (props: any) => {
 					<PaginationContainer>
 						{pageContext.hasPrevPage &&
             <PageBtn position={`left`} onClick={prevPage}>Prev</PageBtn>}
-						{totalPages.map((page, index) => {
+						{totalPagesCount > 1 && totalPages.map((page, index) => {
 							const currentPage = index + 1
 							return (
 								<NumbersBtn
@@ -174,6 +170,7 @@ export const pageCatQuery = graphql`
             categories(where: {name: $cat}) {
                 nodes{
                     count
+                    id
                     name
                     slug
                 }
@@ -181,6 +178,8 @@ export const pageCatQuery = graphql`
             category(id: $catId){
                 name
                 slug
+                id
+                count
             }
 
         }

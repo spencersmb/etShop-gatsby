@@ -2,7 +2,7 @@ const path = require("path")
 
 module.exports = async ({ actions, graphql }) => {
   const { createPage } = actions
-  const perPage = 4
+  const perPage = 10
   const allCats = {}
   const excludeItems = ["uncategorized"]
   let pageNumber = 1
