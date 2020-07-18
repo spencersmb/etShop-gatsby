@@ -37,7 +37,7 @@
     "graphql-tools-fork": "8.4.0",
     "isomorphic-unfetch": "^3.0.0",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "popmotion": "^8.7.1",
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
