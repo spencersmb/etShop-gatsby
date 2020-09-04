@@ -31,7 +31,6 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 	const target = useRef<HTMLElement | null>(null)
 	const bodyScrollPos: any = useRef(0)
 	const { cartIsOpen } = props
-	// onComponent mount
 	useLayoutEffect(() => {
 
 		target.current = document.querySelector('#___gatsby')
@@ -61,7 +60,7 @@ export const MyShoppingCart = (props: IPropsPrivate & IPrivateActions & IPropsPu
 	}, [cartIsOpen])
 
 	return (
-		<CartStyled id='cart-Container' style={{ position: 'relative', zIndex: 5 }}>
+		<CartStyled id='cart-Container' style={{ position: 'relative', zIndex: 10 }}>
 			<PoseGroup>
 				{cartIsOpen &&
         <CartPose key='cart' onPoseComplete={(type: OnPoseComplete) => {

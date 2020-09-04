@@ -47,19 +47,19 @@ const Layout = ({ children, productPage = false, whiteFooter = false }: IlayoutP
 						<PageContainer>
 							<main>{children}</main>
 							<Footer productPage={productPage} whiteFooter={whiteFooter}/>
-							<ReduxToastr
-								key='toastr'
-								timeOut={3000}
-								newestOnTop={false}
-								preventDuplicates={false}
-								position='bottom-right'
-								transitionIn='fadeIn'
-								transitionOut='fadeOut'
-								progressBar={false}
-							/>
 						</PageContainer>
 					</div>
 					<Modal key='modal'/>
+					<ReduxToastr
+						key='toastr'
+						timeOut={3000}
+						newestOnTop={false}
+						preventDuplicates={false}
+						position='bottom-right'
+						transitionIn='fadeIn'
+						transitionOut='fadeOut'
+						progressBar={false}
+					/>
 				</>
 			)}
 		/>
